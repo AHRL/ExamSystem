@@ -32,3 +32,13 @@ $global-info:       $teal !default;
 $global-warning:    $orange !default;
 $global-danger:     $red !default;
 $global-inverse:    $gray-dark !default;
+
+// Sapcing
+//
+// Control the default styling of most Bootstrap elements by modifying these variables.
+// Mostly focus on spacing.
+// You can add more entries to the $spacers map, should you need more variation.
+
+$spacer:      1rem !default;
+$spacer-x:    $spacer !default;
+$spacer-y:    $spacer !default;
