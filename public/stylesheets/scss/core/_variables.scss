@@ -1,0 +1,34 @@
+// Variables
+//
+
+
+// Colors
+//
+// Define gray scale and special colors for use across ExamSystem
+
+// Start with assigning color names to specific hex values.
+$white:   #fff !default;
+$black:   #000 !default;
+$red:     #f08080 !default;
+$orange:  #ff7f50 !default;
+$yellow:  #F9DC36 !default;
+$green:   #63D62A !default;
+$teal:    #2BE2D3 !default;
+$blue:    #2B80E2 !default;
+$pink:    #9923cc !default;
+$purple:  #ff69b4 !default;
+
+// Create gray scale
+$gray-dark:        #474747 !default;
+$gray:             #808080 !default;
+$gray-light:       #a9a9a9 !default;
+$gray-lighter:     #d3d3d3 !default;
+$gray-lightest:    #F5F5F5 !default;
+
+// Reassign color vars to semantic color scheme
+$global-primary:    $blue !default;
+$global-success:    $green !default;
+$global-info:       $teal !default;
+$global-warning:    $orange !default;
+$global-danger:     $red !default;
+$global-inverse:    $gray-dark !default;
