@@ -286,7 +286,7 @@ html {
 
 body {
   font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 1rem;
+  font-size: 1.4rem;
   font-weight: normal;
   line-height: 1.5;
   color: #292b2c;
@@ -441,29 +441,29 @@ output {
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
-  margin-bottom: 0.5rem;
+  margin-bottom: 2rem;
   font-family: inherit;
   font-weight: 500;
   line-height: 1.1;
   color: inherit; }
 
 h1, .h1 {
-  font-size: 2.5rem; }
+  font-size: 3.2rem; }
 
 h2, .h2 {
-  font-size: 2rem; }
+  font-size: 2.8rem; }
 
 h3, .h3 {
-  font-size: 1.75rem; }
+  font-size: 2.4rem; }
 
 h4, .h4 {
-  font-size: 1.5rem; }
+  font-size: 2rem; }
 
 h5, .h5 {
-  font-size: 1.25rem; }
+  font-size: 1.8rem; }
 
 h6, .h6 {
-  font-size: 1rem; }
+  font-size: 1.6rem; }
 
 .lead {
   font-size: 1.25rem;
@@ -8971,5 +8971,36 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   margin: 0;
   overflow: visible;
   clip: auto; }
+
+.container-fluid {
+  position: absolute;
+  top: 10%;
+  left: 10%; }
+
+html {
+  font-size: 10px; }
+
+body {
+  font-size: 1.4rem; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 2rem; }
+
+._brand {
+  font-size: 4.8rem;
+  margin: 4rem 0; }
+
+#particles-js {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  background-image: url("");
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat; }
 
 /*# sourceMappingURL=main.css.map */
