@@ -1,0 +1,17 @@
+// Bootstrap overrides
+//
+// Copy variables from `_variables.scss` to this file to override default values
+// without modifying source files.
+
+$html-font-size-base: 10px !default;
+$body-font-size-base: 1.4rem !default;
+
+
+$font-size-h1: 3.2rem;
+$font-size-h2: 2.8rem;
+$font-size-h3: 2.4rem;
+$font-size-h4: 2rem;
+$font-size-h5: 1.8rem;
+$font-size-h6: 1.6rem;
+
+$headings-margin-bottom: $spacer * 2;
