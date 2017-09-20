@@ -9003,4 +9003,37 @@ h1, h2, h3, h4, h5, h6 {
   background-position: 50% 50%;
   background-repeat: no-repeat; }
 
+/*
+@keyframes opacity_show {
+  from  {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.opacity_show {
+  animation-name: opacity_show;
+  animation-duration: 2s;
+  animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+}
+
+@keyframes slide_down_in {
+  from {
+    display: none;
+    transform: translateY(-5rem);
+  }
+  to {
+    display: block;
+    transform: translateY(0);
+  }
+}
+
+.slide_down {
+  animation-name: slide_down;
+  animation-duration: 4s;
+  animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+}*/
+
 /*# sourceMappingURL=main.css.map */
