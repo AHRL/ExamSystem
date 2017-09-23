@@ -9035,5 +9035,28 @@ h1, h2, h3, h4, h5, h6 {
   animation-duration: 4s;
   animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
 }*/
+.form-group {
+  position: relative; }
+
+.pswStrength {
+  position: absolute;
+  top: 0;
+  left: 8rem;
+  font-size: 1.2rem; }
+
+.psw-h,
+.psw-l,
+.psw-m {
+  display: inline-block;
+  width: 3.2rem;
+  height: 0.8rem;
+  border: 1px solid #5cb85c;
+  vertical-align: middle; }
+
+.psw-h {
+  margin-right: 1.5rem; }
+
+.psw-l {
+  margin-left: 1.5rem; }
 
 /*# sourceMappingURL=main.css.map */
