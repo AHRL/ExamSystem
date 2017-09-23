@@ -66,7 +66,8 @@ h1,h2,h3,h4,h5,h6 {
   animation-name: slide_down;
   animation-duration: 4s;
   animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-}*/
+}
+*/
 
 .form-group {
   position: relative;
@@ -95,4 +96,12 @@ h1,h2,h3,h4,h5,h6 {
 
 .psw-l {
   margin-left: ($spacer * 1.5);
+}
+
+.errorMsg {
+  position: absolute;
+  top: 0;
+  left: 8rem;
+  font-size: 1.2rem;
+  color: $brand-danger;
 }
