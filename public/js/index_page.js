@@ -49,13 +49,46 @@ window.onload = function () {
         }
     };
 
+    // create Function insertAfter
+
+    function insertAfter(newElement, targetElement){
+        var parent = targetElement.parentNode;
+        if (parent.lastChild === targetElement) {
+            parent.appendChild(newElement);
+        } else {
+            parent.insertBefore(newElement, targetElement.nextSibling);
+        }
+    }
+
+    var ensurePswFlag = false; // 页面还没有错误提示
+
     var uEPswd = document.getElementById('upEnsurePassword');
     uEPswd.onblur = function (event) {
         var val = uEPswd.value;
+        var el = document.createElement('p');
         if (val !== uPswd.value) {
             console.log('两次输入密码不一致');
+            el.setAttribute('class', 'errorMsg');
+            el.innerHTML = '&bigotimes; 两次输入密码不一致！ 请重新输入！';
+            if(!ensurePswFlag){
+                insertAfter(el, this);
+                ensurePswFlag = true; // 页面已有错误提示
+            }
+            uEPswd.style.borderColor = '#d9534f';
+            // 清空表单项
         } else {
             console.log('密码一致');
+            uEPswd.style.borderColor = '#5cb85c';
+        }
+    };
+    uEPswd.onfocus = function (event) {
+        if (ensurePswFlag){
+            var er = uEPswd.getElementsByClassName('errorMsg')[0];
+            uEPswd.removeChild(er);
+        }
+        console.log(er);
+        if(er){
+            uEPswd.removeChild(er);
         }
     };
 
@@ -86,6 +119,8 @@ window.onload = function () {
 
 };
 
+
+// autoType.js
 var TxtRotate = function(el, toRotate, period){
     this.toRotate = toRotate;
     this.el = el;
@@ -126,3 +161,4 @@ TxtRotate.prototype.tick = function () {
         that.tick();
     }, delta);
 };
+
