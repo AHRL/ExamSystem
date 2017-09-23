@@ -24,23 +24,28 @@ window.onload = function () {
 
     var uUsr = document.getElementById('upUsername');
     uUsr.onblur = function (event) {
-        var usrReg = /\/;
+        var usrReg = /\w/;
         var val = uUsr.value;
         if (!usrReg.test(val)){
-            console.log('用户名验证成功');
-        } else {
             console.log('用户名验证失败');
+        } else {
+            console.log('用户名验证成功');
         }
     };
 
     var uPswd = document.getElementById('upPassword');
     uPswd.onblur = function (event) {
         var val = uPswd.value;
-        var psdReg = /^(\w){6,20}$/;
+        var psdReg = /^[\w.]{8,16}$/;
+        // 待解决：密码强度验证
+        var lowReg = /[0-9]{8,16}|[a-z]{8,16}|[A-Z]{8,16}|\.{8,16}/;
         if(!psdReg.test(val)){
-            console.log('密码验证成功');
-        } else {
             console.log('密码不符合要求');
+        } else {
+            console.log('密码验证成功');
+            if(lowReg.test(val)){
+                console.log('密码强度低');
+            }
         }
     };
 
@@ -52,11 +57,6 @@ window.onload = function () {
         } else {
             console.log('密码一致');
         }
-    };
-
-    var uSubBtn = document.getElementById('upSubmitButton');
-    uSubBtn.onclick = function (event) {
-
     };
 
     // Sign in validation
