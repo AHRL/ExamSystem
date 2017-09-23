@@ -66,4 +66,42 @@ h1,h2,h3,h4,h5,h6 {
   animation-name: slide_down;
   animation-duration: 4s;
   animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-}*/
+}
+*/
+
+.form-group {
+  position: relative;
+}
+
+.pswStrength {
+  position: absolute;
+  top: 0;
+  left: 8rem;
+  font-size: 1.2rem;
+}
+
+.psw-h,
+.psw-l,
+.psw-m {
+  display: inline-block;
+  width: ($spacer * 3.2);
+  height: ($spacer * 0.8);
+  border: $border-width solid $brand-success;
+  vertical-align: middle;
+}
+
+.psw-h {
+  margin-right: ($spacer * 1.5);
+}
+
+.psw-l {
+  margin-left: ($spacer * 1.5);
+}
+
+.errorMsg {
+  position: absolute;
+  top: 0;
+  left: 8rem;
+  font-size: 1.2rem;
+  color: $brand-danger;
+}

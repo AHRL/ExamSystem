@@ -27,6 +27,14 @@
             </div>
         </form>
 
+        <div>
+            &copy; <span>2017</span>
+            &hearts; <a href="https://github.com/w3fun/" target="_blank">W3Fun</a>
+            &hearts; <a href="https://github.com/swpuLeo/" target="_blank">Leo</a>
+            &amp; <a href="#" target="_blank">lwf</a>
+            &amp; <a href="#" target="_blank">xxy</a>
+        </div>
+
         <!-- modal -->
         <div class="modal fade" id="signInModal" role="dialog">
             <div class="modal-dialog">
@@ -70,25 +78,32 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="#" role="form">
+                        <form id="signUpForm" method="post" action="#" role="form">
                             <div class="form-group">
                                 <label for="upEmail">邮箱</label>
-                                <input type="email" id="upEmail" class="form-control" placeholder="请正确填写邮箱">
+                                <input type="email" id="upEmail" class="form-control" placeholder="请正确填写邮箱, 比如 aaa@bb.ccc">
                             </div>
                             <div class="form-group">
                                 <label for="upUsername">用户名</label>
-                                <input type="text" id="upUsername" class="form-control" placeholder="用户名不能以数字开头，不可以是中文">
+                                <input type="text" id="upUsername" class="form-control" placeholder="用户名只能为数字、字母、下划线，但不能以下划线开头">
                             </div>
                             <div class="form-group">
                                 <label for="upPassword">密码</label>
-                                <input type="password" id="upPassword" class="form-control" placeholder="不少于8位字符">
+                                <input type="password" id="upPassword" class="form-control" placeholder="密码长度为8~16位，可使用数字、字母、点号">
+                                <div class="pswStrength">
+                                    <span>密码强度</span>
+                                    <span class="psw-l"></span>
+                                    <span class="psw-m"></span>
+                                    <span class="psw-h"></span>
+                                    <span>中</span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="upEnsurePassword">确认密码</label>
                                 <input type="password" id="upEnsurePassword" class="form-control" placeholder="请确认密码">
                             </div>
                             <div class="form-group text-center">
-                                <button type="submit" class="btn btn-lg btn-primary">确认</button>
+                                <button type="submit" id="upSubmitButton" class="btn btn-lg btn-primary">确认</button>
                                 <button type="reset" class="btn btn-lg" data-dismiss="modal">取消</button>
                             </div>
                         </form>
@@ -103,10 +118,10 @@
 
     <script src="../public/lib/jquery-3.2.1.min.js"></script>
     <script src="../public/lib/bootstrap.min.js"></script>
+    <script src="../public/lib/validate.min.js"></script>
     <script src="../public/lib/particles.min.js"></script>
     <script src="../public/js/particlesInit.js"></script>
     <script src="../public/lib/classie.js"></script>
     <script src="../public/js/index_page.js"></script>
-    <script src="../public/js/autotype.js"></script>
 </body>
 </html>
