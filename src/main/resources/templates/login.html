@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta email="viewport" content="width=device-width, initial-scale=1">
     <title>登录 - FunExam</title>
     <link rel="stylesheet" href="../static/stylesheets/css/funExam.css"/>
     <link rel="short icon" type="image/x-icon" href="../favicon.ico"/>
@@ -81,7 +83,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="signUpForm" method="post" action="#" role="form">
+                        <form id="signUpForm" method="post" action="#" role="form" th:action="@{/login}">
                             <div class="form-group">
                                 <label for="upEmail">邮箱</label>
                                 <input type="email" id="upEmail" class="form-control" placeholder="请正确填写邮箱, 比如 aaa@bb.ccc">
