@@ -73,16 +73,14 @@ h1,h2,h3,h4,h5,h6 {
   position: relative;
 }
 
-.pswStrength {
+.pswdStrength {
   position: absolute;
   top: 0;
   left: 8rem;
   font-size: 1.2rem;
 }
 
-.psw-h,
-.psw-l,
-.psw-m {
+.pswdStrength-item {
   display: inline-block;
   width: ($spacer * 3.2);
   height: ($spacer * 0.8);
@@ -90,18 +88,34 @@ h1,h2,h3,h4,h5,h6 {
   vertical-align: middle;
 }
 
-.psw-h {
-  margin-right: ($spacer * 1.5);
+.pswdStrength-item--active {
+  background-color: $brand-success;
 }
 
-.psw-l {
-  margin-left: ($spacer * 1.5);
+.pswdStrength-info {
+  color: $brand-success;
+  margin-right: $spacer;
 }
 
-.errorMsg {
+.validationMsg {
   position: absolute;
   top: 0;
   left: 8rem;
   font-size: 1.2rem;
+}
+.validationMsg-failed {
   color: $brand-danger;
+}
+.validationMsg-successed {
+  color: $brand-success;
+}
+
+.validationStyle-failed {
+  border-color: $brand-danger;
+  background-color: $brand-danger;
+}
+
+.validationStyle-successed {
+  border-color: $brand-success;
+  background-color: $brand-success;
 }
