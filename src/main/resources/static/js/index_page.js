@@ -1,12 +1,34 @@
 window.onload = function () {
 
+
+    /* **********************************************************
+    * Start Animation
+    *
+    * */
+
+    (function(){
+        var oH1 = document.getElementsByTagName('h1')[0];
+        var oH2 = document.getElementsByTagName('h2')[0];
+
+        function startAnim(obj, callback){
+            if (!hasClass(obj, 'fadeInDown')){
+                addClass(obj, 'fadeInDown');
+            }
+            if (callback && typeof callback === 'function'){
+                callback();
+            }
+        }
+        startAnim(oH1, function(){
+            startAnim(oH2);
+        });
+    })();
+
     /* **********************************************************
     * Form validate
     *
     * */
 
     // Sign up validation ---------------------------------------
-
     (function(){
         // validate e-mail
         var uEml = document.getElementById('upEmail');
@@ -29,8 +51,7 @@ window.onload = function () {
                 removeAfter(this);
                 if (hasClass(this, 'validationStyle-failed')){
                     removeClass(this, 'validationStyle-failed');
-                }
-                if (hasClass(this, 'validationStyle-successed')){
+                } else {
                     removeClass(this, 'validationStyle-successed');
                 }
             }
@@ -117,29 +138,48 @@ window.onload = function () {
     })();
 
     // Sign in validation ---------------------------------------
+    (function(){
+        // validate username
+        var usr = document.getElementById('username');
+        usr.onblur = function(){
 
+        };
+        usr.onfocus = function(){
 
+        };
+
+        // validate password
+        var pswd = document.getElementById('password');
+        pswd.onblur = function(){
+
+        };
+        pswd.onfocus = function () {
+
+        }
+    })();
 
 
     /* **********************************************************
     * AutoType
     * */
 
-    // AutoType
-    var elements = document.getElementsByClassName('txt-rotate');
-    for(var i=0; i<elements.length; i++){
-        var toRotate = elements[i].getAttribute('data-rotate');
-        var period = elements[i].getAttribute('date-period');
-        if(toRotate) {
-            new TxtRotate(elements[i],JSON.parse(toRotate),period);
+    (function(){
+        // AutoType
+        var elements = document.getElementsByClassName('txt-rotate');
+        for(var i=0; i<elements.length; i++){
+            var toRotate = elements[i].getAttribute('data-rotate');
+            var period = elements[i].getAttribute('date-period');
+            if(toRotate) {
+                new TxtRotate(elements[i],JSON.parse(toRotate),period);
+            }
         }
-    }
 
-    // INJECT CSS
-    var css = document.createElement('style');
-    css.type = 'text/p-css';
-    css.innerHTML = '.txt-rotate > .wrap {border-right: .3rem solid #666}';
-    document.body.appendChild(css);
+        // inject CSS
+        var css = document.createElement('style');
+        css.type = 'text/p-css';
+        css.innerHTML = '.txt-rotate > .wrap {border-right: .3rem solid #666}';
+        document.body.appendChild(css);
+    })();
 
 };
 
@@ -187,7 +227,7 @@ TxtRotate.prototype.tick = function () {
 };
 
 // create Function addClass(), removeClass(), hasClass()
-// From http://www.cnblogs.com/mbyund/p/6908959.html
+// Based http://www.cnblogs.com/mbyund/p/6908959.html
 function addClass(obj, newCls) {
     var obj_classes = obj.className,
         blank = (obj.className !== '') ? ' ' : '';
