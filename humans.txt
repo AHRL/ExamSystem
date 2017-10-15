@@ -1,0 +1,17 @@
+# The humans responsible & technology colophon
+
+# TEAM
+
+    <Leo> -- <Front-ender> -- <w3fun>
+    <staticWalk> -- <Back-ender> -- <w3fun>
+    <812913> -- <Front-ender> -- <w3fun>
+    <luqingying> -- <Front-ender> -- <w3fun>
+
+# THANKS
+
+    <>
+
+# TECHNOLOGY COLOPHON
+
+    Java, HTML5, CSS3
+    Normalize.css, Bootstrap, Modernizr
