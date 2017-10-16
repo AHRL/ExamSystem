@@ -135,6 +135,13 @@ window.onload = function () {
                 }
             }
         };
+
+        var aDismiss = document.getElementsByClassName('js-upDismiss');
+        for (var i=0, len=aDismiss.length; i<len; i++){
+            (function(i){
+                aDismiss[i].onclick = clearForm('signUpForm');
+            })(i);
+        }
     })();
 
     // Sign in validation ---------------------------------------
@@ -344,5 +351,23 @@ function insertAfter(newElement, targetElement){
 function removeAfter(targetElement){
     var parent = targetElement.parentNode;
     parent.removeChild(targetElement.nextSibling);
+}
+
+// create Function clearForm()
+// Based http://www.cnblogs.com/shanlin/archive/2014/07/17/3850417.html
+function clearForm(id){
+    var oId = document.getElementById(id);
+    if (oId === 'undefined'){
+        return false;
+    }
+    for (var i=0, len=oId.elements.length; i<len; i++){
+        if (oId.elements[i].type === 'text'){
+            oId.elements[i].value = '';
+        } else if (oId.elements[i].type === 'password'){
+            oId.elements[i].value = '';
+        } else if (oId.elements[i].type === 'email'){
+            oId.elements[i].value = '';
+        }
+    }
 }
 
