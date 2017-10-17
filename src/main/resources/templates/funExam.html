@@ -1,12 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta email="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta email="viewport" content="width=device-width, initial-scale=1"/>
     <title>Home - FunExam</title>
     <link rel="stylesheet" href="../static/stylesheets/css/funExam.css"/>
     <link rel="short icon" type="image/x-icon" href="../favicon.ico"/>
+    <script src="../static/lib/modernizr-2.6.2.min.js"></script>
+    <!-- Respond.js for IE 8 or less only-->
+    <!--[if (lt IE 9) & (!IEMobile)]>
+    <script src="../static/lib/respond.min.js"></script>
+    <![endif]-->
     <style type="text/css">
         body {
             padding-top: 4.5rem;
@@ -95,7 +100,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="#">
-            <img src="../static/img/w3fun-inverse-40x40.png" id="userInfo" alt="user information">
+            <img src="../static/img/w3fun-inverse-40x40.png" id="userInfo" alt="user information" />
             <span>Fun Exam</span>
         </a>
         <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -109,7 +114,10 @@
                     <a class="nav-link dropdown-toggle"
                        data-toggle="dropdown" href="#"
                        role="button" aria-haspopup="true" aria-expanded="false">
-                        欢迎您 <span>Leo</span>
+
+                        欢迎您 <span th:inline="text"> [[${#httpServletRequest.remoteUser}]]</span>
+
+
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="404.html">个人主页</a>
@@ -175,4 +183,16 @@
 </body>
 <script src="../static/lib/jquery-3.2.1.min.js"></script>
 <script src="../static/lib/bootstrap.min.js"></script>
+<script src="../static/lib/gradientify.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".exam-title").gradientify({
+            gradients: [
+                { start: [49,76,172], stop: [242,159,191] },
+                { start: [255,103,69], stop: [240,154,241] },
+                { start: [33,229,241], stop: [235,236,117] }
+            ]
+        });
+    });
+</script>
 </html>
