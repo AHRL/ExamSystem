@@ -6,8 +6,12 @@
     <meta email="viewport" content="width=device-width, initial-scale=1"/>
     <title>Home - FunExam</title>
     <link rel="stylesheet" href="../static/stylesheets/css/funExam.css"/>
-    <link rel="short icon" type="image/x-icon" href="/favicon.ico"/>
-
+    <link rel="short icon" type="image/x-icon" href="../favicon.ico"/>
+    <script src="../static/lib/modernizr-2.6.2.min.js"></script>
+    <!-- Respond.js for IE 8 or less only-->
+    <!--[if (lt IE 9) & (!IEMobile)]>
+    <script src="../static/lib/respond.min.js"></script>
+    <![endif]-->
     <style type="text/css">
         body {
             padding-top: 4.5rem;
@@ -179,4 +183,16 @@
 </body>
 <script src="../static/lib/jquery-3.2.1.min.js"></script>
 <script src="../static/lib/bootstrap.min.js"></script>
+<script src="../static/lib/gradientify.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".exam-title").gradientify({
+            gradients: [
+                { start: [49,76,172], stop: [242,159,191] },
+                { start: [255,103,69], stop: [240,154,241] },
+                { start: [33,229,241], stop: [235,236,117] }
+            ]
+        });
+    });
+</script>
 </html>

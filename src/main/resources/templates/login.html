@@ -1,18 +1,30 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
 
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta email="viewport" content="width=device-width, initial-scale=1"/>
     <title>登录 - FunExam</title>
-    <link rel="stylesheet" href="../static/stylesheets/css/funExam.css"/>
+    <meta name="keyword" content="Fun Exam"/>
+    <meta name="description" content="An exam system for students"/>
     <link rel="short icon" type="image/x-icon" href="../favicon.ico"/>
+    <link rel="stylesheet" href="../static/stylesheets/css/funExam.css"/>
+
+    <script src="../static/lib/modernizr-2.6.2.min.js"></script>
+    <!-- Respond.js for IE 8 or less only-->
+    <!--[if (lt IE 9) & (!IEMobile)]>
+    <script src="../static/lib/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
-
-
+    <!--[if lte IE 7]>
+        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
     <div id="particles-js"></div>
     <div class="container-fluid">
         <h1 class="animated">Fun Exam</h1>
@@ -26,13 +38,13 @@
         </p>
 
         <form method="post" action="#" role="form">
-            <div class="form-group">
+            <div class="form-group" id="from-group-btns">
                 <button type="button" id="signIn" class="btn btn-lg" data-toggle="modal" data-target="#signInModal">登录</button>
                 <button type="button" id="signUp" class="btn btn-lg" data-toggle="modal" data-target="#signUpModal">注册</button>
             </div>
         </form>
 
-        <footer>
+        <footer id="footer" role="contentinfo">
             &copy; <span>2017</span>
             &hearts; <a href="https://github.com/w3fun/" target="_blank">W3Fun</a><!--
             &hearts; <a href="https://github.com/swpuLeo/" target="_blank">Leo</a>

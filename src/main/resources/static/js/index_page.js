@@ -9,19 +9,52 @@ window.onload = function () {
     (function(){
         var oH1 = document.getElementsByTagName('h1')[0];
         var oH2 = document.getElementsByTagName('h2')[0];
+        // var formBtns = document.getElementById('form-group-btns');
+        // var oFooter = document.getElementById('footer');
 
-        function startAnim(obj, callback){
-            if (!hasClass(obj, 'fadeInDown')){
-                addClass(obj, 'fadeInDown');
+        function startAnim(obj, callback, isDelayNext, delayTime){
+            if (obj){
+                if (!hasClass(obj, 'fadeInDown')){
+                    addClass(obj, 'fadeInDown');
+                }
             }
             if (callback && typeof callback === 'function'){
-                callback();
+                if (isDelayNext){
+                    setTimeout(callback, delayTime);
+                } else {
+                    callback();
+                }
             }
         }
-        startAnim(oH1, function(){
-            startAnim(oH2);
-        });
+        startAnim(oH1, function () {
+            startAnim(oH2, function () {
+                autoPlay();
+            }, true, 1000);
+        }, true, 200);
+
     })();
+
+    /* **********************************************************
+    * AutoType
+    * */
+
+    function autoPlay(){
+        // AutoType
+        var elements = document.getElementsByClassName('txt-rotate');
+        for(var i=0; i<elements.length; i++){
+            var toRotate = elements[i].getAttribute('data-rotate');
+            var period = elements[i].getAttribute('date-period');
+            if(toRotate) {
+                new TxtRotate(elements[i],JSON.parse(toRotate),period);
+            }
+        }
+
+        // inject CSS
+        var css = document.createElement('style');
+        css.type = 'text/p-css';
+        css.innerHTML = '.txt-rotate > .wrap {border-right: .3rem solid #666}';
+        document.body.appendChild(css);
+    }
 
     /* **********************************************************
     * Form validate
@@ -53,8 +86,7 @@ window.onload = function () {
             }
         };
         uEml.onfocus = function () {
-            var valiMsg = hasClass(this.nextSibling, 'validateMsg');
-            console.log(valiMsg);
+            var valiMsg = this.getElementsByClassName('validateMsg');
             if (valiMsg) {
                 removeAfter(this);
                 if (hasClass(this, 'validationStyle-failed')){
@@ -181,12 +213,9 @@ window.onload = function () {
             }
         };
 
-        var aDismiss = document.getElementsByClassName('js-upDismiss');
-        for (var i=0, len=aDismiss.length; i<len; i++){
-            (function(i){
-                aDismiss[i].onclick = clearForm('signUpForm');
-            })(i);
-        }
+        // var aDismiss = document.getElementsByClassName('js-upDismiss');
+        var oResetBtn = document.getElementById('upDismiss');
+        oResetBtn.onclick = clearForm('signUpForm');
     })();
 
     // Sign in validation ---------------------------------------
@@ -208,29 +237,6 @@ window.onload = function () {
         pswd.onfocus = function () {
 
         }
-    })();
-
-
-    /* **********************************************************
-    * AutoType
-    * */
-
-    (function(){
-        // AutoType
-        var elements = document.getElementsByClassName('txt-rotate');
-        for(var i=0; i<elements.length; i++){
-            var toRotate = elements[i].getAttribute('data-rotate');
-            var period = elements[i].getAttribute('date-period');
-            if(toRotate) {
-                new TxtRotate(elements[i],JSON.parse(toRotate),period);
-            }
-        }
-
-        // inject CSS
-        var css = document.createElement('style');
-        css.type = 'text/p-css';
-        css.innerHTML = '.txt-rotate > .wrap {border-right: .3rem solid #666}';
-        document.body.appendChild(css);
     })();
 
 };
@@ -279,54 +285,45 @@ TxtRotate.prototype.tick = function () {
 };
 
 // create Function getClass(), addClass(), removeClass(), hasClass()
-// Based http://www.cnblogs.com/mbyund/p/6908959.html
+// Function removeClass() based Professional JavaScript for Web Developers 3rd Edition
 function getClass(obj) {
-    if (obj.className){
-        var aCls = obj.className.split(/\s+/);
-    }
-    return aCls;
+    return obj.className.split(/\s+/);
 }
 function addClass(obj, newCls) {
-    /*var obj_classes = obj.className,
-        blank = (obj.className !== '') ? ' ' : '';
-    obj.className = obj_classes + blank + newCls;*/
     var aCls = getClass(obj);
-    obj.className = aCls.push(newCls).join(' ');
+    if (Array.isArray(aCls)){
+        aCls.push(newCls);
+        obj.className = aCls.join(' ');
+    }
 }
 function removeClass(obj, targetCls) {
-    /*var obj_classes = ' ' + obj.className + ' ';
-    obj.className = obj_classes.replace(/\s+/gi, ' ').replace(' ' + targetCls + ' ', ' ').replace(/^\s+|\s+$/g, '');*/
     var aCls = getClass(obj);
-    var len = aCls.length;
-    var pos = -1;
-    for (var i=0; i<len; i++){
-        if (aCls[i] === targetCls){
-            pos = i;
-            break;
+    if (Array.isArray(aCls)){
+        if (aCls.length){
+            var len = aCls.length;
+            var pos = -1;
+            for (var i=0; i<len; i++){
+                if (aCls[i] === targetCls){
+                    pos = i;
+                    break;
+                }
+            }
+            aCls.splice(i, 1);
+            obj.className = aCls.join(' ');
         }
     }
-    obj.className = aCls.splice(i, 1).join(' ');
 }
 function hasClass(obj, targetCls) {
-    /*var obj_classes = obj.className,
-        obj_classes_arr = obj_classes.split(/\s+/);
-    var len = obj_classes_arr.length;
-    if (!len){
-        for(var i=0; i<len; i++){
-            if (obj_classes_arr[i] === targetCls){
+    var aCls = getClass(obj);
+    if (Array.isArray(aCls)){
+        var len = aCls.length;
+        for (var i=0; i<len; i++){
+            if (aCls[i] === targetCls){
                 return true;
             }
         }
+        return false;
     }
-    return false;*/
-    var aCls = getClass(obj);
-    var len = aCls.length;
-    for (var i=0; i<len; i++){
-        if (aCls[i] === targetCls){
-            return true;
-        }
-    }
-    return false;
 }
 
 // create Function checkPswdStrength()
@@ -391,7 +388,7 @@ function createPswdStrength(preSiblingNode, mode) {
             span.className = 'pswdStrength-info';
             var aStrength = ['弱', '中', '强'];
             var strength = aStrength[mode-1];
-            span.innerHTML = '密码强度：' + strength;
+            span.innerHTML = '&check; 密码强度：' + strength;
             return span;
         })();
         division.appendChild(info);
@@ -444,17 +441,19 @@ function removeAfter(targetElement){
 // Based http://www.cnblogs.com/shanlin/archive/2014/07/17/3850417.html
 function clearForm(id){
     var oId = document.getElementById(id);
-    if (oId === 'undefined'){
-        return false;
-    }
-    for (var i=0, len=oId.elements.length; i<len; i++){
-        if (oId.elements[i].type === 'text'){
-            oId.elements[i].value = '';
-        } else if (oId.elements[i].type === 'password'){
-            oId.elements[i].value = '';
-        } else if (oId.elements[i].type === 'email'){
-            oId.elements[i].value = '';
-        }
-    }
+        /*for (var i=0, len=oId.elements.length; i<len; i++){
+            if (oId.elements[i].type === 'text'){
+                oId.elements[i].value = '';
+            } else if (oId.elements[i].type === 'password'){
+                oId.elements[i].value = '';
+            } else if (oId.elements[i].type === 'email'){
+                oId.elements[i].value = '';
+            }
+        }*/
+        /*for (var j=0; j<len; j++) {
+            if (oId.elements[i])
+
+        }*/
+    oId.reset();
 }
 
