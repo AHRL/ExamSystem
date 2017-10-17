@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -110,7 +110,10 @@
                     <a class="nav-link dropdown-toggle"
                        data-toggle="dropdown" href="#"
                        role="button" aria-haspopup="true" aria-expanded="false">
-                        欢迎您 <span>Leo</span>
+
+                        欢迎您 <span th:inline="text"> [[${#httpServletRequest.remoteUser}]]</span>
+
+
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="404.html">个人主页</a>
