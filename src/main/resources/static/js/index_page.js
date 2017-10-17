@@ -2,7 +2,7 @@ window.onload = function () {
 
 
     /* **********************************************************
-    * Start Animation
+    * onload Animation
     *
     * */
 
@@ -34,19 +34,27 @@ window.onload = function () {
         var uEml = document.getElementById('upEmail');
         uEml.onblur = function () {
             var emlReg = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-            var val = uEml.value.split(/\s*, \s*/g);
-            for(var i=0, len=val.length; i<len; i++){
-                if(!emlReg.test(val[i])){
-                    addClass(this, 'validationStyle-failed');
-                    createValidateMsg(this, '邮箱验证失败', false);
-                } else {
+            var val = this.value;
+            var matchEmail;
+            if (val){
+                matchEmail = val.split(/\s*, \s*/g).every(function (item) {
+                    return emlReg.test(item);
+                });
+                if(matchEmail){
                     addClass(this, 'validationStyle-successed');
                     createValidateMsg(this, '邮箱验证成功', true);
+                } else {
+                    addClass(this, 'validationStyle-failed');
+                    createValidateMsg(this, '邮箱验证失败', false);
                 }
+            } else {
+                addClass(this, 'validationStyle-failed');
+                createValidateMsg(this, '邮箱为空', false);
             }
         };
         uEml.onfocus = function () {
-            var valiMsg = this.getElementsByClassName('validateMsg');
+            var valiMsg = hasClass(this.nextSibling, 'validateMsg');
+            console.log(valiMsg);
             if (valiMsg) {
                 removeAfter(this);
                 if (hasClass(this, 'validationStyle-failed')){
@@ -60,15 +68,24 @@ window.onload = function () {
         // validate username
         var uUsr = document.getElementById('upUsername');
         uUsr.onblur = function () {
-            var usrReg = /\w/;
-            var val = uUsr.value;
-            if (!usrReg.test(val)){
-                addClass(this, 'validationStyle-failed');
-                createValidateMsg(this, '用户名验证失败', false);
+            var val = this.value;
+            var matchUsername;
+            if (val){
+                matchUsername = val.split('').every(function (item) {
+                    return (/[\w]/).test(item);
+                });
+                if (matchUsername){
+                    addClass(this, 'validationStyle-successed');
+                    createValidateMsg(this, '用户名验证成功', true);
+                } else {
+                    addClass(this, 'validationStyle-failed');
+                    createValidateMsg(this, '用户名验证失败', false);
+                }
             } else {
-                addClass(this, 'validationStyle-successed');
-                createValidateMsg(this, '用户名验证成功', true);
+                addClass(this, 'validationStyle-failed');
+                createValidateMsg(this, '用户名为空', false);
             }
+
         };
         uUsr.onfocus = function () {
             var valiMsg = this.getElementsByClassName('validateMsg');
@@ -83,21 +100,28 @@ window.onload = function () {
         };
 
         // validate password
+        var pswdFlag = false;
         var uPswd = document.getElementById('upPassword');
         uPswd.onblur = function () {
             var val = this.value;
-            var idx = checkPswdStrength(val);
-
-            if (!idx) {
-                addClass(this, 'validationStyle-failed');
-                createValidateMsg(this, '密码不符合要求', false);
+            if (val){
+                var idx = checkPswdStrength(val);
+                if (idx) {
+                    pswdFlag = true;
+                    addClass(this, 'validationStyle-successed');
+                    createPswdStrength(this, idx);
+                } else {
+                    addClass(this, 'validationStyle-failed');
+                    createValidateMsg(this, '密码长度应该为6-16位', false);
+                }
             } else {
-                addClass(this, 'validationStyle-successed');
-                createPswdStrength(uPswd, 2);
+                addClass(this, 'validationStyle-failed');
+                createValidateMsg(this, '密码为空', false);
             }
+
         };
         uPswd.onfocus = function () {
-            if (hasClass(this, 'validationStyle-failed')){
+            /*if (hasClass(this, 'validationStyle-failed')){
                 removeClass(this, 'validationStyle-failed');
                 removeAfter(this);
             }
@@ -108,20 +132,41 @@ window.onload = function () {
                     removeClass(this.nextSibling.childNodes, 'pswdStrength-item');
                 }
                 removeAfter(this);
+            }*/
+            var valiMsg = this.getElementsByClassName('validateMsg');
+            if (valiMsg) {
+                removeAfter(this);
+                if (hasClass(this, 'validationStyle-failed')){
+                    removeClass(this, 'validationStyle-failed');
+                }
+                if (hasClass(this, 'validationStyle-successed')){
+                    removeClass(this, 'validationStyle-successed');
+                }
             }
         };
 
         // ensure password
         var uEPswd = document.getElementById('upEnsurePassword');
         uEPswd.onblur = function () {
-            var val = uEPswd.value;
-            if (val !== uPswd.value) {
-                addClass(this, 'validationStyle-failed');
-                createValidateMsg(this, '两次密码输入不一致', false);
+            var val = this.value;
+            if (val) {
+                if (pswdFlag){
+                    if (val === uPswd.value) {
+                        addClass(this, 'validationStyle-successed');
+                        createValidateMsg(this, '密码一致', true);
+                    } else {
+                        addClass(this, 'validationStyle-failed');
+                        createValidateMsg(this, '两次密码输入不一致', false);
+                    }
+                } else {
+                    addClass(this, 'validationStyle-failed');
+                    createValidateMsg(this, '密码还未符合要求，请检查密码', false);
+                }
             } else {
-                addClass(this, 'validationStyle-successed');
-                createValidateMsg(this, '密码一致', true);
+                addClass(this, 'validationStyle-failed');
+                createValidateMsg(this, '输入为空', false);
             }
+
         };
         uEPswd.onfocus = function () {
             var valiMsg = this.getElementsByClassName('validateMsg');
@@ -233,19 +278,37 @@ TxtRotate.prototype.tick = function () {
     }, delta);
 };
 
-// create Function addClass(), removeClass(), hasClass()
+// create Function getClass(), addClass(), removeClass(), hasClass()
 // Based http://www.cnblogs.com/mbyund/p/6908959.html
+function getClass(obj) {
+    if (obj.className){
+        var aCls = obj.className.split(/\s+/);
+    }
+    return aCls;
+}
 function addClass(obj, newCls) {
-    var obj_classes = obj.className,
+    /*var obj_classes = obj.className,
         blank = (obj.className !== '') ? ' ' : '';
-    obj.className = obj_classes + blank + newCls;
+    obj.className = obj_classes + blank + newCls;*/
+    var aCls = getClass(obj);
+    obj.className = aCls.push(newCls).join(' ');
 }
 function removeClass(obj, targetCls) {
-    var obj_classes = ' ' + obj.className + ' ';
-    obj.className = obj_classes.replace(/\s+/gi, ' ').replace(' ' + targetCls + ' ', ' ').replace(/^\s+|\s+$/g, '');
+    /*var obj_classes = ' ' + obj.className + ' ';
+    obj.className = obj_classes.replace(/\s+/gi, ' ').replace(' ' + targetCls + ' ', ' ').replace(/^\s+|\s+$/g, '');*/
+    var aCls = getClass(obj);
+    var len = aCls.length;
+    var pos = -1;
+    for (var i=0; i<len; i++){
+        if (aCls[i] === targetCls){
+            pos = i;
+            break;
+        }
+    }
+    obj.className = aCls.splice(i, 1).join(' ');
 }
 function hasClass(obj, targetCls) {
-    var obj_classes = obj.className,
+    /*var obj_classes = obj.className,
         obj_classes_arr = obj_classes.split(/\s+/);
     var len = obj_classes_arr.length;
     if (!len){
@@ -255,41 +318,65 @@ function hasClass(obj, targetCls) {
             }
         }
     }
+    return false;*/
+    var aCls = getClass(obj);
+    var len = aCls.length;
+    for (var i=0; i<len; i++){
+        if (aCls[i] === targetCls){
+            return true;
+        }
+    }
     return false;
 }
 
 // create Function checkPswdStrength()
 function checkPswdStrength(sValue){
     var mode;
-    if (/^[\w.]{1,5}$/.test(sValue)){
-        // fail to pass
-        mode = 0;
-    }
-    if (/^[\w.]{6,8}$/.test(sValue)){
-        // weak strength
-        mode = 1;
-    }
-    if (/^[\w.]{9,12}$/){
-        // normal strength
-        mode = 2;
-    }
-    if (/^[\w.]{12,16}$/){
-        // strong strength
-        mode = 3;
-    }
-    switch (mode){
-        case 0:
-            return 0;
-            break;
-        case 1:
-            return 1;
-            break;
-        case 2:
-            return 2;
-            break;
-        case 3:
-            return 3;
-            break;
+    if (sValue){
+        var len = sValue.length;
+        var matchUpperCase = sValue.split('').every(function (item) {
+                return (/[A-Z]/).test(item);
+            }),
+            matchLowerCase = sValue.split('').every(function(item){
+                return (/[a-z]/).test(item);
+            }),
+            matchNum = sValue.split('').every(function (item) {
+                return (/[0-9]/).test(item);
+            }),
+            matchLength = sValue.length;
+        var singleMod = (matchUpperCase&&!matchLowerCase&&!matchNum) || (!matchUpperCase&&matchLowerCase&&!matchNum) || (!matchUpperCase&&!matchLowerCase&&matchNum);
+        if ( matchLength<6 || matchLength>16 ){
+            mode = 0;  // not match
+        } else {
+            if (len<=10){
+                if (singleMod){
+                    mode = 1;  // low
+                } else {
+                    mode = 2;  // middle
+                }
+
+            } else {
+                if (singleMod){
+                    mode = 2;  // middle
+                } else {
+                    mode = 3;  // high
+                }
+            }
+        }
+        switch (mode){
+            case 0:
+                return 0;
+                break;
+            case 1:
+                return 1;
+                break;
+            case 2:
+                return 2;
+                break;
+            case 3:
+                return 3;
+                break;
+        }
     }
 }
 
