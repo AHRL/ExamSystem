@@ -9,19 +9,52 @@ window.onload = function () {
     (function(){
         var oH1 = document.getElementsByTagName('h1')[0];
         var oH2 = document.getElementsByTagName('h2')[0];
+        // var formBtns = document.getElementById('form-group-btns');
+        // var oFooter = document.getElementById('footer');
 
-        function startAnim(obj, callback){
-            if (!hasClass(obj, 'fadeInDown')){
-                addClass(obj, 'fadeInDown');
+        function startAnim(obj, callback, isDelayNext, delayTime){
+            if (obj){
+                if (!hasClass(obj, 'fadeInDown')){
+                    addClass(obj, 'fadeInDown');
+                }
             }
             if (callback && typeof callback === 'function'){
-                callback();
+                if (isDelayNext){
+                    setTimeout(callback, delayTime);
+                } else {
+                    callback();
+                }
             }
         }
-        startAnim(oH1, function(){
-            startAnim(oH2);
-        });
+        startAnim(oH1, function () {
+            startAnim(oH2, function () {
+                autoPlay();
+            }, true, 1000);
+        }, true, 200);
+
     })();
+
+    /* **********************************************************
+    * AutoType
+    * */
+
+    function autoPlay(){
+        // AutoType
+        var elements = document.getElementsByClassName('txt-rotate');
+        for(var i=0; i<elements.length; i++){
+            var toRotate = elements[i].getAttribute('data-rotate');
+            var period = elements[i].getAttribute('date-period');
+            if(toRotate) {
+                new TxtRotate(elements[i],JSON.parse(toRotate),period);
+            }
+        }
+
+        // inject CSS
+        var css = document.createElement('style');
+        css.type = 'text/p-css';
+        css.innerHTML = '.txt-rotate > .wrap {border-right: .3rem solid #666}';
+        document.body.appendChild(css);
+    }
 
     /* **********************************************************
     * Form validate
@@ -204,29 +237,6 @@ window.onload = function () {
         pswd.onfocus = function () {
 
         }
-    })();
-
-
-    /* **********************************************************
-    * AutoType
-    * */
-
-    (function(){
-        // AutoType
-        var elements = document.getElementsByClassName('txt-rotate');
-        for(var i=0; i<elements.length; i++){
-            var toRotate = elements[i].getAttribute('data-rotate');
-            var period = elements[i].getAttribute('date-period');
-            if(toRotate) {
-                new TxtRotate(elements[i],JSON.parse(toRotate),period);
-            }
-        }
-
-        // inject CSS
-        var css = document.createElement('style');
-        css.type = 'text/p-css';
-        css.innerHTML = '.txt-rotate > .wrap {border-right: .3rem solid #666}';
-        document.body.appendChild(css);
     })();
 
 };
