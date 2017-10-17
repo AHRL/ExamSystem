@@ -213,9 +213,15 @@ window.onload = function () {
             }
         };
 
+        // submit
         // var aDismiss = document.getElementsByClassName('js-upDismiss');
-        var oResetBtn = document.getElementById('upDismiss');
-        oResetBtn.onclick = clearForm('signUpForm');
+        // var oResetBtn = document.getElementById('upDismiss');
+        // oResetBtn.onclick = clearForm('signUpForm');
+        var signUpForm = document.getElementById('signUpForm');
+        var upSubmitButton = document.getElementById('upSubmitButton');
+        upSubmitButton.onclick = function () {
+            signUpForm.submit();
+        }
     })();
 
     // Sign in validation ---------------------------------------
@@ -236,6 +242,13 @@ window.onload = function () {
         };
         pswd.onfocus = function () {
 
+        };
+
+        // submit
+        var signInFrom = document.getElementById('signInFrom');
+        var inSubmitButton = document.getElementById('inSubmitButton');
+        inSubmitButton.onclick = function () {
+            signInFrom.submit();
         }
     })();
 
