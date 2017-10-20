@@ -119,3 +119,34 @@ h1,h2,h3,h4,h5,h6 {
   border-color: $brand-success;
   background-color: $brand-success;
 }
+
+._footer {
+  margin-top: $spacer * 3;
+  font-size: 1.4rem;
+}
+
+._footer ._link {
+  color: #292b2c;
+  text-decoration: dotted;
+}
+
+._footer ._link:hover {
+  color: $gray-light;
+  text-decoration: underline;
+}
+
+._footer ._link._hover-male:hover {
+  color: $blue;
+}
+
+._footer ._link._hover-female:hover {
+  color: $pink;
+}
+
+._footer i {
+  margin: 0 $spacer * 0.5;
+}
+
+button {
+  cursor: pointer;
+}

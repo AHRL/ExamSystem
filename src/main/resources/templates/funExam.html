@@ -21,7 +21,7 @@
         }
         .f-hr {
             width: 10rem;
-            border: .2rem solid #2aabd2;
+            border: .2rem solid #3bd8dd;
         }
         #main {
             position: relative;
@@ -53,11 +53,11 @@
             padding-bottom: 3rem;
             margin: 4rem 3rem;
             border-radius: 1rem;
-            border: 1px solid #2aabd2;
+            border: 1px solid #3bd8dd;
         }
         .exam-title {
             padding: 1rem .5rem;
-            background-color: #2aabd2;
+            background: -webkit-linear-gradient(left, #3bd8dd, #e8e383);
             border-radius: 1rem 1rem 0 0;
         }
         .exam-info {
@@ -78,7 +78,7 @@
             width: 100%;
             padding: 2rem;
             margin-top: 6rem;
-            background-color: #2aabd2;
+            background-color: #3bd8dd;
         }
         .news {
             width: 100%;
@@ -86,10 +86,22 @@
             margin: 2rem 0;
             background-color: #eaf6ea;
         }
+        button {
+            border-color: #3bd8dd;
+            background-color: #3bd8dd;
+        }
+        .navbar {
+            background-color: #3bd8dd;
+        }
+        .aside {
+            position: fixed;
+            right: 2rem;
+            top: 20rem;
+        }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-toggleable-md fixed-top navbar-inverse bg-inverse">
+    <nav class="navbar navbar-toggleable-md fixed-top">
         <button class="navbar-toggler navbar-toggler-right"
                 type="button"
                 data-toggle="collapse"
@@ -144,7 +156,7 @@
                     语言包括 C/C++、Java、JavaScript、CSS、HTML
                 </div>
                 <div class="text-center exam-btn">
-                    <button class="btn btn-primary btn-lg">进入题库</button>
+                    <button class="btn btn-lg">进入题库</button>
                 </div>
             </div>
             <div class="exam-item">
@@ -160,7 +172,7 @@
                     <div class="exam-news-info">Web 前端小组测试</div>
                 </div>
                 <div class="text-center exam-btn">
-                    <button class="btn btn-primary btn-lg">马上考试</button>
+                    <button class="btn btn-lg">马上考试</button>
                 </div>
             </div>
         </div>
@@ -172,19 +184,24 @@
 
         </div>
     </main>
-    <footer class="text-center">
-        &copy; <span>2017</span>
-        &hearts; <a href="https://github.com/w3fun/" target="_blank">W3Fun</a>
-        &nbsp;&nbsp; <a href="" target="_blank">Leo</a>
-        &amp; <a href="" target="_blank">StaticWalk</a>
-        &amp; <a href="" target="_blank">812913</a>
-        &amp; <a href="" target="_blank">luqingying</a>
+    <section class="aside">
+        <div>
+            <i class="fa fa-gear"></i>
+        </div>
+    </section>
+    <footer id="footer" class="_footer text-center" role="contentinfo">
+        <span><i class="fa fa-copyright"></i>2017</span>
+        <a href="https://github.com/w3fun/" target="_blank" class="_link"><i class="fa fa-heart"></i>W3Fun</a>
+        <a href="https://github.com/swpuLeo/" target="_blank" class="_link _hover-male"><i class="fa fa-male"></i>Leo</a>
+        <a href="https://github.com/812913/" target="_blank" class="_link _hover-female"><i class="fa fa-female"></i>lwf</a>
+        <a href="https://github.com/StaticWalk/" target="_blank" class="_link _hover-male"><i class="fa fa-male"></i>StaticWalk</a>
+        <a href="https://github.com/luqingying/" target="_blank" class="_link _hover-female"><i class="fa fa-female"></i>yqy</a>
     </footer>
 </body>
 <script src="../static/lib/jquery-3.2.1.min.js"></script>
 <script src="../static/lib/bootstrap.min.js"></script>
-<script src="../static/lib/gradientify.js"></script>
-<script>
+<!--<script src="../static/lib/gradientify.js"></script>-->
+<!--<script>
     $(document).ready(function() {
         $(".exam-title").gradientify({
             gradients: [
@@ -194,5 +211,5 @@
             ]
         });
     });
-</script>
+</script>-->
 </html>
