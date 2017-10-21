@@ -9079,4 +9079,28 @@ h1, h2, h3, h4, h5, h6 {
   border-color: #5cb85c;
   background-color: #5cb85c; }
 
+._footer {
+  margin-top: 3rem;
+  font-size: 1.4rem; }
+
+._footer ._link {
+  color: #292b2c;
+  text-decoration: dotted; }
+
+._footer ._link:hover {
+  color: #636c72;
+  text-decoration: underline; }
+
+._footer ._link._hover-male:hover {
+  color: #0275d8; }
+
+._footer ._link._hover-female:hover {
+  color: #ff5b77; }
+
+._footer i {
+  margin: 0 0.5rem; }
+
+button {
+  cursor: pointer; }
+
 /*# sourceMappingURL=main.css.map */
