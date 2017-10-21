@@ -1,6 +1,5 @@
 window.onload = function () {
 
-
     /* **********************************************************
     * onload Animation
     *
@@ -65,7 +64,7 @@ window.onload = function () {
     (function(){
         // validate e-mail
         var uEml = document.getElementById('upEmail');
-        uEml.onblur = function () {
+        EventUtil.addHandler(uEml, 'blur', function () {
             var emlReg = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
             var val = this.value;
             var matchEmail;
@@ -84,8 +83,8 @@ window.onload = function () {
                 addClass(this, 'validationStyle-failed');
                 createValidateMsg(this, '邮箱为空', false);
             }
-        };
-        uEml.onfocus = function () {
+        });
+        EventUtil.addHandler(uEml, 'focus', function () {
             var valiMsg = this.getElementsByClassName('validateMsg');
             if (valiMsg) {
                 removeAfter(this);
@@ -95,11 +94,11 @@ window.onload = function () {
                     removeClass(this, 'validationStyle-successed');
                 }
             }
-        };
+        });
 
         // validate username
         var uUsr = document.getElementById('upUsername');
-        uUsr.onblur = function () {
+        EventUtil.addHandler(uUsr, 'blur', function () {
             var val = this.value;
             var matchUsername;
             if (val){
@@ -118,8 +117,8 @@ window.onload = function () {
                 createValidateMsg(this, '用户名为空', false);
             }
 
-        };
-        uUsr.onfocus = function () {
+        });
+        EventUtil.addHandler(uUsr, 'focus', function () {
             var valiMsg = this.getElementsByClassName('validateMsg');
             if (valiMsg) {
                 removeAfter(this);
@@ -129,12 +128,12 @@ window.onload = function () {
                     removeClass(this, 'validationStyle-successed');
                 }
             }
-        };
+        });
 
         // validate password
         var pswdFlag = false;
         var uPswd = document.getElementById('upPassword');
-        uPswd.onblur = function () {
+        EventUtil.addHandler(uPswd, 'blur', function () {
             var val = this.value;
             if (val){
                 var idx = checkPswdStrength(val);
@@ -151,8 +150,8 @@ window.onload = function () {
                 createValidateMsg(this, '密码为空', false);
             }
 
-        };
-        uPswd.onfocus = function () {
+        });
+        EventUtil.addHandler(uPswd, 'focus', function () {
             /*if (hasClass(this, 'validationStyle-failed')){
                 removeClass(this, 'validationStyle-failed');
                 removeAfter(this);
@@ -175,11 +174,11 @@ window.onload = function () {
                     removeClass(this, 'validationStyle-successed');
                 }
             }
-        };
+        });
 
         // ensure password
         var uEPswd = document.getElementById('upEnsurePassword');
-        uEPswd.onblur = function () {
+        EventUtil.addHandler(uEPswd, 'blur', function () {
             var val = this.value;
             if (val) {
                 if (pswdFlag){
@@ -199,8 +198,8 @@ window.onload = function () {
                 createValidateMsg(this, '输入为空', false);
             }
 
-        };
-        uEPswd.onfocus = function () {
+        });
+        EventUtil.addHandler(uEPswd, 'focus', function () {
             var valiMsg = this.getElementsByClassName('validateMsg');
             if (valiMsg) {
                 removeAfter(this);
@@ -211,45 +210,86 @@ window.onload = function () {
                     removeClass(this, 'validationStyle-successed');
                 }
             }
-        };
+        });
 
         // submit
-        // var aDismiss = document.getElementsByClassName('js-upDismiss');
-        // var oResetBtn = document.getElementById('upDismiss');
-        // oResetBtn.onclick = clearForm('signUpForm');
         var signUpForm = document.getElementById('signUpForm');
         var upSubmitButton = document.getElementById('upSubmitButton');
-        upSubmitButton.onclick = function () {
+        EventUtil.addHandler(upSubmitButton, 'click', function () {
             signUpForm.submit();
-        }
+        });
+
+        // close
+        var oClose = document.getElementsByClassName('close')[1];
+        EventUtil.addHandler(oClose, 'click',function () {
+            var aIpt = signUpForm.getElementsByTagName('input');
+            var len = aIpt.length;
+            if (len){
+                for (var j=0; j<len; j++){
+                    (function (j) {
+                        if (aIpt[j].nextSibling){
+                            removeAfter(aIpt[j]);
+                            if (hasClass(aIpt[j], 'validationStyle-successed')){
+                                removeClass(aIpt[j], 'validationStyle-successed');
+                            } else {
+                                removeClass(aIpt[j], 'validationStyle-failed');
+                            }
+                            aIpt[j].value = '';
+                        }
+                    })(j);
+                }
+            }
+        });
     })();
 
     // Sign in validation ---------------------------------------
     (function(){
         // validate username
         var usr = document.getElementById('username');
-        usr.onblur = function(){
+        EventUtil.addHandler(usr, 'blur', function(){
 
-        };
-        usr.onfocus = function(){
+        });
+        EventUtil.addHandler(usr, 'focus', function(){
 
-        };
+        });
 
         // validate password
         var pswd = document.getElementById('password');
-        pswd.onblur = function(){
+        EventUtil.addHandler(pswd, 'blur', function(){
 
-        };
-        pswd.onfocus = function () {
+        });
+        EventUtil.addHandler(pswd, 'focus', function(){
 
-        };
+        });
 
         // submit
-        var signInFrom = document.getElementById('signInFrom');
+        var signInForm = document.getElementById('signInForm');
         var inSubmitButton = document.getElementById('inSubmitButton');
-        inSubmitButton.onclick = function () {
-            signInFrom.submit();
-        }
+        EventUtil.addHandler(inSubmitButton, 'click', function () {
+            signInForm.submit();
+        });
+
+        // close
+        var oClose = document.getElementsByClassName('close')[0];
+        EventUtil.addHandler(oClose, 'click', function () {
+            var aIpt = signInForm.getElementsByTagName('input');
+            var len = aIpt.length;
+            if (len){
+                for (var j=0; j<len; j++){
+                    (function (j) {
+                        if (aIpt[j].nextSibling){
+                            removeAfter(aIpt[j]);
+                            if (hasClass(aIpt[j], 'validationStyle-successed')){
+                                removeClass(aIpt[j], 'validationStyle-successed');
+                            } else {
+                                removeClass(aIpt[j], 'validationStyle-failed');
+                            }
+                            aIpt[j].value = '';
+                        }
+                    })(j);
+                }
+            }
+        });
     })();
 
 };
@@ -295,6 +335,48 @@ TxtRotate.prototype.tick = function () {
     setTimeout(function () {
         that.tick();
     }, delta);
+};
+
+// create Object EventUtil
+var EventUtil = {
+    addHandler: function(element, type, handler){
+        if (element.addEventListener){
+            element.addEventListener(type, handler, false);
+        } else if (element.attachEvent){
+            element.attachEvent('on' + type, handler);
+        } else {
+            element['on'+type] = handler;
+        }
+    },
+    removeHandler: function(element, type, handler){
+        if (element.removeEventListener){
+            element.removeEventListener(type, handler, false);
+        } else if(element.detachEvent){
+            element.detachEvent('on' + type, handler);
+        } else {
+            element['on'+type] = null;
+        }
+    },
+    getEvent: function(event){
+        return event ? event : window.event;
+    },
+    getTarget: function(event){
+        return event.target || event.srcElement;
+    },
+    preventDefault: function(event){
+        if(event.preventDefault){
+            event.preventDefault();
+        } else {
+            event.returnValue = false;
+        }
+    },
+    stopPropagation: function(event){
+        if(event.stopPropagation){
+            event.stopPropagation();
+        } else {
+            event.cancelBubble = true;
+        }
+    }
 };
 
 // create Function getClass(), addClass(), removeClass(), hasClass()
@@ -452,21 +534,21 @@ function removeAfter(targetElement){
 
 // create Function clearForm()
 // Based http://www.cnblogs.com/shanlin/archive/2014/07/17/3850417.html
-function clearForm(id){
-    var oId = document.getElementById(id);
-        /*for (var i=0, len=oId.elements.length; i<len; i++){
-            if (oId.elements[i].type === 'text'){
-                oId.elements[i].value = '';
-            } else if (oId.elements[i].type === 'password'){
-                oId.elements[i].value = '';
-            } else if (oId.elements[i].type === 'email'){
-                oId.elements[i].value = '';
-            }
-        }*/
-        /*for (var j=0; j<len; j++) {
-            if (oId.elements[i])
-
-        }*/
-    oId.reset();
+function clearForm() {
+    var aIpt = this.getElementsByTagName('input');
+    var len = aIpt.length;
+    if (len){
+        for (var j=0; j<len; j++){
+            (function (j) {
+                removeAfter(aIpt[j]);
+                if (hasClass(aIpt[j], 'validationStyle-successed')){
+                    removeClass(aIpt[j], 'validationStyle-successed');
+                } else {
+                    removeClass(aIpt[j], 'validationStyle-failed');
+                }
+                aIpt[j].value = '';
+            })(j);
+        }
+    }
 }
 
