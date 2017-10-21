@@ -1,0 +1,76 @@
+@charset "utf-8";
+
+@import "../../lib/lib.css";
+@import "main.css";
+body{
+    background-color: #eeeeee;
+}
+.practice-container{
+    width:95%;
+    background-color: #fff;
+    padding:20px;
+}
+form{
+    padding:10px;
+}
+
+.display-1,.display-2{
+    vertical-align: middle;
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.1;
+}
+.display-1>span{
+    display: inline-block;
+    width:15px;
+    height:15px;
+   margin-right:3px;
+    background: #7baaf7;
+}
+.display-2{
+    margin-bottom:15px;
+    font-size:1.8rem;
+    color: #5f5f5f;
+}
+.practice-choose{
+    background-color: #f3f7f9;
+    padding:15px;
+}
+.practice-choose>hr{
+    margin-bottom:30px;
+}
+.practice-choose>.row>[class*="col-"]{
+    margin-bottom:10px;
+}
+.practice-choose input[type="checkbox"]{
+    width:15px;
+    height:15px;
+    margin-right:3px;
+    vertical-align: -1px;
+}
+.practice-defined,.practice-submit{
+    padding: 15px;
+}
+.practice-defined{
+    background-color: #ffffff;
+}
+.practice-defined label{
+    margin-bottom:0;
+    margin-right:8px;
+}
+.practice-defined label input{
+    margin-right:2px;
+}
+.practice-submit{
+    background-color: #f6f6f6;
+}
+.practice-submit-tip{
+    float: left;
+}
+.practice-submit-tip p{
+    margin-top:5px;
+    margin-bottom:0;
+}
+.practice-submit-btn{
+    float: right;
+}
