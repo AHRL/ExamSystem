@@ -38,28 +38,31 @@
     <![endif]-->
 
     <main class="container practice">
-        <section class="clearfix practice-progress">
+        <section class="row clearfix  practice-progress">
             <div class="count-progress pull-left col-9">
-                <div class="progress">
+                <div class="progress progress-bar_show">
                     <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
                         <span class="sr-only">60% Complete</span>
                     </div>
                 </div>
+                <div class="progress-bar_span text-center">
+                    <span>4/5</span>
+                </div>
             </div>
             <div class="time-progress pull-right text-center col-3">
-                   <img src="../static/img/start.png" alt="start"/>
+                    <i class="fa fa-pause-circle"></i>
                     <time>00:23:56</time>
             </div>
         </section>
 
-        <form>
-            <section class="practice-main">
+        <form class="row">
+            <section class="practice-main col-12">
                 <div class="practice-type">
-                    <img src="../static/img/query.png" alt="?"/>
+                    <i class="fa fa-question-circle"></i>
                     <div class="practice-type-describe">
                         <span>[单选题]</span>
-                        <span>[多选题]</span>
-                        <span>[问答题]</span>
+                        <!--<span>[多选题]</span>-->
+                        <!--<span>[问答题]</span>-->
                     </div>
                     <hr/>
                 </div>
@@ -69,45 +72,49 @@
                     </div>
                     <div class="practice-specific-content">
                         <ul class="list-group practice-single_choice">
-                            <li class="list-group-item"><label><input type="radio" value="A">border</label></li>
-                            <li class="list-group-item"><label><input type="radio" value="B">margin</label></li>
-                            <li class="list-group-item"><label><input type="radio" value="C">padding</label></li>
-                            <li class="list-group-item"><label><input type="radio" value="D">content</label></li>
+                            <li class="list-group-item"><label><input type="radio" name="sing_choice" value="A">border</label></li>
+                            <li class="list-group-item"><label><input type="radio" name="sing_choice" value="B">margin</label></li>
+                            <li class="list-group-item"><label><input type="radio" name="sing_choice" value="C">padding</label></li>
+                            <li class="list-group-item"><label><input type="radio" name="sing_choice"  value="D">content</label></li>
                         </ul>
 
-                        <ul class="list-group practice-multiple_choice">
-                            <li class="list-group-item"><label><input type="radio" value="A">border</label></li>
-                            <li class="list-group-item"><label><input type="radio" value="B">margin</label></li>
-                            <li class="list-group-item"><label><input type="radio" value="C">padding</label></li>
-                            <li class="list-group-item"><label><input type="radio" value="D">content</label></li>
-                        </ul>
+                        <!--<ul class="list-group practice-multiple_choice">-->
+                            <!--<li class="list-group-item"><label><input type="checkbox" name="multiply_choice" value="A">border</label></li>-->
+                            <!--<li class="list-group-item"><label><input type="checkbox" name="multiply_choice" value="B">margin</label></li>-->
+                            <!--<li class="list-group-item"><label><input type="checkbox" name="multiply_choice" value="C">padding</label></li>-->
+                            <!--<li class="list-group-item"><label><input type="checkbox" name="multiply_choice" value="D">content</label></li>-->
+                        <!--</ul>-->
 
-                        <div class="practice-question_and_answers">
-                            <textarea class="form-control">
+                        <!--<div class="practice-question_and_answers">-->
+                            <!--<textarea class="form-control" rows="10">-->
 
-                            </textarea>
-                        </div>
+                            <!--</textarea>-->
+                        <!--</div>-->
                     </div>
 
                 </div>
                 <div class="practice-share_submit">
-                    <ul class="list-group">
-                        <li class="list-group-item"><img src="../static/img/collect.png"/>收藏本题</li>
-                        <li class="list-group-item"><img src="../static/img/share.png"/>分享本题</li>
-                        <li class="list-group-item"><input class="btn input-lg btn-danger" type="submit" value="提前交卷"/></li>
-                        <li class="list-group-item"><input class="btn input-lg btn-primary" type="submit" value="下一题"/></li>
+                    <ul class="clearfix">
+                        <li class="pull-left"><i class="fa fa-heart-o"></i>收藏本题</li>
+                        <li class="pull-left"><i class="fa fa-share"></i>分享本题</li>
+                    </ul>
+                    <ul class="clearfix">
+                        <li class="pull-right  next-practice"><input class="btn  btn-primary btn-lg" type="submit" value="下一题"/></li>
+                        <li class="pull-right"><input class="btn  btn-danger btn-lg" type="submit" value="提前交卷"/></li>
                     </ul>
                 </div>
             </section>
         </form>
-        <section class="practice-answer_sheet">
-            <p class="text-muted">收起答题卡&nbsp;&nbsp;&circ;<span class="glyphicon glyphicon-menu-up"></span></p>
-            <ul class="list-group answer_sheet">
-                <li class="list-group-item">1</li>
-                <li class="list-group-item ">2</li>
-                <li class="list-group-item">3</li>
-                <li class="list-group-item">4</li>
-                <li class="list-group-item">5</li>
+
+        <hr class="mainsheethr"/>
+        <section class="row practice-answer_sheet">
+            <p class="col-12 text-muted">收起答题卡<i class="fa fa-chevron-up"></i></p>
+            <ul class="answer_sheet clearfix">
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
             </ul>
         </section>
     </main>
