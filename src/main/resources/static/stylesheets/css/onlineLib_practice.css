@@ -1,0 +1,41 @@
+@charset "utf-8";
+
+@import "../../lib/lib.css";
+@import "main.css";
+ul{
+    list-style: none;
+}
+.practice{
+    width:90%;
+
+}
+.practice-progress{
+    height:80px;
+    line-height:80px;
+    background-color: #232c31;
+    border-radius: 10px;
+}
+.count-progress,.time-progress{
+    display: inline-block;
+}
+.count-progress{
+    position: relative;
+    top:50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+.time-progress{
+    background-color: #2d3339;
+}
+.time-progress img{
+    width:40px;
+    height:40px;
+    margin-right:3px;
+}
+.time-progress time{
+    font-size:1em;
+    color: #fff;
+}
