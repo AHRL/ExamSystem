@@ -4,6 +4,10 @@
 @import "main.css";
 body{
     background-color: #eeeeee;
+    min-width:410px;
+}
+.practice-choose_programme>.col-4{
+    min-width:360px;
 }
 .practice-container{
     width:95%;
@@ -73,4 +77,10 @@ form{
 }
 .practice-submit-btn{
     float: right;
+}
+
+@media screen and (min-width: 1210px) {
+    .language-name{
+        text-align: right;
+    }
 }
