@@ -90,7 +90,25 @@
                     <div class="col-4  custom-checkbox">
                         <div class="row">
                             <div class="col-4">
-                                <input  type="checkbox" value="HTML+CSS"/>HTML/CSS
+                                <input name="programme" type="checkbox" value="HTML+CSS"/>HTML/CSS
+                            </div>
+                            <div class="col-5">
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="60"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+                                        <span class="sr-only">40% 完成</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <span>0</span>&frasl;<span>100</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4  custom-checkbox">
+                        <div class="row">
+                            <div class="col-4 language-name">
+                                <input name="programme" type="checkbox" value="Javascript"/>Javascript
                             </div>
                             <div class="col-5">
                                 <div class="progress">
@@ -109,26 +127,7 @@
                     <div class="col-4  custom-checkbox">
                         <div class="row">
                             <div class="col-4 language-name">
-                                <input type="checkbox"/>Javascript
-                            </div>
-                            <div class="col-5">
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="60"
-                                         aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-                                        <span class="sr-only">40% 完成</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <span>0</span>&frasl;<span>100</span>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-4  custom-checkbox">
-                        <div class="row">
-                            <div class="col-4 language-name">
-                                <input  type="checkbox"/>Java
+                                <input name="programme" type="checkbox" value="Java"/>Java
                             </div>
                             <div class="col-5">
                                 <div class="progress">
@@ -147,7 +146,7 @@
                     <div class="col-4  custom-checkbox choose">
                         <div class="row">
                             <div class="col-4">
-                                <input type="checkbox"/>C
+                                <input name="programme" type="checkbox" value="C"/>C
                             </div>
                             <div class="col-5">
                                 <div class="progress">
@@ -169,7 +168,7 @@
                 <div>
                     <span>出题数量：</span>
                     <label class="radio-inline"><input type="radio" name="count" value="5"/>5题</label>
-                    <label class="radio-inline"><input type="radio" name="count" value="10"/>10题</label>
+                    <label class="radio-inline"><input type="radio" name="count" value="10" checked/>10题</label>
                     <label class="radio-inline"><input type="radio" name="count" value="20"/>20题</label>
                     <label class="radio-inline"><input type="radio" name="count" value="30"/>30题</label>
                 </div>
@@ -180,14 +179,15 @@
                     <p class="text-muted">已选择：Javascript|30题</p>
                 </div>
                 <div class="practice-submit-btn">
-                    <input class="btn btn-lg" type="reset" value="重选"/>
-                    <input class="btn btn-lg btn-primary"  type="submit" value="确定"/>
+                    <input class="btn btn-lg resetBtn" type="reset" value="重选"/>
+                    <input class="btn btn-lg btn-primary subBtn"  type="submit" value="确定"/>
                 </div>
             </section>
         </form>
     </main>
 
     <script src="../static/lib/jquery-3.2.1.min.js"></script>
-<script src="../static/lib/bootstrap.min.js"></script>
+    <script src="../static/lib/bootstrap.min.js"></script>
+    <script src="../static/js/onlineLib.js"></script>
 </body>
 </html>

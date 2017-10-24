@@ -1,0 +1,44 @@
+#searchBox {
+    position: relative;
+}
+
+#searchBox button {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#searchResult {
+    min-height: 30rem;
+    margin: 4rem 0;
+    border: 2px solid lightgreen;
+    border-radius: .5rem;
+    /*background-image: url('../../img/search-failed-bg.png');*/
+}
+
+.searchResult-item {
+    border: 1px solid lightblue;
+    border-radius: .5rem;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.searchResult-item-img  {
+    float: left;
+    width: 6.4rem;
+    height: 6.4rem;
+    margin-right: 3rem;
+    border: 1px solid lightgray;
+}
+
+.searchResult-item-title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.searchResult-item-info {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
