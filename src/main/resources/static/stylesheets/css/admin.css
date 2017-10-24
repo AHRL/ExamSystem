@@ -1,0 +1,32 @@
+.data_wrap {
+    position: relative;
+    width: 100%;
+    min-width: 30rem;
+    /*height: 40rem;*/
+    margin: 2rem 0;
+    padding: 2rem;
+    /*border: 1px solid lightblue;*/
+}
+
+.data_wrap .custom-select {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+}
+
+.data_target {
+    position: relative;
+    height: 40.5rem;
+    margin-top: 2rem;
+}
+
+.data_target svg {
+    position: absolute;
+    top: 4rem;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.list-group-item {
+    cursor: pointer;
+}
