@@ -1,6 +1,7 @@
 package com.iot.model.login;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 /**
  * Created by xiongxiaoyu on 2017/10/9.
@@ -9,6 +10,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user")
 public class User {
+
+    Date date;
 
     public enum ROLE{
     admin,user;
@@ -60,10 +63,11 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, String email) {
+    public User(String username, String password, String email ,Date date) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.date = date;
     }
 
     @Override

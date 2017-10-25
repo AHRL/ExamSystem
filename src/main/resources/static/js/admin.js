@@ -152,20 +152,53 @@ window.onload = function () {
     (function () {
         var listItems = document.getElementsByClassName('list-group-item');
         var len = listItems.length;
+        var oH1 = document.getElementsByTagName('h1')[0];
         for(var i=0; i<len; i++){
             (function (i) {
-                var curActive = (function (i) {
-                    if (hasClass(listItems[i], 'active')){
-                        return i;
-                    }
-                })(i);
                 EventUtil.addHandler(listItems[i], 'click', function () {
-                    if (!hasClass(listItems[i], 'active')) {
-                        addClass(listItems[i], 'active');
-                        if (curActive){
-                            removeClass(listItems[curActive], 'active');
+                    for (var j=0; j<len; j++){
+                        if (hasClass(listItems[j], 'active')){
+                            removeClass(listItems[j], 'active');
                         }
                     }
+                    if (!hasClass(listItems[i], 'active')) {
+                        addClass(listItems[i], 'active');
+                        oH1.innerHTML = this.innerHTML;
+                    }
+                    /*var xhr = createXHR();
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4){
+                            if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304){
+                                console.log('JSON.parse(xhr.responseText) + xhr.status + 1');
+                            } else {
+                                console.log('Request was unsuccessful: ' + xhr.status);
+                            }
+                        }
+                    };
+                    xhr.open('get', 'http://127.0.0.1:8080/src/main/resources/static/data/example.json', true);
+                    xhr.send(null);*/
+                    /*$.ajax({
+                        type: 'GET',
+                        url: '../static/data/example.json',
+                        dataType: 'json',
+                        success: function (result) {
+                            alert(result);
+                        }
+                    });*/
+                    ajax({
+                        url: 'http://127.0.0.1:8080/registered',
+                        type: 'get',
+                        data: {
+                            page: 'page'
+                        },
+                        dataType: 'json',
+                        success: function (response, xml) {
+                            console.log(JSON.parse(response));
+                        },
+                        error: function (status) {
+                            console.log('error');
+                        }
+                    })
                 });
             })(i);
 
