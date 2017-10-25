@@ -20,7 +20,7 @@ public class ErrorPageConfig {
 
         @Override
         public void customize(ConfigurableEmbeddedServletContainer container) {
-            container.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "/test403"));
+            container.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "/404"));
         }
 
     }
