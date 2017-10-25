@@ -46,6 +46,9 @@ form{
 .practice-choose>.row>[class*="col-"]{
     margin-bottom:10px;
 }
+.practice-choose>.row>.programmeh,.practice-choose>.row>.programmeSelectAll{
+    margin-bottom:0;
+}
 .practice-choose input[type="checkbox"]{
     width:15px;
     height:15px;
