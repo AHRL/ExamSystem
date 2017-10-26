@@ -14,6 +14,11 @@ window.onload=function(){
     var strTip;
     opracticeDefined.style.height=0+'px';
     opracticeDefined.style.overflow='hidden';
+//检测浏览器是否支持hashchange事件
+    var isSupported=("onhashchange" in window)&&(document.documentMode===undefined ||documentMode>7);
+    if(isSupported){
+
+    }
 
     //slide（展开、收起）
     var timer1=null,timer2=null;
@@ -55,10 +60,10 @@ window.onload=function(){
                 submitTip.innerHTML='';
             }
         }
-        for(var i=0;i<arrProgramme.length;i++){
+        for(var j=0;j<arrProgramme.length;j++){
             var definedHeight = opracticeDefined.clientHeight;
-            if(arrProgramme[i].checked){
-                if(definedHeight==0){
+            if(arrProgramme[j].checked){
+                if(definedHeight===0){
                     slideDown();
                 }
                 return;
@@ -83,8 +88,8 @@ window.onload=function(){
     }
 
     //点击选项时，张开、收起
-    for(var i=0;i<arrProgramme.length;i++){
-        arrProgramme[i].addEventListener('click',function() {
+    for(var j=0;j<arrProgramme.length;j++){
+        arrProgramme[j].addEventListener('click',function() {
                 for (var i = 0; i < arrProgramme.length; i++) {
                     if (arrProgramme[i].checked) {
                         var definedHeight = opracticeDefined.clientHeight;
@@ -105,7 +110,7 @@ window.onload=function(){
       for(var i=0;i<arrProgramme.length;i++){
           if(arrProgramme[i].checked){
               submitTip.innerHTML=strTip;
-              if(submitTip.className=='submitTip selectNone'){
+              if(submitTip.className==='submitTip selectNone'){
                   submitTip.classList.remove('selectNone');
               }
               form.submit();
@@ -141,12 +146,12 @@ window.onload=function(){
         strTip='';
         selectProgramme();
         selectCount();
-        if(arrTip.length==1){
+        if(arrTip.length===1){
             arrTip=[];
         }
         strTip=arrTip.join(' | ');
         submitTip.innerHTML=strTip;
-        if(submitTip.className=='submitTip selectNone'){
+        if(submitTip.className==='submitTip selectNone'){
             submitTip.classList.remove('selectNone');
         }
     }
