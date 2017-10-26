@@ -55,7 +55,12 @@ form{
     margin-right:3px;
     vertical-align: -1px;
 }
-.practice-defined,.practice-submit{
+.practice-defined{
+    padding:0 15px;
+    height:51px;
+    line-height:51px;
+}
+.practice-submit{
     padding: 15px;
 }
 .practice-defined{
@@ -77,6 +82,9 @@ form{
 .practice-submit-tip p{
     margin-top:5px;
     margin-bottom:0;
+}
+.selectNone{
+    color: #ff4d46;
 }
 .practice-submit-btn{
     float: right;

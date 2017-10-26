@@ -89,7 +89,7 @@
                         <h2 class="display-2">编程语言</h2>
                     </div>
                     <div class="col-1 pull-right programmeSelectAll">
-                        <input  type="checkbox" value=""/>全选
+                        <input class="selectAllcheckbox"  type="checkbox" value=""/>全选
                     </div>
                 </div>
                 <hr/>
@@ -175,15 +175,15 @@
                 <div>
                     <span>出题数量：</span>
                     <label class="radio-inline"><input type="radio" name="count" value="5"/>5题</label>
-                    <label class="radio-inline"><input type="radio" name="count" value="10" checked/>10题</label>
-                    <label class="radio-inline"><input type="radio" name="count" value="20"/>20题</label>
+                    <label class="radio-inline"><input type="radio" name="count" value="10"/>10题</label>
+                    <label class="radio-inline"><input type="radio" name="count" value="20" checked/>20题</label>
                     <label class="radio-inline"><input type="radio" name="count" value="30"/>30题</label>
                 </div>
             </section>
 
             <section class="practice-submit clearfix">
                 <div class="practice-submit-tip">
-                    <p class="text-muted">已选择：Javascript|30题</p>
+                    <p class="text-muted">已选择：<span class="submitTip"></span></p>
                 </div>
                 <div class="practice-submit-btn">
                     <input class="btn btn-lg resetBtn" type="reset" value="重选"/>
@@ -192,7 +192,6 @@
             </section>
         </form>
     </main>
-
     <script src="../static/lib/jquery-3.2.1.min.js"></script>
     <script src="../static/lib/bootstrap.min.js"></script>
     <script src="../static/js/onlineLib.js"></script>
