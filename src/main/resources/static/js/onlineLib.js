@@ -1,6 +1,3 @@
-/**
- * Created by 15928 on 2017/10/23.
- */
 window.onload=function(){
     var oresetBtn=document.getElementsByClassName('resetBtn')[0];
     var osubBtn=document.getElementsByClassName('subBtn')[0];
@@ -14,11 +11,34 @@ window.onload=function(){
     var strTip;
     opracticeDefined.style.height=0+'px';
     opracticeDefined.style.overflow='hidden';
+//跨浏览器的事件处理程序
+    var EventUtil={
+        addHandler:function(element,type,handler) {
+            if (element.addEventListener) {
+                element.addEventListener(type, handler, false);
+            } else if (element.attachEvent) {
+                element.attachEvent("on" + type, handler);
+            } else {
+                element["on" + type] = handler;
+            }
+        },
+        removeHandler:function(element,type,handler){
+            if(element.removeEventListener){
+                element.removeEventListener(type,handler,false);
+            }else if(element.detachEvent){
+                element.detach("on"+type,handler);
+            }else{
+                element['on'+type]=null;
+            }
+
+        }
+    };
 //检测浏览器是否支持hashchange事件
     var isSupported=("onhashchange" in window)&&(document.documentMode===undefined ||documentMode>7);
     if(isSupported){
 
     }
+
 
     //slide（展开、收起）
     var timer1=null,timer2=null;
@@ -50,7 +70,8 @@ window.onload=function(){
     }
 
     // selectAll（全选或全不选、相应的展开或收起、相应的提示改变）
-    selectAllcheckbox.onclick=function selectAll() {
+    EventUtil.addHandler(selectAllcheckbox,"click",selectAll);
+   function selectAll() {
         for(var i=0;i<arrProgramme.length;i++){
             arrProgramme[i].checked=selectAllcheckbox.checked;
             if(selectAllcheckbox.checked){
@@ -71,11 +92,12 @@ window.onload=function(){
                 slideUp();
             }
         }
-    };
+    }
 
     //autoSelectAll（自动全选、全不选）
     for(var i=0;i<arrProgramme.length;i++){
-        arrProgramme[i].addEventListener('click',autoSelectAll,false);
+        // arrProgramme[i].addEventListener('click',autoSelectAll,false);
+        EventUtil.addHandler(arrProgramme[i],"click",autoSelectAll)
     }
     function autoSelectAll(){
         for(var i=0;i<arrProgramme.length;i++){
@@ -106,39 +128,41 @@ window.onload=function(){
     }
 
     //btnSubmit（提交时判断是否选择了相应的编程语言）
-    osubBtn.onclick=function(event){
-      for(var i=0;i<arrProgramme.length;i++){
-          if(arrProgramme[i].checked){
-              submitTip.innerHTML=strTip;
-              if(submitTip.className==='submitTip selectNone'){
-                  submitTip.classList.remove('selectNone');
-              }
-              form.submit();
-              this.disabled=true;
-              return;
-          }
-          event.preventDefault();
-          submitTip.innerHTML='请选择您要练习的题目';
-          submitTip.classList.add('selectNone');
-      }
-    };
+    EventUtil.addHandler(osubBtn,"click",function(event){
+        for(var i=0;i<arrProgramme.length;i++){
+            if(arrProgramme[i].checked){
+                submitTip.innerHTML=strTip;
+                if(submitTip.className==='submitTip selectNone'){
+                    submitTip.classList.remove('selectNone');
+                }
+                form.submit();
+                this.disabled=true;
+                return;
+            }
+            event.preventDefault();
+            submitTip.innerHTML='请选择您要练习的题目';
+            submitTip.classList.add('selectNone');
+        }
+    });
 
     //selectNone（重选）
-    oresetBtn.onclick=function selectNone(){
+    function selectNone(){
         var definedHeight=opracticeDefined.clientHeight;
         if(definedHeight>0){
             slideUp();
         }
         strTip='';
         submitTip.innerHTML='';
-    };
+    }
+    EventUtil.addHandler(oresetBtn,"click",selectNone);
+
 
     //选择题目类型和练习题目数，给出相应的提示
     for(var i=0;i<arrProgramme.length;i++){
-        arrProgramme[i].addEventListener('click',creatStrtip,false);
+        EventUtil.addHandler(arrProgramme[i],"click" ,creatStrtip);
     }
     for(var i=0;i<arrCount.length;i++){
-        arrCount[i].addEventListener('click',creatStrtip,false);
+        EventUtil.addHandler(arrCount[i],"click",creatStrtip);
     }
     //creatStrtip （生成提示字符串）
     function creatStrtip(){
