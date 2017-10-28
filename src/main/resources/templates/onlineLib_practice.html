@@ -95,8 +95,8 @@
                 </div>
                 <div class="practice-share_submit">
                     <ul class="clearfix">
-                        <li class="pull-left"><i class="fa fa-heart-o"></i>收藏本题</li>
-                        <li class="pull-left"><i class="fa fa-share"></i>分享本题</li>
+                        <li class="pull-left collect" data-toggle="modal" data-target=".collectModal"><i class="fa fa-heart-o"></i>收藏本题</li>
+                        <li class="pull-left share" data-toggle="modal" data-target=".shareModal"><i class="fa fa-share"></i>分享本题</li>
                     </ul>
                     <ul class="clearfix">
                         <li class="pull-right  next-practice"><input class="btn  btn-primary btn-lg" type="submit" value="下一题"/></li>
@@ -107,9 +107,10 @@
         </form>
 
         <hr class="mainsheethr"/>
+
         <section class="row practice-answer_sheet">
-            <p class="col-12 text-muted">收起答题卡<i class="fa fa-chevron-up"></i></p>
-            <ul class="answer_sheet clearfix">
+            <p class="col-12 text-muted sheetToggle">收起答题卡<i class="fa fa-chevron-up"></i></p>
+            <ul class="clearfix answer_sheet">
                 <li>1</li>
                 <li>2</li>
                 <li>3</li>
@@ -119,8 +120,60 @@
         </section>
     </main>
 
+    <!-- Modal -->
+    <div class="modal fade collectModal" role="dialog" tabindex="-1" aria-labelledby="collectModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="collectModalLabel"><span></span>收藏本题</h4>
+
+                    <button type="button" class="close closeBtn" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form name="collectform" id="collectform">
+                            <fieldset class="form-group">
+                                <label  for="collectLabel">输入标签：</label>
+                                <input class="form-control" type="text" value="" id="collectLabel" placeholder="多个标签用空格隔开" autocomplete="off" autofocus/>
+                            </fieldset>
+                            <div>
+                                <span>我的标签：</span><p class="myCollectLabel"><span class="labelSpan">javascript</span><span class="labelSpan">CSS</span></p>
+                            </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button form="collectform" type="button" class="btn btn-secondary cancelBtn" data-dismiss="modal">取消</button>
+                    <button form="collectform" type="button" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade shareModal" role="dialog" tabindex="-1" aria-labelledby="shareModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="shareModalTitle"><span></span>分享本题</h4>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button form="collectform" type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button form="collectform" type="button" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="../static/lib/jquery-3.2.1.min.js"></script>
     <script src="../static/lib/bootstrap.min.js"></script>
+    <script src="../static/js/onlineLib_practice.js"></script>
     </body>
 </html>
