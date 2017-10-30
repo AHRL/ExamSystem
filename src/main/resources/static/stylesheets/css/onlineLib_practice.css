@@ -111,7 +111,16 @@ body{
     margin:0;
     border:1px dashed #f5f5f5;
 }
+.practice-answer_sheet{
+    min-height:120px;
+}
+.toggleDiv{
+    margin-bottom:12px; ;
+}
 .sheetToggle{
+    cursor: pointer;
+}
+.toggleIcon{
     cursor: pointer;
 }
 .practice-answer_sheet ul li{
@@ -158,4 +167,26 @@ body{
     color: #fff;
     background-color: #028df7;
     border:1px solid transparent;
+}
+.shareImg{
+    width:50%;
+    cursor: pointer;
+}
+.aheadSure{
+    margin:20px 0;
+}
+.aheadSure>span{
+    font-size: 1.2em;
+}
+.aheadSure>span>i{
+    vertical-align: -2px;
+    font-size: 25px;
+    color: #ff4d46;
+    margin-right:5px;
+}
+.aheadFooter{
+    background-color: #f0f0f0;
+}
+.sheetToggle>i{
+    margin-left:5px;
 }

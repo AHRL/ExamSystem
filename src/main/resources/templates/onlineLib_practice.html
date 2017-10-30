@@ -50,12 +50,12 @@
                 </div>
             </div>
             <div class="time-progress pull-right text-center col-3">
-                    <i class="fa fa-pause-circle"></i>
-                    <time>00:23:56</time>
+                    <i class="fa fa-pause-circle timeIcon"></i>
+                    <time>00:00:00</time>
             </div>
         </section>
 
-        <form class="row">
+        <form class="row" name="practice-form">
             <section class="practice-main col-12">
                 <div class="practice-type">
                     <i class="fa fa-question-circle"></i>
@@ -100,7 +100,7 @@
                     </ul>
                     <ul class="clearfix">
                         <li class="pull-right  next-practice"><input class="btn  btn-primary btn-lg" type="submit" value="下一题"/></li>
-                        <li class="pull-right"><input class="btn  btn-danger btn-lg" type="submit" value="提前交卷"/></li>
+                        <li class="pull-right"><button type="button" class="btn  btn-danger btn-lg" data-toggle="modal" data-target=".aheadModal">提前交卷</button></li>
                     </ul>
                 </div>
             </section>
@@ -109,8 +109,11 @@
         <hr class="mainsheethr"/>
 
         <section class="row practice-answer_sheet">
-            <p class="col-12 text-muted sheetToggle">收起答题卡<i class="fa fa-chevron-up"></i></p>
-            <ul class="clearfix answer_sheet">
+            <div class="col-12 text-muted toggleDiv">
+                <span class="sheetToggle" data-toggle="collapse" data-target="#collapseSheet" aria-expanded="false" aria-controls="collapseSheet">收起答题卡</span>
+                <i class="fa fa-chevron-down toggleIcon" data-toggle="collapse" data-target="#collapseSheet" aria-expanded="false" aria-controls="collapseSheet"></i>
+            </div>
+            <ul class="clearfix collapse answer_sheet" id="collapseSheet">
                 <li>1</li>
                 <li>2</li>
                 <li>3</li>
@@ -145,7 +148,7 @@
                 </div>
                 <div class="modal-footer">
                     <button form="collectform" type="button" class="btn btn-secondary cancelBtn" data-dismiss="modal">取消</button>
-                    <button form="collectform" type="button" class="btn btn-primary">确定</button>
+                    <button form="collectform" type="button" class="btn btn-primary collectBtn">确定</button>
                 </div>
             </div>
         </div>
@@ -155,22 +158,48 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="shareModalTitle"><span></span>分享本题</h4>
-
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         <span class="sr-only">Close</span>
                     </button>
                 </div>
                 <div class="modal-body">
-
+                    <div class="row">
+                        <div class="col-3 text-center">
+                            <img class="shareImg" src="../static/img/qq.png" alt="QQ"/>
+                        </div>
+                        <div class="col-3 text-center">
+                            <img class="shareImg" src="../static/img/wx.png" alt="weixin"/>
+                        </div>
+                        <div class="col-3 text-center">
+                            <img class="shareImg" src="../static/img/wb.png" alt="weibo"/>
+                        </div>
+                        <div class="col-3 text-center">
+                            <img class="shareImg" src="../static/img/zh.png" alt="zhihu"/>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button form="collectform" type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button form="collectform" type="button" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary shareBtn">确定</button>
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal fade aheadModal" role="dialog" tabindex="-1"  aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center aheadSure">
+                    <span> <i class="fa fa-exclamation-circle"></i>您尚未完成本次练习，确定要提前交卷？</span>
+                </div>
+                <div class="modal-footer aheadFooter">
+                    <button  type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button  type="button" class="btn btn-primary aheadBtn">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script src="../static/lib/jquery-3.2.1.min.js"></script>
     <script src="../static/lib/bootstrap.min.js"></script>

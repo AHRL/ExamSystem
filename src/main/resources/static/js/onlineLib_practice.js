@@ -2,14 +2,21 @@
  * Created by 15928 on 2017/10/28.
  */
 window.onload=function(){
+    var time=document.getElementsByTagName('time')[0];
+    var timeIcon=document.getElementsByClassName('timeIcon')[0];
     var collect=document.getElementsByClassName('collect')[0];
     var share=document.getElementsByClassName('share')[0];
-    var sheetToggle=document.getElementsByClassName('shareToggle')[0];
     var collectForm=document.forms["collectform"];
     var collectLabelInput=document.getElementById('collectLabel');
     var arrLabelSpan=document.getElementsByClassName('labelSpan');
     var closeBtn=document.getElementsByClassName('closeBtn')[0];
     var cancelBtn=document.getElementsByClassName('cancelBtn')[0];
+    var collectBtn=document.getElementsByClassName('collectBtn')[0];
+    var shareBtn=document.getElementsByClassName('shareBtn')[0];
+    var aheadBtn=document.getElementsByClassName('aheadBtn')[0];
+    var sheetToggle=document.getElementsByClassName('sheetToggle')[0];
+    var toggleIcon=document.getElementsByClassName('toggleIcon')[0];
+    var practiceForm=document.forms["practice-form"];
     var strCollectInputValue='';
     var arrCollectInputValue=[];
     var arrLabelSpanValue=[];
@@ -69,6 +76,47 @@ window.onload=function(){
             }
         }
     };
+
+    //页面加载时，开始正向计时
+    var then=new Date();
+    var h=0;
+    var m=0;
+    var s=0;
+    var ms=0;
+    var mysetInterval=setInterval(timer, 1000);
+    function timer(){
+        // var now=new Date();
+        // ms=now-then;
+       s++;
+        // h=checkTime(parseInt(ms/3600000)%60);
+        // m=checkTime(parseInt(ms/60000)%60);
+        // s=checkTime(parseInt(ms/1000)%60);
+        if(s>=60) {
+            s=0;
+            m++;
+        }
+        if(m>=60) {
+            m=0;
+            h++;
+        }
+        time.innerHTML=checkTime(h)+':'+checkTime(m)+':'+checkTime(s);
+    }
+    function checkTime(i){ //将0-9的数字前面加上0，例1变为01
+       return  i<10 ? "0"+i:i;
+    }
+
+    EventUtil.addHandler(timeIcon,"click",timeIconClick);
+    function timeIconClick(){
+        if(hasClass(this,'fa-pause-circle')){
+            removeClass(this,'fa-pause-circle');
+            addClass(this,'fa-play-circle');
+            clearInterval(mysetInterval);
+        }else{
+            removeClass(this,'fa-play-circle');
+            addClass(this,'fa-pause-circle');
+            setInterval(timer, 1000);
+        }
+    }
 
     //监控所有的关闭，取消按钮被点击时，输入框文字消失
     EventUtil.addHandler(closeBtn,"click",clearForm);
@@ -143,5 +191,31 @@ window.onload=function(){
         if(hasClass(this,'labelHover')){
             removeClass(this,'labelHover');
         }
+    }
+
+// 点击收藏的确定按钮，提交表单
+    collectBtn.onclick=function(){
+        $('.collectModal').modal('hide');
+        collectForm.submit();
+    };
+//点击分享本题的确定按钮，模态框消失
+    shareBtn.onclick=function(){
+        $('.shareModal').modal('hide');
+    };
+// 点击提前交卷的确定按钮后，提交表单
+    aheadBtn.onclick=function(){
+        $('.aheadModal').modal('hide');
+        practiceForm.submit();
+    };
+//  点击收起答题卡
+    sheetToggle.onclick=function(){
+        if(hasClass(toggleIcon,"fa-chevron-down")){
+            removeClass(toggleIcon,"fa-chevron-down");
+            addClass(toggleIcon,"fa-chevron-up");
+        }else{
+            removeClass(toggleIcon,"fa-chevron-up");
+            addClass(toggleIcon,"fa-chevron-down");
+        }
+
     }
 };
