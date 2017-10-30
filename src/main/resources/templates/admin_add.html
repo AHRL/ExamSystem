@@ -11,7 +11,7 @@
     <meta name="description" content="An exam system for students"/>
     <link rel="short icon" type="image/x-icon" href="../favicon.ico"/>
     <link rel="stylesheet" href="../static/stylesheets/css/funExam.css"/>
-    <link rel="stylesheet" href="../static/stylesheets/css/admin_login.css"/>
+    <link rel="stylesheet" href="../static/stylesheets/css/admin_add.css"/>
 
     <script src="../static/lib/modernizr-2.6.2.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
@@ -89,8 +89,168 @@
             <main class="col-sm-9 push-sm-1">
                 <h1>添加题库</h1>
                 <hr />
+                <!--<form action="#" method="post">
+                    <select class="c-select">
+                        <option value="0" selected>请选择分类</option>
+                        <option value="1">C/C++</option>
+                        <option value="2">Java</option>
+                        <option value="3">JavaScript</option>
+                        <option value="4">HTML/CSS</option>
+                    </select>
+                    <div id="showType">您已选择 JavaScript</div>
+                    <p class="h3">现在开始添加题库</p>
+                    &lt;!&ndash;如果选择 HTML/CSS 则需要插入一组单选按钮&ndash;&gt;
+                    <h2 class="h4">题目编号<span>js_0075</span></h2>
+                    <div class="form-group row">
+                        <span class="h6 col-sm-2">请选择题型</span>
+                        <label class="c-input c-radio">
+                            <input id="radio1" name="radio" type="radio" class="custom-radio" />
+                            <span class="c-indicator"></span>
+                            单选
+                        </label>
+                        <label class="c-input c-radio">
+                            <input id="radio2" name="radio" type="radio" class="custom-radio" />
+                            <span class="c-indicator"></span>
+                            多选
+                        </label>
+                        <label class="c-input c-radio">
+                            <input id="radio3" name="radio" type="radio" class="custom-radio" />
+                            <span class="c-indicator"></span>
+                            填空
+                        </label>
+                        <label class="c-input c-radio">
+                            <input id="radio4" name="radio" type="radio" class="custom-radio" />
+                            <span class="c-indicator"></span>
+                            简答/代码
+                        </label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="ex-info" class="col-sm-2 h6 form-control-label">题目描述</label>
+                        <input id="ex-info" class="col-sm-10 form-control" />
+                    </div>
+
+                    <div class="form-group row">
+                        <span class="h6 col-sm-2">是否上传图片</span>
+                        <label class="c-input c-radio">
+                            <input id="radioPhoto1" name="radioPhoto" type="radio" class="custom-radio" />
+                            <span class="c-indicator"></span>
+                            是
+                        </label>
+                        <label class="c-input c-radio">
+                            <input id="radioPhoto2" name="radioPhoto" type="radio" class="custom-radio" />
+                            <span class="c-indicator"></span>
+                            否
+                        </label>
+                    </div>
+                    &lt;!&ndash;单选答案&ndash;&gt;
+                    &lt;!&ndash;多选答案&ndash;&gt;
+                    &lt;!&ndash;填空答案&ndash;&gt;
+
+                    <fieldset class="form-group">
+                        <label for="ex-answer-1">题目答案</label>
+                        <textarea class="form-control" id="ex-answer-1" rows="20"></textarea>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label for="ex-answer-2">题目答案</label>
+                        <textarea class="form-control" id="ex-answer-2" rows="20"></textarea>
+                    </fieldset>
+                    &lt;!&ndash; 是，才加入&ndash;&gt;
+                    &lt;!&ndash;<label class="file">
+                        <input type="file" id="file" />
+                        <span class="file-custom"></span>
+                    </label>&ndash;&gt;
+                </form>-->
+                <form id="addForm" action="#" method="post">
+                    <section id="cType">
+                        <h2 class="h5">选择题型</h2>
+                        <div class="row">
+                            <label class="col-sm-3 c-input c-radio">
+                                <input id="singleC" name="chooseType" type="radio" class="custom-radio" value="单选"/>
+                                <span class="c-indicator"></span>
+                                单选
+                            </label>
+                            <label class="col-sm-3 c-input c-radio">
+                                <input id="dulC" name="chooseType" type="radio" class="custom-radio" value="多选"/>
+                                <span class="c-indicator"></span>
+                                多选
+                            </label>
+                            <label class="col-sm-3 c-input c-radio">
+                                <input id="txtC" name="chooseType" type="radio" class="custom-radio" value="填空/简答/代码"/>
+                                <span class="c-indicator"></span>
+                                填空/简答/代码
+                            </label>
+                        </div>
+                    </section>
+                    <section id="cLang">
+                        <h2 class="h5">选择语言</h2>
+                        <div class="row">
+                            <label class="col-sm-3 c-input c-radio">
+                                <input id="chooseC" name="chooseLang" type="radio" class="custom-radio" value="C/C++"/>
+                                <span class="c-indicator"></span>
+                                C/C++
+                            </label>
+                            <label class="col-sm-3 c-input c-radio">
+                                <input id="chooseJv" name="chooseLang" type="radio" class="custom-radio" value="Java"/>
+                                <span class="c-indicator"></span>
+                                Java
+                            </label>
+                            <label class="col-sm-3 c-input c-radio">
+                                <input id="chooseJs" name="chooseLang" type="radio" class="custom-radio" value="JavaScript"/>
+                                <span class="c-indicator"></span>
+                                JavaScript
+                            </label>
+                            <label class="col-sm-3 c-input c-radio">
+                                <input id="chooseHC" name="chooseLang" type="radio" class="custom-radio" value="HTML/CSS"/>
+                                <span class="c-indicator"></span>
+                                HTML/CSS
+                            </label>
+                        </div>
+                    </section>
+                    <section id="cInfo">
+                        <fieldset class="form-group">
+                            <label for="ex-info" class="form-control-label h5">题目描述</label>
+                            <input id="ex-info" type="text" class="form-control form-control-lg"/>
+                        </fieldset>
+                        <button class="btn btn-block btn-success btn-lg">为题目描述添加代码<i class="fa fa-plus-circle fa-2x"></i></button>
+                        <!--<fieldset class="form-group">
+                            <label for="addCodeForExInfo">在下面粘贴你的代码</label>
+                            <textarea class="form-control" id="addCodeForExInfo" rows="8"></textarea>
+                        </fieldset>-->
+                        <!-- 如果是单选或多选才有选项设置-->
+                        <!-- 选项设置 -->
+                        <!-- 单选/多选题 -->
+                        <!--<fieldset class="form-group display-hidden">
+                                <div>
+                                    <label for="singleC_A" class="form-control-label">A</label>
+                                    <input id="singleC_A" class="form-control form-control-lg"/>
+                                </div>
+                                <div>
+                                    <label for="singleC_B" class="form-control-label">B</label>
+                                    <input id="singleC_B" class="form-control form-control-lg"/>
+                                </div>
+                                <div>
+                                    <label for="singleC_C" class="form-control-label">C</label>
+                                    <input id="singleC_C" class="form-control form-control-lg"/>
+                                </div>
+                                <div>
+                                    <label for="singleC_D" class="form-control-label">D</label>
+                                    <input id="singleC_D" class="form-control form-control-lg"/>
+                                </div>
+                                <button class="btn btn-block btn-success btn-lg">添加选项</button>
+                        </fieldset>-->
+
+                        <fieldset class="form-group">
+                            <button class="btn btn-primary btn-lg disabled" disabled>确定添加</button>
+                        </fieldset>
+
+                    </section>
+                </form>
             </main>
         </div>
     </div>
+
+    <script src="../static/lib/jquery-3.2.1.min.js"></script>
+    <script src="../static/lib/bootstrap.min.js"></script>
+    <script src="../static/js/admin_add.js"></script>
 </body>
 </html>

@@ -165,28 +165,28 @@ window.onload = function () {
                         addClass(listItems[i], 'active');
                         oH1.innerHTML = this.innerHTML;
                     }
-                    /*var xhr = createXHR();
+                    var xhr = createXHR();
                     xhr.onreadystatechange = function () {
                         if (xhr.readyState === 4){
                             if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304){
-                                console.log('JSON.parse(xhr.responseText) + xhr.status + 1');
+                                console.log(JSON.parse(xhr.responseText));
                             } else {
                                 console.log('Request was unsuccessful: ' + xhr.status);
                             }
                         }
                     };
-                    xhr.open('get', 'http://127.0.0.1:8080/src/main/resources/static/data/example.json', true);
-                    xhr.send(null);*/
+                    xhr.open('get', 'http://127.0.0.1:8080/src/main/resources/static/data/example.txt', true);
+                    xhr.send(null);
                     /*$.ajax({
                         type: 'GET',
-                        url: '../static/data/example.json',
+                        url: '../static/data/example.txt',
                         dataType: 'json',
                         success: function (result) {
                             alert(result);
                         }
                     });*/
-                    ajax({
-                        url: 'http://127.0.0.1:8080/registered',
+                    /*ajax({
+                        url: '127.0.0.1:8080/src/main/resources/static/data/example.txt',
                         type: 'get',
                         data: {
                             page: 'page'
@@ -198,7 +198,7 @@ window.onload = function () {
                         error: function (status) {
                             console.log('error');
                         }
-                    })
+                    })*/
                 });
             })(i);
 
