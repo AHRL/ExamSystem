@@ -82,9 +82,16 @@
 
     <main class="container practice-container">
         <h1 class="display-1"><span></span>题库练习</h1>
-        <form>
+        <form method="post" action="#">
             <section class="practice-choose">
-                <h2 class="display-2">编程语言</h2>
+                <div class="row clearfix">
+                    <div class="col-11 pull-left programmeh">
+                        <h2 class="display-2">编程语言</h2>
+                    </div>
+                    <div class="col-1 pull-right programmeSelectAll">
+                        <input class="selectAllcheckbox"  type="checkbox" value=""/>全选
+                    </div>
+                </div>
                 <hr/>
                 <div class="row practice-choose_programme">
                     <div class="col-4  custom-checkbox">
@@ -168,15 +175,15 @@
                 <div>
                     <span>出题数量：</span>
                     <label class="radio-inline"><input type="radio" name="count" value="5"/>5题</label>
-                    <label class="radio-inline"><input type="radio" name="count" value="10" checked/>10题</label>
-                    <label class="radio-inline"><input type="radio" name="count" value="20"/>20题</label>
+                    <label class="radio-inline"><input type="radio" name="count" value="10"/>10题</label>
+                    <label class="radio-inline"><input type="radio" name="count" value="20" checked/>20题</label>
                     <label class="radio-inline"><input type="radio" name="count" value="30"/>30题</label>
                 </div>
             </section>
 
             <section class="practice-submit clearfix">
                 <div class="practice-submit-tip">
-                    <p class="text-muted">已选择：Javascript|30题</p>
+                    <p class="text-muted">已选择：<span class="submitTip"></span></p>
                 </div>
                 <div class="practice-submit-btn">
                     <input class="btn btn-lg resetBtn" type="reset" value="重选"/>
@@ -185,7 +192,6 @@
             </section>
         </form>
     </main>
-
     <script src="../static/lib/jquery-3.2.1.min.js"></script>
     <script src="../static/lib/bootstrap.min.js"></script>
     <script src="../static/js/onlineLib.js"></script>
