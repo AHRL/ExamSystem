@@ -44,7 +44,6 @@ function ajax(options) {
     }
 }
 
-/*
 function formatParams(data) {
     var arr = [];
     for (var name in data){
@@ -53,4 +52,17 @@ function formatParams(data) {
     arr.push(('v=' + Math.random()).replace('.', ''));
     console.log(arr);
     return arr.join('&');
-}*/
+}
+
+function createCORSRequest(method, url){
+    var xhr = createXHR();
+    if ('withCredentials' in xhr){
+        xhr.open(method, url, true);
+    } else if (typeof XDomainRequest !== 'undefined'){
+        xhr = new XDomainRequest();
+        xhr.open(method, url);
+    } else {
+        xhr = null;
+    }
+    return xhr;
+}
