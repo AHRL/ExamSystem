@@ -101,12 +101,27 @@ body{
     color: #5f5f5f;
     margin-right:3px;
 }
+.collect:hover,.share:hover,.collect:hover i,.share:hover i{
+    color: #028df7;
+}
 .practice-share_submit .next-practice{
      margin-right:0;
  }
 .mainsheethr{
     margin:0;
     border:1px dashed #f5f5f5;
+}
+.practice-answer_sheet{
+    min-height:120px;
+}
+.toggleDiv{
+    margin-bottom:12px; ;
+}
+.sheetToggle{
+    cursor: pointer;
+}
+.toggleIcon{
+    cursor: pointer;
 }
 .practice-answer_sheet ul li{
     float: left;
@@ -126,4 +141,52 @@ body{
 .completed{
     background: #028df7;
     color: #fff;
+}
+
+.myCollectLabel{
+    margin-top:10px;
+}
+.labelSpan{
+    margin-right:5px;
+    border:1px solid rgba(0, 0, 0, 0.15);
+    padding:5px;
+    font-size: 1rem;
+    line-height:1.25;
+    color: #464a4c;
+    cursor: pointer;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+.labelHover{
+    color: #028df7;
+    border:1px solid #028df7;
+    background-color: #ffffff;
+}
+.labelSelected{
+    color: #fff;
+    background-color: #028df7;
+    border:1px solid transparent;
+}
+.shareImg{
+    width:50%;
+    cursor: pointer;
+}
+.aheadSure{
+    margin:20px 0;
+}
+.aheadSure>span{
+    font-size: 1.2em;
+}
+.aheadSure>span>i{
+    vertical-align: -2px;
+    font-size: 25px;
+    color: #ff4d46;
+    margin-right:5px;
+}
+.aheadFooter{
+    background-color: #f0f0f0;
+}
+.sheetToggle>i{
+    margin-left:5px;
 }

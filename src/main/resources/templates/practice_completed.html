@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>在线考试 - FunExam</title>
+    <meta name="keyword" content="Fun Exam"/>
+    <meta name="description" content="An exam system for students"/>
+    <link rel="short icon" type="image/x-icon" href="../favicon.ico"/>
+    <link rel="stylesheet" href="../static/stylesheets/css/practice_completed.css"/>
+
+    <script src="../static/lib/modernizr-2.6.2.min.js"></script>
+    <!-- Respond.js for IE 8 or less only-->
+    <!--[if (lt IE 9) & (!IEMobile)]>
+    <script src="../static/lib/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!--[if lte IE 7]>
+<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+<![endif]-->
+    <header>
+        <p>评估报告</p>
+        <hr/>
+    </header>
+    <main class="container">
+       <section class="row score-skill">
+           <div class="col-6">
+               <p><i class="fa fa-"></i>得分：100.0</p>
+               <ul>
+                   <li>试卷：HTML+CSS专项练习</li>
+                   <li>正确题数：10/10</li>
+                   <li>得分：100.0</li>
+                   <li>用时：00:05:20</li>
+               </ul>
+           </div>
+           <div class="col-6">
+               <p>您的技能图谱</p>
+           </div>
+       </section>
+        <section class="skill-progress">
+            <p><span></span>通过本次练习，您的一下技能发生了变化</p>
+            <span>HTML+CSS</span>
+            <progress class="progress" value="25" max="100">
+                <div class="progress">
+                    <span class="progress-bar" style="width: 25%;">25%</span>
+                </div>
+            </progress>
+            <a  href="onlineLib.html" class="btn btn-lg btn-primary-outline" role="button">练</a>
+        </section>
+    </main>
+<script src="../static/lib/jquery-3.2.1.min.js"></script>
+<script src="../static/lib/bootstrap.min.js"></script>
+</body>
+</html>
