@@ -207,19 +207,20 @@
                         </div>
                     </section>
                     <section id="cInfo">
+                        <span><i class="fa fa-remove-sign"></i></span>
                         <fieldset class="form-group">
                             <label for="ex-info" class="form-control-label h5">题目描述</label>
                             <input id="ex-info" type="text" class="form-control form-control-lg"/>
                         </fieldset>
-                        <button class="btn btn-block btn-success btn-lg">为题目描述添加代码<i class="fa fa-plus-circle fa-2x"></i></button>
-                        <!--<fieldset class="form-group">
+                        <button class="btn btn-block btn-success btn-lg" id="addCodeBtn">为题目描述添加代码<i class="fa fa-plus-circle fa-2x"></i></button>
+                        <fieldset class="form-group" id="addCodeForExInfoBox">
                             <label for="addCodeForExInfo">在下面粘贴你的代码</label>
                             <textarea class="form-control" id="addCodeForExInfo" rows="8"></textarea>
-                        </fieldset>-->
+                        </fieldset>
                         <!-- 如果是单选或多选才有选项设置-->
                         <!-- 选项设置 -->
                         <!-- 单选/多选题 -->
-                        <!--<fieldset class="form-group display-hidden">
+                        <fieldset class="form-group" id="choicesPanel">
                                 <div>
                                     <label for="singleC_A" class="form-control-label">A</label>
                                     <input id="singleC_A" class="form-control form-control-lg"/>
@@ -236,10 +237,10 @@
                                     <label for="singleC_D" class="form-control-label">D</label>
                                     <input id="singleC_D" class="form-control form-control-lg"/>
                                 </div>
-                                <button class="btn btn-block btn-success btn-lg">添加选项</button>
-                        </fieldset>-->
+                                <button class="btn btn-block btn-success btn-lg" id="addChoiceBtn">添加选项</button>
+                        </fieldset>
 
-                        <fieldset class="form-group">
+                        <fieldset class="form-group" id="ensureBtn">
                             <button class="btn btn-primary btn-lg disabled" disabled>确定添加</button>
                         </fieldset>
 
