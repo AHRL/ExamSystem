@@ -20,3 +20,20 @@
     right: 0;
     top: 0;
 }
+#cInfo {
+    display: none;
+    position: relative;
+}
+
+#addCodeForExInfoBox {
+    display: none;
+}
+
+#ensureBtn {
+    position: absolute;
+    left: -10rem;
+}
+
+#choicesPanel {
+    display: none;
+}
