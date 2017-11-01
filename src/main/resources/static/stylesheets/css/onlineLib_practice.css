@@ -23,6 +23,9 @@ body{
     float:left;
     width:80%;
     margin-top:34px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
 }
 .progress-bar_span{
     float: left;
