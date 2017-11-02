@@ -212,6 +212,64 @@ window.onload = function () {
             }
         });
 
+        // get validate message
+        var getValMsgBtn = document.getElementById('getValMsgBtn');
+        EventUtil.addHandler(getValMsgBtn, 'click', function () {
+            var nameVal = uUsr.value;
+            var emailVal = uEml.value;
+            $.ajax({
+                method: 'post',
+                url: 'http://localhost:8080/send',
+                dataType: 'json',
+                data: {
+                    'name': nameVal,
+                    'email': emailVal
+                },
+                success: function (response) {
+                    console.log('验证码已发送');
+                },
+                error: function (status) {
+                    console.log('error' + status);
+                }
+            })
+        });
+
+        // ensure validate message
+        var uVMsg = document.getElementById('upValMsg');
+        EventUtil.addHandler(uVMsg, 'blur', function () {
+            var validcode;
+            $.ajax({
+                method: 'get',
+                url: 'http://localhost:8080/validcode',
+                dataType: 'json',
+                success: function (response) {
+                    validcode = JSON.stringify(response);
+                    if (validcode === uVMsg.value){
+                        addClass(this, 'validationStyle-successed');
+                        createValidateMsg(this, '验证成功', true);
+                    } else {
+                        addClass(this, 'validationStyle-failed');
+                        createValidateMsg(this, '验证失败', false);
+                    }
+                },
+                error: function (status) {
+                    console.log('error');
+                }
+            })
+        });
+        EventUtil.addHandler(uVMsg, 'focus', function () {
+            var valiMsg = this.getElementsByClassName('validateMsg');
+            if (valiMsg) {
+                removeAfter(this);
+                if (hasClass(this, 'validationStyle-failed')){
+                    removeClass(this, 'validationStyle-failed');
+                }
+                if (hasClass(this, 'validationStyle-successed')){
+                    removeClass(this, 'validationStyle-successed');
+                }
+            }
+        });
+
         // submit
         var signUpForm = document.getElementById('signUpForm');
         var upSubmitButton = document.getElementById('upSubmitButton');
