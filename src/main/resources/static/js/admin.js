@@ -175,7 +175,7 @@ window.onload = function () {
                             }
                         }
                     };
-                    xhr.open('get', 'http://127.0.0.1:8080/src/main/resources/static/data/example.txt', true);
+                    xhr.open('get', 'http://localhost:8080/registered', true);
                     xhr.send(null);
                     /*$.ajax({
                         type: 'GET',
@@ -185,8 +185,8 @@ window.onload = function () {
                             alert(result);
                         }
                     });*/
-                    /*ajax({
-                        url: '127.0.0.1:8080/src/main/resources/static/data/example.txt',
+                    ajax({
+                        url: 'http://localhost:8080/registered',
                         type: 'get',
                         data: {
                             page: 'page'
@@ -198,7 +198,7 @@ window.onload = function () {
                         error: function (status) {
                             console.log('error');
                         }
-                    })*/
+                    })
                 });
             })(i);
 

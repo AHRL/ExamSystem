@@ -25,10 +25,9 @@ window.onload = function () {
                 }
             }
         }
+
         startAnim(oH1, function () {
-            startAnim(oH2, function () {
-                autoPlay();
-            }, true, 1000);
+            startAnim(oH2);
         }, true, 200);
 
     })();
@@ -37,23 +36,7 @@ window.onload = function () {
     * AutoType
     * */
 
-    function autoPlay(){
-        // AutoType
-        var elements = document.getElementsByClassName('txt-rotate');
-        for(var i=0; i<elements.length; i++){
-            var toRotate = elements[i].getAttribute('data-rotate');
-            var period = elements[i].getAttribute('date-period');
-            if(toRotate) {
-                new TxtRotate(elements[i],JSON.parse(toRotate),period);
-            }
-        }
 
-        // inject CSS
-        var css = document.createElement('style');
-        css.type = 'text/p-css';
-        css.innerHTML = '.txt-rotate > .wrap {border-right: .3rem solid #666}';
-        document.body.appendChild(css);
-    }
 
     /* **********************************************************
     * Form validate
@@ -217,9 +200,9 @@ window.onload = function () {
         EventUtil.addHandler(getValMsgBtn, 'click', function () {
             var nameVal = uUsr.value;
             var emailVal = uEml.value;
-            $.ajax({
-                method: 'post',
-                url: 'http://localhost:8080/send',
+            /*$.ajax({
+                method: 'POST',
+                url: 'http://localhost:8080/register',
                 dataType: 'json',
                 data: {
                     'name': nameVal,
@@ -231,6 +214,21 @@ window.onload = function () {
                 error: function (status) {
                     console.log('error' + status);
                 }
+            })*/
+            $.ajax({
+                type: 'post',
+                url: 'http://localhost:8080/register',
+                dataType: 'json',
+                data: {
+                    'name': nameVal,
+                    'email': emailVal
+                },
+                success: function (data, textStatus, jqXHR) {
+                    console.log('验证码已发送' + data);
+                },
+                error: function (jqXHR, textStatus, error) {
+                    console.log('error' + textStatus);
+                }
             })
         });
 
@@ -239,7 +237,7 @@ window.onload = function () {
         EventUtil.addHandler(uVMsg, 'blur', function () {
             var validcode;
             $.ajax({
-                method: 'get',
+                method: 'GET',
                 url: 'http://localhost:8080/validcode',
                 dataType: 'json',
                 success: function (response) {
@@ -610,3 +608,27 @@ function clearForm() {
     }
 }
 
+
+/*function autoPlay(){
+ // AutoType
+ var elements = document.getElementsByClassName('txt-rotate');
+ for(var i=0; i<elements.length; i++){
+ var toRotate = elements[i].getAttribute('data-rotate');
+ var period = elements[i].getAttribute('date-period');
+ if(toRotate) {
+ new TxtRotate(elements[i],JSON.parse(toRotate),period);
+ }
+ }
+
+ // inject CSS
+ var css = document.createElement('style');
+ css.type = 'text/p-css';
+ css.innerHTML = '.txt-rotate > .wrap {border-right: .3rem solid #666}';
+ document.body.appendChild(css);
+ }*/
+
+/*startAnim(oH1, function () {
+ startAnim(oH2, function () {
+ autoPlay();
+ }, true, 1000);
+ }, true, 200);*/

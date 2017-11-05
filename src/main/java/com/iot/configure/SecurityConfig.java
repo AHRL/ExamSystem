@@ -41,10 +41,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http)throws Exception{
+        http.headers().frameOptions().disable();
+
         http
                 .authorizeRequests()
-//                .antMatchers("/*.html","*.css","*.js").permitAll()
-                .antMatchers("/*.html","/register","/registered").permitAll()
+                .antMatchers("/*.html","/register","/registered","/validcode","/admin","/admin_add","/LoginServlet","/test","/mailSender").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").defaultSuccessUrl("/funExam")
@@ -53,6 +54,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
 
     }
-
 
 }
