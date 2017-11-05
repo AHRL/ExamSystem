@@ -198,7 +198,7 @@ window.onload = function () {
         // get validate message
         var getValMsgBtn = document.getElementById('getValMsgBtn');
         EventUtil.addHandler(getValMsgBtn, 'click', function () {
-            var nameVal = uUsr.value;
+            // var nameVal = uUsr.value;
             var emailVal = uEml.value;
             /*$.ajax({
                 method: 'POST',
@@ -220,7 +220,6 @@ window.onload = function () {
                 url: 'http://localhost:8080/register',
                 dataType: 'json',
                 data: {
-                    'name': nameVal,
                     'email': emailVal
                 },
                 success: function (data, textStatus, jqXHR) {
