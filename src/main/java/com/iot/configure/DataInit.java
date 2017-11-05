@@ -1,6 +1,6 @@
 //package com.iot.configure;
 //
-//import com.iot.model.login.User;
+//import User;
 //import com.iot.repository.UserRepository;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Service;
