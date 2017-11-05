@@ -1,4 +1,4 @@
-package com.iot.model.login;
+package com.iot.model;
 
 import javax.persistence.*;
 import java.sql.Date;

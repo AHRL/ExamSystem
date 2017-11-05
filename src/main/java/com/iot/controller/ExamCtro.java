@@ -1,6 +1,6 @@
 package com.iot.controller;
 
-import com.iot.model.login.User;
+import com.iot.model.User;
 import com.iot.repository.UserRepository;
 import com.iot.utils.RandomUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,7 +82,6 @@ public class ExamCtro {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(HttpServletRequest request) throws Exception {
-
         String Username = request.getParameter("upUsername");
         String Password = request.getParameter("upPassword");
         String Email = request.getParameter("upEmail");
@@ -137,7 +136,6 @@ public class ExamCtro {
         }
         return number;
     }
-
 
 //    @RequestMapping("/onlineExam")
 //    @PreAuthorize("hasAnyRole( 'user')")

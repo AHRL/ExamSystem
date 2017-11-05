@@ -1,5 +1,6 @@
 package com.iot.security;
 
+import com.iot.model.User;
 import com.iot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,7 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        com.iot.model.login.User user=userRepository.findByUsername(username);
+        User user=userRepository.findByUsername(username);
         if(user==null){
             throw new UsernameNotFoundException("not found");
         }

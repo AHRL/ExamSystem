@@ -189,6 +189,7 @@ function pageFinished() {
             });
             var input = createElement('input', {
                 "id": "singleC_" + newCode,
+                "name": "singleC_" +  newCode,
                 "classNames": ["form-control", "form-control-lg"]
             });
             choicesPanel.insertBefore(div, addChoiceBtn);
