@@ -204,6 +204,7 @@ function pageFinished() {
         var choicesPanelInputs = choicesPanel.getElementsByTagName('input');
         var cPILen = choicesPanelInputs.length;
         EventUtil.addHandler(ensureBtn, 'click', function (event) {
+            event.preventDefault();
             var jsonObj = {
                 "type": "",
                 "lang": "",
@@ -213,12 +214,12 @@ function pageFinished() {
             };
             for (var i=0; i<lenT; i++){
                 if (typeRadios[i].checked === true){
-                    jsonObj.type = typeRadios[i];
+                    jsonObj.type = typeRadios[i].value;
                 }
             }
             for (var j=0; j<lenL; j++){
                 if (langRadios[j].checked === true){
-                    jsonObj.lang = langRadios[j];
+                    jsonObj.lang = langRadios[j].value;
                 }
             }
             jsonObj.info = exInfo.value;
@@ -230,10 +231,12 @@ function pageFinished() {
                     jsonObj.choices[k] = choicesPanelInputs[k].value;
                 }
             }
-            if (info.value){
+            console.log(jsonObj);
+            if (exInfo.value){
+                console.log(jsonObj);
                 $.ajax({
-                    type: 'post',
-                    url: 'http://localhost:8080/--',
+                    type: 'get',
+                    url: 'http://localhost:8080/add',
                     dataType: 'json',
                     data: {
                         'jsonObj': jsonObj
