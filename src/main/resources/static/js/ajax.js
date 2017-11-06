@@ -36,7 +36,8 @@ function ajax(options) {
     xhr.onreadystatechange = function(){
         if (xhr.readyState === 4){
             if ((xhr.status >= 200 && xhr.status <300) || xhr.status === 304){
-                options.success && options.success(xhr.responseText, xhr.responseXML);
+
+                options.success && options.success(xhr.responseText);
             } else {
                 options.error && options.error(xhr.status);
             }
@@ -44,12 +45,21 @@ function ajax(options) {
     }
 }
 
-function formatParams(data) {
+/*function formatParams(data) {
     var arr = [];
     for (var name in data){
         arr.push(encodeURIComponent(name) + '=' + encodeURIComponent(data[name]));
     }
     arr.push(('v=' + Math.random()).replace('.', ''));
+    console.log(arr);
+    return arr.join('&');
+}*/
+
+function formatParams(data) {
+    var arr = [];
+    for (var name in data){
+        arr.push( '?' + encodeURIComponent(name) + '=' + encodeURIComponent(data[name]));
+    }
     console.log(arr);
     return arr.join('&');
 }
