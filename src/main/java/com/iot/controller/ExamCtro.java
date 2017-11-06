@@ -1,6 +1,8 @@
 package com.iot.controller;
 
+import com.iot.model.Question;
 import com.iot.model.User;
+import com.iot.repository.QuestionRepository;
 import com.iot.repository.UserRepository;
 import com.iot.utils.RandomUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +37,14 @@ public class ExamCtro {
 
     private Jedis jedis=new Jedis("118.89.36.125", 6379);
 
+    @Autowired
     JavaMailSender mailSender;
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private QuestionRepository questionRepository;
 
     @RequestMapping("/admin_add")
     public String admin_add() throws Exception {
@@ -92,9 +98,23 @@ public class ExamCtro {
         return "login";
     }
 
+    @ResponseBody
+    @RequestMapping("/add")
+    public void add(@RequestParam(value = "type")String type,@RequestParam(value = "lang")String lang,
+                                    @RequestParam(value = "info")String info,@RequestParam(value = "code")String code,
+                                    @RequestParam(value = "choices")String choices){
+        Question question=new Question(type,lang,info,code,choices, new Date(System.currentTimeMillis()));
+        questionRepository.save(question);
+        System.out.print(question.toString());
+//        return "admin_add";
+    }
+
+
+    @ResponseBody
     @RequestMapping("/mailSender")
-    public @ResponseBody void mailSender(@RequestParam(value = "email")String email, HttpServletRequest request){
+    public void mailSender(@RequestParam(value = "email")String email, HttpServletRequest request){
         String random= RandomUtil.getRandom();
+        System.out.print("xixixixi");
         request.getSession().setAttribute("email",email);
         try {
             jedis.set(email,random);
@@ -114,6 +134,7 @@ public class ExamCtro {
         System.out.print("hahahahah");
     }
 
+
     @RequestMapping("/validcode")
     @ResponseBody
     public String validcode(HttpServletRequest request) {
@@ -122,6 +143,15 @@ public class ExamCtro {
         String email=(String) request.getSession().getAttribute("email");
         String validcode=jedis.get(email);
         return validcode;
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/isExist")
+    public Boolean isExist(@RequestParam(value = "email")String email) {
+        User user=userRepository.findByEmail(email);
+        if(user!=null){return true;}
+        else {return false;}
     }
 
     @RequestMapping("/registered")
@@ -136,6 +166,8 @@ public class ExamCtro {
         }
         return number;
     }
+
+
 
 //    @RequestMapping("/onlineExam")
 //    @PreAuthorize("hasAnyRole( 'user')")

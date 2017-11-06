@@ -15,11 +15,12 @@ public interface UserRepository extends JpaRepository<User,Integer>{
 
     User findByUsername(String username);
 
+    User findByEmail(String email);
+
     long count();
 
     @Query(value = "select count(u) from User u where u.date=?1 ")
     long registeredDaysBefore(Date date);
-
 
 
 

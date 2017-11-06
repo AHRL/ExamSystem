@@ -1,7 +1,6 @@
 package com.iot.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
 
 /**
@@ -12,19 +11,79 @@ import java.sql.Date;
 @Table(name = "question")
 public class Question {
 
-    Date date;
+   @Id
+   @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    private String chooseType;
-    private String chooseLang;
-    private String exinfo;
-    private String addCodeForExInfo;
-    private String singleC_A;
-    private String singleC_B;
-    private String singleC_C;
-    private String singleC_D;
-    private String singleC_E;
+    private Date date;
+    private String type;
+    private String lang;
+    private String info;
+    private String code;
+    private String choices;
 
+    public Date getDate() {
+        return date;
+    }
 
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
+    public String getType() {
+        return type;
+    }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getLang() {
+        return lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getChoices() {
+        return choices;
+    }
+
+    public void setChoices(String choices) {
+        this.choices = choices;
+    }
+
+    public Question(String type, String Lang, String info, String code, String choices, Date date) {
+        this.type = type;
+        this.lang = Lang;
+        this.info = info;
+        this.code = code;
+        this.choices = choices;
+        this.date = date;
+    }
 }

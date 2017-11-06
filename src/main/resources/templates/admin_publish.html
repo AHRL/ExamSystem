@@ -10,15 +10,15 @@
     <meta name="keyword" content="Fun Exam"/>
     <meta name="description" content="An exam system for students"/>
     <link rel="short icon" type="image/x-icon" href="../favicon.ico"/>
-    <link rel="stylesheet" href="../static/stylesheets/css/funExam.css"/>
-    <link rel="stylesheet" href="../static/stylesheets/css/admin_login.css"/>
+    <link rel="stylesheet" href="   /stylesheets/css/funExam.css"/>
+    <link rel="stylesheet" href="   /stylesheets/css/admin_login.css"/>
 
-    <script src="../static/lib/modernizr-2.6.2.min.js"></script>
+    <script src="   /lib/modernizr-2.6.2.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
     <!--[if (lt IE 9) & (!IEMobile)]>
-    <script src="../static/lib/respond.min.js"></script>
+    <script src="   /lib/respond.min.js"></script>
     <![endif]-->
-</head>
+</head>solr
 <body>
 <nav class="navbar navbar-toggleable-md fixed-top navbar-inverse bg-inverse">
     <button class="navbar-toggler navbar-toggler-right"
@@ -31,7 +31,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="#">
-        <img src="../static/img/w3fun-inverse-40x40.png" id="userInfo" alt="user information" />
+        <img src="   /img/w3fun-inverse-40x40.png" id="userInfo" alt="user information" />
         <span>Fun Exam</span>
     </a>
     <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -50,7 +50,7 @@
             </li>
         </ul>
         <form class="form-inline navbar-form pull-right">
-            <input class="form-control" type="text" placeholder="Search">
+            <input class="form-control" type="choices" placeholder="Search">
             <button class="btn btn-success" type="submit">Search</button>
         </form>
         <ul class="navbar-nav mt-2 mt-md-0">
@@ -59,7 +59,7 @@
                    data-toggle="dropdown" href="#"
                    role="button" aria-haspopup="true" aria-expanded="false">
 
-                    欢迎您 <span th:inline="text"> [[${#httpServletRequest.remoteUser}]]</span>
+                    欢迎您 <span th:inline="choices"> [[${#httpServletRequest.remoteUser}]]</span>
 
 
                 </a>
