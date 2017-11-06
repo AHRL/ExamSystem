@@ -232,6 +232,7 @@ function pageFinished() {
                 }
             }
             console.log(jsonObj);
+            var url = formatParams(jsonObj);
             if (exInfo.value){
                 console.log(jsonObj);
                 $.ajax({
@@ -239,7 +240,7 @@ function pageFinished() {
                     url: 'http://localhost:8080/add',
                     dataType: 'json',
                     data: {
-                        'jsonObj': jsonObj
+                        'url': url
                     },
                     success: function (data, textStatus, jqXHR) {
                         console.log('成功添加题库' + data);
@@ -396,5 +397,16 @@ function slideDown(el, time) {
             el.style.height = totalHeight + 'px';
         }
     }, 10);
+}
+
+function formatParams(data) {
+    var arr = [];
+    for (var name in data){
+        if (data.hasOwnProperty(name)){
+            arr.push( '?' + encodeURIComponent(name) + '=' + encodeURIComponent(data[name]));
+        }
+    }
+    console.log(arr);
+    return arr.join('&');
 }
 

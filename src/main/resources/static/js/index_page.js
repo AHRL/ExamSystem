@@ -267,10 +267,10 @@ window.onload = function () {
                         validcode = JSON.stringify(response);
                         if (validcode === uVMsg.value){
                             addClass(this, 'validationStyle-successed');
-                            createValidateMsg(this.nextSibling, '验证成功', true);
+                            createValidateMsg(uVMsg.nextSibling, '验证成功', true);
                         } else {
                             addClass(this, 'validationStyle-failed');
-                            createValidateMsg(this.nextSibling, '验证失败', false);
+                            createValidateMsg(uVMsg.nextSibling, '验证失败', false);
                         }
                     },
                     error: function (status) {
