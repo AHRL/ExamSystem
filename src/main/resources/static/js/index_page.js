@@ -243,7 +243,7 @@ window.onload = function () {
                 error: function (jqXHR, textStatus, error) {
                     console.log('error' + textStatus);
                 }
-            })
+            });
         });
 
         // ensure validate message

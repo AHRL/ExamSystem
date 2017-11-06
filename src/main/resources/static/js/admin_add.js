@@ -195,8 +195,61 @@ function pageFinished() {
             choicesPanel.insertBefore(div, addChoiceBtn);
             div.appendChild(label);
             div.appendChild(input);
-        })
+        });
 
+        var ensureBtn = document.getElementById('ensureBtn');
+        var exInfo = document.getElementById('ex-info');
+        var addCodeForExInfo = document.getElementById('addCodeForExInfo');
+        var choicesPanel = document.getElementById('choicesPanel');
+        var choicesPanelInputs = choicesPanel.getElementsByTagName('input');
+        var cPILen = choicesPanelInputs.length;
+        EventUtil.addHandler(ensureBtn, 'click', function (event) {
+            var jsonObj = {
+                "type": "",
+                "lang": "",
+                "info": "",
+                "code": "",
+                "choices": []
+            };
+            for (var i=0; i<lenT; i++){
+                if (typeRadios[i].checked === true){
+                    jsonObj.type = typeRadios[i];
+                }
+            }
+            for (var j=0; j<lenL; j++){
+                if (langRadios[j].checked === true){
+                    jsonObj.lang = langRadios[j];
+                }
+            }
+            jsonObj.info = exInfo.value;
+            if (addCodeForExInfo.value){
+                jsonObj.code = addCodeForExInfo.value;
+            }
+            if (choicesPanelInputs[0].value){
+                for (var k=0; k<cPILen; k++){
+                    jsonObj.choices[k] = choicesPanelInputs[k].value;
+                }
+            }
+            if (info.value){
+                $.ajax({
+                    type: 'post',
+                    url: 'http://localhost:8080/--',
+                    dataType: 'json',
+                    data: {
+                        'jsonObj': jsonObj
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        console.log('成功添加题库' + data);
+                    },
+                    error: function (jqXHR, textStatus, error) {
+                        console.log('error' + textStatus);
+                    }
+                });
+            } else {
+                console.log('fail');
+            }
+
+        });
 
 
     })();
