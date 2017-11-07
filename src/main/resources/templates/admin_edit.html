@@ -50,7 +50,7 @@
                 </li>
             </ul>
             <form class="form-inline navbar-form pull-right">
-                <input class="form-control" type="text" placeholder="Search">
+                <input class="form-control" type="choices" placeholder="Search">
                 <button class="btn btn-success" type="submit">Search</button>
             </form>
             <ul class="navbar-nav mt-2 mt-md-0">
@@ -59,7 +59,7 @@
                        data-toggle="dropdown" href="#"
                        role="button" aria-haspopup="true" aria-expanded="false">
 
-                        欢迎您 <span th:inline="text"> [[${#httpServletRequest.remoteUser}]]</span>
+                        欢迎您 <span th:inline="choices"> [[${#httpServletRequest.remoteUser}]]</span>
 
 
                     </a>
@@ -107,7 +107,7 @@
                                 <option value="4">HTML/CSS</option>
                             </select>
                         </label>
-                        <input type="text" placeholder="关键词搜索" />
+                        <input type="choices" placeholder="关键词搜索" />
                         <button>
                             <i class="fa fa-search"></i>
                         </button>
@@ -145,7 +145,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="upUsername" class="form-control-label">题型选择</label>
-                                    <input type="text" name="upUsername" id="upUsername" class="form-control" placeholder=""/>
+                                    <input type="choices" name="upUsername" id="upUsername" class="form-control" placeholder=""/>
                                 </div>
                                 <div class="form-group">
                                     <label for="upPassword" class="form-control-label">是否上传图片</label>
@@ -155,7 +155,7 @@
                                     <label for="upEnsurePassword" class="form-control-label">确认密码</label>
                                     <input type="password" name="upEnsurePassword" id="upEnsurePassword" class="form-control" placeholder="请输入您的密码"/>
                                 </div>
-                                <div class="form-group text-center ">
+                                <div class="form-group choices-center ">
                                     <button type="button"  id="upSubmitButton" class="btn btn-lg btn-primary ">确认</button>
                                     <button type="reset" class="btn btn-lg js-upDismiss" data-dismiss="modal" id="upDismiss">取消</button>
                                 </div>

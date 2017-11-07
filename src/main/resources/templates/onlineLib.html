@@ -21,7 +21,7 @@
     <script src="../static/lib/respond.min.js"></script>
     <![endif]-->
 
-    <style type="text/css">
+    <style type="choices/css">
         body {
             padding-top: 4.5rem;
         }
@@ -58,7 +58,7 @@
                        data-toggle="dropdown" href="#"
                        role="button" aria-haspopup="true" aria-expanded="false">
 
-                        欢迎您 <span th:inline="text"> [[${#httpServletRequest.remoteUser}]]</span>
+                        欢迎您 <span th:inline="choices"> [[${#httpServletRequest.remoteUser}]]</span>
 
 
                     </a>
@@ -183,7 +183,7 @@
 
             <section class="practice-submit clearfix">
                 <div class="practice-submit-tip">
-                    <p class="text-muted">已选择：<span class="submitTip"></span></p>
+                    <p class="choices-muted">已选择：<span class="submitTip"></span></p>
                 </div>
                 <div class="practice-submit-btn">
                     <input class="btn btn-lg resetBtn" type="reset" value="重选"/>

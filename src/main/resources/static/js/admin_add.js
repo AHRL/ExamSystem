@@ -195,8 +195,65 @@ function pageFinished() {
             choicesPanel.insertBefore(div, addChoiceBtn);
             div.appendChild(label);
             div.appendChild(input);
-        })
+        });
 
+        var ensureBtn = document.getElementById('ensureBtn');
+        var exInfo = document.getElementById('ex-info');
+        var addCodeForExInfo = document.getElementById('addCodeForExInfo');
+        var choicesPanel = document.getElementById('choicesPanel');
+        var choicesPanelInputs = choicesPanel.getElementsByTagName('input');
+        var cPILen = choicesPanelInputs.length;
+        EventUtil.addHandler(ensureBtn, 'click', function (event) {
+            event.preventDefault();
+            var jsonObj = {
+                "type": "",
+                "lang": "",
+                "info": "",
+                "code": "",
+                "choices": []
+            };
+            for (var i=0; i<lenT; i++){
+                if (typeRadios[i].checked === true){
+                    jsonObj.type = typeRadios[i].value;
+                }
+            }
+            for (var j=0; j<lenL; j++){
+                if (langRadios[j].checked === true){
+                    jsonObj.lang = langRadios[j].value;
+                }
+            }
+            jsonObj.info = exInfo.value;
+            if (addCodeForExInfo.value){
+                jsonObj.code = addCodeForExInfo.value;
+            }
+            if (choicesPanelInputs[0].value){
+                for (var k=0; k<cPILen; k++){
+                    jsonObj.choices[k] = choicesPanelInputs[k].value;
+                }
+            }
+            console.log(jsonObj);
+            var url = formatParams(jsonObj);
+            if (exInfo.value){
+                console.log(jsonObj);
+                $.ajax({
+                    type: 'get',
+                    url: 'http://localhost:8080/add',
+                    dataType: 'json',
+                    data: {
+                        'url': url
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        console.log('成功添加题库' + data);
+                    },
+                    error: function (jqXHR, textStatus, error) {
+                        console.log('error' + textStatus);
+                    }
+                });
+            } else {
+                console.log('fail');
+            }
+
+        });
 
 
     })();
@@ -340,5 +397,16 @@ function slideDown(el, time) {
             el.style.height = totalHeight + 'px';
         }
     }, 10);
+}
+
+function formatParams(data) {
+    var arr = [];
+    for (var name in data){
+        if (data.hasOwnProperty(name)){
+            arr.push( '?' + encodeURIComponent(name) + '=' + encodeURIComponent(data[name]));
+        }
+    }
+    console.log(arr);
+    return arr.join('&');
 }
 

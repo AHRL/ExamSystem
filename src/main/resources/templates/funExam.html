@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Home - FunExam</title>
-    <link rel="stylesheet" href="../static/stylesheets/css/funExam.css"/>
+    <link rel="stylesheet" href="  stylesheets/css/funExam.css"/>
     <link rel="short icon" type="image/x-icon" href="../favicon.ico"/>
-    <script src="../static/lib/modernizr-2.6.2.min.js"></script>
+    <script src="  lib/modernizr-2.6.2.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
     <!--[if (lt IE 9) & (!IEMobile)]>
-    <script src="../static/lib/respond.min.js"></script>
+    <script src="  lib/respond.min.js"></script>
     <![endif]-->
-    <style type="text/css">
+    <style type="choices/css">
         body {
             padding-top: 4.5rem;
         }
@@ -112,7 +112,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="#">
-            <img src="../static/img/w3fun-inverse-40x40.png" id="userInfo" alt="user information" />
+            <img src="  img/w3fun-inverse-40x40.png" id="userInfo" alt="user information" />
             <span>Fun Exam</span>
         </a>
         <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -127,7 +127,7 @@
                        data-toggle="dropdown" href="#"
                        role="button" aria-haspopup="true" aria-expanded="false">
 
-                        欢迎您 <span th:inline="text"> [[${#httpServletRequest.remoteUser}]]</span>
+                        欢迎您 <span th:inline="choices"> [[${#httpServletRequest.remoteUser}]]</span>
 
 
                     </a>
@@ -136,31 +136,32 @@
                         <a class="dropdown-item" href="404.html">账号设置</a>
                         <a class="dropdown-item" href="404.html">我的简历</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="login.html">退出登录</a>
+                        <a class="dropdown-item"  th:href="@{/logout}">退出登录</a>
+                        <!--<a class="dropdown-item"  href="login.html">退出登录</a>-->
                     </div>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <header id="header" class="text-center">
+    <header id="header" class="choices-center">
         <h1>Fun Exam</h1>
         <hr class="f-hr"/>
     </header>
     <main id="main">
         <div class="exam">
             <div class="exam-item">
-                <h2 class="exam-title h4 text-center">在线题库</h2>
+                <h2 class="exam-title h4 choices-center">在线题库</h2>
                 <div class="exam-info">
                     涵盖嵌入式、Android、JavaWeb、Web 前端四个方向<br/>
                     语言包括 C/C++、Java、JavaScript、CSS、HTML
                 </div>
-                <div class="text-center exam-btn">
+                <div class="choices-center exam-btn">
                     <button class="btn btn-lg">进入题库</button>
                 </div>
             </div>
             <div class="exam-item">
-                <h2 class="exam-title h4 text-center">在线考试</h2>
+                <h2 class="exam-title h4 choices-center">在线考试</h2>
                 <div class="exam-info">
                     翼灵物联工作室大一招新笔试<br/>
                     必修 · C 语言考试<br/>
@@ -171,12 +172,12 @@
                     <div class="exam-news-time">2017/11/15 15:00-17:00</div>
                     <div class="exam-news-info">Web 前端小组测试</div>
                 </div>
-                <div class="text-center exam-btn">
+                <div class="choices-center exam-btn">
                     <button class="btn btn-lg">马上考试</button>
                 </div>
             </div>
         </div>
-        <section class="text-center">
+        <section class="choices-center">
             <h2>The News</h2>
             <hr class="f-hr"/>
         </section>
@@ -189,7 +190,7 @@
             <i class="fa fa-gear"></i>
         </div>
     </section>
-    <footer id="footer" class="_footer text-center" role="contentinfo">
+    <footer id="footer" class="_footer choices-center" role="contentinfo">
         <span><i class="fa fa-copyright"></i>2017</span>
         <a href="https://github.com/w3fun/" target="_blank" class="_link"><i class="fa fa-heart"></i>W3Fun</a>
         <a href="https://github.com/swpuLeo/" target="_blank" class="_link _hover-male"><i class="fa fa-male"></i>Leo</a>
@@ -198,9 +199,9 @@
         <a href="https://github.com/luqingying/" target="_blank" class="_link _hover-female"><i class="fa fa-female"></i>yqy</a>
     </footer>
 </body>
-<script src="../static/lib/jquery-3.2.1.min.js"></script>
-<script src="../static/lib/bootstrap.min.js"></script>
-<!--<script src="../static/lib/gradientify.js"></script>-->
+<script src="  lib/jquery-3.2.1.min.js"></script>
+<script src="  lib/bootstrap.min.js"></script>
+<!--<script src="  lib/gradientify.js"></script>-->
 <!--<script>
     $(document).ready(function() {
         $(".exam-title").gradientify({

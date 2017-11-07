@@ -56,8 +56,23 @@ window.onload = function () {
                     return emlReg.test(item);
                 });
                 if(matchEmail){
-                    addClass(this, 'validationStyle-successed');
-                    createValidateMsg(this, '邮箱验证成功', true);
+                    // addClass(this, 'validationStyle-successed');
+                    // createValidateMsg(this, '邮箱验证成功', true);
+                    $.ajax({
+                        type: 'get',
+                        url: 'http://localhost:8080/isExist',
+                        dataType: 'json',
+                        success: function (data, textStatus, jqXHR) {
+                            console.log(data);
+                            addClass(uEml, 'validationStyle-successed');
+                            createValidateMsg(uEml, '邮箱验证成功', true);
+                        },
+                        error: function (jqXHR, textStatus, error) {
+                            console.log('error' + textStatus);
+                            addClass(uEml, 'validationStyle-failed');
+                            createValidateMsg(uEml, '该邮箱已被注册', false);
+                        }
+                    })
                 } else {
                     addClass(this, 'validationStyle-failed');
                     createValidateMsg(this, '邮箱验证失败', false);
@@ -216,8 +231,8 @@ window.onload = function () {
                 }
             })*/
             $.ajax({
-                type: 'post',
-                url: 'http://localhost:8080/register',
+                type: 'get',
+                url: 'http://localhost:8080/mailSender',
                 dataType: 'json',
                 data: {
                     'email': emailVal
@@ -228,43 +243,57 @@ window.onload = function () {
                 error: function (jqXHR, textStatus, error) {
                     console.log('error' + textStatus);
                 }
-            })
+            });
         });
 
         // ensure validate message
         var uVMsg = document.getElementById('upValMsg');
         EventUtil.addHandler(uVMsg, 'blur', function () {
             var validcode;
-            $.ajax({
-                method: 'GET',
-                url: 'http://localhost:8080/validcode',
-                dataType: 'json',
-                success: function (response) {
-                    validcode = JSON.stringify(response);
-                    if (validcode === uVMsg.value){
-                        addClass(this, 'validationStyle-successed');
-                        createValidateMsg(this, '验证成功', true);
-                    } else {
-                        addClass(this, 'validationStyle-failed');
-                        createValidateMsg(this, '验证失败', false);
+
+            var codeReg = /\d/;
+            var val = this.value;
+            var matchCode;
+            matchCode = val.split('').every(function (item) {
+                return codeReg.test(item);
+            });
+
+            if (val.length===6 && matchCode){
+                $.ajax({
+                    method: 'GET',
+                    url: 'http://localhost:8080/validcode',
+                    dataType: 'json',
+                    success: function (response) {
+                        validcode = JSON.stringify(response);
+                        if (validcode === uVMsg.value){
+                            addClass(this, 'validationStyle-successed');
+                            createValidateMsg(uVMsg.nextSibling, '验证成功', true);
+                        } else {
+                            addClass(this, 'validationStyle-failed');
+                            createValidateMsg(uVMsg.nextSibling, '验证失败', false);
+                        }
+                    },
+                    error: function (status) {
+                        console.log('error');
                     }
-                },
-                error: function (status) {
-                    console.log('error');
-                }
-            })
+                })
+            } else {
+                addClass(this, 'validationStyle-failed');
+                createValidateMsg(this.nextSibling, '验证失败', false);
+            }
+
         });
         EventUtil.addHandler(uVMsg, 'focus', function () {
-            var valiMsg = this.getElementsByClassName('validateMsg');
+            /*var valiMsg = this.getElementsByClassName('validateMsg');
             if (valiMsg) {
-                removeAfter(this);
+                removeAfter(this.nextSibling);
                 if (hasClass(this, 'validationStyle-failed')){
                     removeClass(this, 'validationStyle-failed');
                 }
                 if (hasClass(this, 'validationStyle-successed')){
                     removeClass(this, 'validationStyle-successed');
                 }
-            }
+            }*/
         });
 
         // submit
@@ -606,6 +635,8 @@ function clearForm() {
         }
     }
 }
+
+
 
 
 /*function autoPlay(){
