@@ -233,15 +233,14 @@ function pageFinished() {
             }
             console.log(jsonObj);
             var url = formatParams(jsonObj);
+            console.log(url);
             if (exInfo.value){
                 console.log(jsonObj);
                 $.ajax({
-                    type: 'get',
+                    type: 'POST',
                     url: 'http://localhost:8080/add',
                     dataType: 'json',
-                    data: {
-                        'url': url
-                    },
+                    data: url,
                     success: function (data, textStatus, jqXHR) {
                         console.log('成功添加题库' + data);
                     },
@@ -401,9 +400,10 @@ function slideDown(el, time) {
 
 function formatParams(data) {
     var arr = [];
+    arr.push('?');
     for (var name in data){
         if (data.hasOwnProperty(name)){
-            arr.push( '?' + encodeURIComponent(name) + '=' + encodeURIComponent(data[name]));
+            arr.push( encodeURIComponent(name) + '=' + encodeURIComponent(data[name]));
         }
     }
     console.log(arr);

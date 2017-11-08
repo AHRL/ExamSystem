@@ -72,7 +72,7 @@ particlesJS('particles-js',
             "detect_on": "canvas",
             "events": {
                 "onhover": {
-                    "enable": false,
+                    "enable": true,
                     "mode": "grab"  /*鼠标移入模式*/
                 },
                 "onclick": {

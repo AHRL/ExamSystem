@@ -99,7 +99,7 @@ public class ExamCtro {
     }
 
     @ResponseBody
-    @RequestMapping("/add")
+    @RequestMapping(value = "/add")
     public void add(@RequestParam(value = "type")String type,@RequestParam(value = "lang")String lang,
                                     @RequestParam(value = "info")String info,@RequestParam(value = "code")String code,
                                     @RequestParam(value = "choices")String choices){
@@ -111,7 +111,7 @@ public class ExamCtro {
 
 
     @ResponseBody
-    @RequestMapping("/mailSender")
+    @RequestMapping(value = "/mailSender")
     public void mailSender(@RequestParam(value = "email")String email, HttpServletRequest request){
         String random= RandomUtil.getRandom();
         System.out.print("xixixixi");
@@ -135,7 +135,7 @@ public class ExamCtro {
     }
 
 
-    @RequestMapping("/validcode")
+    @RequestMapping(value = "/validcode")
     @ResponseBody
     public String validcode(HttpServletRequest request) {
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -145,16 +145,16 @@ public class ExamCtro {
         return validcode;
     }
 
-
     @ResponseBody
-    @RequestMapping("/isExist")
-    public Boolean isExist(@RequestParam(value = "email")String email) {
+    @RequestMapping(value = "/isExist",method = RequestMethod.GET)
+    public int isExist(@RequestParam(value = "email")String email) {
         User user=userRepository.findByEmail(email);
-        if(user!=null){return true;}
-        else {return false;}
+        System.out.print("hahahahah");
+        if(user!=null){return 1;}
+        else {return 0;}
     }
 
-    @RequestMapping("/registered")
+    @RequestMapping(value = "/registered")
     @ResponseBody
     public List<Long> registered() {
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -166,7 +166,6 @@ public class ExamCtro {
         }
         return number;
     }
-
 
 
 //    @RequestMapping("/onlineExam")
