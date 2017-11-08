@@ -4,7 +4,7 @@ body{
   padding:80px 0;
 }
 .body{
-  min-width:1120px;
+  min-width:890px;
 }
 .header,.main{
   width:85%;
@@ -76,14 +76,19 @@ body{
     }
     .skill-progress-block{
       margin:10px auto;
-      width:70%;
-      .skill-progress-bar{
+      width:85%;
+      span{
         display: inline-block;
-        margin:0 20px;
-        width:60%;
-        -webkit-border-radius: 10px;
-        -moz-border-radius: 10px;
-        border-radius: 10px;
+       line-height:35px;
+      }
+      .skill-progress-bar{
+        .progress-bar{
+          margin:auto 20px;
+          width:100%;
+          -webkit-border-radius: 10px;
+          -moz-border-radius: 10px;
+          border-radius: 10px;
+        }
       }
     }
 
