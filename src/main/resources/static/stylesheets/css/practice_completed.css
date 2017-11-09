@@ -3,7 +3,7 @@ body {
   padding: 80px 0; }
 
 .body {
-  min-width: 1120px; }
+  min-width: 890px; }
 
 .header, .main {
   width: 85%;
@@ -62,11 +62,13 @@ body {
         background: #ff6547; }
     .main .skill-progress .skill-progress-block {
       margin: 10px auto;
-      width: 70%; }
-      .main .skill-progress .skill-progress-block .skill-progress-bar {
+      width: 85%; }
+      .main .skill-progress .skill-progress-block span {
         display: inline-block;
-        margin: 0 20px;
-        width: 60%;
+        line-height: 35px; }
+      .main .skill-progress .skill-progress-block .skill-progress-bar .progress-bar {
+        margin: auto 20px;
+        width: 100%;
         -webkit-border-radius: 10px;
         -moz-border-radius: 10px;
         border-radius: 10px; }

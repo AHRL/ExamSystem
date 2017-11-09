@@ -86,4 +86,15 @@ public class Question {
         this.choices = choices;
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "type='" + type + '\'' +
+                ", lang='" + lang + '\'' +
+                ", info='" + info + '\'' +
+                ", code='" + code + '\'' +
+                ", choices='" + choices + '\'' +
+                '}';
+    }
 }

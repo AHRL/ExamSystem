@@ -61,16 +61,21 @@ window.onload = function () {
                     $.ajax({
                         type: 'get',
                         url: 'http://localhost:8080/isExist',
-                        dataType: 'json',
+                        dataType: 'text',
+                        data: {
+                            "email": val
+                        },
                         success: function (data, textStatus, jqXHR) {
-                            console.log(data);
-                            addClass(uEml, 'validationStyle-successed');
-                            createValidateMsg(uEml, '邮箱验证成功', true);
+                            if (parseInt(data)){
+                                addClass(uEml, 'validationStyle-failed');
+                                createValidateMsg(uEml, '该邮箱已被注册', false);
+                            } else {
+                                addClass(uEml, 'validationStyle-successed');
+                                createValidateMsg(uEml, '邮箱验证成功', true);
+                            }
                         },
                         error: function (jqXHR, textStatus, error) {
                             console.log('error' + textStatus);
-                            addClass(uEml, 'validationStyle-failed');
-                            createValidateMsg(uEml, '该邮箱已被注册', false);
                         }
                     })
                 } else {
@@ -231,8 +236,8 @@ window.onload = function () {
                 }
             })*/
             $.ajax({
-                type: 'get',
-                url: 'http://localhost:8080/mailSender',
+                type: 'POST',
+                url: '/mailSender',
                 dataType: 'json',
                 data: {
                     'email': emailVal
@@ -260,7 +265,7 @@ window.onload = function () {
 
             if (val.length===6 && matchCode){
                 $.ajax({
-                    method: 'GET',
+                    method: 'get',
                     url: 'http://localhost:8080/validcode',
                     dataType: 'json',
                     success: function (response) {
