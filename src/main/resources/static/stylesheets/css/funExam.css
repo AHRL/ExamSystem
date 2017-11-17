@@ -5,6 +5,9 @@
 
 .getValMsgBtn {
     position: absolute;
-    bottom: 0;
+    top: 0;
     right: 0;
+}
+.alert {
+    display: none;
 }

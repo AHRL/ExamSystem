@@ -112,12 +112,12 @@ h1,h2,h3,h4,h5,h6 {
 
 .validationStyle-failed {
   border-color: $brand-danger;
-  background-color: $brand-danger;
+  /*background-color: $brand-danger;*/
 }
 
 .validationStyle-successed {
   border-color: $brand-success;
-  background-color: $brand-success;
+  /*background-color: $brand-success;*/
 }
 
 ._footer {
