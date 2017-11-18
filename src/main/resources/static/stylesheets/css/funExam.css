@@ -42,3 +42,12 @@
 .btn {
     font-size: 1.4rem;
 }
+
+.fa-eye-slash,
+.fa-eye {
+    position: absolute;
+    top: 3.95rem;
+    right: 1rem;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
