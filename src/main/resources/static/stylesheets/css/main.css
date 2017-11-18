@@ -9073,11 +9073,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .validationStyle-failed {
   border-color: #d9534f;
-  background-color: #d9534f; }
+  /*background-color: $brand-danger;*/ }
 
 .validationStyle-successed {
   border-color: #5cb85c;
-  background-color: #5cb85c; }
+  /*background-color: $brand-success;*/ }
 
 ._footer {
   margin-top: 3rem;
