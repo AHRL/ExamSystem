@@ -363,7 +363,7 @@ window.onload = function () {
                         error: function (jqXHR, textStatus, error) {
                             console.log('error' + textStatus);
                         }
-                    })
+                    });
                 } else {
                     addClass(this, 'validationStyle-failed');
                     showTip.call(this.nextElementSibling, '邮箱格式不正确！');
@@ -374,15 +374,7 @@ window.onload = function () {
             }
         });
         EventUtil.addHandler(uEml, 'focus', function () {
-            if (this.nextElementSibling.style.display === 'block'){
-                this.nextElementSibling.style.display = 'none';
-            }
-            if (hasClass(this, 'validationStyle-failed')){
-                removeClass(this, 'validationStyle-failed');
-            }
-            if (hasClass(this, 'validationStyle-successed')){
-                removeClass(this, 'validationStyle-successed');
-            }
+            clearInput.call(this);
         });
         // validate username
         var uUsr = document.getElementById('upUsername');
@@ -406,15 +398,7 @@ window.onload = function () {
 
         });
         EventUtil.addHandler(uUsr, 'focus', function () {
-            if (this.nextElementSibling.style.display === 'block'){
-                this.nextElementSibling.style.display = 'none';
-            }
-            if (hasClass(this, 'validationStyle-failed')){
-                removeClass(this, 'validationStyle-failed');
-            }
-            if (hasClass(this, 'validationStyle-successed')){
-                removeClass(this, 'validationStyle-successed');
-            }
+            clearInput.call(this);
         });
         // validate password
         var pswdFlag = false;
@@ -438,15 +422,7 @@ window.onload = function () {
 
         });
         EventUtil.addHandler(uPswd, 'focus', function () {
-            if (this.nextElementSibling.style.display === 'block'){
-                this.nextElementSibling.style.display = 'none';
-            }
-            if (hasClass(this, 'validationStyle-failed')){
-                removeClass(this, 'validationStyle-failed');
-            }
-            if (hasClass(this, 'validationStyle-successed')){
-                removeClass(this, 'validationStyle-successed');
-            }
+            clearInput.call(this);
         });
         // ensure password
         var uEPswd = document.getElementById('upEnsurePassword');
@@ -471,15 +447,7 @@ window.onload = function () {
 
         });
         EventUtil.addHandler(uEPswd, 'focus', function () {
-            if (this.nextElementSibling.style.display === 'block'){
-                this.nextElementSibling.style.display = 'none';
-            }
-            if (hasClass(this, 'validationStyle-failed')){
-                removeClass(this, 'validationStyle-failed');
-            }
-            if (hasClass(this, 'validationStyle-successed')){
-                removeClass(this, 'validationStyle-successed');
-            }
+            clearInput.call(this);
         });
         // get validate message
         var getValMsgBtn = document.getElementById('getValMsgBtn');
@@ -558,15 +526,7 @@ window.onload = function () {
 
         });
         EventUtil.addHandler(uVMsg, 'focus', function () {
-            if (this.nextElementSibling.style.display === 'block'){
-                this.nextElementSibling.style.display = 'none';
-            }
-            if (hasClass(this, 'validationStyle-failed')){
-                removeClass(this, 'validationStyle-failed');
-            }
-            if (hasClass(this, 'validationStyle-successed')){
-                removeClass(this, 'validationStyle-successed');
-            }
+            clearInput.call(this);
         });
         // submit
         var signUpForm = document.getElementById('signUpForm');
@@ -608,23 +568,46 @@ window.onload = function () {
 
         });
         EventUtil.addHandler(usr, 'focus', function(){
-
+            clearInput.call(this);
         });
 
         // validate password
         var pswd = document.getElementById('password');
         EventUtil.addHandler(pswd, 'blur', function(){
-
+            if (this.value >=8 && this.value<=16){
+                addClass(this, 'validationStyle-successed');
+            } else {
+                addClass(this, 'validationStyle-failed');
+            }
         });
         EventUtil.addHandler(pswd, 'focus', function(){
-
+            clearInput.call(this);
         });
 
         // submit
         var signInForm = document.getElementById('signInForm');
         var inSubmitButton = document.getElementById('inSubmitButton');
         EventUtil.addHandler(inSubmitButton, 'click', function () {
-            signInForm.submit();
+            this.setAttribute('disabled', 'disabled');
+            addClass(this, 'disabled');
+            $.ajax({
+                type: "POST",
+                url: "",
+                data: {
+                    "username": usr.value,
+                    "password": pswd.value
+                },
+                success: function (data, textStatus, jqXHR) {
+                    if (parseInt(data)){
+
+                    } else {
+
+                    }
+                },
+                error: function (jqXHR, textStatus, error) {
+
+                }
+            });
         });
 
         // close
@@ -807,7 +790,7 @@ function checkPswdStrength(sValue){
             }),
             matchLength = sValue.length;
         var singleMod = (matchUpperCase&&!matchLowerCase&&!matchNum) || (!matchUpperCase&&matchLowerCase&&!matchNum) || (!matchUpperCase&&!matchLowerCase&&matchNum);
-        if ( matchLength<6 || matchLength>16 ){
+        if ( matchLength<8 || matchLength>16 ){
             mode = 0;  // not match
         } else {
             if (len<=10){
@@ -937,6 +920,18 @@ function clearForm() {
 function showTip(tip){
     this.lastElementChild.innerHTML = tip;
     this.style.display = 'block';
+}
+
+function clearInput(){
+    if (this.nextElementSibling.style.display === 'block'){
+        this.nextElementSibling.style.display = 'none';
+    }
+    if (hasClass(this, 'validationStyle-failed')){
+        removeClass(this, 'validationStyle-failed');
+    }
+    if (hasClass(this, 'validationStyle-successed')){
+        removeClass(this, 'validationStyle-successed');
+    }
 }
 
 

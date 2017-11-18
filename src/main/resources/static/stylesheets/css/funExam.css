@@ -11,3 +11,29 @@
 .alert {
     display: none;
 }
+
+.form-group.text-center {
+    margin: 2.5rem 0;
+}
+
+.find-psd {
+    position: absolute;
+    left: 1.5rem;
+}
+
+.modal-header {
+    position: relative;
+    height: 18rem;
+}
+
+.modal-header figure {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.modal-header .close {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+}

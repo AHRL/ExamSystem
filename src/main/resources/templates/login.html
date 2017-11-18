@@ -49,6 +49,7 @@
             <a href="https://github.com/812913/" target="_blank" class="_link _hover-female"><i class="fa fa-female"></i>lwf</a>
             <a href="https://github.com/StaticWalk/" target="_blank" class="_link _hover-male"><i class="fa fa-male"></i>StaticWalk</a>
             <a href="https://github.com/luqingying/" target="_blank" class="_link _hover-female"><i class="fa fa-female"></i>lqy</a>
+            <a href="#" target="_blank" class="_link"><i class="fa fa-copyright"></i> MIT</a>
         </footer>
 
         <!-- modal -->
@@ -56,7 +57,10 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">登录 Fun Exam</h5>
+                        <figure class="text-center">
+                            <img src="../static/img/w3fun-100x100.png"/>
+                            <figcaption class="h5">登&nbsp;&nbsp;&nbsp;&nbsp;录</figcaption>
+                        </figure>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -71,18 +75,16 @@
                                 <label for="password" class="form-control-label">密码</label>
                                 <input type="password" name="password" id="password" class="form-control" placeholder="请输入密码"/>
                             </div>
-                            <div>
-                                忘记密码？
-                                <a href="" target="_blank" class="">找回密码</a>
-                            </div>
-                            <div class="form-group choices-center">
-                                <button type="button" class="btn btn-lg btn-primary" id="inSubmitButton">确认</button>
-                                <button type="reset" class="btn btn-lg" data-dismiss="modal">取消</button>
+                            <div class="form-group text-center">
+                                <button type="button" class="btn btn-lg btn-primary btn-block" id="inSubmitButton">登 录</button>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        还没账号？
+                        <div class="find-psd">
+                            忘记密码?<a href="" target="_blank" class="">&nbsp;&nbsp;去找回</a>
+                        </div>
+                        还没账号?&nbsp;&nbsp;
                         <button class="btn btn-primary btn-lg" data-dismiss="modal">
                             去注册 <i class="fa fa-arrow-right"></i>
                         </button>
@@ -95,7 +97,10 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">注册 Fun Exam</h5>
+                        <figure class="text-center">
+                            <img src="../static/img/w3fun-100x100.png"/>
+                            <figcaption class="h5">注&nbsp;&nbsp;&nbsp;&nbsp;册</figcaption>
+                        </figure>
                         <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="upClose">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -139,14 +144,9 @@
                                 <button type="button" id="getValMsgBtn" class="btn btn-primary getValMsgBtn">获取邮箱验证码</button>
                             </div>
                             <div class="form-group text-center ">
-                                <button type="button"  id="upSubmitButton" class="btn btn-lg btn-primary ">确认</button>
-                                <button type="reset" class="btn btn-lg js-upDismiss" data-dismiss="modal" id="upDismiss">取消</button>
+                                <button type="button"  id="upSubmitButton" class="btn btn-lg btn-primary btn-block">注 册</button>
                             </div>
                         </form>
-                        <!--<iframe id="signUpMsgIframe" name="signUpMsgIframe" style="display: none;"></iframe>-->
-                       <!-- <form id="signUpMsg" method="post" role="form" th:action="@{/register}" target="signUpMsgIframe">
-
-                        </form>-->
                     </div>
                     <div class="modal-footer">
                         已有账号？
