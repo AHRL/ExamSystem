@@ -578,6 +578,7 @@ window.onload = function () {
                 addClass(this, 'validationStyle-successed');
             } else {
                 addClass(this, 'validationStyle-failed');
+                showTip.call(this.nextElementSibling, '密码不符合要求！')
             }
         });
         EventUtil.addHandler(pswd, 'focus', function(){

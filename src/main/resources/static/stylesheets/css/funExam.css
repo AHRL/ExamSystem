@@ -5,7 +5,7 @@
 
 .getValMsgBtn {
     position: absolute;
-    top: 0;
+    top: 2.6rem;
     right: 0;
 }
 .alert {
@@ -36,4 +36,9 @@
     position: absolute;
     top: 2rem;
     right: 2rem;
+}
+
+.form-control,
+.btn {
+    font-size: 1.4rem;
 }
