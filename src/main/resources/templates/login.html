@@ -13,12 +13,12 @@
     <meta name="keyword" content="Fun Exam"/>
     <meta name="description" content="An exam system for students"/>
     <link rel="short icon" type="image/x-icon" href="../favicon.ico"/>
-    <link rel="stylesheet" href=" /stylesheets/css/funExam.css"/>
+    <link rel="stylesheet" href="../static/stylesheets/css/funExam.css"/>
 
-    <script src=" /lib/modernizr-2.6.2.min.js"></script>
+    <script src="../static/lib/modernizr-2.6.2.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
     <!--[if (lt IE 9) & (!IEMobile)]>
-    <script src=" /lib/respond.min.js"></script>
+    <script src="../static/lib/respond.min.js"></script>
     <![endif]-->
 </head>
 <body>
@@ -49,6 +49,7 @@
             <a href="https://github.com/812913/" target="_blank" class="_link _hover-female"><i class="fa fa-female"></i>lwf</a>
             <a href="https://github.com/StaticWalk/" target="_blank" class="_link _hover-male"><i class="fa fa-male"></i>StaticWalk</a>
             <a href="https://github.com/luqingying/" target="_blank" class="_link _hover-female"><i class="fa fa-female"></i>lqy</a>
+            <a href="#" target="_blank" class="_link"><i class="fa fa-copyright"></i> MIT</a>
         </footer>
 
         <!-- modal -->
@@ -56,7 +57,10 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">登录 Fun Exam</h5>
+                        <figure class="text-center">
+                            <img src="../static/img/w3fun-100x100.png"/>
+                            <figcaption class="h5">登&nbsp;&nbsp;&nbsp;&nbsp;录</figcaption>
+                        </figure>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -65,24 +69,26 @@
                         <form id="signInForm" method="post" th:action="@{/login}" role="form">
                             <div class="form-group">
                                 <label for="username" class="form-control-label">用户名</label>
-                                <input type="choices" id="username" name="username" class="form-control" placeholder="请输入用户名"/>
+                                <input type="text" id="username" name="username" class="form-control" placeholder="请输入用户名"/>
                             </div>
                             <div class="form-group">
                                 <label for="password" class="form-control-label">密码</label>
-                                <input type="password" name="password" id="password" class="form-control" placeholder="请输入密码"/>
+                                <input type="password" name="password" id="password" class="form-control" placeholder="请输入密码" maxlength="16"/>
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>Error! </strong> <span></span>
+                                </div>
+                                <i class="fa fa-eye-slash" style="color: #666;"></i>
                             </div>
-                            <div>
-                                忘记密码？
-                                <a href="" target="_blank" class="">找回密码</a>
-                            </div>
-                            <div class="form-group choices-center">
-                                <button type="button" class="btn btn-lg btn-primary" id="inSubmitButton">确认</button>
-                                <button type="reset" class="btn btn-lg" data-dismiss="modal">取消</button>
+                            <div class="form-group text-center">
+                                <button type="button" class="btn btn-lg btn-primary btn-block" id="inSubmitButton">登 录</button>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        还没账号？
+                        <div class="find-psd">
+                            忘记密码?&nbsp;&nbsp;<a href="findPsd.html" target="_blank">去找回</a>
+                        </div>
+                        还没账号?&nbsp;&nbsp;
                         <button class="btn btn-primary btn-lg" data-dismiss="modal">
                             去注册 <i class="fa fa-arrow-right"></i>
                         </button>
@@ -95,7 +101,10 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">注册 Fun Exam</h5>
+                        <figure class="text-center">
+                            <img src="../static/img/w3fun-100x100.png"/>
+                            <figcaption class="h5">注&nbsp;&nbsp;&nbsp;&nbsp;册</figcaption>
+                        </figure>
                         <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="upClose">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -105,50 +114,54 @@
                             <div class="form-group">
                                 <label for="upEmail" class="form-control-label">邮箱</label>
                                 <input type="email" name="upEmail" id="upEmail" class="form-control" placeholder="请正确填写邮箱, 如 aaa@bb.ccc"/>
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>Error! </strong> <span></span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="upUsername" class="form-control-label">用户名</label>
-                                <input type="choices" name="upUsername" id="upUsername" class="form-control" placeholder="请填写用户名"/>
+                                <input type="text" name="upUsername" id="upUsername" class="form-control" placeholder="请填写用户名"/>
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>Error! </strong> <span></span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="upPassword" class="form-control-label">密码</label>
-                                <input type="password" name="upPassword" id="upPassword" class="form-control" placeholder="密码长度为8~16位，可使用数字、字母、点号"/>
+                                <input type="password" name="upPassword" id="upPassword" class="form-control" placeholder="密码长度为8~16位，可使用数字、字母、点号" maxlength="16"/>
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>Error! </strong> <span></span>
+                                </div>
+                                <i class="fa fa-eye-slash" style="color: #666;"></i>
                             </div>
                             <div class="form-group">
                                 <label for="upEnsurePassword" class="form-control-label">确认密码</label>
-                                <input type="password" name="upEnsurePassword" id="upEnsurePassword" class="form-control" placeholder="请确认密码"/>
+                                <input type="password" name="upEnsurePassword" id="upEnsurePassword" class="form-control" placeholder="请确认密码" maxlength="16"/>
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>Error! </strong> <span></span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="upValMsg" class="form-control-label">填写验证码</label>
-                                <input type="password" name="upEnsurePassword" id="upValMsg" class="form-control" placeholder="请填写验证码"/>
-                                <button type="button" id="getValMsgBtn" class="btn btn-primary getValMsgBtn">获取验证码</button>
+                                <input type="text" name="upEnsurePassword" id="upValMsg" class="form-control" placeholder="请填写验证码" maxlength="6"/>
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>Error! </strong> <span></span>
+                                </div>
+                                <button type="button" id="getValMsgBtn" class="btn btn-primary getValMsgBtn">获取邮箱验证码</button>
                             </div>
-                            <div class="form-group choices-center ">
-                                <button type="button"  id="upSubmitButton" class="btn btn-lg btn-primary ">确认</button>
-                                <button type="reset" class="btn btn-lg js-upDismiss" data-dismiss="modal" id="upDismiss">取消</button>
+                            <div class="form-group text-center ">
+                                <button type="button"  id="upSubmitButton" class="btn btn-lg btn-primary btn-block">注 册</button>
                             </div>
                         </form>
-                        <!--<iframe id="signUpMsgIframe" name="signUpMsgIframe" style="display: none;"></iframe>-->
-                       <!-- <form id="signUpMsg" method="post" role="form" th:action="@{/register}" target="signUpMsgIframe">
-
-                        </form>-->
-                    </div>
-                    <div class="modal-footer">
-                        已有账号？
-                        <button class="btn btn-primary btn-lg" data-dismiss="modal">
-                            去登录 <i class="fa fa-arrow-right"></i>
-                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src=" /lib/jquery-3.2.1.min.js"></script>
-    <script src=" /lib/bootstrap.min.js"></script>
-    <script src=" /lib/validate.min.js"></script>
-    <script src=" /lib/particles.min.js"></script>
-    <script src=" /js/particlesInit.js"></script>
-    <script src=" /js/index_page.js"></script>
+    <script src="../static/lib/jquery-3.2.1.min.js"></script>
+    <script src="../static/lib/bootstrap.min.js"></script>
+    <script src="../static/lib/particles.min.js"></script>
+    <script src="../static/js/particlesInit.js"></script>
+    <script src="../static/js/index_page.js"></script>
 </body>
 </html>

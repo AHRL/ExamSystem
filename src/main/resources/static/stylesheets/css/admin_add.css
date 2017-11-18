@@ -1,3 +1,28 @@
+.add-info {
+    margin: 4rem 0;
+}
+.add-text {
+    height: 2.9rem;
+    margin-bottom: 1rem;
+    padding: .3725rem .5rem;
+    border: 1px solid #ccc;
+    border-radius: .5rem;
+    font-size: 1.4rem;
+}
+
+.chooseStep {
+    position: relative;
+    margin-top: 3rem;
+}
+
+#wrap {
+    display: none;
+}
+
+
+
+
+
 .btn {
     font-size: 1.4rem;
 }
@@ -29,11 +54,24 @@
     display: none;
 }
 
-#ensureBtn {
+.forDisabled {
     position: absolute;
-    left: -10rem;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    cursor: not-allowed;
 }
 
-#choicesPanel {
-    display: none;
+._footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 2rem 0;
+    background-color: #2aabd2;
 }

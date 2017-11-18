@@ -1,15 +1,42 @@
+(function () {
+    var script = document.createElement('script');
+    var __dirPath = '../static/js/';
+    script.setAttribute('src', __dirPath + 'funLib.js');
+    document.head.appendChild(script);
+})();
 window.onload = function () {
     pageFinished();
 };
 
 function pageFinished() {
-    var addForm = document.getElementById('addForm');
-    var type = document.getElementById('cType');
-    var lang = document.getElementById('cLang');
-    var info = document.getElementById('cInfo');
+    var chooseType = document.getElementById('chooseType');
+    var typeRadios = chooseType.getElementsByTagName('input');
+    var chooseLang = document.getElementById('chooseLang');
+    var langRadios = chooseLang.getElementsByTagName('input');
+    var setInfo = document.getElementById('setInfo');
+    var setChoices = document.getElementById('setChoices');
+    var forDisabled = setChoices.getElementsByClassName('forDisabled')[0];
+    var confirmAdd = document.getElementById('confirmAdd');
+    var wrap = document.getElementById('wrap');
 
-    var typeRadios = type.getElementsByTagName('input');
-    var langRadios = lang.getElementsByTagName('input');
+    var addInfo = document.getElementsByClassName('add-info')[0];
+    var addInfoBtns = addInfo.getElementsByTagName('button');
+    var sureBtn = addInfoBtns[0];
+    var resetBtn = addInfoBtns[1];
+    var addText = document.getElementsByClassName('add-text')[0];
+
+    var addCodeForExInfoBox = document.getElementById('addCodeForExInfoBox');
+    var addCodeForExInfo = document.getElementById('addCodeForExInfo');
+    var addCodeBtn = document.getElementById('addCodeBtn');
+    var removeCodeBtn = createElement('button', {
+        "id": "removeCodeBtn",
+        "txt": "取消",
+        "classNames": ["btn", "btn-danger"]
+    });
+
+    var addChoiceBtn = document.getElementById('addChoiceBtn');
+    var removeChoiceBtn = document.getElementById('removeChoiceBtn');
+
     HTMLCollection.prototype.map=function(callback){
         [].slice.call(this).map(callback);
     };
@@ -18,73 +45,35 @@ function pageFinished() {
     };
 
     (function () {
-        var choosedTypeItems = [];
-        var choosedLangItems = [];
-
+        var chooseTypeItems = [],
+            chooseLangItems = [];
         typeRadios.map(function (t) {
             EventUtil.addHandler(t, 'click', function () {
-                // var flag = 1;
-                //
-                // var con = document.getElementsByClassName('choosedCon');
-                // t.setAttribute('disabled', 'true');
-                if (choosedTypeItems.length){
-                    choosedTypeItems.shift();
+                if (chooseTypeItems.length){
+                    chooseTypeItems.shift();
                 }
-                choosedTypeItems.push(t.value);
-                insertStr(section, choosedTypeItems, choosedLangItems);
+                chooseTypeItems.push(t.value);
+                insertStr(addText, chooseTypeItems, chooseLangItems);
                 addClass(t, 'checked');
             });
         });
         langRadios.map(function (t) {
             EventUtil.addHandler(t, 'click', function () {
-
-                // t.setAttribute('disabled', 'true');
-                if (choosedLangItems.length){
-                    choosedLangItems.shift();
+                if (chooseLangItems.length){
+                    chooseLangItems.shift();
                 }
-                choosedLangItems.push(t.value);
-                insertStr(section, choosedTypeItems, choosedLangItems);
-                /*if (typeRadios[0].checked || typeRadios[1].checked){
-                    var setChoices = document.getElementById('setChoices');
-                    setChoices.style.display = 'block';
-                }*/
+                chooseLangItems.push(t.value);
+                insertStr(addText, chooseTypeItems, chooseLangItems);
                 addClass(t, 'checked');
             });
         });
 
-
-        var div = createElement('div', {
-            "classNames": ["choosedCon"]
-        });
-        var section = createElement('section', {
-            "id": "choosedItem",
-            "txt": "您已选择：",
-            "classNames": ["choosedItem", "h5"]
-        });
-        var btn = createElement('button', {
-            "id": "",
-            "txt": "确定",
-            "classNames": ['btn', 'btn-primary', 'btn-lg']
-        });
-        var btnCancel = createElement('button', {
-            "id": "",
-            "txt": "重新选择",
-            "classNames": ['btn', 'btn-warning', 'btn-lg']
-        });
-        var btnGroup = createElement('div',{
-            "classNames": ['choosedBtn']
-        });
-        div.appendChild(section);
-        div.appendChild(btnGroup);
-        btnGroup.appendChild(btn);
-        btnGroup.appendChild(btnCancel);
-        addForm.insertBefore(div, info);
         function insertStr(el, arr1, arr2){
             el.innerHTML = '您已选择：' + arr1.concat(arr2).join(' | ');
         }
         var lenT = typeRadios.length,
             lenL = langRadios.length;
-        EventUtil.addHandler(btn, 'click', function (event) {
+        EventUtil.addHandler(sureBtn, 'click', function (event) {
             event.preventDefault();
             var flagT = false,
                 flagL = false;
@@ -99,14 +88,13 @@ function pageFinished() {
                 }
             }
             if (flagT&&flagL){
-                slideDown(info, 500);
+                slideDown(wrap, 500);
             } else {
                 alert('请您先选择！');
                 return false;
             }
             var bool1 = false,
                 bool2 = false;
-            var choicesPanel = document.getElementById('choicesPanel');
             if (typeRadios[0].checked === true){
                 bool1 = true;
             }
@@ -114,7 +102,9 @@ function pageFinished() {
                 bool2 = true;
             }
             if (bool1 || bool2){
-                choicesPanel.style.display = 'block';
+                forDisabled.style.display = 'none';
+            } else {
+                forDisabled.style.display = 'block';
             }
             for (var m=0; m<lenT; m++){
                 typeRadios[m].setAttribute('disabled', 'true');
@@ -124,65 +114,69 @@ function pageFinished() {
                 langRadios[n].setAttribute('disabled', 'true');
                 addClass(langRadios[n], 'disabled');
             }
-            btn.setAttribute('disabled', 'true');
-            addClass(btn, 'disabled');
-            btnCancel.removeAttribute('disabled');
-            removeClass(btnCancel, 'disabled');
+            this.setAttribute('disabled', 'true');
+            addClass(this, 'disabled');
+            resetBtn.removeAttribute('disabled');
+            removeClass(resetBtn, 'disabled');
         });
-        btnCancel.setAttribute('disabled', 'true');
-        addClass(btnCancel, 'disabled');
-        EventUtil.addHandler(btnCancel, 'click', function () {
-            slideUp(info, 500);
+        EventUtil.addHandler(resetBtn, 'click', function () {
+            slideUp(wrap, 100);
             for (var i=0; i<lenT; i++){
+                typeRadios[i].checked = false;
                 typeRadios[i].removeAttribute('disabled');
                 removeClass(typeRadios[i], 'disabled');
             }
             for (var j=0; j<lenL; j++){
+                langRadios[j].checked = false;
                 langRadios[j].removeAttribute('disabled');
                 removeClass(langRadios[j], 'disabled');
             }
-            btnCancel.setAttribute('disabled', 'true');
-            addClass(btnCancel, 'disabled');
-            btn.removeAttribute('disabled');
-            removeClass(btn, 'disabled');
-            var choicesPanel = document.getElementById('choicesPanel');
-            if (choicesPanel.style.display !== 'none'){
-                choicesPanel.style.display = 'none';
-            }
-            var addCodeForExInfoBox = document.getElementById('addCodeForExInfoBox');
+            addText.innerHTML = '请您先选择题目类型和语言：';
+            this.setAttribute('disabled', 'disabled');
+            addClass(this, 'disabled');
+            sureBtn.removeAttribute('disabled');
+            removeClass(sureBtn, 'disabled');
             if (addCodeForExInfoBox.style.display !== 'none'){
                 addCodeForExInfoBox.style.display = 'none';
-                info.replaceChild(addCodeBtn, removeCodeBtn);
+                setInfo.replaceChild(addCodeBtn, removeCodeBtn);
             }
         });
 
-        var addCodeForExInfoBox = document.getElementById('addCodeForExInfoBox');
-        var addCodeBtn = document.getElementById('addCodeBtn');
+        // step3 Set Information
+        var targetChild = setInfo.getElementsByTagName('fieldset')[1];
         EventUtil.addHandler(addCodeBtn, 'click', function (event) {
             event.preventDefault();
             slideDown(addCodeForExInfoBox, 300);
-            info.replaceChild(removeCodeBtn, addCodeBtn);
-        });
-        var removeCodeBtn = createElement('button', {
-            "id": "removeCodeBtn",
-            "txt": "取消添加代码<i class=\"fa fa-remove-sign fa-2x\"></i>",
-            "classNames": ["btn", "btn-block", "btn-danger", "btn-lg"]
+            targetChild.replaceChild(removeCodeBtn, addCodeBtn);
         });
         EventUtil.addHandler(removeCodeBtn, 'click', function (event) {
             event.preventDefault();
             slideUp(addCodeForExInfoBox, 300);
-            info.replaceChild(addCodeBtn, removeCodeBtn);
+            targetChild.replaceChild(addCodeBtn, removeCodeBtn);
+            if (addCodeForExInfo.value){
+                addCodeForExInfo.value = '';
+            }
+        });
+        var setInfoIpt = setInfo.getElementsByTagName('input')[0];
+        EventUtil.addHandler(setInfoIpt, 'blur', function () {
+            if (!this.value){
+                showTip.call(this.nextElementSibling, '题目描述不能为空！');
+            }
+        });
+        EventUtil.addHandler(setInfoIpt, 'focus', function () {
+            clearInput.call(this);
         });
 
-        var addChoiceBtn = document.getElementById('addChoiceBtn');
-        var choicesPanel = document.getElementById('choicesPanel');
-        var str = 'D';
-        var code = str.charCodeAt(0);
+        // step4 Set Choices
+        var beginStr = 'D';
+        var code = beginStr.charCodeAt(0);
         EventUtil.addHandler(addChoiceBtn, 'click', function (event) {
             event.preventDefault();
             code++;
             var newCode = String.fromCharCode(code);
-            var div = createElement('div');
+            var fieldset = createElement('fieldset', {
+                "classNames": ["form-group"]
+            });
             var label = createElement('label', {
                 "txt": newCode,
                 "classNames": ["form-control-label"]
@@ -192,18 +186,76 @@ function pageFinished() {
                 "name": "singleC_" +  newCode,
                 "classNames": ["form-control", "form-control-lg"]
             });
-            choicesPanel.insertBefore(div, addChoiceBtn);
-            div.appendChild(label);
-            div.appendChild(input);
+            var fieldSets = setChoices.getElementsByTagName('fieldset');
+            fieldset.appendChild(label);
+            fieldset.appendChild(input);
+            setChoices.insertBefore(fieldset, fieldSets[fieldSets.length-1]);
+            if (setChoices.getElementsByTagName('fieldset').length === 9){
+                this.setAttribute('disabled', 'disabled');
+                addClass(this, 'disabled');
+            }
+            if (setChoices.getElementsByTagName('fieldset').length < 9){
+                if (hasClass(this, 'disabled')){
+                    this.removeAttribute('disabled');
+                    removeClass(this, 'disabled');
+                }
+                if (hasClass(removeChoiceBtn, 'disabled')){
+                    removeChoiceBtn.removeAttribute('disabled');
+                    removeClass(removeChoiceBtn, 'disabled');
+                }
+            }
+        });
+        EventUtil.addHandler(removeChoiceBtn, 'click', function (event) {
+            event.preventDefault();
+            code--;
+            setChoices.removeChild(setChoices.getElementsByTagName('fieldset')[setChoices.getElementsByTagName('fieldset').length-2]);
+            if (setChoices.getElementsByTagName('fieldset').length === 3){
+                this.setAttribute('disabled', 'disabled');
+                addClass(this, 'disabled');
+            }
+            if (setChoices.getElementsByTagName('fieldset').length > 3){
+                if (hasClass(this, 'disabled')){
+                    this.removeAttribute('disabled');
+                    removeClass(this, 'disabled');
+                }
+                if (hasClass(addChoiceBtn, 'disabled')){
+                    addChoiceBtn.removeAttribute('disabled');
+                    removeClass(addChoiceBtn, 'disabled');
+                }
+            }
         });
 
-        var ensureBtn = document.getElementById('ensureBtn');
+        // step5 Ensure
+        var confirmAddBtn = confirmAdd.getElementsByTagName('button')[0];
+        var pswdIpt = confirmAdd.getElementsByTagName('input')[0];
         var exInfo = document.getElementById('ex-info');
-        var addCodeForExInfo = document.getElementById('addCodeForExInfo');
-        var choicesPanel = document.getElementById('choicesPanel');
-        var choicesPanelInputs = choicesPanel.getElementsByTagName('input');
-        var cPILen = choicesPanelInputs.length;
-        EventUtil.addHandler(ensureBtn, 'click', function (event) {
+        var setChoicesIpts = setChoices.getElementsByTagName('input');
+        var sCILen = setChoicesIpts.length;
+        EventUtil.addHandler(pswdIpt, 'blur', function () {
+            var val = this.value;
+            var len = val.length;
+            if (len>=8 && len<=16){
+                $.ajax({
+                    type: 'POST',
+                    url: '',
+                    data: {
+                        "password": val
+                    },
+                    success: function () {
+
+                    },
+                    error: function () {
+
+                    }
+                });
+            } else {
+                showTip.call(this.nextElementSibling, '密码不符合要求！');
+            }
+        });
+        EventUtil.addHandler(pswdIpt, 'focus', function () {
+            clearInput.call(this);
+        });
+        EventUtil.addHandler(confirmAddBtn, 'click', function (event) {
             event.preventDefault();
             var jsonObj = {
                 "type": "",
@@ -226,14 +278,15 @@ function pageFinished() {
             if (addCodeForExInfo.value){
                 jsonObj.code = addCodeForExInfo.value;
             }
-            if (choicesPanelInputs[0].value){
-                for (var k=0; k<cPILen; k++){
-                    jsonObj.choices[k] = choicesPanelInputs[k].value;
+            if (setChoicesIpts[0].value){
+                for (var k=0; k<sCILen; k++){
+                    jsonObj.choices[k] = setChoicesIpts[k].value;
                 }
             }
             console.log(jsonObj);
             var url = formatParams(jsonObj);
             console.log(url);
+
             if (exInfo.value){
                 console.log(jsonObj);
                 $.ajax({
@@ -251,10 +304,7 @@ function pageFinished() {
             } else {
                 console.log('fail');
             }
-
         });
-
-
     })();
 }
 
