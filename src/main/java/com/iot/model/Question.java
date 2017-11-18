@@ -1,6 +1,7 @@
 package com.iot.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
@@ -9,17 +10,25 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "question")
-public class Question {
+public class Question implements Serializable{
 
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private Date date;
+
     private String type;
+
     private String lang;
+
+    @Column(length=1024 )
     private String info;
+
+    @Column(length=1024 )
     private String code;
+
+    @Column(length = 2048 )
     private String choices;
 
     public Date getDate() {
@@ -85,6 +94,9 @@ public class Question {
         this.code = code;
         this.choices = choices;
         this.date = date;
+    }
+
+    public Question() {
     }
 
     @Override
