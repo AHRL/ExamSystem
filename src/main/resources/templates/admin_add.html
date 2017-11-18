@@ -10,13 +10,13 @@
     <meta name="keyword" content="Fun Exam"/>
     <meta name="description" content="An exam system for students"/>
     <link rel="short icon" type="image/x-icon" href="../favicon.ico"/>
-    <link rel="stylesheet" href=" /stylesheets/css/funExam.css"/>
-    <link rel="stylesheet" href=" /stylesheets/css/admin_add.css"/>
+    <link rel="stylesheet" href="../static/stylesheets/css/funExam.css"/>
+    <link rel="stylesheet" href="../static/stylesheets/css/admin_add.css"/>
 
-    <script src=" /lib/modernizr-2.6.2.min.js"></script>
+    <script src="../static/lib/modernizr-2.6.2.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
     <!--[if (lt IE 9) & (!IEMobile)]>
-    <script src=" /lib/respond.min.js"></script>
+    <script src="../static/lib/respond.min.js"></script>
     <![endif]-->
 </head>
 <body>
@@ -75,114 +75,61 @@
             </div>
         </nav>
 
-    <div class="container" style="padding-top: 10rem">
+    <div class="container" style="padding: 10rem 0">
         <div class="row">
-            <aside class="col-sm-2">
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-heading list-group-item-success">请选择分类</li>
-                    <li class="list-group-item list-group-item-action active">C/C++</li>
-                    <li class="list-group-item list-group-item-action">Java</li>
-                    <li class="list-group-item list-group-item-action">JavaScript</li>
-                    <li class="list-group-item list-group-item-action">HTML/CSS</li>
-                </ul>
-            </aside>
-            <main class="col-sm-9 push-sm-1">
+            <main class="col-sm-8 push-sm-2">
                 <h1>添加题库</h1>
                 <hr />
-                <!--<form action="#" method="post">
-                    <select class="c-select">
-                        <option value="0" selected>请选择分类</option>
-                        <option value="1">C/C++</option>
-                        <option value="2">Java</option>
-                        <option value="3">JavaScript</option>
-                        <option value="4">HTML/CSS</option>
-                    </select>
-                    <div id="showType">您已选择 JavaScript</div>
-                    <p class="h3">现在开始添加题库</p>
-                    &lt;!&ndash;如果选择 HTML/CSS 则需要插入一组单选按钮&ndash;&gt;
-                    <h2 class="h4">题目编号<span>js_0075</span></h2>
-                    <div class="form-group row">
-                        <span class="h6 col-sm-2">请选择题型</span>
-                        <label class="c-input c-radio">
-                            <input id="radio1" name="radio" type="radio" class="custom-radio" />
-                            <span class="c-indicator"></span>
-                            单选
-                        </label>
-                        <label class="c-input c-radio">
-                            <input id="radio2" name="radio" type="radio" class="custom-radio" />
-                            <span class="c-indicator"></span>
-                            多选
-                        </label>
-                        <label class="c-input c-radio">
-                            <input id="radio3" name="radio" type="radio" class="custom-radio" />
-                            <span class="c-indicator"></span>
-                            填空
-                        </label>
-                        <label class="c-input c-radio">
-                            <input id="radio4" name="radio" type="radio" class="custom-radio" />
-                            <span class="c-indicator"></span>
-                            简答/代码
-                        </label>
-                    </div>
-                    <div class="form-group row">
-                        <label for="ex-info" class="col-sm-2 h6 form-control-label">题目描述</label>
-                        <input id="ex-info" class="col-sm-10 form-control" />
-                    </div>
-
-                    <div class="form-group row">
-                        <span class="h6 col-sm-2">是否上传图片</span>
-                        <label class="c-input c-radio">
-                            <input id="radioPhoto1" name="radioPhoto" type="radio" class="custom-radio" />
-                            <span class="c-indicator"></span>
-                            是
-                        </label>
-                        <label class="c-input c-radio">
-                            <input id="radioPhoto2" name="radioPhoto" type="radio" class="custom-radio" />
-                            <span class="c-indicator"></span>
-                            否
-                        </label>
-                    </div>
-                    &lt;!&ndash;单选答案&ndash;&gt;
-                    &lt;!&ndash;多选答案&ndash;&gt;
-                    &lt;!&ndash;填空答案&ndash;&gt;
-
-                    <fieldset class="form-group">
-                        <label for="ex-answer-1">题目答案</label>
-                        <textarea class="form-control" id="ex-answer-1" rows="20"></textarea>
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label for="ex-answer-2">题目答案</label>
-                        <textarea class="form-control" id="ex-answer-2" rows="20"></textarea>
-                    </fieldset>
-                    &lt;!&ndash; 是，才加入&ndash;&gt;
-                    &lt;!&ndash;<label class="file">
-                        <input type="file" id="file" />
-                        <span class="file-custom"></span>
-                    </label>&ndash;&gt;
-                </form>-->
                 <form id="addForm">
-                    <section id="cType">
-                        <h2 class="h5">选择题型</h2>
+                    <section class="add-info">
+                        <div class="add-text">
+                            请您先选择题目类型和语言：
+                        </div>
+                        <fieldset class="text-right">
+                            <button type="button" class="btn btn-success">确定</button>
+                            <button type="button" class="btn btn-warning disabled" disabled="disabled">重新选择（会清空您填写的所有信息）</button>
+                        </fieldset>
+                        <div class="alert alert-danger" role="alert">
+                            <strong>Error! </strong> <span></span>
+                        </div>
+                    </section>
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Error! </strong> <span></span>
+                    </div>
+                    <!--Step1-->
+                    <section id="chooseType" class="chooseStep">
+                        <h2 class="h5">Step1. 选择题型</h2>
                         <div class="row">
-                            <label class="col-sm-3 c-input c-radio">
+                            <label class="col-sm-2 c-input c-radio">
                                 <input id="singleC" name="type" type="radio" class="custom-radio" value="单选"/>
                                 <span class="c-indicator"></span>
                                 单选
                             </label>
-                            <label class="col-sm-3 c-input c-radio">
+                            <label class="col-sm-2 c-input c-radio">
                                 <input id="dulC" name="type" type="radio" class="custom-radio" value="多选"/>
                                 <span class="c-indicator"></span>
                                 多选
                             </label>
-                            <label class="col-sm-3 c-input c-radio">
-                                <input id="txtC" name="type" type="radio" class="custom-radio" value="填空/简答/代码"/>
+                            <label class="col-sm-2 c-input c-radio">
+                                <input id="spaceC" name="type" type="radio" class="custom-radio" value="填空"/>
                                 <span class="c-indicator"></span>
-                                填空/简答/代码
+                                填空
+                            </label>
+                            <label class="col-sm-2 c-input c-radio">
+                                <input id="answerC" name="type" type="radio" class="custom-radio" value="简答"/>
+                                <span class="c-indicator"></span>
+                                简答
+                            </label>
+                            <label class="col-sm-2 c-input c-radio">
+                                <input id="codeC" name="type" type="radio" class="custom-radio" value="代码"/>
+                                <span class="c-indicator"></span>
+                                代码
                             </label>
                         </div>
                     </section>
-                    <section id="cLang">
-                        <h2 class="h5">选择语言</h2>
+                    <!--Step2-->
+                    <section id="chooseLang" class="chooseStep">
+                        <h2 class="h5">Step2. 选择语言</h2>
                         <div class="row">
                             <label class="col-sm-3 c-input c-radio">
                                 <input id="chooseC" name="lang" type="radio" class="custom-radio" value="C/C++"/>
@@ -206,52 +153,85 @@
                             </label>
                         </div>
                     </section>
-                    <section id="cInfo">
-                        <span><i class="fa fa-remove-sign"></i></span>
-                        <fieldset class="form-group">
-                            <label for="ex-info" class="form-control-label h5">题目描述</label>
-                            <input id="ex-info" type="text" name="info" class="form-control form-control-lg"/>
-                        </fieldset>
-                        <button class="btn btn-block btn-success btn-lg" id="addCodeBtn">为题目描述添加代码<i class="fa fa-plus-circle fa-2x"></i></button>
-                        <fieldset class="form-group" id="addCodeForExInfoBox">
-                            <label for="addCodeForExInfo">在下面粘贴你的代码</label>
-                            <textarea class="form-control" name="code" id="addCodeForExInfo" rows="8"></textarea>
-                        </fieldset>
-                        <!-- 如果是单选或多选才有选项设置-->
-                        <!-- 选项设置 -->
-                        <!-- 单选/多选题 -->
-                        <fieldset class="form-group" id="choicesPanel">
-                                <div>
-                                    <label for="singleC_A" class="form-control-label">A</label>
-                                    <input id="singleC_A" name="choices" class="form-control form-control-lg"/>
+                    <div id="wrap">
+                        <!--Step3-->
+                        <section id="setInfo" class="chooseStep">
+                            <h2 class="h5">Step3. 题目描述</h2>
+                            <fieldset class="form-group">
+                                <label for="ex-info" class="form-control-label">请填写题目描述</label>
+                                <input id="ex-info" type="text" name="info" class="form-control form-control-lg"/>
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>Error! </strong> <span></span>
                                 </div>
-                                <div>
-                                    <label for="singleC_B" class="form-control-label">B</label>
-                                    <input id="singleC_B" name="choices" class="form-control form-control-lg"/>
+                            </fieldset>
+                            <fieldset class="text-right">
+                                <button class="btn btn-success" id="addCodeBtn">为题目描述添加代码</button>
+                            </fieldset>
+                            <fieldset class="form-group" id="addCodeForExInfoBox">
+                                <label for="addCodeForExInfo">在下面粘贴你的代码</label>
+                                <textarea class="form-control" name="code" id="addCodeForExInfo" rows="8"></textarea>
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>Error! </strong> <span></span>
                                 </div>
-                                <div>
-                                    <label for="singleC_C" class="form-control-label">C</label>
-                                    <input id="singleC_C" name="choices" class="form-control form-control-lg"/>
+                            </fieldset>
+                        </section>
+                        <!--Step4-->
+                        <section id="setChoices" class="chooseStep">
+                            <div class="forDisabled"></div>
+                            <h2 class="h5">Step4. 设置选项<small style="color: #666; margin-left: 1rem">填空/简答/代码题型下不可用</small></h2>
+                            <fieldset class="form-group">
+                                <label for="singleC_A" class="form-control-label">A</label>
+                                <input id="singleC_A" name="choices" class="form-control form-control-lg"/>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <label for="singleC_B" class="form-control-label">B</label>
+                                <input id="singleC_B" name="choices" class="form-control form-control-lg"/>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <label for="singleC_C" class="form-control-label">C</label>
+                                <input id="singleC_C" name="choices" class="form-control form-control-lg"/>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <label for="singleC_D" class="form-control-label">D</label>
+                                <input id="singleC_D" name="choices" class="form-control form-control-lg"/>
+                            </fieldset>
+                            <fieldset class="form-group text-right">
+                                <button class="btn btn-success" id="addChoiceBtn">添加选项</button>
+                                <button class="btn btn-warning" id="removeChoiceBtn">删除选项</button>
+                            </fieldset>
+                        </section>
+                        <!--Step5-->
+                        <section id="confirmAdd" class="chooseStep">
+                            <h2 class="h5">Step5. 确认添加</h2>
+                            <fieldset class="form-group">
+                                <label for="ensurePswd" class="form-control-label">您需要输入您的密码</label>
+                                <input type="password" id="ensurePswd" class="form-control" maxlength="16" />
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>Error! </strong> <span></span>
                                 </div>
-                                <div>
-                                    <label for="singleC_D" class="form-control-label">D</label>
-                                    <input id="singleC_D" name="choices" class="form-control form-control-lg"/>
-                                </div>
-                                <button class="btn btn-block btn-success btn-lg" id="addChoiceBtn">添加选项</button>
-                        </fieldset>
-
-                        <fieldset class="form-group">
-                            <button class="btn btn-primary btn-lg" id="ensureBtn">确定添加</button>
-                        </fieldset>
-
-                    </section>
+                            </fieldset>
+                            <fieldset class="text-right">
+                                <button class="btn btn-success" id="ensureBtn">确定添加</button>
+                            </fieldset>
+                        </section>
+                    </div>
                 </form>
             </main>
         </div>
     </div>
 
-    <script src=" /lib/jquery-3.2.1.min.js"></script>
-    <script src=" /lib/bootstrap.min.js"></script>
-    <script src=" /js/admin_add.js"></script>
+    <!--<footer id="footer" class="_footer text-center" role="contentinfo">
+        <span><i class="fa fa-copyright"></i>2017</span>
+        <a href="https://github.com/w3fun/" target="_blank" class="_link"><i class="fa fa-heart"></i>W3Fun</a>
+        <a href="https://github.com/swpuLeo/" target="_blank" class="_link _hover-male"><i class="fa fa-male"></i>Leo</a>
+        <a href="https://github.com/812913/" target="_blank" class="_link _hover-female"><i class="fa fa-female"></i>lwf</a>
+        <a href="https://github.com/StaticWalk/" target="_blank" class="_link _hover-male"><i class="fa fa-male"></i>StaticWalk</a>
+        <a href="https://github.com/luqingying/" target="_blank" class="_link _hover-female"><i class="fa fa-female"></i>lqy</a>
+        <a href="#" target="_blank" class="_link"><i class="fa fa-copyright"></i> MIT</a>
+    </footer>-->
+
+    <script src="../static/lib/jquery-3.2.1.min.js"></script>
+    <script src="../static/lib/bootstrap.min.js"></script>
+    <script src="../static/js/admin_add.js"></script>
 </body>
 </html>

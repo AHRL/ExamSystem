@@ -4,9 +4,6 @@
     script.setAttribute('src', __dirPath + 'funLib.js');
     document.head.appendChild(script);
 })();
-(function (){
-
-})();
 window.onload = function () {
 
     /* **********************************************************
