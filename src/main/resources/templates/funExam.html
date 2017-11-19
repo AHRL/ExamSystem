@@ -127,6 +127,10 @@
                        data-toggle="dropdown" href="#"
                        role="button" aria-haspopup="true" aria-expanded="false">
                         欢迎您 <span th:inline="text"> [[${#httpServletRequest.remoteUser}]]</span>
+
+                        <!--<a th:href="@{/user}" th:if="${#httpServletRequest.remoteUser}}">个人中心</a>-->
+                        <!--<a th:href="@{/login]" th:unless="${#httpServletRequest.remoteUser}}">登陆</a>-->
+
                     </a>
 
                     <div class="dropdown-menu">

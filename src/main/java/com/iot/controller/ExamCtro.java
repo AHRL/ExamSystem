@@ -56,6 +56,17 @@ public class ExamCtro {
         return "funExam";
     }
 
+
+    @RequestMapping("/onlineLib")
+    public String onlineLib() throws Exception {
+        return "onlineLib";
+    }
+
+    @RequestMapping("/onlineLib_practice")
+    public String onlineLib_practice() throws Exception {
+        return "onlineLib_practice";
+    }
+
     @RequestMapping("/test")
     public String test() throws Exception {
         return "test";
@@ -67,7 +78,9 @@ public class ExamCtro {
     }
 
     @RequestMapping("/login")
-    public String login() throws Exception {
+    public String login(HttpServletRequest request) throws Exception {
+        String user =request.getParameter("username");
+        request.getSession().setAttribute("user",user);
         return "login";
     }
 
@@ -98,6 +111,29 @@ public class ExamCtro {
         return "login";
     }
 
+
+    @RequestMapping(value = "/select",method = RequestMethod.POST)
+    public String select(HttpServletRequest request)throws Exception{
+        String A =request.getParameter("programmeA");
+        String B =request.getParameter("programmeB");
+        String C =request.getParameter("programmeC");
+        String D =request.getParameter("programmeD");
+        int count=Integer.parseInt(request.getParameter("count"));
+        List<Question> list=questionRepository.find(A,B,C,D,count);
+//        List<Question> list=questionRepository.find(A,B,C,D);
+
+        for (int i = 0; i <list.size(); i++) {
+            System.out.print(list.get(i).toString());
+        }
+
+//        Iterator it=list.iterator();
+//        while (it.hasNext()){
+//            System.out.print(it.toString());
+//        }
+
+        return "onlineLib_practice";
+    }
+
     @ResponseBody
     @RequestMapping(value = "/add")
     public void add(@RequestParam(value = "type")String type,@RequestParam(value = "lang")String lang,
@@ -108,7 +144,6 @@ public class ExamCtro {
         System.out.print(question.toString());
 //        return "admin_add";
     }
-
 
     @ResponseBody
     @RequestMapping(value = "/mailSender")
@@ -132,6 +167,17 @@ public class ExamCtro {
             e.printStackTrace();
         }
         System.out.print("hahahahah");
+    }
+
+
+    @RequestMapping(value = "/get")
+    @ResponseBody
+    public void get(HttpServletRequest request) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set("Accept", "application/json");
+        String email=(String) request.getSession().getAttribute("email");
+        String validcode=jedis.get(email);
+//        return validcode;
     }
 
 

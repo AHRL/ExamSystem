@@ -13,12 +13,12 @@
     <meta name="keyword" content="Fun Exam"/>
     <meta name="description" content="An exam system for students"/>
     <link rel="short icon" type="image/x-icon" href="../favicon.ico"/>
-    <link rel="stylesheet" href="../static/stylesheets/css/onlineLib.css"/>
+    <link rel="stylesheet" href=" /stylesheets/css/onlineLib.css"/>
 
-    <script src="../static/lib/modernizr-2.6.2.min.js"></script>
+    <script src=" /lib/modernizr-2.6.2.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
     <!--[if (lt IE 9) & (!IEMobile)]>
-    <script src="../static/lib/respond.min.js"></script>
+    <script src=" /lib/respond.min.js"></script>
     <![endif]-->
 
     <style type="choices/css">
@@ -43,7 +43,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="#">
-            <img src="../static/img/w3fun-inverse-40x40.png" id="userInfo" alt="user information" />
+            <img src=" /img/w3fun-inverse-40x40.png" id="userInfo" alt="user information" />
             <span>Fun Exam</span>
         </a>
         <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -79,10 +79,9 @@
         <li class="breadcrumb-item active">在线题库</li>
     </ol>
 
-
     <main class="container practice-container">
         <h1 class="display-1"><span></span>题库练习</h1>
-        <form method="post" action="#">
+        <form method="post" action="/select">
             <section class="practice-choose">
                 <div class="row clearfix">
                     <div class="col-11 pull-left programmeh">
@@ -97,7 +96,7 @@
                     <div class="col-4  custom-checkbox">
                         <div class="row">
                             <div class="col-4">
-                                <input name="programme" type="checkbox" value="HTML+CSS"/>HTML/CSS
+                                <input class="programme" name="programmeA" type="checkbox" value="HTML+CSS" />HTML/CSS
                             </div>
                             <div class="col-5">
                                 <div class="progress">
@@ -115,7 +114,7 @@
                     <div class="col-4  custom-checkbox">
                         <div class="row">
                             <div class="col-4 language-name">
-                                <input name="programme" type="checkbox" value="Javascript"/>Javascript
+                                <input class="programme"  name="programmeB" type="checkbox" value="Javascript"/>Javascript
                             </div>
                             <div class="col-5">
                                 <div class="progress">
@@ -134,7 +133,7 @@
                     <div class="col-4  custom-checkbox">
                         <div class="row">
                             <div class="col-4 language-name">
-                                <input name="programme" type="checkbox" value="Java"/>Java
+                                <input class="programme" name="programmeC" type="checkbox" value="Java"/>Java
                             </div>
                             <div class="col-5">
                                 <div class="progress">
@@ -153,7 +152,7 @@
                     <div class="col-4  custom-checkbox choose">
                         <div class="row">
                             <div class="col-4">
-                                <input name="programme" type="checkbox" value="C"/>C
+                                <input class="programme" name="programmeD" type="checkbox" value="C"/>C
                             </div>
                             <div class="col-5">
                                 <div class="progress">
@@ -174,9 +173,9 @@
             <section class="practice-defined">
                 <div>
                     <span>出题数量：</span>
-                    <label class="radio-inline"><input type="radio" name="count" value="5"/>5题</label>
-                    <label class="radio-inline"><input type="radio" name="count" value="10"/>10题</label>
-                    <label class="radio-inline"><input type="radio" name="count" value="20" checked/>20题</label>
+                    <label class="radio-inline"><input type="radio" name="count" value="5" />5题</label>
+                    <label class="radio-inline"><input type="radio" name="count" value="10" checked="checked"/>10题</label>
+                    <label class="radio-inline"><input type="radio" name="count" value="20"/>20题</label>
                     <label class="radio-inline"><input type="radio" name="count" value="30"/>30题</label>
                 </div>
             </section>
@@ -192,8 +191,8 @@
             </section>
         </form>
     </main>
-    <script src="../static/lib/jquery-3.2.1.min.js"></script>
-    <script src="../static/lib/bootstrap.min.js"></script>
-    <script src="../static/js/onlineLib.js"></script>
+    <script src="/lib/jquery-3.2.1.min.js"></script>
+    <script src="/lib/bootstrap.min.js"></script>
+    <script src="/js/onlineLib.js"></script>
 </body>
 </html>

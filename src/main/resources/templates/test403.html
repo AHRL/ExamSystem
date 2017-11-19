@@ -1,19 +1,31 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <title>403</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        td{
+            border: 1px solid;
+        }
+    </style>
 </head>
 <body>
-<h1>你没得权限滚！</h1>
-
-
-<h1 th:inline="choices">抱歉!</h1>
-<p>您没有权限访问该页面</p>
-<p><a th:href="@{/testUser}">前往普通用户界面</a></p>
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="登出"/>
-</form>
-
+<table style="width: 100%;text-align: center">
+    <tr height="100px" bgcolor="yellow">
+        <td colspan="3">网站名称</td>
+    </tr>
+    <tr bgcolor="blue">
+        <td>网站标题</td>
+        <td colspan="2">搜索框</td>
+    </tr>
+    <tr height="300px" bgcolor="yellow">
+        <td width="33.3%">左</td>
+        <td>中</td>
+        <td>右</td>
+    </tr>
+    <tr height="100px" bgcolor="blue">
+        <td colspan="3">网站底部信息</td>
+    </tr>
+</table>
 </body>
-</html>
+<ml>
