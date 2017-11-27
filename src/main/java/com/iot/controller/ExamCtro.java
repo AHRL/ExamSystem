@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import redis.clients.jedis.Jedis;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +34,7 @@ import java.util.List;
 @Controller
 public class ExamCtro {
 
-    private Jedis jedis=new Jedis("118.89.36.125", 6379);
+//    private Jedis jedis=new Jedis("118.89.36.125", 6379);
 
     @Autowired
     JavaMailSender mailSender;
@@ -55,7 +54,6 @@ public class ExamCtro {
     public String index() throws Exception {
         return "funExam";
     }
-
 
     @RequestMapping("/onlineLib")
     public String onlineLib() throws Exception {
@@ -111,27 +109,18 @@ public class ExamCtro {
         return "login";
     }
 
-
     @RequestMapping(value = "/select",method = RequestMethod.POST)
-    public String select(HttpServletRequest request)throws Exception{
+    public List<Question> select(HttpServletRequest request)throws Exception{
         String A =request.getParameter("programmeA");
         String B =request.getParameter("programmeB");
         String C =request.getParameter("programmeC");
         String D =request.getParameter("programmeD");
         int count=Integer.parseInt(request.getParameter("count"));
         List<Question> list=questionRepository.find(A,B,C,D,count);
-//        List<Question> list=questionRepository.find(A,B,C,D);
-
         for (int i = 0; i <list.size(); i++) {
             System.out.print(list.get(i).toString());
         }
-
-//        Iterator it=list.iterator();
-//        while (it.hasNext()){
-//            System.out.print(it.toString());
-//        }
-
-        return "onlineLib_practice";
+        return list;
     }
 
     @ResponseBody
@@ -147,13 +136,13 @@ public class ExamCtro {
 
     @ResponseBody
     @RequestMapping(value = "/mailSender")
-    public void mailSender(@RequestParam(value = "email")String email, HttpServletRequest request){
+    public String mailSender(@RequestParam(value = "email")String email, HttpServletRequest request){
         String random= RandomUtil.getRandom();
         System.out.print("xixixixi");
         request.getSession().setAttribute("email",email);
         try {
-            jedis.set(email,random);
-            jedis.expire(email,Integer.parseInt(String.valueOf(360)));
+//            jedis.set(email,random);
+//            jedis.expire(email,Integer.parseInt(String.valueOf(360)));
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
             helper.setFrom("957400829@qq.com");
@@ -167,29 +156,31 @@ public class ExamCtro {
             e.printStackTrace();
         }
         System.out.print("hahahahah");
+
+        return random;
+
     }
-
-
-    @RequestMapping(value = "/get")
-    @ResponseBody
-    public void get(HttpServletRequest request) {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.set("Accept", "application/json");
-        String email=(String) request.getSession().getAttribute("email");
-        String validcode=jedis.get(email);
+//    @RequestMapping(value = "/validcode")
+//    @ResponseBody
+//    public String validcode(HttpServletRequest request) {
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//        httpHeaders.set("Accept", "application/json");
+//        String email=(String) request.getSession().getAttribute("email");
+//        String validcode=jedis.get(email);
 //        return validcode;
-    }
+//    }
 
 
-    @RequestMapping(value = "/validcode")
-    @ResponseBody
-    public String validcode(HttpServletRequest request) {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.set("Accept", "application/json");
-        String email=(String) request.getSession().getAttribute("email");
-        String validcode=jedis.get(email);
-        return validcode;
-    }
+//    @RequestMapping(value = "/get")
+//    @ResponseBody
+//    public void get(HttpServletRequest request) {
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//        httpHeaders.set("Accept", "application/json");
+//        String email=(String) request.getSession().getAttribute("email");
+//        String validcode=jedis.get(email);
+////        return validcode;
+//    }
+
 
     @ResponseBody
     @RequestMapping(value = "/isExist",method = RequestMethod.GET)
@@ -212,7 +203,6 @@ public class ExamCtro {
         }
         return number;
     }
-
 
 //    @RequestMapping("/onlineExam")
 //    @PreAuthorize("hasAnyRole( 'user')")
