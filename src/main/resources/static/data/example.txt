@@ -1,5 +1,0 @@
-{
-  "title": {
-    "choices": "Fun Exam 最近7天统计数据"
-  }
-}

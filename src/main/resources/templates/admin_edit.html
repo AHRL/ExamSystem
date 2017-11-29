@@ -50,7 +50,7 @@
                 </li>
             </ul>
             <form class="form-inline navbar-form pull-right">
-                <input class="form-control" type="choices" placeholder="Search">
+                <input class="form-control" type="text" placeholder="Search">
                 <button class="btn btn-success" type="submit">Search</button>
             </form>
             <ul class="navbar-nav mt-2 mt-md-0">
@@ -77,44 +77,24 @@
 
     <div class="container" style="padding-top: 10rem;">
         <div class="row">
-            <aside class="col-sm-2">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-success btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        请选择分类
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">C/C++</a>
-                        <a class="dropdown-item" href="#">Java</a>
-                        <a class="dropdown-item" href="#">JavaScript</a>
-                        <a class="dropdown-item" href="#">HTML/CSS</a>
-                    </div>
-                </div>
-                <div>
-                    您已选择 JavaScript
-                </div>
-            </aside>
-            <main class="col-sm-9 push-sm-1">
+            <main class="col-sm-8 push-sm-2">
                 <h1>编辑题库</h1>
                 <hr />
-                <form id="searchBox">
-                    <div>
-                        <label for="chooseProgram">
-                            <select class="custom-select" id="chooseProgram">
-                                <option value="0">请选择类型</option>
-                                <option value="1">C/C++</option>
-                                <option value="2">Java</option>
-                                <option value="3">JavaScript</option>
-                                <option value="4">HTML/CSS</option>
-                            </select>
-                        </label>
-                        <input type="choices" placeholder="关键词搜索" />
-                        <button>
+                <div class="feedBackExams">
+                    <h2 class="h5">反馈的题目</h2>
+                </div>
+                <form class="searchBox">
+                    <fieldset class="form-group">
+                        <h2 class="h5">输入您想编辑的题目关键字</h2>
+                        <input type="text" class="form-control form-control-lg" placeholder="关键词搜索, 例如: JavaScript " autocomplete="off"/>
+                        <button class="btn btn-success btn-lg">
                             <i class="fa fa-search"></i>
                         </button>
-                    </div>
+                    </fieldset>
                 </form>
-                <div id="searchResult">
-                    <div class="searchResult-item" data-toggle="modal" data-target="#editModal1">
+                <div class="searchResult">
+                    <h2 class="h5">搜索结果</h2>
+                    <div class="searchResult-item">
                         <img src="../static/img/java.png" alt="#" class="searchResult-item-img"/>
                         <div class="searchResult-item-title h4">
                             hello
@@ -125,45 +105,6 @@
                     </div>
                 </div>
             </main>
-
-            <!-- modal -->
-            <div class="modal fade" id="editModal1" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">编辑题库</h5>
-                            <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="upClose">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="" method="post" role="form" action="">
-                                <p>您将编辑的题目id是<span>java_115</span></p>
-                                <div class="form-group">
-                                    <label for="upEmail" class="form-control-label">题目描述</label>
-                                    <input type="email" name="upEmail" id="upEmail" class="form-control" placeholder="请正确填写邮箱, 比如 aaa@bb.ccc"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="upUsername" class="form-control-label">题型选择</label>
-                                    <input type="choices" name="upUsername" id="upUsername" class="form-control" placeholder=""/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="upPassword" class="form-control-label">是否上传图片</label>
-                                    <input type="password" name="upPassword" id="upPassword" class="form-control" placeholder=""/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="upEnsurePassword" class="form-control-label">确认密码</label>
-                                    <input type="password" name="upEnsurePassword" id="upEnsurePassword" class="form-control" placeholder="请输入您的密码"/>
-                                </div>
-                                <div class="form-group choices-center ">
-                                    <button type="button"  id="upSubmitButton" class="btn btn-lg btn-primary ">确认</button>
-                                    <button type="reset" class="btn btn-lg js-upDismiss" data-dismiss="modal" id="upDismiss">取消</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
