@@ -3,17 +3,19 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" xmlns:th="http://www.thymeleaf.org">
+<!--<![endif]-->
 
 <head>
-    <meta charset="UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>在线题库 - FunExam</title>
-    <meta name="keyword" content="Fun Exam"/>
-    <meta name="description" content="An exam system for students"/>
-    <link rel="short icon" type="image/x-icon" href="../favicon.ico"/>
-    <link rel="stylesheet" href=" /stylesheets/css/onlineLib.css"/>
+    <meta name="keyword" content="Fun Exam" />
+    <meta name="description" content="An exam system for students" />
+    <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
+    <link rel="stylesheet" href=" /stylesheets/css/onlineLib.css" />
 
     <script src=" /lib/modernizr-2.6.2.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
@@ -22,11 +24,10 @@
     <![endif]-->
 
     <style type="choices/css">
-        body {
-            padding-top: 4.5rem;
-        }
+        body { padding-top: 4.5rem; }
     </style>
 </head>
+
 <body>
     <!--[if lte IE 7]>
         <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
@@ -87,7 +88,7 @@
                         <h2 class="display-2">编程语言</h2>
                     </div>
                     <div class="col-1 pull-right programmeSelectAll">
-                        <input class="selectAllcheckbox"  type="checkbox" value=""/>全选
+                        <input class="selectAllcheckbox" type="checkbox" value="" />全选
                     </div>
                 </div>
                 <hr/>
@@ -99,8 +100,7 @@
                             </div>
                             <div class="col-5">
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="60"
-                                         aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
                                         <span class="sr-only">40% 完成</span>
                                     </div>
                                 </div>
@@ -113,12 +113,11 @@
                     <div class="col-4  custom-checkbox">
                         <div class="row">
                             <div class="col-4 language-name">
-                                <input class="programme"  name="programmeB" type="checkbox" value="Javascript"/>Javascript
+                                <input class="programme" name="programmeB" type="checkbox" value="Javascript" />Javascript
                             </div>
                             <div class="col-5">
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="60"
-                                         aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
                                         <span class="sr-only">40% 完成</span>
                                     </div>
                                 </div>
@@ -132,12 +131,11 @@
                     <div class="col-4  custom-checkbox">
                         <div class="row">
                             <div class="col-4 language-name">
-                                <input class="programme" name="programmeC" type="checkbox" value="Java"/>Java
+                                <input class="programme" name="programmeC" type="checkbox" value="Java" />Java
                             </div>
                             <div class="col-5">
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="60"
-                                         aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
                                         <span class="sr-only">40% 完成</span>
                                     </div>
                                 </div>
@@ -151,12 +149,11 @@
                     <div class="col-4  custom-checkbox choose">
                         <div class="row">
                             <div class="col-4">
-                                <input class="programme" name="programmeD" type="checkbox" value="C"/>C
+                                <input class="programme" name="programmeD" type="checkbox" value="C" />C
                             </div>
                             <div class="col-5">
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="60"
-                                         aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
                                         <span class="sr-only">40% 完成</span>
                                     </div>
                                 </div>
@@ -184,8 +181,8 @@
                     <p class="choices-muted">已选择：<span class="submitTip"></span></p>
                 </div>
                 <div class="practice-submit-btn">
-                    <input class="btn btn-lg resetBtn" type="reset" value="重选"/>
-                    <input class="btn btn-lg btn-primary subBtn"  type="submit" value="确定"/>
+                    <input class="btn btn-lg resetBtn" type="reset" value="重选" />
+                    <input class="btn btn-lg btn-primary subBtn" type="submit" value="确定" />
                 </div>
             </section>
         </form>
@@ -194,4 +191,5 @@
     <script src="/lib/bootstrap.min.js"></script>
     <script src="/js/onlineLib.js"></script>
 </body>
+
 </html>

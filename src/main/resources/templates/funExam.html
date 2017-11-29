@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8"/>`
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta charset="UTF-8" />`
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Home - FunExam</title>
-    <link rel="stylesheet" href="../static/stylesheets/css/funExam.css"/>
-    <link rel="short icon" type="image/x-icon" href="../favicon.ico"/>
+    <link rel="stylesheet" href="../static/stylesheets/css/funExam.css" />
+    <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
     <script src="../static/lib/modernizr-2.6.2.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
     <!--[if (lt IE 9) & (!IEMobile)]>
@@ -16,10 +17,12 @@
         .navbar a {
             color: #292b2c;
         }
+        
         .f-hr {
             width: 10rem;
             border: .2rem solid #292b2c;
         }
+        
         #userInfo {
             /*position: absolute;
             right: 3rem;
@@ -30,6 +33,7 @@
             /*border: 1px solid #fff;*/
             border-radius: 50%;
         }
+        
         ._footer {
             position: absolute;
             bottom: 0;
@@ -39,64 +43,86 @@
             padding: 2rem;
             margin-top: 6rem;
         }
+        
         ._main {
             margin-top: 10rem;
         }
+        
         .dropdown-item {
             font-size: 1.4rem;
         }
+        
+        th,
+        td {
+            text-align: center;
+        }
     </style>
 </head>
+
 <body>
     <nav class="navbar navbar-toggleable-md fixed-top">
-    <button class="navbar-toggler navbar-toggler-right"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarCollapse"
-            aria-controls="navbarCollapse"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mt-2 mt-md-0">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle"
-                   data-toggle="dropdown" href="#"
-                   role="button" aria-haspopup="true" aria-expanded="false">
-                    欢迎您 <span th:inline="text"> [[${#httpServletRequest.remoteUser}]]</span>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mt-2 mt-md-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <img src="../static/img/logos/w3fun-50.png" alt="avator" class="avator" /> 欢迎您 <span th:inline="text"> [[${#httpServletRequest.remoteUser}]]</span>
 
-                    <!--<a th:href="@{/user}" th:if="${#httpServletRequest.remoteUser}}">个人中心</a>-->
-                    <!--<a th:href="@{/login]" th:unless="${#httpServletRequest.remoteUser}}">登陆</a>-->
+                        <!--<a th:href="@{/user}" th:if="${#httpServletRequest.remoteUser}}">个人中心</a>-->
+                        <!--<a th:href="@{/login]" th:unless="${#httpServletRequest.remoteUser}}">登陆</a>-->
 
-                </a>
+                    </a>
 
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="404.html">个人主页</a>
-                    <a class="dropdown-item" href="404.html">账号设置</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item"  th:href="@{/logout}">退出登录</a>
-                    <!--<a class="dropdown-item"  href="login.html">退出登录</a>-->
-                </div>
-            </li>
-        </ul>
-    </div>
-</nav>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="personal.html">个人主页</a>
+                        <a class="dropdown-item" href="settingAccount.html">账号设置</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" th:href="@{/logout}">退出登录</a>
+                        <!--<a class="dropdown-item"  href="login.html">退出登录</a>-->
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <div id="particles-js"></div>
     <div class="container" style="margin-top: 10rem">
         <div class="row">
             <header class="_header text-center col-sm-8 push-sm-2">
                 <h1>Fun Exam</h1>
-                <hr class="f-hr"/>
-                <img src="../static/img/w3fun-100x100.png" alt="w3fun"/>
+                <hr class="f-hr" />
+                <img src="../static/img/w3fun-100x100.png" alt="w3fun" />
             </header>
             <main class="_main text-center col-sm-8 push-sm-2">
                 <form>
                     <fieldset class="form-group">
-                        <button class="btn btn-lg">在线考试</button>
-                        <button class="btn btn-lg">在线题库</button>
+                        <button class="btn btn-lg btn-block disabled">
+                            <strong>在线考试入口 - 暂未开放，准时开放</strong>
+                        </button>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>时间</th>
+                                    <th>考试内容</th>
+                                    <th>地点</th>
+                                    <th>备注</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2017/12/15 19:00-21:00</td>
+                                    <td>C 语言</td>
+                                    <td>明理楼 B412</td>
+                                    <td>请带好学生卡</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </fieldset>
                 </form>
+                <p class="text-right">
+                    您还可以在线练题 <a href="onlineLib.html" target="_blank">在线题库入口</a>
+                </p>
             </main>
         </div>
     </div>
@@ -114,4 +140,5 @@
     <script src="../static/lib/particles.min.js"></script>
     <script src="../static/js/particlesInit.js"></script>
 </body>
+
 </html>
