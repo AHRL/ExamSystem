@@ -1,13 +1,12 @@
 @charset "utf-8";
-
 @import "../../lib/lib.css";
 @import "main.css";
-
 .getValMsgBtn {
     position: absolute;
     top: 2.6rem;
     right: 0;
 }
+
 .alert {
     display: none;
 }
@@ -32,6 +31,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
 .modal-header .close {
     position: absolute;
     top: 2rem;
@@ -50,4 +50,54 @@
     right: 1rem;
     transform: translateY(-50%);
     cursor: pointer;
+}
+
+.navbar a {
+    color: #292b2c;
+}
+
+.f-hr {
+    width: 10rem;
+    border: .2rem solid #292b2c;
+}
+
+#userInfo {
+    /*position: absolute;
+    right: 3rem;
+    top: 3rem;*/
+    width: 4rem;
+    height: 4rem;
+    margin-right: 1rem;
+    /*border: 1px solid #fff;*/
+    border-radius: 50%;
+}
+
+._footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 2rem;
+    margin-top: 6rem;
+    font-size: 12px;
+}
+
+._main {
+    margin-top: 4rem;
+}
+
+.dropdown-item {
+    font-size: 1.4rem;
+}
+
+th,
+td {
+    text-align: center;
+}
+
+.avator {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
 }
