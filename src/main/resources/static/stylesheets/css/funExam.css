@@ -72,16 +72,7 @@
     border-radius: 50%;
 }
 
-._footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    padding: 2rem;
-    margin-top: 6rem;
-    font-size: 12px;
-}
+
 
 ._main {
     margin-top: 4rem;
@@ -100,4 +91,9 @@ td {
     width: 50px;
     height: 50px;
     border-radius: 100%;
+}
+
+.qq_link {
+    color: #fff;
+    text-decoration: none;
 }

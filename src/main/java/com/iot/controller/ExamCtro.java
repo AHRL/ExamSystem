@@ -1,5 +1,6 @@
 package com.iot.controller;
 
+import com.iot.model.QQUser;
 import com.iot.model.Question;
 import com.iot.model.User;
 import com.iot.repository.QuestionRepository;
@@ -10,10 +11,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,15 +64,18 @@ public class ExamCtro {
         return "onlineLib";
     }
 
+
+    @RequestMapping("/funExam")
+    @PreAuthorize("hasAnyRole( 'user','admin')")
+    public String funExam() throws Exception {
+        return "funExam";
+    }
+
     @RequestMapping("/onlineLib_practice")
     public String onlineLib_practice() throws Exception {
         return "onlineLib_practice";
     }
 
-    @RequestMapping("/test")
-    public String test() throws Exception {
-        return "test";
-    }
 
     @RequestMapping("/admin")
     public String admin() throws Exception {
@@ -82,6 +89,15 @@ public class ExamCtro {
         return "login";
     }
 
+    @RequestMapping("/user")
+    public String user(@AuthenticationPrincipal UsernamePasswordAuthenticationToken userAuthentication, Model model)
+    {
+        QQUser user = (QQUser) userAuthentication.getPrincipal();
+        model.addAttribute("username", user.getNickname());
+        model.addAttribute("avatar", user.getAvatar());
+        return "user";
+    }
+
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -91,11 +107,6 @@ public class ExamCtro {
         return "login";
     }
 
-    @RequestMapping("/funExam")
-    @PreAuthorize("hasAnyRole( 'user','admin')")
-    public String funExam() throws Exception {
-        return "funExam";
-    }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(HttpServletRequest request) throws Exception {
@@ -106,7 +117,7 @@ public class ExamCtro {
         User user = new User(Username, Password, Email, new Date(System.currentTimeMillis()));
         user.setRole(User.ROLE.user);
         userRepository.save(user);
-        return "login";
+        return "/";
     }
 
     @RequestMapping(value = "/select",method = RequestMethod.POST)
@@ -138,7 +149,6 @@ public class ExamCtro {
     @RequestMapping(value = "/mailSender")
     public String mailSender(@RequestParam(value = "email")String email, HttpServletRequest request){
         String random= RandomUtil.getRandom();
-        System.out.print("xixixixi");
         request.getSession().setAttribute("email",email);
         try {
 //            jedis.set(email,random);
@@ -152,13 +162,11 @@ public class ExamCtro {
             sb.append("<p>你好</p>").append("验证码是"+random);
             helper.setText(sb.toString(), true);
             mailSender.send(mimeMessage);
+            System.out.print("hahahahah");
         } catch (javax.mail.MessagingException e) {
             e.printStackTrace();
         }
-        System.out.print("hahahahah");
-
         return random;
-
     }
 //    @RequestMapping(value = "/validcode")
 //    @ResponseBody
