@@ -470,6 +470,23 @@ window.onload = function () {
         // get validate message
         var getValMsgBtn = document.getElementById('getValMsgBtn');
         EventUtil.addHandler(getValMsgBtn, 'click', function () {
+            /*$.ajax({
+                method: 'get',
+                url: 'http://localhost:8080/validcode',
+                dataType: 'json',
+                success: function (response) {
+                    validcode = JSON.stringify(response);
+                    if (validcode === uVMsg.value){
+                        addClass(this, 'validationStyle-successed');
+                    } else {
+                        addClass(this, 'validationStyle-failed');
+                        showTip.call(uVMsg.nextElementSibling, '验证码不正确！');
+                    }
+                },
+                error: function (status) {
+                    console.log('error');
+                }
+            });*/
             var emailVal = uEml.value;
             function setTime(time) {
                 if (time === 0){
@@ -493,7 +510,7 @@ window.onload = function () {
                 }
             }
             setTime(60);
-            $.ajax({
+            var valCode = $.ajax({
                 type: 'POST',
                 url: '/mailSender',
                 dataType: 'json',
@@ -520,23 +537,7 @@ window.onload = function () {
             });
 
             if (val.length===6 && matchCode){
-                $.ajax({
-                    method: 'get',
-                    url: 'http://localhost:8080/validcode',
-                    dataType: 'json',
-                    success: function (response) {
-                        validcode = JSON.stringify(response);
-                        if (validcode === uVMsg.value){
-                            addClass(this, 'validationStyle-successed');
-                        } else {
-                            addClass(this, 'validationStyle-failed');
-                            showTip.call(uVMsg.nextElementSibling, '验证码不正确！');
-                        }
-                    },
-                    error: function (status) {
-                        console.log('error');
-                    }
-                })
+                // ...
             } else {
                 addClass(this, 'validationStyle-failed');
                 showTip.call(uVMsg.nextElementSibling, '验证码不正确！');
@@ -595,7 +596,7 @@ window.onload = function () {
         // validate password
         var pswd = document.getElementById('password');
         EventUtil.addHandler(pswd, 'blur', function(){
-            if (this.value >=8 && this.value<=16){
+            if (this.value.length >=8 && this.value.length <=16){
                 addClass(this, 'validationStyle-successed');
             } else {
                 addClass(this, 'validationStyle-failed');
@@ -622,7 +623,7 @@ window.onload = function () {
         // submit
         var signInForm = document.getElementById('signInForm');
         var inSubmitButton = document.getElementById('inSubmitButton');
-        EventUtil.addHandler(inSubmitButton, 'click', function () {
+       /* EventUtil.addHandler(inSubmitButton, 'click', function () {
             this.setAttribute('disabled', 'disabled');
             addClass(this, 'disabled');
             $.ajax({
@@ -643,7 +644,7 @@ window.onload = function () {
 
                 }
             });
-        });
+        });*/
 
         // close
         var oClose = document.getElementsByClassName('close')[0];
