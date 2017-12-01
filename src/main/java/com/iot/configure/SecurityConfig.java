@@ -1,5 +1,7 @@
 package com.iot.configure;
 
+import com.iot.filter.qq.QQAuthenticationFilter;
+import com.iot.filter.qq.QQAuthenticationManager;
 import com.iot.security.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,15 +10,17 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * Created by xiongxiaoyu on 2017/10/12.
  */
 
 @Configuration
-@EnableWebMvcSecurity
+@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -35,7 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().antMatchers("/static/**");
         web.ignoring().antMatchers("/img/**","/js/**","/lib/**","/fonts/**","/stylesheets/**");
     }
 
@@ -44,16 +47,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable();
         http.csrf().disable();
 
-        http
-                .authorizeRequests()
+        http.authorizeRequests()
                 .antMatchers("/*.html","/register","/onlineLib","/onlineLib_practice","/registered","/validcode","/admin","/admin_add","/add","/isExist","/select","/mailSender").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").defaultSuccessUrl("/funExam")
+                .formLogin().loginPage("/login").defaultSuccessUrl("/")
                 .permitAll()
                 .and().logout().logoutSuccessUrl("/login")
                 .permitAll();
 
+        http.addFilterAt(qqAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
+
     }
+
+    private QQAuthenticationFilter qqAuthenticationFilter(){
+        QQAuthenticationFilter authenticationFilter = new QQAuthenticationFilter("/login/qq");
+        SimpleUrlAuthenticationSuccessHandler successHandler = new SimpleUrlAuthenticationSuccessHandler();
+        successHandler.setAlwaysUseDefaultTargetUrl(true);
+        successHandler.setDefaultTargetUrl("/");
+        authenticationFilter.setAuthenticationManager(new QQAuthenticationManager());
+        authenticationFilter.setAuthenticationSuccessHandler(successHandler);
+        return authenticationFilter;
+    }
+
 
 }

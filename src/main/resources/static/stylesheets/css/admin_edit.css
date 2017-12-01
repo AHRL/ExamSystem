@@ -1,19 +1,25 @@
-#searchBox {
+.searchBox {
     position: relative;
+    margin: 5rem 0;
 }
-
-#searchBox button {
+.searchBox .form-control {
+    font-size: 1.4rem;
+}
+.searchBox .btn {
     position: absolute;
-    top: 0;
+    bottom: 0;
     right: 0;
+    height: 3.4rem;
+    width: 8.7rem;
 }
 
-#searchResult {
+
+
+
+
+.searchResult {
     min-height: 30rem;
     margin: 4rem 0;
-    border: 2px solid lightgreen;
-    border-radius: .5rem;
-    /*background-image: url('../../img/search-failed-bg.png');*/
 }
 
 .searchResult-item {

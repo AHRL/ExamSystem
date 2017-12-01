@@ -1,132 +1,42 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8"/>`
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Home - FunExam</title>
-    <link rel="stylesheet" href="/stylesheets/css/funExam.css"/>
-    <link rel="short icon" type="image/x-icon" href="../favicon.ico"/>
-    <script src="/lib/modernizr-2.6.2.min.js"></script>
+    <link rel="stylesheet" href=" /stylesheets/css/funExam.css" />
+    <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
+    <script src=" /lib/modernizr-2.6.2.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
     <!--[if (lt IE 9) & (!IEMobile)]>
-    <script src="/lib/respond.min.js"></script>
+    <script src=" /lib/respond.min.js"></script>
     <![endif]-->
     <style type="text/css">
-        body {
-            padding-top: 4.5rem;
-        }
-        #header {
-            padding-top: 9rem;
-        }
-        .f-hr {
-            width: 10rem;
-            border: .2rem solid #3bd8dd;
-        }
-        #main {
-            position: relative;
-            width: 100%;
-            height: auto;
-            margin: 3rem 0;
-        }
-        #userInfo {
-            /*position: absolute;
-            right: 3rem;
-            top: 3rem;*/
-            width: 4rem;
-            height: 4rem;
-            margin-right: 1rem;
-            /*border: 1px solid #fff;*/
-            border-radius: 50%;
-        }
-        .exam {
-            display: flex;
-            width: 100%;
-            padding: 3rem;
-            margin-bottom: 2rem;
-            justify-content: center;
-        }
-        .exam-item {
-            position: relative;
-            width: 30rem;
-            height: auto;
-            padding-bottom: 3rem;
-            margin: 4rem 3rem;
-            border-radius: 1rem;
-            border: 1px solid #3bd8dd;
-        }
-        .exam-title {
-            padding: 1rem .5rem;
-            background: -webkit-linear-gradient(left, #3bd8dd, #e8e383);
-            border-radius: 1rem 1rem 0 0;
-        }
-        .exam-info {
-            padding: 1rem;
-            margin: 2rem 0;
-        }
-        .exam-news {
-            padding: 1rem;
-            margin-bottom: 2rem;
-        }
-        .exam-btn {
+        ._footer {
             position: absolute;
-            left: 50%;
-            bottom: 1rem;
-            transform: translateX(-50%);
-        }
-        footer {
+            bottom: 0;
+            left: 0;
+            right: 0;
             width: 100%;
             padding: 2rem;
             margin-top: 6rem;
-            background-color: #3bd8dd;
-        }
-        .news {
-            width: 100%;
-            height: 40rem;
-            margin: 2rem 0;
-            background-color: #eaf6ea;
-        }
-        button {
-            border-color: #3bd8dd;
-            background-color: #3bd8dd;
-        }
-        .navbar {
-            background-color: #3bd8dd;
-        }
-        .aside {
-            position: fixed;
-            right: 2rem;
-            top: 20rem;
+            font-size: 12px;
         }
     </style>
 </head>
+
 <body>
     <nav class="navbar navbar-toggleable-md fixed-top">
-        <button class="navbar-toggler navbar-toggler-right"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarCollapse"
-                aria-controls="navbarCollapse"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#">
-            <img src="/img/w3fun-inverse-40x40.png" id="userInfo" alt="user information" />
-            <span>Fun Exam</span>
-        </a>
         <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home<span class="sr-only">(current)</span> </a>
-                </li>
-            </ul>
             <ul class="navbar-nav mt-2 mt-md-0">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle"
-                       data-toggle="dropdown" href="#"
-                       role="button" aria-haspopup="true" aria-expanded="false">
-                        欢迎您 <span th:inline="text"> [[${#httpServletRequest.remoteUser}]]</span>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <img src=" /img/logos/w3fun-50.png" alt="avator" class="avator" /> 欢迎您 <span th:inline="text"> [[${#httpServletRequest.remoteUser}]]</span>
 
                         <!--<a th:href="@{/user}" th:if="${#httpServletRequest.remoteUser}}">个人中心</a>-->
                         <!--<a th:href="@{/login]" th:unless="${#httpServletRequest.remoteUser}}">登陆</a>-->
@@ -134,65 +44,60 @@
                     </a>
 
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="404.html">个人主页</a>
-                        <a class="dropdown-item" href="404.html">账号设置</a>
-                        <a class="dropdown-item" href="404.html">我的简历</a>
+                        <a class="dropdown-item" href="personal.html">个人主页</a>
+                        <a class="dropdown-item" href="settingAccount.html">账号设置</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item"  th:href="@{/logout}">退出登录</a>
+                        <a class="dropdown-item" th:href="@{/logout}">退出登录</a>
                         <!--<a class="dropdown-item"  href="login.html">退出登录</a>-->
                     </div>
                 </li>
             </ul>
         </div>
     </nav>
+    <div id="particles-js"></div>
+    <div class="container" style="margin-top: 10rem">
+        <div class="row">
+            <header class="_header text-center col-sm-8 push-sm-2">
+                <h1>Fun Exam</h1>
+                <hr class="f-hr" />
+                <img src=" /img/w3fun-100x100.png" alt="w3fun" />
+            </header>
+            <main class="_main text-center col-sm-8 push-sm-2">
+                <form>
+                    <fieldset class="form-group">
+                        <button class="btn btn-lg btn-block disabled">
+                            <strong>在线考试入口 - 暂未开放，准时开放</strong>
+                        </button>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>时间</th>
+                                    <th>考试内容</th>
+                                    <th>地点</th>
+                                    <th>备注</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2017/12/15 19:00-21:00</td>
+                                    <td>C 语言</td>
+                                    <td>明理楼 B412</td>
+                                    <td>请带好学生卡</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </fieldset>
+                </form>
+                <p class="text-right">
+                    您还可以在线练题:
+                    <a href="onlineLib.html" target="_blank">在线题库入口</a>
+                    <a href="" target="_blank">考试真题入口</a>
+                </p>
+            </main>
+        </div>
+    </div>
 
-    <header id="header" class="choices-center">
-        <h1>Fun Exam</h1>
-        <hr class="f-hr"/>
-    </header>
-    <main id="main">
-        <div class="exam">
-            <div class="exam-item">
-                <h2 class="exam-title h4 choices-center">在线题库</h2>
-                <div class="exam-info">
-                    涵盖嵌入式、Android、JavaWeb、Web 前端四个方向<br/>
-                    语言包括 C/C++、Java、JavaScript、CSS、HTML
-                </div>
-                <div class="choices-center exam-btn">
-                    <button class="btn btn-lg">进入题库</button>
-                </div>
-            </div>
-            <div class="exam-item">
-                <h2 class="exam-title h4 choices-center">在线考试</h2>
-                <div class="exam-info">
-                    翼灵物联工作室大一招新笔试<br/>
-                    必修 · C 语言考试<br/>
-                    必修 · 数据结构考试<br/>
-                    Web 前端 · 小组测试<br/>
-                </div>
-                <div class="exam-news">
-                    <div class="exam-news-time">2017/11/15 15:00-17:00</div>
-                    <div class="exam-news-info">Web 前端小组测试</div>
-                </div>
-                <div class="choices-center exam-btn">
-                    <button class="btn btn-lg">马上考试</button>
-                </div>
-            </div>
-        </div>
-        <section class="choices-center">
-            <h2>The News</h2>
-            <hr class="f-hr"/>
-        </section>
-        <div class="news">
-
-        </div>
-    </main>
-    <section class="aside">
-        <div>
-            <i class="fa fa-gear"></i>
-        </div>
-    </section>
-    <footer id="footer" class="_footer choices-center" role="contentinfo">
+    <footer id="footer" class="_footer text-center" role="contentinfo">
         <span><i class="fa fa-copyright"></i>2017</span>
         <a href="https://github.com/w3fun/" target="_blank" class="_link"><i class="fa fa-heart"></i>W3Fun</a>
         <a href="https://github.com/swpuLeo/" target="_blank" class="_link _hover-male"><i class="fa fa-male"></i>Leo</a>
@@ -200,19 +105,10 @@
         <a href="https://github.com/StaticWalk/" target="_blank" class="_link _hover-male"><i class="fa fa-male"></i>StaticWalk</a>
         <a href="https://github.com/luqingying/" target="_blank" class="_link _hover-female"><i class="fa fa-female"></i>yqy</a>
     </footer>
+    <script src=" /lib/jquery-3.2.1.min.js"></script>
+    <script src=" /lib/bootstrap.min.js"></script>
+    <script src=" /lib/particles.min.js"></script>
+    <script src=" /js/particlesInit.js"></script>
 </body>
-<script src="/lib/jquery-3.2.1.min.js"></script>
-<script src="/lib/bootstrap.min.js"></script>
-<!--<script src="  lib/gradientify.js"></script>-->
-<!--<script>
-    $(document).ready(function() {
-        $(".exam-title").gradientify({
-            gradients: [
-                { start: [49,76,172], stop: [242,159,191] },
-                { start: [255,103,69], stop: [240,154,241] },
-                { start: [33,229,241], stop: [235,236,117] }
-            ]
-        });
-    });
-</script>-->
+
 </html>
