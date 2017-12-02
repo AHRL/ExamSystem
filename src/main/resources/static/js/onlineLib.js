@@ -129,20 +129,30 @@ window.onload=function(){
 
     //btnSubmit（提交时判断是否选择了相应的编程语言）
     EventUtil.addHandler(osubBtn,"click",function(event){
-        for(var i=0;i<arrProgramme.length;i++){
-            if(arrProgramme[i].checked){
-                submitTip.innerHTML=strTip;
-                if(submitTip.className==='submitTip selectNone'){
-                    submitTip.classList.remove('selectNone');
-                }
-                form.submit();
-                this.disabled=true;
-                return;
-            }
             event.preventDefault();
-            submitTip.innerHTML='请选择您要练习的题目';
-            submitTip.classList.add('selectNone');
-        }
+            var flag=false;
+            for(var i=0;i<arrProgramme.length;i++){
+                if(arrProgramme[i].checked){
+                    flag=true;
+                    break;
+                }
+            }
+            if(flag===false){
+                submitTip.innerHTML='请选择您要练习的题目';
+                submitTip.classList.add('selectNone');
+            }else{
+                for(var i=0;i<arrProgramme.length;i++){
+                    if(arrProgramme[i].checked){
+                        submitTip.innerHTML=strTip;
+                        if(submitTip.className==='submitTip selectNone'){
+                            submitTip.classList.remove('selectNone');
+                        }
+                    }
+            }
+                this.disabled=true;
+                form.submit();
+            }
+
     });
 
     //selectNone（重选）

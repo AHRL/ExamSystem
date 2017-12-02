@@ -36,7 +36,7 @@ public class QQAuthenticationManager implements AuthenticationManager{
     private final static String USER_INFO_API = "%s?access_token=%s&oauth_consumer_key=%s&openid=%s";
 
     static {
-        AUTHORITIES.add(new SimpleGrantedAuthority("ROLE_USER"));
+        AUTHORITIES.add(new SimpleGrantedAuthority("user"));
     }
 
     @Override
