@@ -3,23 +3,27 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" xmlns:th="http://www.thymeleaf.org">
+<!--<![endif]-->
 
 <head>
-    <meta charset="UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>在线考试 - FunExam</title>
-    <meta name="keyword" content="Fun Exam"/>
-    <meta name="description" content="An exam system for students"/>
-    <link rel="short icon" type="image/x-icon" href="../favicon.ico"/>
-    <link rel="stylesheet" href="../static/stylesheets/css/onlineExam.css"/>
+    <meta name="keyword" content="Fun Exam" />
+    <meta name="description" content="An exam system for students" />
+    <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../static/stylesheets/css/onlineExam.css" />
+
     <script src="  /lib/modernizr-2.6.2.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
     <!--[if (lt IE 9) & (!IEMobile)]>
     <script src="  /lib/respond.min.js"></script>
     <![endif]-->
 </head>
+
 <body>
     <!--[if lte IE 7]>
         <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
@@ -85,14 +89,14 @@
                 <div class="practice-share_submit">
 
                     <ul class="clearfix">
-                        <li class="pull-right  next-practice"><input class="btn  btn-primary btn-lg" type="submit" value="下一题"/></li>
+                        <li class="pull-right  next-practice"><input class="btn  btn-primary btn-lg" type="submit" value="下一题" /></li>
                         <li class="pull-right"><button type="button" class="btn  btn-danger btn-lg" data-toggle="modal" data-target=".aheadModal">提前交卷</button></li>
                     </ul>
                 </div>
             </section>
         </form>
 
-        <hr class="mainsheethr"/>
+        <hr class="mainsheethr" />
 
         <section class="row practice-answer_sheet">
             <div class="col-12 choices-muted toggleDiv">
@@ -124,11 +128,12 @@
                 <div class="modal-body">
                     <form name="collectform" id="collectform">
                         <fieldset class="form-group">
-                            <label  for="collectLabel">输入标签：</label>
+                            <label for="collectLabel">输入标签：</label>
                             <input class="form-control" type="choices" value="" id="collectLabel" placeholder="多个标签用空格隔开" autocomplete="off" autofocus/>
                         </fieldset>
                         <div>
-                            <span>我的标签：</span><p class="myCollectLabel"><span class="labelSpan">javascript</span><span class="labelSpan">CSS</span></p>
+                            <span>我的标签：</span>
+                            <p class="myCollectLabel"><span class="labelSpan">javascript</span><span class="labelSpan">CSS</span></p>
                         </div>
                     </form>
                 </div>
@@ -152,16 +157,16 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-3 choices-center">
-                            <img class="shareImg" src="../static/img/qq.png" alt="QQ"/>
+                            <img class="shareImg" src="../static/img/qq.png" alt="QQ" />
                         </div>
                         <div class="col-3 choices-center">
-                            <img class="shareImg" src="../static/img/wx.png" alt="weixin"/>
+                            <img class="shareImg" src="../static/img/wx.png" alt="weixin" />
                         </div>
                         <div class="col-3 choices-center">
-                            <img class="shareImg" src="../static/img/wb.png" alt="weibo"/>
+                            <img class="shareImg" src="../static/img/wb.png" alt="weibo" />
                         </div>
                         <div class="col-3 choices-center">
-                            <img class="shareImg" src="../static/img/zh.png" alt="zhihu"/>
+                            <img class="shareImg" src="../static/img/zh.png" alt="zhihu" />
                         </div>
                     </div>
                 </div>
@@ -172,15 +177,15 @@
             </div>
         </div>
     </div>
-    <div class="modal fade aheadModal" role="dialog" tabindex="-1"  aria-hidden="true">
+    <div class="modal fade aheadModal" role="dialog" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-body choices-center aheadSure">
                     <span> <i class="fa fa-exclamation-circle"></i>您尚未完成本次练习，确定要提前交卷？</span>
                 </div>
                 <div class="modal-footer aheadFooter">
-                    <button  type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button  type="button" class="btn btn-primary aheadBtn">确定</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary aheadBtn">确定</button>
                 </div>
             </div>
         </div>
@@ -190,4 +195,5 @@
     <script src="../static/lib/bootstrap.min.js"></script>
     <script src="../static/js/onlineExam.js"></script>
 </body>
+
 </html>
