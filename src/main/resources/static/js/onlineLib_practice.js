@@ -77,6 +77,45 @@ window.onload=function(){
         }
     };
 
+    //加载页面后，请求数据；
+    // function requestFunction(){
+    //     var xmlHttpReq=null;
+    //     if(window.ActiveXObject){
+    //         xmlHttpReq=new ActiveXObject("Microsoft.XMLHTTP");
+    //     }else if(window.XMLHttpRequest){
+    //         xmlHttpReq=new XMLHttpRequest();
+    //     }
+    //     xmlHttpReq.open("GET","http://192.168.1.139/back",true);
+    //     xmlHttpReq.onreadystatechange=requestCallBack;
+    //     xmlHttpReq.send(null);
+    //     function requestCallBack(){
+    //         if(xmlHttpReq.readyState==4){
+    //             if(xmlHttpReq.status==200){
+    //                 var responseText=xmlHttpReq.responseText;
+    //                 alert(responseText);
+    //                 alert(typeof responseText);
+    //             }
+    //         }
+    //     }
+    // }
+    // requestFunction();
+
+    // $.ajax({
+    //     url:"test.json",
+    //     type:"GET",
+    //     dataType:"json",
+    //     success:function(data){
+    //         alert(data);
+    //     },
+    //     error:function(){
+    //         alert('error');
+    //     }
+    //  });
+
+    // $.getJSON("test.json",function(data){
+    //     alert(data);
+    // });
+
     //页面加载时，开始正向计时
     var then=new Date();
     var h=0;
