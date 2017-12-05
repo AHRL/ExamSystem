@@ -1,6 +1,5 @@
 package com.iot.controller;
 
-import com.iot.model.QQUser;
 import com.iot.model.Question;
 import com.iot.model.User;
 import com.iot.repository.QuestionRepository;
@@ -11,17 +10,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +32,7 @@ import java.util.List;
 public class ExamCtro {
 
 //    private Jedis jedis=new Jedis("118.89.36.125", 6379);
+
 
     @Autowired
     JavaMailSender mailSender;
@@ -58,6 +52,7 @@ public class ExamCtro {
     public String index() throws Exception {
         return "funExam";
     }
+
 
     @RequestMapping("/onlineLib")
     public String onlineLib() throws Exception {
@@ -89,13 +84,18 @@ public class ExamCtro {
         return "login";
     }
 
+//    @RequestMapping("/user")
+//    public String user(@AuthenticationPrincipal UsernamePasswordAuthenticationToken userAuthentication, Model model)
+//    {
+//        QQUser user = (QQUser) userAuthentication.getPrincipal();
+//        model.addAttribute("username", user.getNickname());
+//        model.addAttribute("avatar", user.getAvatar());
+//        return "user";
+//    }
+
     @RequestMapping("/user")
-    public String user(@AuthenticationPrincipal UsernamePasswordAuthenticationToken userAuthentication, Model model)
-    {
-        QQUser user = (QQUser) userAuthentication.getPrincipal();
-        model.addAttribute("username", user.getNickname());
-        model.addAttribute("avatar", user.getAvatar());
-        return "user";
+    public String user() throws Exception {
+        return "funExam";
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -117,11 +117,11 @@ public class ExamCtro {
         User user = new User(Username, Password, Email, new Date(System.currentTimeMillis()));
         user.setRole(User.ROLE.user);
         userRepository.save(user);
-        return "/";
+        return "/funExam";
     }
 
     @RequestMapping(value = "/select",method = RequestMethod.POST)
-    public List<Question> select(HttpServletRequest request)throws Exception{
+    public String select(HttpServletRequest request)throws Exception{
         String A =request.getParameter("programmeA");
         String B =request.getParameter("programmeB");
         String C =request.getParameter("programmeC");
@@ -131,8 +131,30 @@ public class ExamCtro {
         for (int i = 0; i <list.size(); i++) {
             System.out.print(list.get(i).toString());
         }
+//        return list;
+        request.getSession().setAttribute("list",list);
+        System.out.print("list"+list);
+        return "onlineLib";
+    }
+
+    @RequestMapping(value = "/back")
+    @ResponseBody
+    public List<Question> back(HttpServletRequest request){
+       List<Question> list= (List<Question>) request.getSession().getAttribute("list");
         return list;
     }
+
+    //    @RequestMapping(value = "/validcode")
+//    @ResponseBody
+//    public String validcode(HttpServletRequest request) {
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//        httpHeaders.set("Accept", "application/json");
+//        String email=(String) request.getSession().getAttribute("email");
+//        String validcode=jedis.get(email);
+//        return validcode;
+//    }
+
+
 
     @ResponseBody
     @RequestMapping(value = "/add")
@@ -168,15 +190,6 @@ public class ExamCtro {
         }
         return random;
     }
-//    @RequestMapping(value = "/validcode")
-//    @ResponseBody
-//    public String validcode(HttpServletRequest request) {
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.set("Accept", "application/json");
-//        String email=(String) request.getSession().getAttribute("email");
-//        String validcode=jedis.get(email);
-//        return validcode;
-//    }
 
 
 //    @RequestMapping(value = "/get")

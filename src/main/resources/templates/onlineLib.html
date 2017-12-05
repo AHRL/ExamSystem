@@ -15,14 +15,14 @@
     <meta name="keyword" content="Fun Exam" />
     <meta name="description" content="An exam system for students" />
     <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
-    <link rel="stylesheet" href=" /stylesheets/css/onlineLib.css" />
+    <link rel="stylesheet" href=" ../static/stylesheets/css/onlineLib.css" />
 
-    <script src=" /lib/modernizr-2.6.2.min.js"></script>
-    <!-- Respond.js for IE 8 or less only-->
+    <script src="../static/lib/modernizr-2.6.2.min.js"></script>
+    <!-- Respond.js for IE  ../static8 or less only-->
+
     <!--[if (lt IE 9) & (!IEMobile)]>
-    <script src=" /lib/respond.min.js"></script>
+    <script src="  ../static/lib/respond.min.js"></script>
     <![endif]-->
-
     <style type="choices/css">
         body { padding-top: 4.5rem; }
     </style>
@@ -81,7 +81,7 @@
 
     <main class="container practice-container">
         <h1 class="display-1"><span></span>题库练习</h1>
-        <form method="post" action="/select">
+        <form method="post" th:action="@{/select}">
             <section class="practice-choose">
                 <div class="row clearfix">
                     <div class="col-11 pull-left programmeh">
@@ -187,9 +187,9 @@
             </section>
         </form>
     </main>
-    <script src="/lib/jquery-3.2.1.min.js"></script>
-    <script src="/lib/bootstrap.min.js"></script>
-    <script src="/js/onlineLib.js"></script>
+    <script src="../static/lib/jquery-3.2.1.min.js"></script>
+    <script src="../static/lib/bootstrap.min.js"></script>
+    <script src="../static/js/onlineLib.js"></script>
 </body>
 
 </html>

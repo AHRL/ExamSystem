@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         http.authorizeRequests()
-                .antMatchers("/*.html","/register","/onlineLib","/onlineLib_practice","/registered","/validcode","/admin","/admin_add","/add","/isExist","/select","/mailSender").permitAll()
+                .antMatchers("/*.html","/register","/back","/onlineLib","/select","/registered","/validcode","/admin","/admin_add","/add","/isExist","/select","/mailSender").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").defaultSuccessUrl("/")
@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         QQAuthenticationFilter authenticationFilter = new QQAuthenticationFilter("/login/qq");
         SimpleUrlAuthenticationSuccessHandler successHandler = new SimpleUrlAuthenticationSuccessHandler();
         successHandler.setAlwaysUseDefaultTargetUrl(true);
-        successHandler.setDefaultTargetUrl("/");
+        successHandler.setDefaultTargetUrl("/user");
         authenticationFilter.setAuthenticationManager(new QQAuthenticationManager());
         authenticationFilter.setAuthenticationSuccessHandler(successHandler);
         return authenticationFilter;

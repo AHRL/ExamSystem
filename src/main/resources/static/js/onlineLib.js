@@ -34,11 +34,77 @@ window.onload=function(){
         }
     };
 //检测浏览器是否支持hashchange事件
-    var isSupported=("onhashchange" in window)&&(document.documentMode===undefined ||documentMode>7);
-    if(isSupported){
+//     var isSupported=("onhashchange" in window)&&(document.documentMode===undefined ||documentMode>7);
+    // if(isSupported){
+    //     window.onhashchange=function(){
+    //         var xmlHttpReq=null;
+    //         if(window.ActiveXObject){
+    //             xmlHttpReq=new ActiveXObject("Microsoft.XMLHTTP");
+    //         }else if(window.XMLHttpRequest){
+    //             xmlHttpReq=new XMLHttpRequest();
+    //         }
+    //         xmlHttpReq.open("GET","http://192.168.1.112/back",true);
+    //         xmlHttpReq.onreadystatechange=requestCallBack;
+    //         xmlHttpReq.send(null);
+    //         function requestCallBack(){
+    //             if(xmlHttpReq.readyState==4){
+    //                 if(xmlHttpReq.status==200){
+    //                     var responseText=xmlHttpReq.responseText;
+    //                     alert(responseText);
+    //                     alert(typeof responseText);
+    //                 }
+    //             }
+    //         }
+    //     };
+    // }
 
-    }
+    // function requestFunction(){
+        //     var xmlHttpReq=null;
+        //     if(window.ActiveXObject){
+        //         xmlHttpReq=new ActiveXObject("Microsoft.XMLHTTP");
+        //     }else if(window.XMLHttpRequest){
+        //         xmlHttpReq=new XMLHttpRequest();
+        //     }
+        //     xmlHttpReq.open("GET","http://192.168.1.112/back",true);
+        //     xmlHttpReq.onreadystatechange=requestCallBack;
+        //     xmlHttpReq.send(null);
+        //     function requestCallBack(){
+        //         if(xmlHttpReq.readyState==4){
+        //             if(xmlHttpReq.status==200){
+        //                 var responseText=xmlHttpReq.responseText;
+        //                 alert(responseText);
+        //                 alert(typeof responseText);
+        //             }
+        //         }
+        //     }
+        // }
 
+        // $(window).hashchange(function(){
+        //     alert(0);
+            // $.ajax({
+            //     url:"http://192.168.1.112/back",
+            //     type:"GET",
+            //     dataType:"json",
+            //     success:function(data){
+            //         alert(data);
+            //     },
+            //     error:function(){
+            //         alert(error);
+            //     }
+            //  })
+        // });
+
+    // $.ajax({
+    //     url:"http://192.168.1.112/back",
+    //     type:"GET",
+    //     dataType:"json",
+    //     success:function(data){
+    //         alert(data);
+    //     },
+    //     error:function(){
+    //         alert('error');
+    //     }
+    //  });
 
     //slide（展开、收起）
     var timer1=null,timer2=null;
@@ -129,20 +195,31 @@ window.onload=function(){
 
     //btnSubmit（提交时判断是否选择了相应的编程语言）
     EventUtil.addHandler(osubBtn,"click",function(event){
-        for(var i=0;i<arrProgramme.length;i++){
-            if(arrProgramme[i].checked){
-                submitTip.innerHTML=strTip;
-                if(submitTip.className==='submitTip selectNone'){
-                    submitTip.classList.remove('selectNone');
-                }
-                form.submit();
-                this.disabled=true;
-                return;
-            }
             event.preventDefault();
-            submitTip.innerHTML='请选择您要练习的题目';
-            submitTip.classList.add('selectNone');
-        }
+            var flag=false;
+            for(var i=0;i<arrProgramme.length;i++){
+                if(arrProgramme[i].checked){
+                    flag=true;
+                    break;
+                }
+            }
+            if(flag===false){
+                submitTip.innerHTML='请选择您要练习的题目';
+                submitTip.classList.add('selectNone');
+            }else{
+                for(var i=0;i<arrProgramme.length;i++){
+                    if(arrProgramme[i].checked){
+                        submitTip.innerHTML=strTip;
+                        if(submitTip.className==='submitTip selectNone'){
+                            submitTip.classList.remove('selectNone');
+                        }
+                    }
+                }
+                this.disabled=true;
+                form.submit();
+                window.open("file:///C:/Users/15928/Desktop/ExamSystem/src/main/resources/templates/onlineLib_practice.html","_self");
+            }
+
     });
 
     //selectNone（重选）
