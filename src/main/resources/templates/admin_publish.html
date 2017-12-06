@@ -207,64 +207,65 @@
                         <div class="form-group">
                             <div class="row">
                                 <label class="form-control-label col-sm-2 text-right">题目类型</label>
-                                <select name="type" id="chooseType" class="custom-select col-sm-9 form-control">
+                                <select name="examType" id="examType" class="custom-select col-sm-9 form-control">
                                     <option selected>请选择</option>
-                                    <option value="1">单选</option>
-                                    <option value="2">多选</option>
-                                    <option value="3">填空</option>
-                                    <option value="4">简答</option>
-                                    <option value="5">代码</option>
+                                    <option value="单选">单选</option>
+                                    <option value="多选">多选</option>
+                                    <option value="填空">填空</option>
+                                    <option value="简答">简答</option>
+                                    <option value="代码">代码</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="row">
-                                <label for="add-desc" class="form-control-label col-sm-2 text-right">题目描述</label>
-                                <input type="text" name="add-desc" id="add-desc" class="form-control col-sm-9 form-control-sm" autocomplete="off" />
+                                <label for="examDesc" class="form-control-label col-sm-2 text-right">题目描述</label>
+                                <input type="text" name="examDesc" id="examDesc" class="form-control col-sm-9 form-control-sm" autocomplete="off" />
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="row">
-                                <label for="add-desc" class="form-control-label col-sm-2 text-right">粘贴代码</label>
-                                <textarea class="form-control col-sm-9" name="" id="" rows="6"></textarea>
+                                <label for="examCode" class="form-control-label col-sm-2 text-right">粘贴代码</label>
+                                <textarea class="form-control col-sm-9" name="examCode" id="examCode" rows="6"></textarea>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <fiel class="set-choices">
                             <div class="row">
-                                <label for="add-desc" class="form-control-label col-sm-2 text-right">添加/删除</label>
-                                <button class="btn btn-success btn-sm">
+                                <span class="form-control-label col-sm-2 text-right">添加/删除</label>
+                                <button class="btn btn-success btn-sm" id="examAddBtn" type="button">
                                     <i class="fa fa-plus"></i>
                                 </button>
-                                <button class="btn btn-success btn-sm">
+                                <button class="btn btn-success btn-sm" id="examRemoveBtn" type="button">
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
-                            <div class="row">
-                                <label class="col-sm-1 push-sm-1">A</label>
-                                <input class="col-sm-9 push-sm-1 form-control" autocomplete="off" />
-                            </div>
-                            <div class="row">
-                                <label class="col-sm-1 push-sm-1">B</label>
-                                <input class="col-sm-9 push-sm-1 form-control" autocomplete="off" />
-                            </div>
-                            <div class="row">
-                                <label class="col-sm-1 push-sm-1">C</label>
-                                <input class="col-sm-9 push-sm-1 form-control" autocomplete="off" />
-                            </div>
-                            <div class="row">
-                                <label class="col-sm-1 push-sm-1">D</label>
-                                <input class="col-sm-9 push-sm-1 form-control" autocomplete="off" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-sm-5 push-sm-6 text-right">
-
+                            <fieldset class="form-group">
+                                <div class="row">
+                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoice-A">A</label>
+                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoice-A" id="examChoice-A" autocomplete="off" />
+                                </div>  
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <div class="row">
+                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoice-B">B</label>
+                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoice-B" id="examChoice-B" autocomplete="off" />
                                 </div>
-                            </div>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <div class="row">
+                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoice-C">C</label>
+                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoice-C" id="examChoice-C" autocomplete="off" />
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <div class="row">
+                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoice-D">D</label>
+                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoice-D" id="examChoice-D" autocomplete="off" />
+                                </div>
+                            </fieldset>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-block btn-info">确定添加</button>
+                            <button class="btn btn-block btn-info" id="examConfirmBtn">确定添加</button>
                         </div>
                     </form>
                 </div>
