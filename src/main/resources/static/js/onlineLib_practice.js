@@ -101,7 +101,7 @@ window.onload=function(){
     // requestFunction();
 
     $.ajax({
-        url:'http://192.168.1.139/back',
+        url:'http://127.0.0.1/back',
         type:"GET",
         dataType:"json",
         success:function(data){

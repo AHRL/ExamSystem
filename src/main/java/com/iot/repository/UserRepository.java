@@ -23,5 +23,4 @@ public interface UserRepository extends JpaRepository<User,Integer>{
     long registeredDaysBefore(Date date);
 
 
-
 }
