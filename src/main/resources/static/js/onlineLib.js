@@ -146,21 +146,22 @@ window.onload=function(){
                     }
                 }
                 this.disabled=true;
-                dataString=$(form).serialize();
-                alert(dataString);
-                $.ajax({
-                    url:'http://192.168.1.139/select',
-                    type:'POST',
-                    data:dataString,
-                    dataType:'json',
-                    success:function(data){
-                        alert(JSON.stringify(data));
-                        window.open('onlineLib_practice.html');
-                    },
-                    error:function(){
-                        alert('Error');
-                    }
-                })
+                form.submit();
+                // dataString=$(form).serialize();
+                // alert(dataString);
+                // $.ajax({
+                //     url:'http://192.168.1.139/select',
+                //     type:'POST',
+                //     data:dataString,
+                //     dataType:'json',
+                //     success:function(data){
+                //         alert(JSON.stringify(data));
+                //         window.open('onlineLib_practice.html');
+                //     },
+                //     error:function(){
+                //         alert('Error');
+                //     }
+                // })
 
 
             }
