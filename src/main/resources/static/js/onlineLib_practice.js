@@ -100,21 +100,19 @@ window.onload=function(){
     // }
     // requestFunction();
 
-    // $.ajax({
-    //     url:"test.json",
-    //     type:"GET",
-    //     dataType:"json",
-    //     success:function(data){
-    //         alert(data);
-    //     },
-    //     error:function(){
-    //         alert('error');
-    //     }
-    //  });
-
-    // $.getJSON("test.json",function(data){
-    //     alert(data);
-    // });
+    $.ajax({
+        url:'http://192.168.1.139/back',
+        type:"GET",
+        dataType:"json",
+        success:function(data){
+            alert(data);
+            alert(typeof data);
+            alert(JSON.stringify(data));
+        },
+        error:function(){
+            alert('error');
+        }
+     });
 
     //页面加载时，开始正向计时
     var then=new Date();

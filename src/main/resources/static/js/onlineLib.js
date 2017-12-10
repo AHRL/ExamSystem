@@ -146,33 +146,23 @@ window.onload=function(){
                     }
                 }
                 this.disabled=true;
-
-                // dataString=$($arrProgramme).serialize();
                 dataString=$(form).serialize();
                 alert(dataString);
-                alert(typeof dataString);
-
-                // form.submit();
-                // alert(3);
                 $.ajax({
                     url:'http://192.168.1.139/select',
                     type:'POST',
                     data:dataString,
                     dataType:'json',
-                    // jsonp:'callback',
                     success:function(data){
-                        alert(data);
                         alert(JSON.stringify(data));
-                        alert('Success');
+                        window.open('onlineLib_practice.html');
                     },
                     error:function(){
-                        alert(dataString);
                         alert('Error');
                     }
                 })
 
 
-                // window.open("file:///C:/Users/15928/Desktop/ExamSystem/src/main/resources/templates/onlineLib_practice.html","_self");
             }
 
     });
