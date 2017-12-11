@@ -78,36 +78,52 @@ window.onload=function(){
     };
 
     //加载页面后，请求数据；
-    // function requestFunction(){
-    //     var xmlHttpReq=null;
-    //     if(window.ActiveXObject){
-    //         xmlHttpReq=new ActiveXObject("Microsoft.XMLHTTP");
-    //     }else if(window.XMLHttpRequest){
-    //         xmlHttpReq=new XMLHttpRequest();
-    //     }
-    //     xmlHttpReq.open("GET","http://192.168.1.139/back",true);
-    //     xmlHttpReq.onreadystatechange=requestCallBack;
-    //     xmlHttpReq.send(null);
-    //     function requestCallBack(){
-    //         if(xmlHttpReq.readyState==4){
-    //             if(xmlHttpReq.status==200){
-    //                 var responseText=xmlHttpReq.responseText;
-    //                 alert(responseText);
-    //                 alert(typeof responseText);
-    //             }
-    //         }
-    //     }
-    // }
-    // requestFunction();
-
+    var oItemType=document.getElementsByClassName('itemType')[0];
+    var oItemTitle=document.getElementsByClassName('practice-specific-title')[0];
+    var oItemContent=document.getElementsByClassName('practice-specific-content')[0];
+    var strItemContent='';
+    var strSingSelect='';
+    var multiple='';
+    var newData='';
+    var items='';
+    var arrItems=[];
+    var len;
+    var jsonArrItems=[];
     $.ajax({
         url:'http://192.168.1.139/back',
         type:"GET",
         dataType:"json",
         success:function(data){
-            alert(data);
-            alert(typeof data);
-            alert(JSON.stringify(data));
+            newData=data.substring(1,data.length-1);
+            localStorage.setItem('items',newData);
+            items=localStorage.getItem('items');
+            alert(items);
+            arrItems=items.split('},{');
+            len=arrItems.length;
+            arrItems[0]=arrItems[0]+'}';
+            arrItems[len-1]='{'+arrItems[len-1];
+           for(var i=1;i<len-1;i++){
+               arrItems[i]='{'+arrItems[i]+'}';
+           }
+           arrItems.forEach(function(item,index,array){
+               item="'"+item+"'";
+               jsonArrItems[index]=JSON.parse(array[index]);
+           });
+
+            function fillPage(item){
+                   oItemType.innerHTML='['+item["type"]+'题]';
+                   oItemTitle.innerHTML=item["info"];
+                   if(item["type"]==='单选'){
+                       strSingSelect=item["choices"];
+
+                       strItemContent='<ul><li>'
+                   }
+                   oItemContent.innerHTML=strItemContent;
+            }
+            for(var i=0;i<len;i++){
+                console.log(jsonArrItems[i]["type"]);
+                // console.log(typeof jsonArrItems[i]);
+            }
         },
         error:function(){
             alert('error');
