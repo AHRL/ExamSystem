@@ -86,8 +86,19 @@ body{
     margin-right:3px;
     vertical-align: -2px;
 }
+.practice-question_and_answers{
+    position: relative;
+}
 .practice-question_and_answers>textarea{
-
+    padding:3px 5px;
+}
+.practice-question_and_answers>.areaTip{
+    position: absolute;
+    top:3px;
+    left:6px;
+    line-height:20px;
+    padding:3px 5px;
+    color: rgba(95, 95, 95, 1);
 }
 .practice-share_submit{
     margin-top:12px;

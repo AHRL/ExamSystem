@@ -81,54 +81,102 @@ window.onload=function(){
     var oItemType=document.getElementsByClassName('itemType')[0];
     var oItemTitle=document.getElementsByClassName('practice-specific-title')[0];
     var oItemContent=document.getElementsByClassName('practice-specific-content')[0];
+    var oTextArea=document.getElementsByTagName('textArea')[0];
+    var oAreaTip=document.getElementsByClassName('areaTip')[0];
+    oTextArea.value= '';
+    oAreaTip.style.display='none';
+    oTextArea.onfocus= function tipDisNone(){
+        oAreaTip.style.display='none';
+    };
+    oAreaTip.onclick= function tipDisNone(){
+        oAreaTip.style.display='none';
+        oTextArea.focus();
+    };
+    oTextArea.onblur=function tipDisBlock(){
+        if(oTextArea.value== ''){
+            oAreaTip.style.display='block';
+        }
+    };
+    // function tipDisNone(){
+    //         oAreaTip.style.display='none';
+    // }
+    // function tipDisBlock(){
+    //     if(oTextArea.innerHTML=''){
+    //         oAreaTip.style.display='block';
+    //     }
+    // }
+
+    var optionUnicode=65;
+    var inputVal='';
     var strItemContent='';
-    var strSingSelect='';
-    var multiple='';
+    var arrSingSelect=[];
+    var arrMultipleSelect=[];
     var newData='';
     var items='';
     var arrItems=[];
     var len;
     var jsonArrItems=[];
-    $.ajax({
-        url:'http://192.168.1.139/back',
-        type:"GET",
-        dataType:"json",
-        success:function(data){
-            newData=data.substring(1,data.length-1);
-            localStorage.setItem('items',newData);
-            items=localStorage.getItem('items');
-            alert(items);
-            arrItems=items.split('},{');
-            len=arrItems.length;
-            arrItems[0]=arrItems[0]+'}';
-            arrItems[len-1]='{'+arrItems[len-1];
-           for(var i=1;i<len-1;i++){
-               arrItems[i]='{'+arrItems[i]+'}';
-           }
-           arrItems.forEach(function(item,index,array){
-               item="'"+item+"'";
-               jsonArrItems[index]=JSON.parse(array[index]);
-           });
-
-            function fillPage(item){
-                   oItemType.innerHTML='['+item["type"]+'题]';
-                   oItemTitle.innerHTML=item["info"];
-                   if(item["type"]==='单选'){
-                       strSingSelect=item["choices"];
-
-                       strItemContent='<ul><li>'
-                   }
-                   oItemContent.innerHTML=strItemContent;
-            }
-            for(var i=0;i<len;i++){
-                console.log(jsonArrItems[i]["type"]);
-                // console.log(typeof jsonArrItems[i]);
-            }
-        },
-        error:function(){
-            alert('error');
-        }
-     });
+    // $.ajax({
+    //     // url:'offjson.json',
+    //     url:'http://192.168.43.245/back',
+    //     type:"GET",
+    //     dataType:"text",
+    //     success:function(data){
+    //         alert(data);
+    //
+    //         newData=data.substring(1,data.length-1);
+    //         // alert(typeof  newData);
+    //         localStorage.setItem('items',newData);
+    //         items=localStorage.getItem('items');
+    //         // alert(items);
+    //         arrItems=items.split('},{');
+    //         len=arrItems.length;
+    //         arrItems[0]=arrItems[0]+'}';
+    //         arrItems[len-1]='{'+arrItems[len-1];
+    //        for(var i=1;i<len-1;i++){
+    //            arrItems[i]='{'+arrItems[i]+'}';
+    //        }
+    //        arrItems.forEach(function(item,index,array){
+    //            item="'"+item+"'";
+    //            jsonArrItems[index]=JSON.parse(array[index]);
+    //        });
+    //
+    //         function fillPage(item){
+    //               strItemContent='';
+    //                oItemType.innerHTML='['+item["type"]+'题]';
+    //                oItemTitle.innerHTML=item["info"];
+    //                if(item["type"]==='单选'){
+    //                    arrSingSelect=item["choices"].split(',');
+    //                    strItemContent='<ul class="list-group practice-single_choice">';
+    //                    for(var i=0;i<arrSingSelect.length;i++){
+    //                        inputVal=String.fromCharCode(i+optionUnicode);
+    //                        strItemContent+='<li class="list-group-item"><label><input type="radio" name="sing_choice" value='+inputVal+'/>'+arrSingSelect[i]+'</label></li>';
+    //                    }
+    //                    strItemContent=strItemContent+'</ul>';
+    //                }else if(item["type"]==='多选'){
+    //                    arrMultipleSelect=item["choices"].split(',');
+    //                    strItemContent='<ul class="list-group practice-multiple_choice">';
+    //                    for(var i=0;i<arrMultipleSelect.length;i++){
+    //                        inputVal=String.fromCharCode(i+optionUnicode);
+    //                        strItemContent+='<li class="list-group-item"><label><input type="checkbox" name="multiply_choice" value='+inputVal+'/>'+arrMultipleSelect[i]+'</label></li>';
+    //                    }
+    //                    strItemContent=strItemContent+'</ul>';
+    //                }else if(item["type"]==='问答题'){
+    //                     strItemContent='<div class="practice-question_and_answers"><textarea class="form-control" rows="10"></textarea>'
+    //                }
+    //                oItemContent.innerHTML=strItemContent;
+    //         }
+    //
+    //         // fillPage(jsonArrItems[5]);
+    //         // for(var i=0;i<len;i++){
+    //         //     console.log(jsonArrItems[i]["type"]);
+    //         //     // console.log(typeof jsonArrItems[i]);
+    //         // }
+    //     },
+    //     error:function(){
+    //         alert('error');
+    //     }
+    //  });
 
     //页面加载时，开始正向计时
     var then=new Date();
