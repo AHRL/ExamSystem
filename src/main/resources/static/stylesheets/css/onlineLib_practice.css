@@ -71,6 +71,16 @@ body{
     margin:12px 0;
     font-size:1.2em;
 }
+.practice-specific-code{
+    margin: 8px  5px;
+    line-height:22px;
+    /*font-size: 16px;*/
+    background-color: #eee;
+    /*color: #fff;*/
+}
+.practice-specific-content{
+    margin-top:15px;
+}
 .practice-single_choice>li,.practice-multiple_choice>li{
     margin-bottom: 12px;
 }
@@ -98,7 +108,8 @@ body{
     left:6px;
     line-height:20px;
     padding:3px 5px;
-    color: rgba(95, 95, 95, 1);
+    color: rgb(125, 125, 125);
+    /*display: none;*/
 }
 .practice-share_submit{
     margin-top:12px;
