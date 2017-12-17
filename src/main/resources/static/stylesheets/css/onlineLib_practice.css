@@ -155,13 +155,12 @@ body{
     line-height:25px;
     text-align: center;
     margin-left:3px;
-
-    background: #028df7;
-    color: #fff;
+    background-color: transparent;
+    color: #bebebe;
 }
 .uncomplete{
     background: transparent;
-    color: #bebebe;
+    color: #eee;
 }
 .completed{
     background: #028df7;
