@@ -14,9 +14,11 @@ window.onload=function(){
     var collectBtn=document.getElementsByClassName('collectBtn')[0];
     var shareBtn=document.getElementsByClassName('shareBtn')[0];
     var aheadBtn=document.getElementsByClassName('aheadBtn')[0];
+    var aheadModalBtn=document.getElementsByClassName('aheadModalBtn')[0];
     var sheetToggle=document.getElementsByClassName('sheetToggle')[0];
     var toggleIcon=document.getElementsByClassName('toggleIcon')[0];
     var practiceForm=document.forms["practice-form"];
+    var $practiceForm=$(practiceForm);
     var strCollectInputValue='';
     var arrCollectInputValue=[];
     var arrLabelSpanValue=[];
@@ -96,6 +98,7 @@ window.onload=function(){
     var arrItems=[];
     var len;
     var jsonArrItems=[];
+    var sendAction="http://192.168.43.245/answersSender?";
     $.ajax({
         url:'offjson.json',
         // url:'http://192.168.43.245/back',
@@ -128,6 +131,7 @@ window.onload=function(){
                 }
                 return strObject;//注意在if语句之外return，否则会出现undefined
             }
+            //生成最终的题目格式
             jsonArrItems.map(function(item,index,array){
                 item["info"]=replaceStr(item["info"]);
                 item["code"]=replaceStr(item["code"]);
@@ -137,7 +141,7 @@ window.onload=function(){
 
             //生成相应的答题卡
             for(var i=0;i<len;i++){
-                strAnswerSheet+='<li>'+(i+1)+'</li>';
+                strAnswerSheet+='<li class="sheetLi">'+(i+1)+'</li>';
             }
             var $oAnswerSheet=$(oAnswerSheet);
             $oAnswerSheet.append(strAnswerSheet);
@@ -158,7 +162,7 @@ window.onload=function(){
                        strItemContent='<ul class="list-group practice-single_choice">';
                        for(var i=0;i<arrSingSelect.length;i++){
                            inputVal=String.fromCharCode(i+optionUnicode);
-                           strItemContent+='<li class="list-group-item"><label><input type="radio" name="sing_choice" value='+inputVal+'/>'+arrSingSelect[i]+'</label></li>';
+                           strItemContent+='<li class="list-group-item"><label><input type="radio" name="sing_choice" value="'+inputVal+'"/>'+arrSingSelect[i]+'</label></li>';
                        }
                        strItemContent=strItemContent+'</ul>';
                        oItemContent.innerHTML=strItemContent;
@@ -168,13 +172,13 @@ window.onload=function(){
                        strItemContent='<ul class="list-group practice-multiple_choice">';
                        for(var i=0;i<arrMultipleSelect.length;i++){
                            inputVal=String.fromCharCode(i+optionUnicode);
-                           strItemContent+='<li class="list-group-item"><label><input type="checkbox" name="multiply_choice" value='+inputVal+'/>'+arrMultipleSelect[i]+'</label></li>';
+                           strItemContent+='<li class="list-group-item"><label><input type="checkbox" name="multiply_choice" value="'+inputVal+'"/>'+arrMultipleSelect[i]+'</label></li>';
                        }
                        strItemContent=strItemContent+'</ul>';
                        oItemContent.innerHTML=strItemContent;
 
                    }else if(item["type"]==='问答'){
-                       var strItemContent='<div class="practice-question_and_answers"><textarea  class="form-control" rows="10" autofocus="autofocus"></textarea><div class="areaTip">请在此处写出你的答案 </div>'
+                       var strItemContent='<div class="practice-question_and_answers"><textarea  class="form-control" name="textarea" rows="10" autofocus="autofocus"></textarea><div class="areaTip">请在此处写出你的答案 </div>'
                        $('.practice-specific-content').append(strItemContent);
                        var oTextArea=document.getElementsByTagName('textArea')[0];
                        var oAreaTip=document.getElementsByClassName('areaTip')[0];
@@ -192,38 +196,98 @@ window.onload=function(){
                        oTextArea.onblur=tipDisBlock;
                    }
             }
+
+            //页面初次加载时
             var itemOrder=0;
             fillPage(jsonArrItems[itemOrder]);
-            // $(".oAnswerSheet").css("color","red");
-            // alert( $('.oAnswerSheet>li:eq(0)').html);
+            $('.practice-answer_sheet ul li:first-child').addClass('displayed');
+            $('.practice-answer_sheet ul li:gt(0)').addClass('undisplayed');
 
-            $('.practice-answer_sheet ul li:eq(0)').css('background_color','red');
+            //生成提交URI
+            function transURI(itemOrder){
+                if($practiceForm.serializeArray()[0]!=undefined){
+                    //传递的URI
+                    if($practiceForm.serializeArray()[0]["name"]=="sing_choice"||$practiceForm.serializeArray()[0]["name"]=="textarea"){
+                        sendAction+=jsonArrItems[itemOrder-1]["id"]+'="'+$practiceForm.serializeArray()[0]["value"]+'"&';
+                    }else if($practiceForm.serializeArray()[0]["name"]=="multiply_choice"){
+                        var selectedCount=$practiceForm.serializeArray().length;
+                        var selectedResult='';
+                        for(var i=0;i<selectedCount;i++){
+                            selectedResult+=$practiceForm.serializeArray()[i]["value"]+',';
+                        }
+                        selectedResult=selectedResult.slice(0,selectedResult.length-1);
+                        sendAction+=jsonArrItems[itemOrder-1]["id"]+'="'+selectedResult+'"';
+                        sendAction+='&';
+                    }
+                    //判断是否答题，决定答题卡的状态
+                    //textArea是个例外，value为空时，$practiceForm.serializeArray()[0]!=undefined
+                    if($practiceForm.serializeArray()[0]["value"]!=''){
+                        $(".practice-answer_sheet ul li:eq("+(itemOrder-1)+")").addClass('completed');
+                    }else{
+                        $(".practice-answer_sheet ul li:eq("+(itemOrder-1)+")").addClass('undisplayed');
+                    }
+                }else{
+                    sendAction+=jsonArrItems[itemOrder-1]["id"]+'="'+'"'+'&';
+                    $(".practice-answer_sheet ul li:eq("+(itemOrder-1)+")").addClass('undisplayed');
+                }
+            }
 
-            // $('.practice-answer_sheet ul li:first-child').addClass('completed');
-            $(".oAnswerSheet>li:eq("+itemOrder+")").css({'background':'#028df7','color':'#fff'});
-
+            //点击下一题时
             oNextBtn.onclick=function(){
                 itemOrder++;
-
-               $(".oAnswerSheet>li:eq("+itemOrder+")").css({'background':'#028df7','color':'#fff'});
-
+                $(".practice-answer_sheet ul li:eq("+(itemOrder-1)+")").removeClass('displayed');
+                // console.log(jsonArrItems[itemOrder-1]["id"]);
+                // console.log($practiceForm.serializeArray());
+                // console.log($practiceForm.serializeArray()[0]);
+                // console.log($practiceForm.serializeArray()[0]["name"]);
+                // console.log($practiceForm.serializeArray()[0]);
+                //把上一页添加到URI中
+                transURI(itemOrder);
+                console.log(sendAction);
+                //答题卡的状态，点击"下一题"按钮时，改变上一题按钮的状态
+                $(".practice-answer_sheet ul li:eq("+itemOrder+")").removeClass('undisplayed').addClass('displayed');
+                //填充页面
                 if(itemOrder<len-1){
-                    //填充页面
                     fillPage(jsonArrItems[itemOrder]);
                 }else if(itemOrder==len-1){
                     fillPage(jsonArrItems[itemOrder]);
                     this.innerHTML="交卷";
                     aheadBtn.style.display='none';
                 }else if(itemOrder==len){
-
-                    // var $practiceForm=$(practiceForm);
-                    // practiceForm.submit();
+                    //提交并且提交一次后不可再用
                     this.disabled=true;
-                    // answers=localStorage.getItem('answers');
-                    // console.log(localStorage);
+                    sendAction=sendAction.slice(0,sendAction.length-1);
+                    //http://192.168.43.245/answersSender?8=""&9=""&10=""&11=""
+                    // console.log(sendAction);
+                    practiceForm.method="POST";
+                    practiceForm.action=sendAction;
+                    practiceForm.submit();
                 }
             };
 
+            //点击提前交卷后弹出的确定按钮，提前交卷
+            aheadModalBtn.onclick=function(){
+                //把本页添加到URI中
+                transURI(itemOrder+1);
+
+                sendAction=sendAction.slice(0,sendAction.length-1);
+                console.log(sendAction);
+                practiceForm.method="POST";
+                practiceForm.action=sendAction;
+                practiceForm.submit();
+            };
+
+            //点击答题卡的li时
+            $('.sheetLi').click(function(){
+                fillPage(jsonArrItems[this.innerHTML-1]);
+                for(var i=0;i<len;i++){
+                    if($(".practice-answer_sheet ul li:eq("+i+")").hasClass('displayed')){
+                        $(".practice-answer_sheet ul li:eq("+i+")").removeClass('displayed');
+                    }
+
+                }
+                $(".practice-answer_sheet ul li:eq("+(this.innerHTML-1)+")").addClass('displayed');
+            });
 
             //开始正向计时
             var then=new Date();
