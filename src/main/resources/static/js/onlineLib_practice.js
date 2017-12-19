@@ -99,6 +99,11 @@ window.onload=function(){
     var len;
     var jsonArrItems=[];
     var sendAction="http://192.168.43.245/answersSender?";
+    var singleAnswer='';
+    var multiplyAnswer='';
+    var textareaAnswer='';
+    var itemAnswer;
+
     $.ajax({
         url:'offjson.json',
         // url:'http://192.168.43.245/back',
@@ -145,6 +150,32 @@ window.onload=function(){
             }
             var $oAnswerSheet=$(oAnswerSheet);
             $oAnswerSheet.append(strAnswerSheet);
+
+            //确定之前的答案
+            function confirmAnswer(itemOrder) {
+                if($practiceForm.serializeArray()[0]!=undefined) {
+                    if ($practiceForm.serializeArray()[0]["name"] == "sing_choice"){
+                        itemAnswer=jsonArrItems[itemOrder-1]["id"]+'="'+$practiceForm.serializeArray()[0]["value"]+'"&';
+                        return itemAnswer;
+                    }else if($practiceForm.serializeArray()[0]["name"] == "textarea"){
+                        itemAnswer=jsonArrItems[itemOrder-1]["id"]+'="'+$practiceForm.serializeArray()[0]["value"]+'"&';
+                        return itemAnswer;
+                    } else if($practiceForm.serializeArray()[0]["name"]=="multiply_choice"){
+                        var selectedCount=$practiceForm.serializeArray().length;
+                        var selectedResult='';
+                        for(var i=0;i<selectedCount;i++){
+                            selectedResult+=$practiceForm.serializeArray()[i]["value"]+',';
+                        }
+                        selectedResult=selectedResult.slice(0,selectedResult.length-1);
+                        itemAnswer=jsonArrItems[itemOrder-1]["id"]+'="'+selectedResult+'"&';
+                        return itemAnswer;
+                    }
+                }else{
+                        itemAnswer=jsonArrItems[itemOrder-1]["id"]+'="'+'"'+'&';
+                }
+                return itemAnswer;
+            }
+
 
             //填充页面
             function fillPage(item){
@@ -205,31 +236,34 @@ window.onload=function(){
 
             //生成提交URI
             function transURI(itemOrder){
-                if($practiceForm.serializeArray()[0]!=undefined){
-                    //传递的URI
-                    if($practiceForm.serializeArray()[0]["name"]=="sing_choice"||$practiceForm.serializeArray()[0]["name"]=="textarea"){
-                        sendAction+=jsonArrItems[itemOrder-1]["id"]+'="'+$practiceForm.serializeArray()[0]["value"]+'"&';
-                    }else if($practiceForm.serializeArray()[0]["name"]=="multiply_choice"){
-                        var selectedCount=$practiceForm.serializeArray().length;
-                        var selectedResult='';
-                        for(var i=0;i<selectedCount;i++){
-                            selectedResult+=$practiceForm.serializeArray()[i]["value"]+',';
-                        }
-                        selectedResult=selectedResult.slice(0,selectedResult.length-1);
-                        sendAction+=jsonArrItems[itemOrder-1]["id"]+'="'+selectedResult+'"';
-                        sendAction+='&';
-                    }
-                    //判断是否答题，决定答题卡的状态
-                    //textArea是个例外，value为空时，$practiceForm.serializeArray()[0]!=undefined
-                    if($practiceForm.serializeArray()[0]["value"]!=''){
-                        $(".practice-answer_sheet ul li:eq("+(itemOrder-1)+")").addClass('completed');
-                    }else{
-                        $(".practice-answer_sheet ul li:eq("+(itemOrder-1)+")").addClass('undisplayed');
-                    }
-                }else{
-                    sendAction+=jsonArrItems[itemOrder-1]["id"]+'="'+'"'+'&';
-                    $(".practice-answer_sheet ul li:eq("+(itemOrder-1)+")").addClass('undisplayed');
-                }
+                // if($practiceForm.serializeArray()[0]!=undefined){
+                //     //传递的URI
+                //     if($practiceForm.serializeArray()[0]["name"]=="sing_choice"||$practiceForm.serializeArray()[0]["name"]=="textarea"){
+                //         sendAction+=jsonArrItems[itemOrder-1]["id"]+'="'+$practiceForm.serializeArray()[0]["value"]+'"&';
+                //     }else if($practiceForm.serializeArray()[0]["name"]=="multiply_choice"){
+                //         var selectedCount=$practiceForm.serializeArray().length;
+                //         var selectedResult='';
+                //         for(var i=0;i<selectedCount;i++){
+                //             selectedResult+=$practiceForm.serializeArray()[i]["value"]+',';
+                //         }
+                //         selectedResult=selectedResult.slice(0,selectedResult.length-1);
+                //         sendAction+=jsonArrItems[itemOrder-1]["id"]+'="'+selectedResult+'"';
+                //         sendAction+='&';
+                //     }
+                //     //判断是否答题，决定答题卡的状态
+                //     //textArea是个例外，value为空时，$practiceForm.serializeArray()[0]!=undefined
+                //     if($practiceForm.serializeArray()[0]["value"]!=''){
+                //         $(".practice-answer_sheet ul li:eq("+(itemOrder-1)+")").addClass('completed');
+                //     }else{
+                //         $(".practice-answer_sheet ul li:eq("+(itemOrder-1)+")").addClass('undisplayed');
+                //     }
+                // }else{
+                //     sendAction+=jsonArrItems[itemOrder-1]["id"]+'="'+'"'+'&';
+                //     $(".practice-answer_sheet ul li:eq("+(itemOrder-1)+")").addClass('undisplayed');
+                // }
+                sendAction=sendAction+confirmAnswer(itemOrder);
+                console.log(sendAction);
+
             }
 
             //点击下一题时
@@ -243,7 +277,7 @@ window.onload=function(){
                 // console.log($practiceForm.serializeArray()[0]);
                 //把上一页添加到URI中
                 transURI(itemOrder);
-                console.log(sendAction);
+                // console.log(sendAction);
                 //答题卡的状态，点击"下一题"按钮时，改变上一题按钮的状态
                 $(".practice-answer_sheet ul li:eq("+itemOrder+")").removeClass('undisplayed').addClass('displayed');
                 //填充页面
@@ -258,7 +292,7 @@ window.onload=function(){
                     this.disabled=true;
                     sendAction=sendAction.slice(0,sendAction.length-1);
                     //http://192.168.43.245/answersSender?8=""&9=""&10=""&11=""
-                    // console.log(sendAction);
+                    console.log(sendAction);
                     practiceForm.method="POST";
                     practiceForm.action=sendAction;
                     practiceForm.submit();
@@ -279,13 +313,33 @@ window.onload=function(){
 
             //点击答题卡的li时
             $('.sheetLi').click(function(){
-                fillPage(jsonArrItems[this.innerHTML-1]);
+
                 for(var i=0;i<len;i++){
+                    // if($(".practice-answer_sheet ul li:eq("+i+")").hasClass('undisplayed')) {
+                    //     $(".practice-answer_sheet ul li:eq(" + i + ")").removeClass('undisplayed');
+                    // }
+                    // if($(".practice-answer_sheet ul li:eq("+i+")").hasClass('completed')) {
+                    //     $(".practice-answer_sheet ul li:eq(" + i + ")").removeClass('completed');
+                    // }
+
+                    console.log(confirmAnswer(i+1));
+
                     if($(".practice-answer_sheet ul li:eq("+i+")").hasClass('displayed')){
                         $(".practice-answer_sheet ul li:eq("+i+")").removeClass('displayed');
+                        alert($practiceForm.serializeArray()[0]);
+                        if($practiceForm.serializeArray()[0]!=undefined){
+                            if($practiceForm.serializeArray()[0]["name"]=="sing_choice"||$practiceForm.serializeArray()[0]["name"]=="multiply_choice"||(($practiceForm.serializeArray()[0]["name"]=="textarea")&&($practiceForm.serializeArray()[0]["value"]!=''))){
+                                $(".practice-answer_sheet ul li:eq("+i+")").addClass('completed');
+                            }else
+                                $(".practice-answer_sheet ul li:eq("+i+")").addClass('undisplayed');
+                        }else{
+
+                            $(".practice-answer_sheet ul li:eq("+i+")").addClass('undisplayed');
+                        }
                     }
 
                 }
+                fillPage(jsonArrItems[this.innerHTML-1]);
                 $(".practice-answer_sheet ul li:eq("+(this.innerHTML-1)+")").addClass('displayed');
             });
 
