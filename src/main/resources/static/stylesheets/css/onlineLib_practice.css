@@ -109,7 +109,6 @@ body{
     line-height:20px;
     padding:3px 5px;
     color: rgb(125, 125, 125);
-    /*display: none;*/
 }
 .practice-share_submit{
     margin-top:12px;
@@ -156,24 +155,6 @@ body{
     text-align: center;
     margin-left:3px;
     cursor: pointer;
-    /*background: #028df7;*/
-    /*color: #fff;*/
-}
-.practice-answer_sheet ul li:hover{
-    background: #028df7;
-    color: #fff;
-}
-.undisplayed{
-    background: transparent;
-    color: #ccc;
-}
-.displayed{
-    background: #028df7;
-    color: #fff;
-}
-.completed{
-    background:transparent;
-    color: #028df7;
 }
 .myCollectLabel{
     margin-top:10px;
