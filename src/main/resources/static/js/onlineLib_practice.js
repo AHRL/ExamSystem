@@ -18,7 +18,6 @@ window.onload=function(){
     var sheetToggle=document.getElementsByClassName('sheetToggle')[0];
     var toggleIcon=document.getElementsByClassName('toggleIcon')[0];
     var practiceForm=document.forms["practice-form"];
-    // var progressBar=
     var strCollectInputValue='';
     var arrCollectInputValue=[];
     var arrLabelSpanValue=[];
@@ -97,6 +96,7 @@ window.onload=function(){
     var len;
     var jsonArrItems=[];
     var sendAction='';
+    var progressNow;
     $.ajax({
         // url:'offjson.json',
         // url:'http://192.168.43.245/back',
@@ -282,7 +282,17 @@ window.onload=function(){
                 }
 
                 //更新进度条
+                for(var i=0;i<len;i++){
+                    if(answers[i].id===item.id){
+                        progressNow=((answers[i].cid+1)/len)*100;
+                        $('.progress-bar').attr('aria-valuenow',progressNow.toFixed(2));
+                        $('.progress-bar').css('width',progressNow+'%');
+                        $('.progress-bar>span').html(+progressNow.toFixed(2)+'% completed');
 
+                        $('.progress-bar_span').html((answers[i].cid+1)+'/'+len);
+                        break;
+                    }
+                }
 
 
                 //最后一道题时，按钮变为交卷

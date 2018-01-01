@@ -22,7 +22,7 @@ body{
 .progress-bar_show{
     float:left;
     width:80%;
-    margin-top:34px;
+    margin-top:31px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
@@ -30,7 +30,9 @@ body{
 .progress-bar_span{
     float: left;
     width:20%;
+    padding-left:3px;
     line-height:78px;
+    color: #fff;
 }
 .progress-bar_span span{
     font-size: 1.2em;
