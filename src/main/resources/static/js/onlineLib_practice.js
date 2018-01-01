@@ -18,6 +18,7 @@ window.onload=function(){
     var sheetToggle=document.getElementsByClassName('sheetToggle')[0];
     var toggleIcon=document.getElementsByClassName('toggleIcon')[0];
     var practiceForm=document.forms["practice-form"];
+    // var progressBar=
     var strCollectInputValue='';
     var arrCollectInputValue=[];
     var arrLabelSpanValue=[];
@@ -103,6 +104,7 @@ window.onload=function(){
         type:"GET",
         dataType:"text",
         success:function(data){
+            // alert(data);
             newData=data.substring(1,data.length-1);
             localStorage.setItem('items',newData);
 
@@ -119,9 +121,12 @@ window.onload=function(){
            });
             //将title、code、choices中可能的出现的标签尖括号替换成相应编码
             function replaceStr(strObject) {
-                if(strObject.indexOf('<')!==-1&&strObject.indexOf('>')!==-1) {
-                    strObject=strObject.replace(/</g,'&lt;');
-                    strObject=strObject.replace(/>/g,'&gt;');
+                //注意判断null
+                if(strObject!==null){
+                    if(strObject.indexOf('<')!==-1&&strObject.indexOf('>')!==-1) {
+                        strObject=strObject.replace(/</g,'&lt;');
+                        strObject=strObject.replace(/>/g,'&gt;');
+                    }
                 }
                 return strObject;//注意在if语句之外return，否则会出现undefined
             }
@@ -159,7 +164,7 @@ window.onload=function(){
                 oItemContent.innerHTML='';
                 oItemType.innerHTML='['+item["type"]+'题]';
                 oItemTitle.innerHTML=item["info"];
-                if(item["code"]!==''){
+                if(item["code"]!==''&&item["code"]!==null){
                     oItemCode.innerHTML='<pre><code>'+item["code"]+'</code></pre>';
                 }else{
                     oItemCode.innerHTML='';
@@ -275,6 +280,10 @@ window.onload=function(){
                         }
                     });
                 }
+
+                //更新进度条
+
+
 
                 //最后一道题时，按钮变为交卷
                 for(var i=0;i<len;i++){
