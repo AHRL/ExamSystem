@@ -98,9 +98,9 @@ window.onload=function(){
     var sendAction='';
     var progressNow;
     $.ajax({
-        // url:'offjson.json',
+        url:'offjson.json',
         // url:'http://192.168.43.245/back',
-        url:'http://194oe84904.iok.la/back',
+        // url:'http://194oe84904.iok.la/back',
         type:"GET",
         dataType:"text",
         success:function(data){

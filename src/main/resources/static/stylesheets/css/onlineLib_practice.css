@@ -205,3 +205,20 @@ body{
 .sheetToggle>i{
     margin-left:5px;
 }
+
+/*分享图标*/
+.modal-content{
+    min-width: 670px;
+}
+.shareModal .social-share{
+    width:85%;
+    margin:0 auto;
+    min-width:640px;
+}
+.shareModal .social-share .social-share-icon{
+    width: 100px;
+    height:100px;
+    font-size:60px;
+    line-height:100px;
+    margin:0 25px;
+}

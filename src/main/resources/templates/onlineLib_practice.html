@@ -15,6 +15,7 @@
             <link rel="short icon" type="image/x-icon" href="../favicon.ico"/>
             <!--<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
             <link rel="stylesheet" href=" ../static/stylesheets/css/onlineLib_practice.css"/>
+            <link rel="stylesheet" href=" ../static/lib/css/share.min.css"/>
 
             <script src="  ../static/lib/modernizr-2.6.2.min.js"></script>
             <!-- Respond.js for IE 8 or less only-->
@@ -157,21 +158,8 @@
                         <span class="sr-only">Close</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-3 choices-center">
-                            <img class="shareImg" src="  ../static/img/qq.png" alt="QQ"/>
-                        </div>
-                        <div class="col-3 choices-center">
-                            <img class="shareImg" src="  ../static/img/wx.png" alt="weixin"/>
-                        </div>
-                        <div class="col-3 choices-center">
-                            <img class="shareImg" src=" ../static/img/wb.png" alt="weibo"/>
-                        </div>
-                        <div class="col-3 choices-center">
-                            <img class="shareImg" src=" ../static/img/zh.png" alt="zhihu"/>
-                        </div>
-                    </div>
+                <div class="modal-body social-share">
+                    <!--一键分享-->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -196,42 +184,24 @@
     </div>
 
     <script src="  ../static/lib/jquery-3.2.1.min.js"></script>
+    <script src="../static/lib/js/jquery.share.min.js"></script>
     <script src=" ../static/lib/bootstrap.min.js"></script>
     <script src=" ../static/js/onlineLib_practice.js"></script>
     <script>
-//                $.getJSON("http://192.168.1.139/back",function(data){
-//                    alert(0);
-//                    alert(data);
-//                    alert(JSON.stringify(data));
-//                    alert(typeof  JSON.stringify((data)));
-//                });
-
-//                 $.ajax({
-//                     url:"http://192.168.1.139/back",
-//                     type:"GET",
-//                     dataType:"json",
-//                     success:function(data){
-//                         alert(0);
-//                         alert(data);
-//                     },
-//                     error:function(){
-//                         alert('error');
-//                     }
-//                  });
-
-
-//            $.getJSON("test.json",function(data){
-//                alert(data);
-//                alert(JSON.stringify(data));
-//                alert(typeof  JSON.stringify((data)));
-//            });
-
-//            $.getJSON("http://192.168.1.139/back",function(data){
-//                alert(0);
-//                alert(data);
-//                alert(JSON.stringify(data));
-//                alert(typeof  JSON.stringify((data)));
-//            });
+        //一键分享相关配置
+        var $config = {
+            url                 : '', // 网址，默认使用 window.location.href
+            source              : '', // 来源（QQ空间会用到）, 默认读取head标签：<meta name="site" content="http://overtrue" />
+            title               : '', // 标题，默认读取 document.title 或者 <meta name="title" content="share.js" />
+            description         : '', // 描述, 默认读取head标签：<meta name="description" content="PHP弱类型的实现原理分析" />
+            image               : '', // 图片, 默认取网页中第一个img标签
+            sites               : ['qzone', 'qq', 'weibo','wechat'], // 启用的站点
+            disabled            : ['google', 'facebook', 'twitter'], // 禁用的站点
+            wechatQrcodeTitle   : '微信扫一扫：分享', // 微信二维码提示文字
+            wechatQrcodeHelper  : '<p>微信里点“发现”，扫一下</p><p>二维码便可将本文分享至朋友圈。</p>',
+            target : '_blank' //打开方式
+        };
+        $('.social-share').share($config);
     </script>
     </body>
 </html>
