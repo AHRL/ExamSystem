@@ -294,17 +294,17 @@ window.onload=function(){
                     }
                 }
 
-
-                //最后一道题时，按钮变为交卷
+                ////最后一道题时，按钮变为交卷
                 for(var i=0;i<len;i++){
                     if(answers[i].id===item.id){
-                        if(answers[i].cid===len-1){
+                        if(answers[i].cid===len-1 ){
                             oNextBtn.innerHTML='交卷';
                             aheadBtn.style.display='none';
                         }else{
                             oNextBtn.innerHTML='下一题';
                             aheadBtn.style.display='block';
                         }
+                        break;
                     }
                 }
 
@@ -384,6 +384,7 @@ window.onload=function(){
             //点击提前交卷后弹出的确定按钮，提前交卷
             aheadModalBtn.onclick=function(){
                 //把本页添加到URI中
+                this.disabled=true;
                 practiceForm.method="POST";
                 practiceForm.action=transURI();
                 practiceForm.submit();
@@ -391,23 +392,18 @@ window.onload=function(){
 
             //点击答题卡的li时
             $('.sheetLi').click(function(){
+                itemOrder=this.innerHTML-1;
                 fillPage(jsonArrItems[this.innerHTML-1]);
             });
 
             //开始正向计时
-            var then=new Date();
+            //注意一个页面只有唯一的一个定时器，开始和清空都是一个定时器
             var h=0;
             var m=0;
             var s=0;
-            var ms=0;
             var mysetInterval=setInterval(timer, 1000);
             function timer(){
-                // var now=new Date();
-                // ms=now-then;
                 s++;
-                // h=checkTime(parseInt(ms/3600000)%60);
-                // m=checkTime(parseInt(ms/60000)%60);
-                // s=checkTime(parseInt(ms/1000)%60);
                 if(s>=60) {
                     s=0;
                     m++;
@@ -431,7 +427,7 @@ window.onload=function(){
                 }else{
                     removeClass(this,'fa-play-circle');
                     addClass(this,'fa-pause-circle');
-                    setInterval(timer, 1000);
+                    mysetInterval=setInterval(timer, 1000);
                 }
             }
 
