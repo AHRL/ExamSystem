@@ -1,9 +1,12 @@
 package com.iot.controller;
 
 import com.google.gson.Gson;
+import com.iot.model.QQUser;
 import com.iot.model.Question;
+import com.iot.model.Record;
 import com.iot.model.User;
 import com.iot.repository.QuestionRepository;
+import com.iot.repository.RecordRepository;
 import com.iot.repository.UserRepository;
 import com.iot.utils.RandomUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +14,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,9 +30,9 @@ import redis.clients.jedis.Jedis;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by xiongxiaoyu on 2017/10/9.
@@ -38,6 +44,10 @@ public class ExamCtro {
     private Jedis jedis=new Jedis("118.89.36.125", 6379);
     private Gson gson=new Gson();
 
+    private static String jsessionId;
+
+    private static String username;
+
     @Autowired
     JavaMailSender mailSender;
 
@@ -47,10 +57,24 @@ public class ExamCtro {
     @Autowired
     private QuestionRepository questionRepository;
 
+    @Autowired
+    private RecordRepository recordRepository;
+
 
     @RequestMapping("/")
-    public String index() throws Exception {
+    public String index(HttpServletRequest request) throws Exception {
+         username=request.getRemoteUser();
+         jsessionId=request.getSession().getId();
+         jedis.set(username,jsessionId);
+//        System.out.println("jsessionId:"+jsessionId+"+username:"+username);
         return "funExam";
+    }
+
+    @RequestMapping("/login")
+    public String login() throws Exception {
+//         username =request.getParameter("username");
+//        if(username!=null){ jedis.set("username",username);}
+        return "login";
     }
 
     @RequestMapping("/admin_add")
@@ -58,38 +82,27 @@ public class ExamCtro {
         return "admin_add";
     }
 
-    @RequestMapping("/onlineLib")
+    @RequestMapping(value = "/onlineLib")
+    @PreAuthorize("hasAnyRole('admin','user')")
     public String onlineLib() throws Exception {
         return "onlineLib";
     }
 
     @RequestMapping("/funExam")
     @PreAuthorize("hasAnyRole( 'user','admin')")
-
     public String funExam() throws Exception {
         return "funExam";
     }
 
-    @RequestMapping("/onlineLib_practice")
-    public String onlineLib_practice() throws Exception {
-        return "onlineLib_practice";
+
+    @RequestMapping("/404")
+    public String forbidden(){
+        return "404";
     }
 
     @RequestMapping("/admin")
     public String admin() throws Exception {
         return "admin";
-    }
-
-    @RequestMapping("/login")
-    public String login(HttpServletRequest request) throws Exception {
-        String user =request.getParameter("username");
-        request.getSession().setAttribute("user",user);
-        return "login";
-    }
-
-    @RequestMapping("/user")
-    public String user() throws Exception {
-        return "funExam";
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -112,7 +125,6 @@ public class ExamCtro {
         userRepository.save(user);
         return "/funExam";
     }
-
 
     @RequestMapping(value = "/mailSender")
     @ResponseBody
@@ -139,34 +151,126 @@ public class ExamCtro {
     }
 
 
+    @RequestMapping("/answersSender")
+    @ResponseBody
+    public String answersSender(HttpServletRequest request,HttpServletResponse response){
+
+        return "yes";
+    }
+
+
+    @RequestMapping("/onlineLib_practice")
+    public String onlineLib_practice() throws Exception {
+        return "onlineLib_practice";
+    }
+
     @RequestMapping("/select")
-    public String select(@RequestParam(required = false,value = "programmeA")String A,@RequestParam(required = false,value = "programmeB")String B,@RequestParam(required = false,value = "programmeC")String C,
-                         @RequestParam(required = false,value = "programmeD")String D,@RequestParam(required = false,value = "count")String count,HttpServletResponse response,HttpServletRequest request){
+    public String select(@RequestParam(required = false,defaultValue = "null",value = "programmeA")String A,@RequestParam(required = false,defaultValue = "null",value = "programmeB")String B,@RequestParam(required = false,defaultValue = "null",value = "programmeC")String C,
+                         @RequestParam(required = false,defaultValue = "null",value = "programmeD")String D,@RequestParam(required = false,value = "count")String count,HttpServletResponse response,HttpServletRequest request) throws IOException {
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         response.addHeader("Access-Control-Max-Age", "1800");
-        int c=Integer.parseInt(count);
-        List<Question> list=questionRepository.find(A,B,C,D,c);
-        request.getSession().setAttribute("list",list);
+
+        request.getSession().setAttribute("before",System.currentTimeMillis());
+        jedis.set("count",count);
+
+        //jedis的map来带值
+        Map<String,String> map=new HashMap<>();
+//        map.put("count",count);
+        map.put("A",A);
+        map.put("B",B);
+        map.put("C",C);
+        map.put("D",D);
+        jedis.hmset(username,map);
+
+        //使用jedis来携带值
+//        jedis.set("count",count);
+//        jedis.set("A",A);
+//        jedis.set("B",B);
+//        jedis.set("C",A);
+//        jedis.set("D",D);
+
+        //使用session来携带值  但是在security中实现不了
+//        request.getSession().setAttribute("A",A);
+//        request.getSession().setAttribute("B",B);
+//        request.getSession().setAttribute("C",C);
+//        request.getSession().setAttribute("D",D);
+//        request.getSession().setAttribute("count",count);
+
+//        request.getSession().setAttribute("a",list);
 //        request.getSession().setAttribute("lang",request.getParameter("lang"));
 //        request.getSession().setAttribute("count",c);
-//        request.getSession().setAttribute("before",System.currentTimeMillis());
-//        List<Question> a= (List<Question>) request.getSession().getAttribute("list");
-        jedis.set("a",gson.toJson(list));
+//        response.sendRedirect("/onlineLib_practice");
 
         return "onlineLib_practice";
     }
 
+
+    @RequestMapping("/user")
+    public String user(@AuthenticationPrincipal UsernamePasswordAuthenticationToken userAuthentication, Model model)
+    {
+        QQUser user = (QQUser) userAuthentication.getPrincipal();
+        model.addAttribute("username", user.getNickname());
+        model.addAttribute("avatar", user.getAvatar());
+        return "funExam";
+    }
+
+
     @RequestMapping(value = "/back")
     @ResponseBody
-    public String back(HttpServletRequest request,HttpServletResponse response){
+    public List<Question> back(HttpServletRequest request,HttpServletResponse response){
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         response.addHeader("Access-Control-Max-Age", "1800");
 //        List<Question> a= (List<Question>) request.getSession().getAttribute("list");
-        return gson.toJson(jedis.get("a"));
+        int count= Integer.parseInt(jedis.get("count"));
+
+        //通过redis中的map拿到值
+        List<String> A= (jedis.hmget(username,"A"));
+        List<String> B= (jedis.hmget(username,"B"));
+        List<String> C= (jedis.hmget(username,"C"));
+        List<String> D=jedis.hmget(username,"D");
+
+        //jedis携带查询条件
+//        String A=jedis.get("A");
+//        String B=jedis.get("B");
+//        String C=jedis.get("C");
+//        String D=jedis.get("D");
+
+        //session携带值
+//        String A= (String) request.getSession().getAttribute("A");
+//        String B= (String) request.getSession().getAttribute("B");
+//        String C= (String) request.getSession().getAttribute("C");
+//        String D= (String) request.getSession().getAttribute("D");
+//        Integer count= (Integer) request.getSession().getAttribute("count");
+
+        List<Question> list=questionRepository.find(
+                String.valueOf(A.get(0)),
+                String.valueOf(B.get(0)),
+                String.valueOf(C.get(0)),
+                String.valueOf(D.get(0)),
+                count);
+
+        //使用构造器来new新的record
+        Record record=new Record(0,userRepository.findByUsername(username),list,count,new Date(System.currentTimeMillis()));
+//        record.setQuestions(list);
+//        record.setUser(userRepository.findByUsername(jedis.get("username")));
+//        record.setType(0);
+//        record.setCount(count);
+//        record.setDate(new Date(System.currentTimeMillis()));
+        recordRepository.save(record);
+
+        //iterator迭代器输出当前用户所有的查询记录
+//        List<Record> records=recordRepository.findAll();
+//        List<Record> records=recordRepository.findUserAnswers(jedis.get("username"));
+//        Iterator<Record> i=records.iterator();
+//        while(i.hasNext()){
+//            Record a=i.next();
+//            System.out.print("大笨猪1"+a.getQuestions());}
+
+        return list;
     }
 
     @RequestMapping("/report")
@@ -175,12 +279,11 @@ public class ExamCtro {
         List list=new ArrayList();
         int score=0;
 //        String lang=(String)request.getSession().getAttribute("lang");
-        String count=(String)request.getSession().getAttribute("count");
-System.out.println("测试测试"+request.getSession().getAttribute("before"));
+        String count=String.valueOf (request.getSession().getAttribute("count")) ;
         String time= String.valueOf(System.currentTimeMillis()-(long)request.getSession().getAttribute("before"));
-System.out.println("测试测试"+count+"测试测试"+time);
+System.out.println("count="+time);
 //        list.add(lang);
-        list.add(score);
+//        list.add(score);
         list.add(count);
         list.add(time);
         return  gson.toJson(list);
@@ -252,13 +355,10 @@ System.out.println("测试测试"+count+"测试测试"+time);
 ////        return validcode;
 //    }
 
-//    @RequestMapping("/user")
-//    public String user(@AuthenticationPrincipal UsernamePasswordAuthenticationToken userAuthentication, Model model)
-//    {
-//        QQUser user = (QQUser) userAuthentication.getPrincipal();
-//        model.addAttribute("username", user.getNickname());
-//        model.addAttribute("avatar", user.getAvatar());
-//        return "user";
+
+    //    @RequestMapping("/user")
+//    public String user() throws Exception {
+//        return "funExam";
 //    }
 
 //    @RequestMapping("/onlineLib")
