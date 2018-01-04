@@ -1,17 +1,21 @@
+*{
+    font-size: 18px;
+    margin: auto;
+}
 ul{
     list-style: none;
-    margin: 40px auto;
-    width: 280px;
-    position: absolute;
+    width: 90%;
+    position: relative;
+    top:1em;
+    left:-1em;
 }
 li{
     width: 100%;
-    margin: 20px auto;
+    margin: 2em auto;
 }
 body{
     background: #ebebeb;
     color: #222;
-    font-size: 12px;
 }
 .top{
     width: 100%;
@@ -25,11 +29,17 @@ body{
 }
 .center{
     position: relative;
-    top:-100px;
-    width: 350px;
-    height: 200px;
+    top:-8em;
+    width: 22em;
+    height: 14em;
     margin: auto;
     background: #ffffff;
     text-align: center;
     border: 1px solid #e7e7e7;
+}
+button{
+    width: 80%;
+    background-color: #0386b4;
+    border: dashed 1px #0386b4;
+    color: #ebebeb;
 }
