@@ -1,5 +1,12 @@
 ul{
     list-style: none;
+    margin: 40px auto;
+    width: 280px;
+    position: absolute;
+}
+li{
+    width: 100%;
+    margin: 20px auto;
 }
 body{
     background: #ebebeb;
