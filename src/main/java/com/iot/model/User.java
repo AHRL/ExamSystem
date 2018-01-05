@@ -78,7 +78,7 @@ public class User {
     public void setDate(Date date) {
         this.date = date;
     }
-//
+
 //    public List<Record> getRecordes() {
 //        return recordes;
 //    }

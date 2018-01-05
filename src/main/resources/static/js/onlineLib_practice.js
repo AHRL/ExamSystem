@@ -100,8 +100,8 @@ window.onload=function(){
     $.ajax({
         // url:'offjson.json',
         // url:'http://192.168.43.245/back',
-        url:'http://194oe84904.iok.la/back',
-        // url:'http://127.0.0.1/back',
+        // url:'http://194oe84904.iok.la/back',
+        url:'http://127.0.0.1/back',
         type:"GET",
         dataType:"text",
         success:function(data){
@@ -355,7 +355,8 @@ window.onload=function(){
             //生成提交URI
             function transURI(){
                 // sendAction="http://192.168.43.245/answersSender?";
-                sendAction="http://194oe84904.iok.la/answersSender?";
+                // sendAction="http://194oe84904.iok.la/answersSender?";
+                sendAction="http://127.0.0.1/answersSender?";
                 for(var i=0;i<len;i++){
                     sendAction=sendAction+answers[i].id+'="'+answers[i].answer+'"&';
                 }

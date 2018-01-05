@@ -15,6 +15,8 @@ public class Record {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	private String jsessionId;
+
 	Integer type;
 
 	@ManyToOne
@@ -22,6 +24,38 @@ public class Record {
 
 	@ManyToMany()
 	List<Question> questions;
+
+	private int score;
+
+	private String rightSerial;
+
+	private String answers;
+
+	public String getJsessionId() {
+		return jsessionId;
+	}
+
+	public void setJsessionId(String jsessionId) {
+		this.jsessionId = jsessionId;
+	}
+
+	public String getAnswers() {
+		return answers;
+	}
+
+	public void setAnswers(String answers) {
+		this.answers = answers;
+	}
+
+	private String answerList;
+
+	public String getAnswerList() {
+		return answerList;
+	}
+
+	public void setAnswerList(String answerList) {
+		this.answerList = answerList;
+	}
 
 	private int count;
 
@@ -75,10 +109,52 @@ public class Record {
 		this.type = type;
 	}
 
-	public Record(Integer type, User user, List<Question> questions, int count, Date date) {
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public String getRightSerial() {
+		return rightSerial;
+	}
+
+	public void setRightSerial(String rightSerial) {
+		this.rightSerial = rightSerial;
+	}
+
+
+	public Record() {
+	}
+
+	@Override
+	public String toString() {
+		return "Record{" +
+				"id=" + id +
+				", jsessionId='" + jsessionId + '\'' +
+				", type=" + type +
+				", user=" + user +
+				", questions=" + questions +
+				", score=" + score +
+				", rightSerial='" + rightSerial + '\'' +
+				", answers='" + answers + '\'' +
+				", answerList='" + answerList + '\'' +
+				", count=" + count +
+				", date=" + date +
+				'}';
+	}
+
+	public Record(String jsessionId, Integer type, User user, List<Question> questions, int score, String rightSerial, String answers, String answerList, int count, Date date) {
+		this.jsessionId = jsessionId;
 		this.type = type;
 		this.user = user;
 		this.questions = questions;
+		this.score = score;
+		this.rightSerial = rightSerial;
+		this.answers = answers;
+		this.answerList = answerList;
 		this.count = count;
 		this.date = date;
 	}

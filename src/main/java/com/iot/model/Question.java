@@ -20,7 +20,7 @@ public class Question implements Serializable{
 
     private String type;
 
-//    private List<String> answer;
+    private String answer;
 
     private String lang;
 
@@ -34,11 +34,17 @@ public class Question implements Serializable{
     private String choices;
 
 
-
 //    @ManyToMany
 //    Record recorde;
 
 
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
 
     public Date getDate() {
         return date;

@@ -21,6 +21,13 @@ public interface RecordRepository extends JpaRepository<Record,Long>{
 	@Query(value = "select * from Record r where r.UserUsername=?1 and r.type=0",nativeQuery = true)
 	List<Record> findUserQuery(String UserUsername);
 
+//	@Query(value = "update * from Record r r.answerList and r.score and r.rightSerial where r.jsessionId=?4")
+//	void  updateByJsessionId()
+
+	Record saveAndFlush(Record record);
+
 	List<Record> findByUserUsername(String UserUsername);
+
+	Record findByJsessionId(String jsessionId);
 
 }
