@@ -235,7 +235,7 @@ window.onload=function(){
                                             answers[i].answer=answers[i].answer+$(':checkbox:eq('+j+')').val();
                                         }
                                     }
-                                    answers[i].answer=answers[i].answer.split('').join(',');
+                                    // answers[i].answer=answers[i].answer.split('').join(',');
                                     break;
                                 }
                             }
@@ -358,7 +358,7 @@ window.onload=function(){
                 // sendAction="http://194oe84904.iok.la/answersSender?";
                 sendAction="http://127.0.0.1/answersSender?";
                 for(var i=0;i<len;i++){
-                    sendAction=sendAction+answers[i].id+'="'+answers[i].answer+'"&';
+                    sendAction=sendAction+answers[i].id+'='+answers[i].answer+'&';
                 }
                 sendAction=sendAction.substring(0,sendAction.length-1);
                 return sendAction;

@@ -73,8 +73,6 @@ public class ExamCtro {
 
     @RequestMapping("/login")
     public String login() throws Exception {
-//         username =request.getParameter("username");
-//        if(username!=null){ jedis.set("username",username);}
         return "login";
     }
 
@@ -150,54 +148,56 @@ public class ExamCtro {
         return random;
     }
 
-
     @RequestMapping("/answersSender")
     @ResponseBody
     public String answersSender(HttpServletRequest request,HttpServletResponse response){
 
+        //获取当前jsessionId会话的record
+        Record record=recordRepository.findByJsessionId(jsessionId);
         int score=0;
-//        Integer count= Integer.valueOf(jedis.hmget(jsessionId,"count").get(0));
-        String answers=jedis.get(username + "answers");
+
+        //答题数不要之前的count，用更准确的答案个数来确定
+        String answers=record.getAnswers();
         answers=answers.substring(1,answers.length()-1);
-
-        String[] dd=answers.split(",");
-
-        System.out.println("这是去首尾后的"+answers);
-
-        for (int i = 0; i <dd.length ; i++) {
-            System.out.println(dd[i]);
-        }
+        String[] dd=answers.replace(" ","").split(",");
 
         String anwserList[] = new String[dd.length];
         int rightSerial[]= new int[dd.length];
 
         for (int i = 0; i <dd.length ; i++) {
             anwserList[i]=request.getParameter(String.valueOf(i+1));
-           System.out.println(i+":"+anwserList[i]);
-           if(dd[i]!=null)
-           {
-               if(anwserList[i].equals(dd[i]))
-               {
+//           System.out.println(i+":"+anwserList[i]);
+           if(dd[i]!=null) {
+               //这里判断答案是否正确，应该要重写这个equals方法。
+               if(dd[i].equals(anwserList[i])) {
                rightSerial[i]=1;
                score++;
                }
+               else
                rightSerial[i]=0;
            }
         }
 
+        //处理返回给completed的数据
+        long time=System.currentTimeMillis()-Long.parseLong(String.valueOf(jedis.hmget(jsessionId,"begin").get(0)));
+        Map map=new HashMap();
+        map.put("score",score);
+        map.put("count",record.getCount());
+        map.put("time",time);
+        map.put("A",String.valueOf(jedis.hmget(jsessionId,"A").get(0)));
+        map.put("B",String.valueOf(jedis.hmget(jsessionId,"B").get(0)));
+        map.put("C",String.valueOf(jedis.hmget(jsessionId,"C").get(0)));
+        map.put("D",String.valueOf(jedis.hmget(jsessionId,"D").get(0)));
+
         //使用获取记录然后set参数的方法失效？？？
         //通过创建jpa的sql语句解决
-        Record record=recordRepository.findByJsessionId(jsessionId);
         record.setAnswerList(Arrays.toString(anwserList));
         record.setScore(score);
         record.setRightSerial(Arrays.toString(rightSerial));
+        record.setType(1);
         recordRepository.saveAndFlush(record);
 
-
-//        System.out.println(answerList+""+ Arrays.toString(anwsers));
-//        Record record=new Record(1,userRepository.findByUsername(username),list,null,count,new Date(System.currentTimeMillis()));
-//        recordRepository.save(record);
-        return "yes";
+        return map.toString();
     }
 
     @RequestMapping("/onlineLib_practice")
@@ -211,14 +211,11 @@ public class ExamCtro {
                          @RequestParam(required = false,defaultValue = "null",value = "programmeC")String C,
                          @RequestParam(required = false,defaultValue = "null",value = "programmeD")String D,
                          @RequestParam(required = false,value = "count")String count,
-                         HttpServletResponse response,HttpServletRequest request) throws IOException {
+                         HttpServletResponse response) throws IOException {
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         response.addHeader("Access-Control-Max-Age", "1800");
-
-        //答题时间统计 暂时用不上
-//        request.getSession().setAttribute("before",System.currentTimeMillis());
 
         //jedis的map来带值
         Map<String,String> map=new HashMap<>();
@@ -227,16 +224,11 @@ public class ExamCtro {
         map.put("C",C);
         map.put("D",D);
         map.put("count",count);
+        map.put("begin", String.valueOf(System.currentTimeMillis()));//答题练习的开始时间
         jedis.hmset(jsessionId,map);
 
+        //设置会话窗口的存活期
 //       jedis.expire(jsessionId,Integer.parseInt(String.valueOf(360)));//设置由就session生成的查询条件map生存期
-
-        //使用jedis来携带值
-//        jedis.set("count",count);
-//        jedis.set("A",A);
-//        jedis.set("B",B);
-//        jedis.set("C",A);
-//        jedis.set("D",D);
 
         //使用session来携带值  但是在security中实现不了
 //        request.getSession().setAttribute("A",A);
@@ -244,7 +236,6 @@ public class ExamCtro {
 //        request.getSession().setAttribute("C",C);
 //        request.getSession().setAttribute("D",D);
 //        request.getSession().setAttribute("count",count);
-
 //        request.getSession().setAttribute("a",list);
 //        request.getSession().setAttribute("lang",request.getParameter("lang"));
 //        request.getSession().setAttribute("count",c);
@@ -277,12 +268,6 @@ public class ExamCtro {
         String D=String.valueOf(jedis.hmget(jsessionId,"D").get(0));
         Integer count= Integer.valueOf(jedis.hmget(jsessionId,"count").get(0));
 
-        //jedis携带查询条件
-//        String A=jedis.get("A");
-//        String B=jedis.get("B");
-//        String C=jedis.get("C");
-//        String D=jedis.get("D");
-
         //session携带值
 //        String A= (String) request.getSession().getAttribute("A");
 //        String B= (String) request.getSession().getAttribute("B");
@@ -292,14 +277,13 @@ public class ExamCtro {
 
         List<Question> list=questionRepository.find(A,B,C,D,count);
 
-
         //把查询出来的答案数组放在字符串answers中,不需要放入jedis去转运，关键设计在于使用好jsessionid
-        jedis.set(username + "answers",String.valueOf(questionRepository.findAnwserList(A,B,C,D,count)));
+//        jedis.set(username + "answers",String.valueOf(questionRepository.findAnwserList(A,B,C,D,count)));
         String answers=String.valueOf(questionRepository.findAnwserList(A,B,C,D,count));
 
         //使用构造器来new新的record
-        Record record=new Record(jsessionId,0,userRepository.findByUsername(username),list,-1,null,answers,null,count,new Date(System.currentTimeMillis()));
-
+        Record record=new Record(jsessionId,0,userRepository.findByUsername(username),list,-1,
+                null,answers,null,count,new Date(System.currentTimeMillis()));
 //        record.setQuestions(list);
 //        record.setUser(userRepository.findByUsername(jedis.get("username")));
 //        record.setType(0);
@@ -374,11 +358,6 @@ System.out.println("count="+time);
 //    @PreAuthorize("hasAnyRole('user')")
 //    public String onlineLib()throws Exception{return "onlineLib";}
 
-//    @RequestMapping(value = "/testUser", method=RequestMethod.GET)
-//    @PreAuthorize("hasAnyRole('user','admin')")
-//    public String testUser(){
-//        return "testUser";
-//    }
 
 //    @RequestMapping(value = "/validcode")
 //    @ResponseBody
@@ -399,7 +378,6 @@ System.out.println("count="+time);
 //        String validcode=jedis.get(email);
 ////        return validcode;
 //    }
-
 
     //    @RequestMapping("/user")
 //    public String user() throws Exception {
