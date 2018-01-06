@@ -288,7 +288,7 @@ window.onload=function(){
                         progressNow=((answers[i].cid+1)/len)*100;
                         $('.progress-bar').attr('aria-valuenow',progressNow.toFixed(2));
                         $('.progress-bar').css('width',progressNow+'%');
-                        $('.progress-bar>span').html(+progressNow.toFixed(2)+'% completed');
+                        $('.progress-bar>span').html(progressNow.toFixed(2)+'% completed');
 
                         $('.progress-bar_span').html((answers[i].cid+1)+'/'+len);
                         break;
