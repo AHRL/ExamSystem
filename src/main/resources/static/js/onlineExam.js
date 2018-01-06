@@ -20,9 +20,68 @@ window.onload=function(){
     var strCollectInputValue='';
     var arrCollectInputValue=[];
     var arrLabelSpanValue=[];
-    for(var i=0;i<arrLabelSpan.length;i++){
-        arrLabelSpanValue.push(arrLabelSpan[i].innerHTML);
+
+    //全屏事件
+    var viewFullScreen = document.getElementsByTagName("body")[0];
+    if (viewFullScreen) {
+        viewFullScreen.addEventListener("click", function () {
+            var docElm = document.documentElement;
+            if (docElm.requestFullscreen) {
+                docElm.requestFullscreen();
+            }
+            else if (docElm.msRequestFullscreen) {
+                docElm = document.body; //overwrite the element (for IE)
+                docElm.msRequestFullscreen();
+            }
+            else if (docElm.mozRequestFullScreen) {
+                docElm.mozRequestFullScreen();
+            }
+            else if (docElm.webkitRequestFullScreen) {
+                docElm.webkitRequestFullScreen();
+            }
+        }, false);
     }
+
+    var cancelFullScreen = document.getElementById("cancel-fullscreen");
+    if (cancelFullScreen) {
+        cancelFullScreen.addEventListener("click", function () {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+            else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+            else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            }
+            else if (document.webkitCancelFullScreen) {
+                document.webkitCancelFullScreen();
+            }
+        }, false);
+    }
+
+    var fullscreenState = document.getElementById("fullscreen-state");
+    if (fullscreenState) {
+        document.addEventListener("fullscreenchange", function () {
+            fullscreenState.innerHTML = (document.fullscreenElement)? "" : "not ";
+        }, false);
+
+        document.addEventListener("msfullscreenchange", function () {
+            fullscreenState.innerHTML = (document.msFullscreenElement)? "" : "not ";
+        }, false);
+
+        document.addEventListener("mozfullscreenchange", function () {
+            fullscreenState.innerHTML = (document.mozFullScreen)? "" : "not ";
+        }, false);
+
+        document.addEventListener("webkitfullscreenchange", function () {
+            fullscreenState.innerHTML = (document.webkitIsFullScreen)? "" : "not ";
+        }, false);
+    }
+
+
+
+
     //跨浏览器的事件处理程序
     var EventUtil={
         addHandler:function(element,type,handler) {
@@ -46,6 +105,9 @@ window.onload=function(){
         }
     };
     //通用函数
+
+
+
     function hasClass(elem, cls) {
         cls = cls || '';
         if (cls.replace(/\s/g, '').length == 0) return false; //当cls没有参数时，返回false
@@ -187,15 +249,6 @@ window.onload=function(){
         }
     }
 
-// 点击收藏的确定按钮，提交表单
-    collectBtn.onclick=function(){
-        $('.collectModal').modal('hide');
-        collectForm.submit();
-    };
-//点击分享本题的确定按钮，模态框消失
-    shareBtn.onclick=function(){
-        $('.shareModal').modal('hide');
-    };
 // 点击提前交卷的确定按钮后，提交表单
     aheadBtn.onclick=function(){
         $('.aheadModal').modal('hide');
