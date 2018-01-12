@@ -22,6 +22,4 @@ public interface UserRepository extends JpaRepository<User,Integer>{
     @Query(value = "select count(u) from User u where u.date=?1 ")
     long registeredDaysBefore(Date date);
 
-
-
 }

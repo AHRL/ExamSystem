@@ -22,7 +22,7 @@ body{
 .progress-bar_show{
     float:left;
     width:80%;
-    margin-top:34px;
+    margin-top:31px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
@@ -30,7 +30,9 @@ body{
 .progress-bar_span{
     float: left;
     width:20%;
+    padding-left:3px;
     line-height:78px;
+    color: #fff;
 }
 .progress-bar_span span{
     font-size: 1.2em;
@@ -71,6 +73,16 @@ body{
     margin:12px 0;
     font-size:1.2em;
 }
+.practice-specific-code{
+    margin: 8px  5px;
+    line-height:22px;
+    /*font-size: 16px;*/
+    background-color: #eee;
+    /*color: #fff;*/
+}
+.practice-specific-content{
+    margin-top:15px;
+}
 .practice-single_choice>li,.practice-multiple_choice>li{
     margin-bottom: 12px;
 }
@@ -86,8 +98,19 @@ body{
     margin-right:3px;
     vertical-align: -2px;
 }
+.practice-question_and_answers{
+    position: relative;
+}
 .practice-question_and_answers>textarea{
-
+    padding:3px 5px;
+}
+.practice-question_and_answers>.areaTip{
+    position: absolute;
+    top:3px;
+    left:6px;
+    line-height:20px;
+    padding:3px 5px;
+    color: rgb(125, 125, 125);
 }
 .practice-share_submit{
     margin-top:12px;
@@ -133,19 +156,8 @@ body{
     line-height:25px;
     text-align: center;
     margin-left:3px;
-
-    background: #028df7;
-    color: #fff;
+    cursor: pointer;
 }
-.uncomplete{
-    background: transparent;
-    color: #bebebe;
-}
-.completed{
-    background: #028df7;
-    color: #fff;
-}
-
 .myCollectLabel{
     margin-top:10px;
 }
@@ -192,4 +204,21 @@ body{
 }
 .sheetToggle>i{
     margin-left:5px;
+}
+
+/*分享图标*/
+.modal-content{
+    min-width: 670px;
+}
+.shareModal .social-share{
+    width:85%;
+    margin:0 auto;
+    min-width:640px;
+}
+.shareModal .social-share .social-share-icon{
+    width: 100px;
+    height:100px;
+    font-size:60px;
+    line-height:100px;
+    margin:0 25px;
 }
