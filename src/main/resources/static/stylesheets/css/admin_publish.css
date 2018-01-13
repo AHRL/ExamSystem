@@ -46,6 +46,6 @@
     border-radius: 100%;
 }
 
-.publish-add {
-    visibility: hidden;
+.examLibCon {
+    display: none;
 }

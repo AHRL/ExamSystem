@@ -66,27 +66,32 @@
 
     <div class="container" style="padding-top: 10rem">
         <div class="row">
-            <main class="col-sm-8 push-sm-2">
+            <div class="col-sm-8 push-sm-2">
                 <h1>发布考试</h1>
                 <hr />
-                <button type="button" class="btn btn-success btn-positioned">
-                    <a href="#" class="btn-link">查看已发布的考试</a>
-                </button>
+                <button type="button" class="btn btn-success btn-positioned" id="toggleBtn">查看考试题库</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="publishCon">
+        <div class="row">
+            <main class="col-sm-8 push-sm-2">
                 <div class="publish-info">
                     <div class="row">
                         <div class="col-sm-2">考试类型</div>
                         <div class="col-sm-10">
                             <select name="type" id="chooseType" class="custom-select">
                                 <option selected value="">请选择</option>
-                                <option value="1">嵌入式</option>
-                                <option value="2">web后端</option>
-                                <option value="3">Android</option>
-                                <option value="4">web前端</option>
-                                <option value="5">招新笔试</option>
-                                <option value="6">C/C++</option>
-                                <option value="7">Java</option>
-                                <option value="8">JavaScript</option>
-                                <option value="9">其他</option>
+                                <option value="嵌入式">嵌入式</option>
+                                <option value="web后端">web后端</option>
+                                <option value="Android">Android</option>
+                                <option value="web前端">web前端</option>
+                                <option value="招新笔试">招新笔试</option>
+                                <option value="C/C++">C/C++</option>
+                                <option value="Java">Java</option>
+                                <option value="JavaScript">JavaScript</option>
+                                <option value="其他">其他</option>
                             </select>
                         </div>
                     </div>
@@ -109,10 +114,19 @@
                             <input type="text" id="infoNotes" class="form-control" placeholder="填写备注，比如：2017级C语言第2次测试" />
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-sm-4 push-sm-2">
+                            <button class="btn btn-info btn-block disabled btn-js" disabled data-toggle="modal" data-target="#addExam">开始添加题目</button>
+                        </div>
+                        <div class="col-sm-4 push-sm-2">
+                            <button class="btn btn-success btn-block disabled" id="cpltBtn" disabled data-toggle="modal" data-target="#listofExam">完成添加，准备提交</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="publish-exam">
+                <!-- <div class="publish-exam">
                     <div class="h4 text-center bg-inverse text-white">考试题目列表</div>
                     <div id="accordion" role="tablist" aria-multiselectable="true">
+                        暂无 ...
                         <div class="panel panel-default">
                             <div class="panel-heading h6" role="tab" id="headingOne">
                                 <div class="panel-title">
@@ -176,95 +190,94 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <button class="btn btn-info btn-block publish-add" data-toggle="modal" data-target="#addExam">开始添加题目</button>
-                </div>
+                </div> -->
             </main>
         </div>
     </div>
 
+    <div class="container examLibCon" id="examLibCon">
+        <div class=" row ">
+            <main class="col-sm-8 push-sm-2 ">考试题库</main>
+        </div>
+    </div>
 
-
-
-
-    <div class="modal fade" id="addExam" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <figure class="text-center">
+    <div class="modal fade" id="addExam" role="dialog ">
+        <div class="modal-dialog ">
+            <div class="modal-content ">
+                <div class="modal-header ">
+                    <figure class="text-center ">
                         <img src="../static/img/w3fun-100x100.png" />
-                        <figcaption class="h6">
-                            <span class="exam-note"></span> - 第<span class="exam-count">5</span>题
+                        <figcaption class="h6 ">
+                            <span class="exam-note "></span> - 第<span class="exam-count "></span>题
                         </figcaption>
                     </figure>
-                    <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="upClose">
-                        <span aria-hidden="true">&times;</span>
+                    <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="upClose ">
+                        <span aria-hidden="true ">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form id="">
-                        <div class="form-group">
-                            <div class="row">
-                                <label class="form-control-label col-sm-2 text-right">题目类型</label>
-                                <select name="examType" id="examType" class="custom-select col-sm-9 form-control">
+                <div class="modal-body ">
+                    <form id=" ">
+                        <div class="form-group ">
+                            <div class="row ">
+                                <label class="form-control-label col-sm-2 text-right ">题目类型</label>
+                                <select name="examType" id="examType" class="custom-select col-sm-9 form-control ">
                                     <option selected>请选择</option>
-                                    <option value="单选">单选</option>
-                                    <option value="多选">多选</option>
-                                    <option value="填空">填空</option>
-                                    <option value="简答">简答</option>
-                                    <option value="代码">代码</option>
+                                    <option value="单选 ">单选</option>
+                                    <option value="多选 ">多选</option>
+                                    <option value="填空 ">填空</option>
+                                    <option value="简答 ">简答</option>
+                                    <option value="代码 ">代码</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <label for="examDesc" class="form-control-label col-sm-2 text-right">题目描述</label>
+                        <div class="form-group ">
+                            <div class="row ">
+                                <label for="examDesc" class="form-control-label col-sm-2 text-right ">题目描述</label>
                                 <input type="text" name="examDesc" id="examDesc" class="form-control col-sm-9 form-control-sm" autocomplete="off" />
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <label for="examCode" class="form-control-label col-sm-2 text-right">粘贴代码</label>
-                                <textarea class="form-control col-sm-9" name="examCode" id="examCode" rows="6"></textarea>
+                        <div class="form-group ">
+                            <div class="row ">
+                                <label for="examCode" class="form-control-label col-sm-2 text-right ">粘贴代码</label>
+                                <textarea class="form-control col-sm-9" name="examCode" id="examCode" rows="6 "></textarea>
                             </div>
                         </div>
-                        <fiel class="set-choices">
-                            <div class="row">
-                                <span class="form-control-label col-sm-2 text-right">添加/删除</label>
-                                <button class="btn btn-success btn-sm" id="examAddBtn" type="button">
-                                    <i class="fa fa-plus"></i>
+                        <fiel class="set-choices ">
+                            <div class="row ">
+                                <span class="form-control-label col-sm-2 text-right ">添加/删除</label>
+                                <button class="btn btn-success btn-sm" id="examAddBtn" type="button ">
+                                    <i class="fa fa-plus "></i>
                                 </button>
-                                <button class="btn btn-success btn-sm" id="examRemoveBtn" type="button">
-                                    <i class="fa fa-minus"></i>
+                                <button class="btn btn-success btn-sm" id="examRemoveBtn" type="button ">
+                                    <i class="fa fa-minus "></i>
                                 </button>
                             </div>
-                            <fieldset class="form-group">
-                                <div class="row">
-                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoice-A">A</label>
+                            <fieldset class="form-group ">
+                                <div class="row ">
+                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoice-A ">A</label>
                                     <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoice-A" id="examChoice-A" autocomplete="off" />
                                 </div>  
                             </fieldset>
                             <fieldset class="form-group">
-                                <div class="row">
-                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoice-B">B</label>
+                                <div class="row ">
+                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoice-B ">B</label>
                                     <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoice-B" id="examChoice-B" autocomplete="off" />
                                 </div>
                             </fieldset>
                             <fieldset class="form-group">
-                                <div class="row">
-                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoice-C">C</label>
+                                <div class="row ">
+                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoice-C ">C</label>
                                     <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoice-C" id="examChoice-C" autocomplete="off" />
                                 </div>
                             </fieldset>
                             <fieldset class="form-group">
-                                <div class="row">
-                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoice-D">D</label>
+                                <div class="row ">
+                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoice-D ">D</label>
                                     <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoice-D" id="examChoice-D" autocomplete="off" />
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group ">
                             <button class="btn btn-block btn-info" id="examConfirmBtn">确定添加</button>
                         </div>
                     </form>
@@ -280,7 +293,7 @@
     <script>
         $(function() {
             $('.datetimepicker').datetimepicker({
-                language: "zh-CN",
+                language: "zh-CN ",
                 autoclose: true,
                 clearBtn: true,
                 todayBtn: true,
@@ -288,6 +301,7 @@
             });
         });
     </script>
+    <script src="../static/js/funLib.js"></script>
     <script src="../static/js/admin_publish.js"></script>
 </body>
 

@@ -20,6 +20,8 @@ public class Question implements Serializable{
 
     private String type;
 
+    private String answer;
+
     private String lang;
 
     @Column(length=1024 )
@@ -30,6 +32,19 @@ public class Question implements Serializable{
 
     @Column(length = 2048 )
     private String choices;
+
+
+//    @ManyToMany
+//    Record recorde;
+
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
 
     public Date getDate() {
         return date;
@@ -98,6 +113,7 @@ public class Question implements Serializable{
 
     public Question() {
     }
+
 
     @Override
     public String toString() {
