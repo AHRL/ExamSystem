@@ -223,7 +223,7 @@ function pageFinished() {
 
     EventUtil.addHandler(cpltBtn, 'click', function(event) {
         event.preventDefault();
-        /* $.ajax({
+        $.ajax({
             type: 'POST',
             url: '/',
             dataType: 'json',
@@ -238,22 +238,23 @@ function pageFinished() {
                 pubAddBtn.addAttribute('disabled');
                 addClass(cpltBtn, 'disabled');
                 cpltBtn.addAttribute('disabled');
+                alert('提交成功!');
             },
             error: function() {
 
             }
-        }); */
+        });
 
-        storage.removeItem('examData');
-        pubInfoType.value = '';
-        pubInfoST.value = '';
-        pubInfoET.value = '';
-        pubInfoNote.value = '';
-        addClass(pubAddBtn, 'disabled');
-        pubAddBtn.setAttribute('disabled', 'disabled');
-        addClass(cpltBtn, 'disabled');
-        cpltBtn.setAttribute('disabled', 'disabled');
-        alert('提交成功')
+        // storage.removeItem('examData');
+        // pubInfoType.value = '';
+        // pubInfoST.value = '';
+        // pubInfoET.value = '';
+        // pubInfoNote.value = '';
+        // addClass(pubAddBtn, 'disabled');
+        // pubAddBtn.setAttribute('disabled', 'disabled');
+        // addClass(cpltBtn, 'disabled');
+        // cpltBtn.setAttribute('disabled', 'disabled');
+        // alert('提交成功')
     });
 
     EventUtil.addHandler(toggleBtn, 'click', function() {
