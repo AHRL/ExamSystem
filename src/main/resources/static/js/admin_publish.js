@@ -18,6 +18,7 @@ function pageFinished() {
 
     var pubAddBtn = document.getElementsByClassName('btn-js')[0];
     var cpltBtn = document.getElementById('cpltBtn');
+    var submitCfrmBtn = document.getElementById('submitCfrmBtn');
     var toggleBtn = document.getElementById('toggleBtn');
     var toggleFlag = true;
 
@@ -112,8 +113,6 @@ function pageFinished() {
     var eAddBtn = document.getElementById('examAddBtn');
     var eRmvBtn = document.getElementById('examRemoveBtn');
     var eCfmBtn = document.getElementById('examConfirmBtn');
-
-    console.log(eCfmBtn);
 
     // EventUtil.addHandler(eType, 'change', function() {
     //     storage.setItem('examType', eType.value);
@@ -221,7 +220,7 @@ function pageFinished() {
         }
     });
 
-    EventUtil.addHandler(cpltBtn, 'click', function(event) {
+    EventUtil.addHandler(submitCfrmBtn, 'click', function(event) {
         event.preventDefault();
         $.ajax({
             type: 'POST',
@@ -229,7 +228,7 @@ function pageFinished() {
             dataType: 'json',
             data: JSON.parse(storage.getItem('examData')),
             success: function(data) {
-                storage.clear();
+                storage.removeItem('examData');
                 pubInfoType.value = '';
                 pubInfoST.value = '';
                 pubInfoET.value = '';

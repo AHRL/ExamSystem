@@ -119,78 +119,10 @@
                             <button class="btn btn-info btn-block disabled btn-js" disabled data-toggle="modal" data-target="#addExam">开始添加题目</button>
                         </div>
                         <div class="col-sm-4 push-sm-2">
-                            <button class="btn btn-success btn-block disabled" id="cpltBtn" disabled data-toggle="modal" data-target="#listofExam">完成添加，准备提交</button>
+                            <button class="btn btn-success btn-block disabled" id="cpltBtn" disabled data-toggle="modal" data-target="#submitModal">完成添加，准备提交</button>
                         </div>
                     </div>
                 </div>
-                <!-- <div class="publish-exam">
-                    <div class="h4 text-center bg-inverse text-white">考试题目列表</div>
-                    <div id="accordion" role="tablist" aria-multiselectable="true">
-                        暂无 ...
-                        <div class="panel panel-default">
-                            <div class="panel-heading h6" role="tab" id="headingOne">
-                                <div class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        2017级第2次C语言考试 - 第 1 题 - 单选
-                                    </a>
-                                </div>
-                            </div>
-                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                <form>
-                                    <div class="form-group">
-                                        <label class="form-control-label">题目描述（双击可更改）</label>
-                                        <input type="text" class="form-control" value="javascript中document.getElemenById的返回值的类型为" readonly />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-control-label">相关代码（双击可更改）</label>
-                                        <textarea name="" id="" rows="10" class="form-control" readonly></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-control-label">题目选项（双击可更改）</label>
-                                        <div>
-                                            <label class="form-control-label">A</label>
-                                            <input type="text" class="form-control" value="Array" readonly />
-                                            <label class="form-control-label">B</label>
-                                            <input type="text" class="form-control" value="Object" readonly />
-                                            <label class="form-control-label">C</label>
-                                            <input type="text" class="form-control" value="String" readonly />
-                                            <label class="form-control-label">D</label>
-                                            <input type="text" class="form-control" value="Function" readonly />
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingTwo">
-                                <div class="panel-title h6">
-                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        2017级第2次C语言考试 - 第 2 题 - 单选
-                                    </a>
-                                </div>
-                            </div>
-                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-                                on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
-                                beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingThree">
-                                <div class="panel-title h6">
-                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                        2017级第2次C语言考试 - 第 3 题 - 单选
-                                    </a>
-                                </div>
-                            </div>
-                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-                                on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
-                                beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
             </main>
         </div>
     </div>
@@ -198,6 +130,32 @@
     <div class="container examLibCon" id="examLibCon">
         <div class=" row ">
             <main class="col-sm-8 push-sm-2 ">考试题库</main>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="submitModal" role="dialog ">
+        <div class="modal-dialog ">
+            <div class="modal-content ">
+                <div class="modal-header ">
+                    <figure class="text-center ">
+                        <img src="../static/img/w3fun-100x100.png" />
+                        <figcaption class="h6 ">
+                            试题预览
+                        </figcaption>
+                    </figure>
+                    <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="upClose ">
+                        <span aria-hidden="true ">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body ">
+                    <form>
+                        <div class="from-group">
+                            <button class="btn btn-block btn-info" id="submitCfrmBtn">确定提交</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -284,7 +242,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
 
     <script src="../static/lib/jquery-3.2.1.min.js"></script>
     <script src="../static/lib/bootstrap.min.js"></script>
