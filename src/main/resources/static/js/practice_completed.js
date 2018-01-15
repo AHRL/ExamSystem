@@ -8,7 +8,7 @@ var practiceRight=document.getElementsByClassName('practiceRight')[0];
 var practiceTime=document.getElementsByClassName('practiceTime')[0];
 var skillType=document.getElementsByClassName('skillType')[0];
 $.ajax({
-    url:'completed.json',//改
+    url:'http://127.0.0.1/onlineLib_result',//改
     type:"GET",
     dataType:"json",
     success:function(data){
@@ -17,10 +17,11 @@ $.ajax({
         var jsonTextType=JSON.stringify(data,["A","B","C","D"]);
         var jsonType=JSON.parse(jsonTextType);
         for(var o in jsonType){
-           if(jsonType[o]!==''){
+            if(jsonType[o]!==''&&jsonType[o]!=='null'){
                type=type+jsonType[o]+'/';
            }
         }
+
         function checkTime(t) {
             if(t<10){
                 t='0'+t;

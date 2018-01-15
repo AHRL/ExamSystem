@@ -22,7 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebMvcSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)//使@preAuthorize生效
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
@@ -34,7 +34,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected  void configure(AuthenticationManagerBuilder auth)
             throws Exception{
-        auth.userDetailsService(userDetailsService());
+        auth.userDetailsService(userDetailsService());//这里作用是引入dataInit的配置
+        //内存申明一个用户，用于简单调试security
+//        auth.inMemoryAuthentication().withUser("xixixi").password("123456").roles("user");
     }
 
     //使@preAuthorize生效
@@ -58,7 +60,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/register","/*.html","/onlineLib","/report"
                         ,"/back","/onlineLib_practice","/select","/registered","/validcode"
                         ,"/admin","/admin_add","/add","/isExist","/select","/mailSender"
-                        ,"/answersSender","/test").permitAll()
+                        ,"/answersSender","/test","/onlineLib_result","/skill_chart"
+                        ,"/admin_publish").permitAll()
 //                .antMatchers("/onlineLib").access("hasRole('admin')")
                 .anyRequest().authenticated()
                 .and()

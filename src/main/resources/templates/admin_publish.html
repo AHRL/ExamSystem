@@ -52,7 +52,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 
-                        欢迎您 <span th:inline="choices"> [[${#httpServletRequest.remoteUser}]]</span>
+                        <!--欢迎您 <span th:inline="choices"> [[${#httpServletRequest.remoteUser}]]</span>-->
+                        欢迎您 <span th:inline="choices"> </span>
 
 
                     </a>
@@ -98,12 +99,12 @@
                     <div class="row">
                         <div class="col-sm-2">考试日期/时间</div>
                         <div class="col-sm-4 input-group date datetimepicker">
-                            <input type="text" id="startTime" class="form-control" value="" size="24" placeholder="开始时间" readonly/>
+                            <input type="text" id="startTime" name="start" class="form-control" value="" size="24" placeholder="开始时间" readonly/>
                             <span class="input-group-addon"><i class="fa fa-remove"></i></span>
                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                         </div>
                         <div class="col-sm-4 input-group date datetimepicker">
-                            <input type="text" id="endTime" class="form-control" value="" size="24" placeholder="结束时间" readonly/>
+                            <input type="text" id="endTime" name="stop" class="form-control" value="" size="24" placeholder="结束时间" readonly/>
                             <span class="input-group-addon"><i class="fa fa-remove"></i></span>
                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                         </div>
@@ -111,7 +112,7 @@
                     <div class="row">
                         <div class="col-sm-2">备注</div>
                         <div class="col-sm-10">
-                            <input type="text" id="infoNotes" class="form-control" placeholder="填写备注，比如：2017级C语言第2次测试" />
+                            <input type="text" name="infoNotes" id="infoNotes" class="form-control" placeholder="填写备注，比如：2017级C语言第2次测试" />
                         </div>
                     </div>
                     <div class="row">
@@ -212,26 +213,26 @@
                             </div>
                             <fieldset class="form-group ">
                                 <div class="row ">
-                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoice-A ">A</label>
-                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoice-A" id="examChoice-A" autocomplete="off" />
+                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoiceA">A</label>
+                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoiceA" id="examChoiceA" autocomplete="off" />
                                 </div>  
                             </fieldset>
                             <fieldset class="form-group">
                                 <div class="row ">
-                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoice-B ">B</label>
-                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoice-B" id="examChoice-B" autocomplete="off" />
+                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoiceB">B</label>
+                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoiceB" id="examChoiceB" autocomplete="off" />
                                 </div>
                             </fieldset>
                             <fieldset class="form-group">
                                 <div class="row ">
-                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoice-C ">C</label>
-                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoice-C" id="examChoice-C" autocomplete="off" />
+                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoiceC">C</label>
+                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoiceC" id="examChoiceC" autocomplete="off" />
                                 </div>
                             </fieldset>
                             <fieldset class="form-group">
                                 <div class="row ">
-                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoice-D ">D</label>
-                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoice-D" id="examChoice-D" autocomplete="off" />
+                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoiceD">D</label>
+                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoiceD" id="examChoiceD" autocomplete="off" />
                                 </div>
                             </fieldset>
                         </div>

@@ -34,10 +34,6 @@ public class Question implements Serializable{
     private String choices;
 
 
-//    @ManyToMany
-//    Record recorde;
-
-
     public String getAnswer() {
         return answer;
     }
