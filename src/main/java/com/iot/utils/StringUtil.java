@@ -18,7 +18,6 @@ public class StringUtil {
 
 	public int totalNumber(String a,List<String> hh){
 		int count=0;
-
 		//这里使用后者是因为.toArray()方法返回的是Object，不能转化成String
 //		String [] aa= (String[]) hh.toArray();
 		String[] aa= new String[hh.size()];
