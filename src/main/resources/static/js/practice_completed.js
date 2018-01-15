@@ -8,7 +8,7 @@ var practiceRight=document.getElementsByClassName('practiceRight')[0];
 var practiceTime=document.getElementsByClassName('practiceTime')[0];
 var skillType=document.getElementsByClassName('skillType')[0];
 $.ajax({
-    url:'completed.json',
+    url:'completed.json',//改
     type:"GET",
     dataType:"json",
     success:function(data){
