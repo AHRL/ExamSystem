@@ -111,15 +111,24 @@ window.onload=function(){
 
             items=localStorage.getItem('items');
             arrItems=items.split('},{');
+
+
+
             len=arrItems.length;
-            arrItems[0]=arrItems[0]+'}';
-            arrItems[len-1]='{'+arrItems[len-1];
-           for(var i=1;i<len-1;i++){
-               arrItems[i]='{'+arrItems[i]+'}';
-           }
-           arrItems.forEach(function(item,index,array){
+            if(len>1){
+                arrItems[0]=arrItems[0]+'}';
+                arrItems[len-1]='{'+arrItems[len-1];
+                for(var i=1;i<len-1;i++){
+                    arrItems[i]='{'+arrItems[i]+'}';
+                }
+            }
+
+
+            arrItems.forEach(function(item,index,array){
                jsonArrItems[index]=JSON.parse(array[index]);
            });
+
+
             //将title、code、choices中可能的出现的标签尖括号替换成相应编码
             function replaceStr(strObject) {
                 //注意判断null
@@ -136,7 +145,6 @@ window.onload=function(){
                 item["info"]=replaceStr(item["info"]);
                 item["code"]=replaceStr(item["code"]);
                 item["choices"]=replaceStr(item["choices"]);
-                // console.log(item);
                 return item;
             });
 
@@ -213,7 +221,7 @@ window.onload=function(){
 
                     for(var i=0;i<len;i++){
                         if(answers[i].id===item.id){
-                            var arrMultiplyAnswer=answers[i].answer.split(',');
+                            var arrMultiplyAnswer=answers[i].answer.split('');
                             for(var j=0;j<$('input[name=multiply_choice]').length;j++){
                                 for(var k=0;k<arrMultiplyAnswer.length;k++){
                                     if(arrMultiplyAnswer[k]===$('input[name=multiply_choice]')[j].value){

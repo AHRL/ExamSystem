@@ -6,21 +6,22 @@ var practiceType=document.getElementsByClassName('practiceType')[0];
 var practiceScore=document.getElementsByClassName('practiceScore')[0];
 var practiceRight=document.getElementsByClassName('practiceRight')[0];
 var practiceTime=document.getElementsByClassName('practiceTime')[0];
+var skillType=document.getElementsByClassName('skillType')[0];
 $.ajax({
-    url:'completed.json',
+    url:'http://127.0.0.1/onlineLib_result',//改
     type:"GET",
     dataType:"json",
     success:function(data){
-        console.log(data);
         var type='';
         var totalTime='';
         var jsonTextType=JSON.stringify(data,["A","B","C","D"]);
         var jsonType=JSON.parse(jsonTextType);
         for(var o in jsonType){
-           if(jsonType[o]!==''){
+            if(jsonType[o]!==''&&jsonType[o]!=='null'){
                type=type+jsonType[o]+'/';
            }
         }
+
         function checkTime(t) {
             if(t<10){
                 t='0'+t;
@@ -50,7 +51,11 @@ $.ajax({
         practiceRight.innerHTML=data.score+'/'+data.count;
         practiceScore.innerHTML=(100/data.count*data.score).toFixed(2);
         practiceTime.innerHTML=transTime(data.time);
-
+        if(type.indexOf('/')!==-1){
+            skillType.innerHTML=type.substring(0,type.length-1).split('/')[0];
+        }else{
+            skillType.innerHTML=type;
+        }
         // progressNow=((answers[i].cid+1)/len)*100;
         // $('.progress-bar').attr('aria-valuenow',progressNow.toFixed(2));
         // $('.progress-bar').css('width',progressNow+'%');

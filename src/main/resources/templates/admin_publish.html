@@ -52,7 +52,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 
-                        欢迎您 <span th:inline="choices"> [[${#httpServletRequest.remoteUser}]]</span>
+                        <!--欢迎您 <span th:inline="choices"> [[${#httpServletRequest.remoteUser}]]</span>-->
+                        欢迎您 <span th:inline="choices"> </span>
 
 
                     </a>
@@ -98,12 +99,12 @@
                     <div class="row">
                         <div class="col-sm-2">考试日期/时间</div>
                         <div class="col-sm-4 input-group date datetimepicker">
-                            <input type="text" id="startTime" class="form-control" value="" size="24" placeholder="开始时间" readonly/>
+                            <input type="text" id="startTime" name="start" class="form-control" value="" size="24" placeholder="开始时间" readonly/>
                             <span class="input-group-addon"><i class="fa fa-remove"></i></span>
                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                         </div>
                         <div class="col-sm-4 input-group date datetimepicker">
-                            <input type="text" id="endTime" class="form-control" value="" size="24" placeholder="结束时间" readonly/>
+                            <input type="text" id="endTime" name="stop" class="form-control" value="" size="24" placeholder="结束时间" readonly/>
                             <span class="input-group-addon"><i class="fa fa-remove"></i></span>
                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                         </div>
@@ -111,7 +112,7 @@
                     <div class="row">
                         <div class="col-sm-2">备注</div>
                         <div class="col-sm-10">
-                            <input type="text" id="infoNotes" class="form-control" placeholder="填写备注，比如：2017级C语言第2次测试" />
+                            <input type="text" name="infoNotes" id="infoNotes" class="form-control" placeholder="填写备注，比如：2017级C语言第2次测试" />
                         </div>
                     </div>
                     <div class="row">
@@ -119,78 +120,10 @@
                             <button class="btn btn-info btn-block disabled btn-js" disabled data-toggle="modal" data-target="#addExam">开始添加题目</button>
                         </div>
                         <div class="col-sm-4 push-sm-2">
-                            <button class="btn btn-success btn-block disabled" id="cpltBtn" disabled data-toggle="modal" data-target="#listofExam">完成添加，准备提交</button>
+                            <button class="btn btn-success btn-block disabled" id="cpltBtn" disabled data-toggle="modal" data-target="#submitModal">完成添加，准备提交</button>
                         </div>
                     </div>
                 </div>
-                <!-- <div class="publish-exam">
-                    <div class="h4 text-center bg-inverse text-white">考试题目列表</div>
-                    <div id="accordion" role="tablist" aria-multiselectable="true">
-                        暂无 ...
-                        <div class="panel panel-default">
-                            <div class="panel-heading h6" role="tab" id="headingOne">
-                                <div class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        2017级第2次C语言考试 - 第 1 题 - 单选
-                                    </a>
-                                </div>
-                            </div>
-                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                <form>
-                                    <div class="form-group">
-                                        <label class="form-control-label">题目描述（双击可更改）</label>
-                                        <input type="text" class="form-control" value="javascript中document.getElemenById的返回值的类型为" readonly />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-control-label">相关代码（双击可更改）</label>
-                                        <textarea name="" id="" rows="10" class="form-control" readonly></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-control-label">题目选项（双击可更改）</label>
-                                        <div>
-                                            <label class="form-control-label">A</label>
-                                            <input type="text" class="form-control" value="Array" readonly />
-                                            <label class="form-control-label">B</label>
-                                            <input type="text" class="form-control" value="Object" readonly />
-                                            <label class="form-control-label">C</label>
-                                            <input type="text" class="form-control" value="String" readonly />
-                                            <label class="form-control-label">D</label>
-                                            <input type="text" class="form-control" value="Function" readonly />
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingTwo">
-                                <div class="panel-title h6">
-                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        2017级第2次C语言考试 - 第 2 题 - 单选
-                                    </a>
-                                </div>
-                            </div>
-                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-                                on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
-                                beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingThree">
-                                <div class="panel-title h6">
-                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                        2017级第2次C语言考试 - 第 3 题 - 单选
-                                    </a>
-                                </div>
-                            </div>
-                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-                                on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
-                                beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
             </main>
         </div>
     </div>
@@ -198,6 +131,32 @@
     <div class="container examLibCon" id="examLibCon">
         <div class=" row ">
             <main class="col-sm-8 push-sm-2 ">考试题库</main>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="submitModal" role="dialog ">
+        <div class="modal-dialog ">
+            <div class="modal-content ">
+                <div class="modal-header ">
+                    <figure class="text-center ">
+                        <img src="../static/img/w3fun-100x100.png" />
+                        <figcaption class="h6 ">
+                            试题预览
+                        </figcaption>
+                    </figure>
+                    <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="upClose ">
+                        <span aria-hidden="true ">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body ">
+                    <form>
+                        <div class="from-group">
+                            <button class="btn btn-block btn-info" id="submitCfrmBtn">确定提交</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -254,26 +213,26 @@
                             </div>
                             <fieldset class="form-group ">
                                 <div class="row ">
-                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoice-A ">A</label>
-                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoice-A" id="examChoice-A" autocomplete="off" />
+                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoiceA">A</label>
+                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoiceA" id="examChoiceA" autocomplete="off" />
                                 </div>  
                             </fieldset>
                             <fieldset class="form-group">
                                 <div class="row ">
-                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoice-B ">B</label>
-                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoice-B" id="examChoice-B" autocomplete="off" />
+                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoiceB">B</label>
+                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoiceB" id="examChoiceB" autocomplete="off" />
                                 </div>
                             </fieldset>
                             <fieldset class="form-group">
                                 <div class="row ">
-                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoice-C ">C</label>
-                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoice-C" id="examChoice-C" autocomplete="off" />
+                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoiceC">C</label>
+                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoiceC" id="examChoiceC" autocomplete="off" />
                                 </div>
                             </fieldset>
                             <fieldset class="form-group">
                                 <div class="row ">
-                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoice-D ">D</label>
-                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoice-D" id="examChoice-D" autocomplete="off" />
+                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoiceD">D</label>
+                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoiceD" id="examChoiceD" autocomplete="off" />
                                 </div>
                             </fieldset>
                         </div>
@@ -284,7 +243,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
 
     <script src="../static/lib/jquery-3.2.1.min.js"></script>
     <script src="../static/lib/bootstrap.min.js"></script>
