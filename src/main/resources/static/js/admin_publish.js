@@ -224,7 +224,7 @@ function pageFinished() {
         event.preventDefault();
         $.ajax({
             type: 'POST',
-            url: '/',
+            url: '/exam_add',
             dataType: 'json',
             data: JSON.parse(storage.getItem('examData')),
             success: function(data) {
