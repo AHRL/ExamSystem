@@ -20,6 +20,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private ROLE role;
 
+//    @OneToMany
+//    List<Record> recordes;
 
     @Id
     private String username;
@@ -68,6 +70,22 @@ public class User {
         this.email = email;
         this.date = date;
     }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+//    public List<Record> getRecordes() {
+//        return recordes;
+//    }
+//
+//    public void setRecordes(List<Record> recordes) {
+//        this.recordes = recordes;
+//    }
 
     @Override
     public String toString() {

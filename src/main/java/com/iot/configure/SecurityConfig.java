@@ -5,12 +5,13 @@ import com.iot.filter.qq.QQAuthenticationManager;
 import com.iot.security.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -20,9 +21,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 
 @Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-
+@EnableWebMvcSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)//使@preAuthorize生效
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
@@ -34,7 +34,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected  void configure(AuthenticationManagerBuilder auth)
             throws Exception{
-        auth.userDetailsService(userDetailsService());
+        auth.userDetailsService(userDetailsService());//这里作用是引入dataInit的配置
+        //内存申明一个用户，用于简单调试security
+//        auth.inMemoryAuthentication().withUser("xixixi").password("123456").roles("user");
+    }
+
+    //使@preAuthorize生效
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Override
@@ -46,9 +55,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http)throws Exception{
         http.headers().frameOptions().disable();
         http.csrf().disable();
-
+//
         http.authorizeRequests()
-                .antMatchers("/*.html","/register","/back","/onlineLib","/select","/registered","/validcode","/admin","/admin_add","/add","/isExist","/select","/mailSender").permitAll()
+                .antMatchers("/register","/*.html","/onlineLib","/report"
+                        ,"/back","/onlineLib_practice","/select","/registered","/validcode"
+                        ,"/admin","/admin_add","/add","/isExist","/select","/mailSender"
+                        ,"/answersSender","/test","/onlineLib_result","/skill_chart"
+                        ,"/admin_publish").permitAll()
+//                .antMatchers("/onlineLib").access("hasRole('admin')")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").defaultSuccessUrl("/")
@@ -56,9 +70,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().logout().logoutSuccessUrl("/login")
                 .permitAll();
 
-        http.addFilterAt(qqAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-
-
+        http.addFilterBefore(qqAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+//       http.addFilter(qqAuthenticationFilter());
+//        UsernamePasswordAuthenticationFilter.class
     }
 
     private QQAuthenticationFilter qqAuthenticationFilter(){
@@ -69,7 +83,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationFilter.setAuthenticationManager(new QQAuthenticationManager());
         authenticationFilter.setAuthenticationSuccessHandler(successHandler);
         return authenticationFilter;
-    }
-
+}
 
 }

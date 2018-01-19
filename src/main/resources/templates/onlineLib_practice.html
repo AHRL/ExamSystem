@@ -11,15 +11,17 @@
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
             <title>在线题库 - FunExam</title>
             <meta name="keyword" content="Fun Exam"/>
+            <meta name="site" content="Fun Exam">
             <meta name="description" content="An exam system for students"/>
             <link rel="short icon" type="image/x-icon" href="../favicon.ico"/>
             <!--<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
-            <link rel="stylesheet" href=" ../static/stylesheets/css/onlineLib_practice.css"/>
+            <link rel="stylesheet" href=" stylesheets/css/onlineLib_practice.css"/>
+            <link rel="stylesheet" href=" lib/css/share.min.css"/>
 
-            <script src=" ../static/lib/modernizr-2.6.2.min.js"></script>
+            <script src="  lib/modernizr-2.6.2.min.js"></script>
             <!-- Respond.js for IE 8 or less only-->
             <!--[if (lt IE 9) & (!IEMobile)]>
-            <script src=" ../static/lib/respond.min.js"></script>
+            <script src="  lib/respond.min.js"></script>
             <![endif]-->
 
             <style type="choices/css">
@@ -37,12 +39,12 @@
         <section class="row clearfix  practice-progress">
             <div class="count-progress pull-left col-9">
                 <div class="progress progress-bar_show">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                        <span class="sr-only">60% Complete</span>
+                    <div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%;">
+                        <span class="sr-only"></span>
                     </div>
                 </div>
                 <div class="progress-bar_span choices-center">
-                    <span>4/5</span>
+                    <span></span>
                 </div>
             </div>
             <div class="time-progress pull-right choices-center col-3">
@@ -56,23 +58,24 @@
                 <div class="practice-type">
                     <i class="fa fa-question-circle"></i>
                     <div class="practice-type-describe">
-                        <span>[单选题]</span>
-                        <!--<span>[多选题]</span>-->
-                        <!--<span>[问答题]</span>-->
+                        <span class="itemType"></span>
                     </div>
                     <hr/>
                 </div>
                 <div class="practice-specific">
                     <div class="practice-specific-title">
-                        CSS盒子模型中（）是透明的，这部分可以显示背景()
+                        <!--CSS盒子模型中（）是透明的，这部分可以显示背景()-->
+                    </div>
+                    <div class="practice-specific-code">
+                        <!--public class Solution {\r\n    public boolean Find(int target, int [][] array) {\r\n\r\n    }\r\n}-->
                     </div>
                     <div class="practice-specific-content">
-                        <ul class="list-group practice-single_choice">
-                            <li class="list-group-item"><label><input type="radio" name="sing_choice" value="A"/>border</label></li>
-                            <li class="list-group-item"><label><input type="radio" name="sing_choice" value="B"/>margin</label></li>
-                            <li class="list-group-item"><label><input type="radio" name="sing_choice" value="C"/>padding</label></li>
-                            <li class="list-group-item"><label><input type="radio" name="sing_choice"  value="D"/>content</label></li>
-                        </ul>
+                        <!--<ul class="list-group practice-single_choice">-->
+                            <!--<li class="list-group-item"><label><input type="radio" name="sing_choice" value="A"/>border</label></li>-->
+                            <!--<li class="list-group-item"><label><input type="radio" name="sing_choice" value="B"/>margin</label></li>-->
+                            <!--<li class="list-group-item"><label><input type="radio" name="sing_choice" value="C"/>padding</label></li>-->
+                            <!--<li class="list-group-item"><label><input type="radio" name="sing_choice"  value="D"/>content</label></li>-->
+                        <!--</ul>-->
 
                         <!--<ul class="list-group practice-multiple_choice">-->
                             <!--<li class="list-group-item"><label><input type="checkbox" name="multiply_choice" value="A">border</label></li>-->
@@ -82,12 +85,13 @@
                         <!--</ul>-->
 
                         <!--<div class="practice-question_and_answers">-->
-                            <!--<textarea class="form-control" rows="10">-->
-
+                            <!--<textarea class="form-control" rows="10" autofocus="autofocus">-->
                             <!--</textarea>-->
+                            <!--<div class="areaTip">-->
+                                <!--请在此处写出你的答案-->
+                            <!--</div>-->
                         <!--</div>-->
                     </div>
-
                 </div>
                 <div class="practice-share_submit">
                     <ul class="clearfix">
@@ -95,8 +99,8 @@
                         <li class="pull-left share" data-toggle="modal" data-target=".shareModal"><i class="fa fa-share"></i>分享本题</li>
                     </ul>
                     <ul class="clearfix">
-                        <li class="pull-right  next-practice"><input class="btn  btn-primary btn-lg" type="submit" value="下一题"/></li>
-                        <li class="pull-right"><button type="button" class="btn  btn-danger btn-lg" data-toggle="modal" data-target=".aheadModal">提前交卷</button></li>
+                        <li class="pull-right  next-practice"><button type="button" class="btn  btn-primary btn-lg nextBtn">下一题</button></li>
+                        <li class="pull-right"><button type="button" class="btn  btn-danger btn-lg aheadBtn" data-toggle="modal" data-target=".aheadModal">提前交卷</button></li>
                     </ul>
                 </div>
             </section>
@@ -110,11 +114,7 @@
                 <i class="fa fa-chevron-down toggleIcon" data-toggle="collapse" data-target="#collapseSheet" aria-expanded="false" aria-controls="collapseSheet"></i>
             </div>
             <ul class="clearfix collapse answer_sheet" id="collapseSheet">
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
+
             </ul>
         </section>
     </main>
@@ -159,21 +159,8 @@
                         <span class="sr-only">Close</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-3 choices-center">
-                            <img class="shareImg" src=" ../static/img/qq.png" alt="QQ"/>
-                        </div>
-                        <div class="col-3 choices-center">
-                            <img class="shareImg" src=" ../static/img/wx.png" alt="weixin"/>
-                        </div>
-                        <div class="col-3 choices-center">
-                            <img class="shareImg" src="../static/img/wb.png" alt="weibo"/>
-                        </div>
-                        <div class="col-3 choices-center">
-                            <img class="shareImg" src=" ../static/img/zh.png" alt="zhihu"/>
-                        </div>
-                    </div>
+                <div class="modal-body social-share">
+                    <!--一键分享-->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -190,51 +177,32 @@
                 </div>
                 <div class="modal-footer aheadFooter">
                     <button  type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button  type="button" class="btn btn-primary aheadBtn">确定</button>
+                    <button  type="button" class="btn btn-primary aheadModalBtn">确定</button>
                 </div>
             </div>
+
         </div>
     </div>
 
-    <script src=" ../static/lib/jquery-3.2.1.min.js"></script>
-    <script src="../static/lib/bootstrap.min.js"></script>
-    <script src="../static/js/onlineLib_practice.js"></script>
-
+    <script src="  lib/jquery-3.2.1.min.js"></script>
+    <script src="lib/js/jquery.share.min.js"></script>
+    <script src=" lib/bootstrap.min.js"></script>
+    <script src=" js/onlineLib_practice.js"></script>
     <script>
-//                $.getJSON("http://192.168.1.139/back",function(data){
-//                    alert(0);
-//                    alert(data);
-//                    alert(JSON.stringify(data));
-//                    alert(typeof  JSON.stringify((data)));
-//                });
-
-                 $.ajax({
-                     url:"http://192.168.1.139/back",
-                     type:"GET",
-                     dataType:"json",
-                     success:function(data){
-                         alert(0);
-                         alert(data);
-
-                     },
-                     error:function(){
-                         alert('error');
-                     }
-                  });
-
-
-//            $.getJSON("test.json",function(data){
-//                alert(data);
-//                alert(JSON.stringify(data));
-//                alert(typeof  JSON.stringify((data)));
-//            });
-
-//            $.getJSON("http://192.168.1.139/back",function(data){
-//                alert(0);
-//                alert(data);
-//                alert(JSON.stringify(data));
-//                alert(typeof  JSON.stringify((data)));
-//            });
+        //一键分享相关配置
+        var $config = {
+            url                 : window.location.href, // 网址，默认使用 window.location.href
+            source              : '', // 来源（QQ空间会用到）, 默认读取head标签：<meta name="site" content="http://overtrue" />
+            title               : '', // 标题，默认读取 document.title 或者 <meta name="title" content="share.js" />
+            description         : '', // 描述, 默认读取head标签：<meta name="description" content="PHP弱类型的实现原理分析" />
+            image               : '', // 图片, 默认取网页中第一个img标签
+            sites               : ['qzone', 'qq', 'weibo','wechat'], // 启用的站点
+            disabled            : ['google', 'facebook', 'twitter'], // 禁用的站点
+            wechatQrcodeTitle   : '微信扫一扫：分享', // 微信二维码提示文字
+            wechatQrcodeHelper  : '<p>微信里点“发现”，扫一下</p><p>二维码便可将本文分享至朋友圈。</p>',
+            target : '_blank' //打开方式
+        };
+        $('.social-share').share($config);
     </script>
     </body>
 </html>

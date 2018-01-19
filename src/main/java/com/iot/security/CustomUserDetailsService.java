@@ -21,14 +21,19 @@ public class CustomUserDetailsService implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         User user=userRepository.findByUsername(username);
         if(user==null){
             throw new UsernameNotFoundException("not found");
         }
+
+        //这里可以增加一个禁止同时在线的功能
+
+
         List<SimpleGrantedAuthority> authorities=new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(user.getRole().name()));
-        System.err.print("username is "+username +","+user.getRole().name());
+
+        System.err.println(user.getUsername()+","+
+                user.getPassword()+","+authorities);
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(),
                 user.getPassword(), authorities);

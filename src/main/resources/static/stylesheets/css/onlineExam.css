@@ -167,10 +167,10 @@ main{
     background-color: #028df7;
     border:1px solid transparent;
 }
-.shareImg{
-    width:50%;
-    cursor: pointer;
-}
+/*.shareImg{*/
+    /*width:50%;*/
+    /*cursor: pointer;*/
+/*}*/
 .aheadSure{
     margin:20px 0;
 }
