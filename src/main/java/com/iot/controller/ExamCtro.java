@@ -2,9 +2,7 @@ package com.iot.controller;
 
 import com.google.gson.Gson;
 import com.iot.model.*;
-import com.iot.repository.QuestionRepository;
-import com.iot.repository.RecordRepository;
-import com.iot.repository.UserRepository;
+import com.iot.repository.*;
 import com.iot.utils.RandomUtil;
 import com.iot.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +55,12 @@ public class ExamCtro {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ExaminationRepository examinationRepository;
+
+    @Autowired
+    private PaperRecordRepository paperRecordRepository;
 
     @Autowired
     private QuestionRepository questionRepository;
@@ -147,8 +151,6 @@ public class ExamCtro {
         String random= RandomUtil.getRandom();
         request.getSession().setAttribute("email",email);
         try {
-//            jedis.set(email,random);
-//            jedis.expire(email,Integer.parseInt(String.valueOf(360)));
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
             helper.setFrom("957400829@qq.com");
@@ -242,7 +244,6 @@ public class ExamCtro {
     public String exam_add(@RequestParam(required = false,value = "basic[]")List<String> basic,
                            @RequestParam(required = false,value = "exam[]")List<String> exam){
 
-
         return "/404";
     }
 
@@ -271,17 +272,6 @@ public class ExamCtro {
 
         //设置会话窗口的存活期
 //       jedis.expire(jsessionId,Integer.parseInt(String.valueOf(360)));//设置由就session生成的查询条件map生存期
-
-        //使用session来携带值  但是在security中实现不了
-//        request.getSession().setAttribute("A",A);
-//        request.getSession().setAttribute("B",B);
-//        request.getSession().setAttribute("C",C);
-//        request.getSession().setAttribute("D",D);
-//        request.getSession().setAttribute("count",count);
-//        request.getSession().setAttribute("a",list);
-//        request.getSession().setAttribute("lang",request.getParameter("lang"));
-//        request.getSession().setAttribute("count",c);
-//        response.sendRedirect("/onlineLib_practice");
 
         return "onlineLib_practice";
     }

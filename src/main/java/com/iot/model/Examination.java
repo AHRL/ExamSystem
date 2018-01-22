@@ -28,6 +28,4 @@ public class Examination {
 	@Column(length = 2048 )
 	private String examChoice;
 
-
-
 }

@@ -12,7 +12,9 @@ public class StringUtil {
 	private Gson gson=new Gson();
 
 	public String[] stringToArray(String s){
-		String[] b=s.substring(1,s.length()-1).replace(" ","").split(",");
+//		String[] b=s.substring(1,s.length()-1).replace(" ","").split(",");
+		String[] b=s.replace("[","").replace("]","").replace(" ","").split(",");
+
 		return b;
 	}
 
