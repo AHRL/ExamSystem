@@ -2,9 +2,7 @@ package com.iot.controller;
 
 import com.google.gson.Gson;
 import com.iot.model.*;
-import com.iot.repository.QuestionRepository;
-import com.iot.repository.RecordRepository;
-import com.iot.repository.UserRepository;
+import com.iot.repository.*;
 import com.iot.utils.RandomUtil;
 import com.iot.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,11 +57,16 @@ public class ExamCtro {
     private UserRepository userRepository;
 
     @Autowired
+    private ExaminationRepository examinationRepository;
+
+    @Autowired
+    private PaperRecordRepository paperRecordRepository;
+
+    @Autowired
     private QuestionRepository questionRepository;
 
     @Autowired
     private RecordRepository recordRepository;
-
 
     @RequestMapping("/")
     public String index(HttpServletRequest request) throws Exception {
@@ -94,7 +97,6 @@ public class ExamCtro {
     public String onlineLib() throws Exception {
         return "onlineLib";
     }
-
 
     @RequestMapping("/skill_chart")
     public String skill_chart() throws Exception {
@@ -149,8 +151,6 @@ public class ExamCtro {
         String random= RandomUtil.getRandom();
         request.getSession().setAttribute("email",email);
         try {
-//            jedis.set(email,random);
-//            jedis.expire(email,Integer.parseInt(String.valueOf(360)));
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
             helper.setFrom("957400829@qq.com");
@@ -210,7 +210,7 @@ public class ExamCtro {
         //处理返回给practice_result的数据
         //在处理返回给Psd页面的创建了psdBack类处理数据格式
         for (int i = 0; i < 4; i++) {
-            psdBack=new PsdBack(lang[i],stringUtil.totalNumber(lang[i],hh),stringUtil.rightNumber(lang[i],hh));
+            psdBack=new PsdBack(lang[i],stringUtil.rightNumber(lang[i],hh),stringUtil.totalNumber(lang[i],hh));
             chart.add(psdBack);
         }
         long time=System.currentTimeMillis()-Long.parseLong(String.valueOf(jedis.hmget(jsessionId,"begin").get(0)));
@@ -223,12 +223,6 @@ public class ExamCtro {
         map.put("C",String.valueOf(jedis.hmget(jsessionId,"C").get(0)));
         map.put("D",String.valueOf(jedis.hmget(jsessionId,"D").get(0)));
         map.put("chart",chart);
-//        String [] aa= (String[]) hh.toArray();
-//        for (int i = 0; i <aa.length ; i=i+2) {
-//            String[] c=stringUtil.stringToArray(aa[i]);
-//            String[] d=stringUtil.stringToArray(aa[i+1])
-//        }
-        System.out.println(gson.toJson(map));
 
         jedis.set("map"+jsessionId,gson.toJson(map));
         return "/practice_completed";
@@ -244,6 +238,15 @@ public class ExamCtro {
     public String onlineLib_result(){
         return jedis.get("map"+jsessionId);
     }
+
+
+    @RequestMapping("/exam_add")
+    public String exam_add(@RequestParam(required = false,value = "basic[]")List<String> basic,
+                           @RequestParam(required = false,value = "exam[]")List<String> exam){
+
+        return "/404";
+    }
+
 
     @RequestMapping("/select")
     public String select(@RequestParam(required = false,defaultValue = "null",value = "programmeA")String A,
@@ -269,17 +272,6 @@ public class ExamCtro {
 
         //设置会话窗口的存活期
 //       jedis.expire(jsessionId,Integer.parseInt(String.valueOf(360)));//设置由就session生成的查询条件map生存期
-
-        //使用session来携带值  但是在security中实现不了
-//        request.getSession().setAttribute("A",A);
-//        request.getSession().setAttribute("B",B);
-//        request.getSession().setAttribute("C",C);
-//        request.getSession().setAttribute("D",D);
-//        request.getSession().setAttribute("count",count);
-//        request.getSession().setAttribute("a",list);
-//        request.getSession().setAttribute("lang",request.getParameter("lang"));
-//        request.getSession().setAttribute("count",c);
-//        response.sendRedirect("/onlineLib_practice");
 
         return "onlineLib_practice";
     }
@@ -344,21 +336,6 @@ public class ExamCtro {
         return list;
     }
 
-    @RequestMapping("/report")
-    @ResponseBody
-    public String report(HttpServletRequest request,HttpServletResponse response){
-        List list=new ArrayList();
-        int score=0;
-//      String lang=(String)request.getSession().getAttribute("lang");
-        String count=String.valueOf (request.getSession().getAttribute("count")) ;
-        String time= String.valueOf(System.currentTimeMillis()-(long)request.getSession().getAttribute("before"));
-System.out.println("count="+time);
-//        list.add(lang);
-//        list.add(score);
-        list.add(count);
-        list.add(time);
-        return  gson.toJson(list);
-    }
 
     @ResponseBody
     @RequestMapping(value = "/add")
@@ -396,21 +373,6 @@ System.out.println("count="+time);
 //    @PreAuthorize("hasAnyRole( 'user')")
 //    public String onlineExam()throws Exception{return "onlineExam";}
 
-//    @RequestMapping("/onlineLib")
-//    @PreAuthorize("hasAnyRole('user')")
-//    public String onlineLib()throws Exception{return "onlineLib";}
-
-
-//    @RequestMapping(value = "/validcode")
-//    @ResponseBody
-//    public String validcode(HttpServletRequest request) {
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.set("Accept", "application/json");
-//        String email=(String) request.getSession().getAttribute("email");
-//        String validcode=jedis.get(email);
-//        return validcode;
-//    }
-
 //    @RequestMapping(value = "/get")
 //    @ResponseBody
 //    public void get(HttpServletRequest request) {
@@ -421,37 +383,24 @@ System.out.println("count="+time);
 ////        return validcode;
 //    }
 
-    //    @RequestMapping("/user")
+//    @RequestMapping("/user")
 //    public String user() throws Exception {
 //        return "funExam";
 //    }
 
-//    @RequestMapping("/onlineLib")
+//    @RequestMapping("/report")
 //    @ResponseBody
-//    public String onlineLib(HttpServletResponse response) throws Exception {
-//        response.addHeader("Access-Control-Allow-Origin", "*");
-//        response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-//        response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
-//        response.addHeader("Access-Control-Max-Age", "1800");
-//        String a="[{\"id\":3,\"date\":\"2017-11-02\",\"type\":\"96\",\"lang\":\"C\",\"info\":\"7\",\"code\":\"7\",\"choices\":\"6\"},{\"id\":4,\"date\":\"2017-11-09\",\"type\":\"7\",\"lang\":\"C\",\"info\":\"4\",\"code\":\"4\",\"choices\":\"4\"},{\"id\":5,\"date\":null,\"type\":\"5\",\"lang\":\"C\",\"info\":\"5\",\"code\":\"5\",\"choices\":\"5\"},{\"id\":6,\"date\":\"2017-11-03\",\"type\":\"7\",\"lang\":\"C\",\"info\":\"7\",\"code\":\"7\",\"choices\":\"7\"},{\"id\":7,\"date\":null,\"type\":\"9\",\"lang\":\"Java\",\"info\":\"8\",\"code\":\"8\",\"choices\":\"8\"},{\"id\":8,\"date\":\"2017-12-04\",\"type\":\"单选\",\"lang\":\"C\",\"info\":\"要去掉文本超链接的下划线，下列正确的是（）\",\"code\":\"public class Solution {\\r\\n    public boolean Find(int target, int [][] array) {\\r\\n\\r\\n    }\\r\\n}\",\"choices\":\"a{underline:none},a{text-decoration:none},a{text-decoration:underline},a{decoration:no underline}\"}]\n";
-//        return a;
-//    }
-
-//    @RequestMapping(value = "/select",method = RequestMethod.POST)
-//    public String select(HttpServletRequest request)throws Exception{
-//        String A =request.getParameter("programmeA");
-//        String B =request.getParameter("programmeB");
-//        String C =request.getParameter("programmeB");
-//        String D =request.getParameter("programmeD");
-//        int count=Integer.parseInt(request.getParameter("count"));
-//        List<Question> list=questionRepository.find(A,B,C,D,count);
-//        for (int i = 0; i <list.size(); i++) {
-//            System.out.print(list.get(i).toString());
-//        }
-//        request.getSession().setAttribute("list",list);
-//        System.out.print("list"+list);
-//        jedis.set("test", gson.toJson(list));
-//        return "onlineLib";
+//    public String report(HttpServletRequest request,HttpServletResponse response){
+//        List list=new ArrayList();
+//        int score=0;
+//      String lang=(String)request.getSession().getAttribute("lang");
+//        String count=String.valueOf (request.getSession().getAttribute("count")) ;
+//        String time= String.valueOf(System.currentTimeMillis()-(long)request.getSession().getAttribute("before"));
+//        list.add(lang);
+//        list.add(score);
+//        list.add(count);
+//        list.add(time);
+//        return  gson.toJson(list);
 //    }
 
 }
