@@ -52,10 +52,10 @@ function pageFinished() {
         chooseEHour.value = checkExamData.basic.endTime.slice(0, 2);
         chooseEMin.value = checkExamData.basic.endTime.slice(3);
 
-        if (checkExamData.basic.location !== '明理楼C1011' || checkExamData.basic.location !== '明理楼B区4楼') {
-            explicitLocation.value = checkExamData.basic.location;
-        } else {
+        if (checkExamData.basic.location === '明理楼C1011' || checkExamData.basic.location === '明理楼B区4楼') {
             chooseLocation.value = checkExamData.basic.location;
+        } else {
+            explicitLocation.value = checkExamData.basic.location;
         }
 
         infoNotes.value = checkExamData.basic.info;
@@ -99,7 +99,7 @@ function pageFinished() {
                 examDataObj.basic.time = ms;
                 examDataObj.basic.info = noteVal;
 
-                if (!eLocVal) { // 如果精确地点（自定义）不为空，则使用精确地点
+                if (eLocVal) { // 如果精确地点（自定义）不为空，则使用精确地点
                     examDataObj.basic.location = eLocVal;
                 } else { // 否则使用默认选择地点
                     examDataObj.basic.location = locVal;
