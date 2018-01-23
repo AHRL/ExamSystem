@@ -301,7 +301,7 @@
                             <div class="row">
                                 <label class="form-control-label col-sm-2 text-right">题目类型</label>
                                 <select name="examType" id="examType" class="custom-select col-sm-9 form-control">
-                                    <option selected>请选择</option>
+                                    <option selected value="" disabled>请选择</option>
                                     <option value="单选">单选</option>
                                     <option value="多选">多选</option>
                                     <option value="填空">填空</option>
@@ -318,25 +318,25 @@
                         </div>
                         <div class="form-group">
                             <div class="row">
-                                <label for="examCode" class="form-control-label col-sm-2 text-right">粘贴代码</label>
+                                <label for="examCode" class="form-control-label col-sm-2 text-right">相关代码</label>
                                 <textarea class="form-control col-sm-9" name="examCode" id="examCode" rows="6"></textarea>
                             </div>
                         </div>
                         <div class="set-choices">
                             <div class="row">
-                                <span class="form-control-label col-sm-2 text-right">添加/删除</label>
-                                <button class="btn btn-success btn-sm" id="examAddBtn" type="button">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                                <button class="btn btn-success btn-sm" id="examRemoveBtn" type="button">
-                                    <i class="fa fa-minus"></i>
-                                </button>
+                                <div class="col-sm-3">
+                                    <label class="form-control-label text-right">添加/删除</label>
+                                </div>
+                                <div class="col-sm-9 pull-sm-1">
+                                    <button class="btn btn-primary btn-sm exam-choice-btn" id="examAddBtn">Add</button>
+                                    <button class="btn btn-warning btn-sm exam-choice-btn" id="examRemoveBtn">Delete</button>
+                                </div>
                             </div>
                             <fieldset class="form-group">
                                 <div class="row">
                                     <label class="col-sm-1 push-sm-1 form-check-label" for="examChoiceA">A</label>
                                     <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoiceA" id="examChoiceA" autocomplete="off" />
-                                </div>  
+                                </div>
                             </fieldset>
                             <fieldset class="form-group">
                                 <div class="row">
@@ -364,7 +364,7 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 
     <script src="../static/lib/jquery-3.2.1.min.js"></script>
     <script src="../static/lib/bootstrap.min.js"></script>

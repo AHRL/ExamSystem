@@ -134,6 +134,13 @@ function pageFinished() {
         return ms;
     }
 
+    var eType = document.getElementById('examType');
+    var eDesc = document.getElementById('examDesc');
+    var eCode = document.getElementById('examCode');
+    var eAddBtn = document.getElementById('examAddBtn');
+    var eRmvBtn = document.getElementById('examRemoveBtn');
+    var eCfmBtn = document.getElementById('examConfirmBtn');
+
     (function() {
         var examNote = document.getElementsByClassName('exam-note')[0];
         var examCount = document.getElementsByClassName('exam-count')[0];
@@ -143,13 +150,6 @@ function pageFinished() {
             examNote.innerText = JSON.parse(storage.getItem('examData')).basic.info;
             examCount.innerText = JSON.parse(storage.getItem('examData')).exam.length + 1;
         });
-
-        var eType = document.getElementById('examType');
-        var eDesc = document.getElementById('examDesc');
-        var eCode = document.getElementById('examCode');
-        var eAddBtn = document.getElementById('examAddBtn');
-        var eRmvBtn = document.getElementById('examRemoveBtn');
-        var eCfmBtn = document.getElementById('examConfirmBtn');
 
         var stChar = 'D';
         var stASC = stChar.charCodeAt(0);
