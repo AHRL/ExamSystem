@@ -134,99 +134,89 @@ function pageFinished() {
         return ms;
     }
 
-    var examNote = document.getElementsByClassName('exam-note')[0];
-    var examCount = document.getElementsByClassName('exam-count')[0];
+    (function() {
+        var examNote = document.getElementsByClassName('exam-note')[0];
+        var examCount = document.getElementsByClassName('exam-count')[0];
 
-    EventUtil.addHandler(pubAddBtn, 'click', function(event) {
-        event.preventDefault();
-        examNote.innerText = JSON.parse(storage.getItem('examData')).basic.info;
-        examCount.innerText = JSON.parse(storage.getItem('examData')).exam.length + 1;
-    });
+        EventUtil.addHandler(pubAddBtn, 'click', function(event) {
+            event.preventDefault();
+            examNote.innerText = JSON.parse(storage.getItem('examData')).basic.info;
+            examCount.innerText = JSON.parse(storage.getItem('examData')).exam.length + 1;
+        });
 
-    var eType = document.getElementById('examType');
-    var eDesc = document.getElementById('examDesc');
-    var eCode = document.getElementById('examCode');
-    var eAddBtn = document.getElementById('examAddBtn');
-    var eRmvBtn = document.getElementById('examRemoveBtn');
-    var eCfmBtn = document.getElementById('examConfirmBtn');
+        var eType = document.getElementById('examType');
+        var eDesc = document.getElementById('examDesc');
+        var eCode = document.getElementById('examCode');
+        var eAddBtn = document.getElementById('examAddBtn');
+        var eRmvBtn = document.getElementById('examRemoveBtn');
+        var eCfmBtn = document.getElementById('examConfirmBtn');
 
-    // EventUtil.addHandler(eType, 'change', function() {
-    //     storage.setItem('examType', eType.value);
-    // });
+        var stChar = 'D';
+        var stASC = stChar.charCodeAt(0);
+        var setChoices = document.getElementsByClassName('set-choices')[0];
+        EventUtil.addHandler(eAddBtn, 'click', function(event) {
+            event.preventDefault();
+            stASC++;
+            var newChar = String.fromCharCode(stASC);
+            var choices = setChoices.getElementsByTagName('fieldset');
+            var fieldsetEl = createElement('fieldset', {
+                "classNames": ["form-group"]
+            });
+            var divEl = createElement('div', {
+                "classNames": ["row"]
+            });
+            var labelEl = createElement('label', {
+                "txt": newChar,
+                "classNames": ["col-sm-1", "push-sm-1", "form-check-label"],
+                "for": "examChoice" + newChar
+            });
+            var inputEl = createElement('input', {
+                "type": "text",
+                "id": "examChoice" + newChar,
+                "name": "examChoice" + newChar,
+                "classNames": ["col-sm-9", "push-sm-1", "form-control"],
+                "autocomplete": "off"
+            });
+            fieldsetEl.appendChild(divEl);
+            divEl.appendChild(labelEl);
+            divEl.appendChild(inputEl);
+            setChoices.insertBefore(fieldsetEl, choices[length - 1]);
+            if (setChoices.getElementsByTagName('fieldset').length === 6) {
+                this.setAttribute('disabled', 'disabled');
+                addClass(this, 'disabled');
+            }
+            if (setChoices.getElementsByTagName('fieldset').length < 6) {
+                if (hasClass(this, 'disabled')) {
+                    this.removeAttribute('disabled');
+                    removeClass(this, 'disabled');
+                }
+                if (hasClass(eRmvBtn, 'disabled')) {
+                    eRmvBtn.removeAttribute('disabled');
+                    removeClass(eRmvBtn, 'disabled');
+                }
+            }
+        });
 
-    // EventUtil.addHandler(eDesc, 'blur', function() {
-    //     storage.setItem('examDesc', eDesc.value);
-    // });
-
-    // EventUtil.addHandler(eCode, 'blur', function() {
-    //     storage.setItem('examCode', eCode.value);
-    // });
-
-
-    // var stChar = 'D';
-    // var stASC = stChar.charCodeAt(0);
-    // var setChoices = document.getElementsByClassName('set-choices')[0];
-    // EventUtil.addHandler(eAddBtn, 'click', function(event) {
-    //     event.preventDefault();
-    //     stASC++;
-    //     var newChar = String.fromCharCode(stASC);
-    //     var choices = setChoices.getElementsByTagName('fieldset');
-    //     var fieldsetEl = createElement('fieldset', {
-    //         "classNames": ["form-group"]
-    //     });
-    //     var divEl = createElement('div', {
-    //         "classNames": ["row"]
-    //     });
-    //     var labelEl = createElement('label', {
-    //         "txt": newChar,
-    //         "classNames": ["col-sm-1", "push-sm-1", "form-check-label"]
-    //     });
-    //     var inputEl = createElement('input', {
-    //         "type": "text",
-    //         "id": "examChoice-" + newChar,
-    //         "name": "examChoice-" + newChar,
-    //         "classNames": ["col-sm-9", "push-sm-1", "form-control"],
-    //         "autocomplete": "off"
-    //     });
-    //     fieldsetEl.appendChild(divEl);
-    //     divEl.appendChild(labelEl);
-    //     divEl.appendChild(inputEl);
-    //     setChoices.insertBefore(fieldsetEl, choices[length - 1]);
-    //     if (setChoices.getElementsByTagName('fieldset').length === 8) {
-    //         this.setAttribute('disabled', 'disabled');
-    //         addClass(this, 'disabled');
-    //     }
-    //     if (setChoices.getElementsByTagName('fieldset').length < 8) {
-    //         if (hasClass(this, 'disabled')) {
-    //             this.removeAttribute('disabled');
-    //             removeClass(this, 'disabled');
-    //         }
-    //         if (hasClass(eRmvBtn, 'disabled')) {
-    //             removeChoiceBtn.removeAttribute('disabled');
-    //             removeClass(eRmvBtn, 'disabled');
-    //         }
-    //     }
-    // });
-
-    // EventUtil.addHandler(eRmvBtn, 'click', function(event) {
-    //     event.preventDefault();
-    //     stASC--;
-    //     setChoices.removeChild(setChoices.getElementsByTagName('fieldset')[setChoices.getElementsByTagName('fieldset').length - 2]);
-    //     if (setChoices.getElementsByTagName('fieldset').length === 3) {
-    //         this.setAttribute('disabled', 'disabled');
-    //         addClass(this, 'disabled');
-    //     }
-    //     if (setChoices.getElementsByTagName('fieldset').length > 3) {
-    //         if (hasClass(this, 'disabled')) {
-    //             this.removeAttribute('disabled');
-    //             removeClass(this, 'disabled');
-    //         }
-    //         if (hasClass(eAddBtn, 'disabled')) {
-    //             addChoiceBtn.removeAttribute('disabled');
-    //             removeClass(eAddBtn, 'disabled');
-    //         }
-    //     }
-    // });
+        EventUtil.addHandler(eRmvBtn, 'click', function(event) {
+            event.preventDefault();
+            stASC--;
+            setChoices.removeChild(setChoices.getElementsByTagName('fieldset')[setChoices.getElementsByTagName('fieldset').length - 1]);
+            if (setChoices.getElementsByTagName('fieldset').length === 2) {
+                this.setAttribute('disabled', 'disabled');
+                addClass(this, 'disabled');
+            }
+            if (setChoices.getElementsByTagName('fieldset').length > 2) {
+                if (hasClass(this, 'disabled')) {
+                    this.removeAttribute('disabled');
+                    removeClass(this, 'disabled');
+                }
+                if (hasClass(eAddBtn, 'disabled')) {
+                    eAddBtn.removeAttribute('disabled');
+                    removeClass(eAddBtn, 'disabled');
+                }
+            }
+        });
+    }());
 
     examDataObj.basic.token = '23dP57';
 
@@ -348,6 +338,9 @@ function createElement(el, jsonObj) {
         }
         if (jsonObj.autocomplete) {
             element.setAttribute('autocomplete', jsonObj.autocomplete);
+        }
+        if (jsonObj.for) {
+            element.setAttribute('for', jsonObj.for)
         }
         return element;
     }
