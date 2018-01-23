@@ -1,5 +1,84 @@
 window.onload = function() {
+    //getCurrentDate();
     pageFinished();
+
+    // create Function createElement()
+    /*
+     * @param: el String
+     * @param: jsonObj JSON
+     * @return: HTML Object
+     *
+     * */
+    function createElement(el, jsonObj) {
+        var element = document.createElement(el);
+        if (jsonObj) {
+            if (jsonObj.id) {
+                element.id = jsonObj.id;
+            }
+            if (jsonObj.txt) {
+                element.innerHTML = jsonObj.txt;
+            }
+            if (jsonObj.classNames) {
+                addClass(element, jsonObj.classNames.join(' '));
+            }
+            if (jsonObj.type) {
+                element.setAttribute('type', jsonObj.type);
+            }
+            if (jsonObj.autocomplete) {
+                element.setAttribute('autocomplete', jsonObj.autocomplete);
+            }
+            if (jsonObj.for) {
+                element.setAttribute('for', jsonObj.for)
+            }
+            return element;
+        }
+        return element;
+    }
+
+    function getCurrentDate() {
+        var now = new Date();
+
+        var year = now.getFullYear();
+        var nextYear = year + 1;
+        var month = now.getMonth() + 1; // 1 2 3 4 5 6 7 8 9 10 11 12
+        var nextMonth = month % 12 + 1; // 2 3 4 5 6 7 8 9 10 11 12 1
+        var date = now.getDate();
+        var nextDateArr = [];
+
+        function calNextDateArr(date, days) {
+            return [
+                date,
+                date % days + 1,
+                (date + 1) % days + 1,
+                (date + 2) % days + 1,
+                (date + 3) % days + 1,
+                (date + 4) % days + 1,
+                (date + 5) % days + 1
+            ];
+        }
+
+        if (month === 1 || month === 3 || month === 5 || month === 7 || month === 8 || month === 10 || month === 12) { // 31天
+            nextDateArr = calNextDateArr(date, 31);
+        } else if (month === 2) {
+            if ((year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)) { // 29天
+                nextDateArr = calNextDateArr(date, 29)
+            } else { // 28天
+                nextDateArr = calNextDateArr(date, 28);
+            }
+        } else { // 30天
+            nextDateArr = calNextDateArr(date, 30);
+        }
+
+        console.log(year, nextYear, month, nextMonth, date, nextDateArr);
+    }
+
+    function createDateSelect(id) {
+        var optionArr = Array.prototype.slice.call(id.getElementsByTagName('option'));
+        optionArr[1].value = year;
+        optionArr[1].innerText = year;
+        optionArr[2].value = nextYear;
+        optionArr[2].innerText = nextYear;
+    }
 };
 
 function pageFinished() {
@@ -374,38 +453,4 @@ function pageFinished() {
             toggleFlag = true;
         }
     });
-
-}
-
-// create Function createElement()
-/*
- * @param: el String
- * @param: jsonObj JSON
- * @return: HTML Object
- *
- * */
-function createElement(el, jsonObj) {
-    var element = document.createElement(el);
-    if (jsonObj) {
-        if (jsonObj.id) {
-            element.id = jsonObj.id;
-        }
-        if (jsonObj.txt) {
-            element.innerHTML = jsonObj.txt;
-        }
-        if (jsonObj.classNames) {
-            addClass(element, jsonObj.classNames.join(' '));
-        }
-        if (jsonObj.type) {
-            element.setAttribute('type', jsonObj.type);
-        }
-        if (jsonObj.autocomplete) {
-            element.setAttribute('autocomplete', jsonObj.autocomplete);
-        }
-        if (jsonObj.for) {
-            element.setAttribute('for', jsonObj.for)
-        }
-        return element;
-    }
-    return element;
 }
