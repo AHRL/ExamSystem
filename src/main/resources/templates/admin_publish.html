@@ -208,7 +208,7 @@
                             <button class="btn btn-success btn-block disabled" id="cpltBtn" disabled data-toggle="modal" data-target="#submitModal">试题预览</button>
                         </div>
                         <div class="col-sm-3 push-sm-2">
-                            <button class="btn btn-danger btn-block" id="cpltBtn" data-toggle="modal" data-target="#clearModal">清空未发布的试题</button>
+                            <button class="btn btn-danger btn-block disabled" disabled id="clearBtn" data-toggle="modal" data-target="#clearModal">清空未发布的试题</button>
                         </div>
                     </div>
                 </div>
@@ -230,7 +230,7 @@
                     <div class="text-center">
                         <h6 class="h5">您想要清空未发布的题目？</h6>
                     </div>
-                    <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="upClose">
+                    <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="closeClearModal">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -258,7 +258,7 @@
                             试题预览
                         </figcaption>
                     </figure>
-                    <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="upClose">
+                    <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="closeSubmitModal">
                         <span aria-hidden="true ">&times;</span>
                     </button>
                 </div>
@@ -269,7 +269,7 @@
                                 <div class="col-sm-4">
                                     <label title="密令用于用户考试验证" class="form-control-label">填写本次考试密令 <sup><i class="fa fa-exclamation-circle"></i></sup> </label>
                                 </div>
-                                <div class="col-sm-8"><input type="text" class="form-control" placeholder="0-9, a-z, A-Z, 共六位" autocomplete="off" /></div>
+                                <div class="col-sm-8"><input type="text" class="form-control" id="examToken" placeholder="0-9, a-z, A-Z, 共六位" autocomplete="off" /></div>
                             </div>
                         </div>
                         <div class="from-group">
@@ -291,7 +291,7 @@
                             <span class="exam-note"></span> - 第 <span class="exam-count"></span> 题
                         </figcaption>
                     </figure>
-                    <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="upClose">
+                    <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="closeExamModal">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -368,19 +368,6 @@
 
     <script src="../static/lib/jquery-3.2.1.min.js"></script>
     <script src="../static/lib/bootstrap.min.js"></script>
-    <script src="../static/lib/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="../static/lib/js/bootstrap-datetimepicker.zh-CN.js"></script>
-    <script>
-        $(function() {
-            $('.datetimepicker').datetimepicker({
-                language: "zh-CN ",
-                autoclose: true,
-                clearBtn: true,
-                todayBtn: true,
-                format: "yyyy-mm-dd hh:ii"
-            });
-        });
-    </script>
     <script src="../static/js/funLib.js"></script>
     <script src="../static/js/admin_publish.js"></script>
 </body>

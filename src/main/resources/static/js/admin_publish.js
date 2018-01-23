@@ -25,7 +25,8 @@ function pageFinished() {
     var infoNotes = document.getElementById('infoNotes');
 
     var pubAddBtn = document.getElementsByClassName('btn-js')[0];
-    var cpltBtn = document.getElementById('cpltBtn');
+    var pubCpltBtn = document.getElementById('cpltBtn');
+    var pubClearBtn = document.getElementById('clearBtn')
     var submitCfrmBtn = document.getElementById('submitCfrmBtn');
     var toggleBtn = document.getElementById('toggleBtn');
     var toggleFlag = true;
@@ -61,8 +62,36 @@ function pageFinished() {
         infoNotes.value = checkExamData.basic.info;
         removeClass(pubAddBtn, 'disabled');
         pubAddBtn.removeAttribute('disabled');
-        removeClass(cpltBtn, 'disabled');
-        cpltBtn.removeAttribute('disabled');
+        removeClass(pubCpltBtn, 'disabled');
+        pubCpltBtn.removeAttribute('disabled');
+        removeClass(pubClearBtn, 'disbaled');
+        pubClearBtn.removeAttribute('disabled');
+    }
+
+    EventUtil.addHandler(infoNotes, 'keyup', checkChoice);
+
+    function checkChoice() {
+        var typeVal = chooseType.value;
+        var shVal = chooseSHour.value;
+        var ehVal = chooseEHour.value;
+        var noteVal = infoNotes.value;
+
+        if (!typeVal) {
+            alert('提示：您还未选择考试类型');
+        } else if (!shVal || !ehVal) {
+            alert('提示：您还未请选择考试时间');
+        } else {
+            console.log(noteVal);
+            if (noteVal) {
+                removeClass(pubAddBtn, 'disabled');
+                pubAddBtn.removeAttribute('disabled');
+            } else {
+                if (!hasClass(pubAddBtn, 'disabled')) {
+                    addClass(pubAddBtn, 'disabled');
+                    pubAddBtn.setAttribute('disabled', 'disabled');
+                }
+            }
+        }
     }
 
     function calMS(sh, sm, eh, em) {
@@ -91,6 +120,9 @@ function pageFinished() {
     var eCfmBtn = document.getElementById('examConfirmBtn');
     var setChoices = document.getElementsByClassName('set-choices')[0];
 
+    var closeExamModal = document.getElementById('closeExamModal');
+    EventUtil.addHandler(closeExamModal, 'click', clearExamModal);
+
     (function() {
         var examNote = document.getElementsByClassName('exam-note')[0];
         var examCount = document.getElementsByClassName('exam-count')[0];
@@ -111,38 +143,21 @@ function pageFinished() {
 
             var ms = calMS(shVal, smVal, ehVal, emVal);
 
-            if (!typeVal) {
-                alert('提示：您还未选择考试类型');
-            } else if (!shVal || !ehVal) {
-                alert('提示：您还未请选择考试时间');
-            } else {
-                console.log(noteVal);
-                if (noteVal) {
-                    removeClass(pubAddBtn, 'disabled');
-                    pubAddBtn.removeAttribute('disabled');
+            examDataObj.basic.type = typeVal;
+            examDataObj.basic.date = yearVal + '-' + monthVal + '-' + dayVal;
+            examDataObj.basic.startTime = shVal + ':' + smVal;
+            examDataObj.basic.endTime = ehVal + ':' + emVal;
+            examDataObj.basic.time = ms;
+            examDataObj.basic.info = noteVal;
 
-                    examDataObj.basic.type = typeVal;
-                    examDataObj.basic.date = yearVal + '-' + monthVal + '-' + dayVal;
-                    examDataObj.basic.startTime = shVal + ':' + smVal;
-                    examDataObj.basic.endTime = ehVal + ':' + emVal;
-                    examDataObj.basic.time = ms;
-                    examDataObj.basic.info = noteVal;
-
-                    if (eLocVal) { // 如果精确地点（自定义）不为空，则使用精确地点
-                        examDataObj.basic.location = eLocVal;
-                    } else { // 否则使用默认选择地点
-                        examDataObj.basic.location = locVal;
-                    }
-
-                    examDataStr = JSON.stringify(examDataObj);
-                    storage.setItem('examData', examDataStr);
-                } else {
-                    if (!hasClass(pubAddBtn, 'disabled')) {
-                        addClass(pubAddBtn, 'disabled');
-                        pubAddBtn.setAttribute('disabled', 'disabled');
-                    }
-                }
+            if (eLocVal) { // 如果精确地点（自定义）不为空，则使用精确地点
+                examDataObj.basic.location = eLocVal;
+            } else { // 否则使用默认选择地点
+                examDataObj.basic.location = locVal;
             }
+
+            examDataStr = JSON.stringify(examDataObj);
+            storage.setItem('examData', examDataStr);
             examNote.innerText = JSON.parse(storage.getItem('examData')).basic.info;
             examCount.innerText = JSON.parse(storage.getItem('examData')).exam.length + 1;
         });
@@ -213,10 +228,12 @@ function pageFinished() {
         });
     }());
 
-    examDataObj.basic.token = '23dP57';
-
     function quickExamModal() {
         $('#addExam').modal('hide');
+        clearExamModal();
+    }
+
+    function clearExamModal() {
         eType.value = '';
         eDesc.value = '';
         eCode.value = '';
@@ -270,45 +287,60 @@ function pageFinished() {
             storage.setItem('examData', examDataStr);
             console.log('afterAdd :', JSON.parse(storage.getItem('examData')));
 
-            if (hasClass(cpltBtn, 'disabled')) {
-                removeClass(cpltBtn, 'disabled');
-                cpltBtn.removeAttribute('disabled');
+            if (hasClass(pubCpltBtn, 'disabled')) {
+                removeClass(pubCpltBtn, 'disabled');
+                pubCpltBtn.removeAttribute('disabled');
             }
             quickExamModal();
         }
     });
 
+    function checkToken() {
+
+    }
+
     EventUtil.addHandler(submitCfrmBtn, 'click', function(event) {
         event.preventDefault();
-        $('#submitModal').modal('hide');
-        $.ajax({
-            type: 'POST',
-            url: 'http://127.0.0.1/exam_add',
-            dataType: 'json',
-            data: JSON.parse(storage.getItem('examData')),
-            success: function(data) {
-                storage.removeItem('examData');
-                chooseType.value = '';
-                chooseYear.value = '';
-                chooseMonth.value = '';
-                chooseDay.value = '';
-                chooseSHour.value = '';
-                chooseSMin.value = '';
-                chooseEHour.value = '';
-                chooseEMin.value = '';
-                chooseLocation.value = '';
-                explicitLocation.value = '';
-                infoNote.value = '';
-                addClass(pubAddBtn, 'disabled');
-                pubAddBtn.addAttribute('disabled');
-                addClass(cpltBtn, 'disabled');
-                cpltBtn.addAttribute('disabled');
-                alert('提交成功!');
-            },
-            error: function() {
-                alert('提交失败!');
-            }
-        });
+
+        var examToken = document.getElementById('examToken');
+        examDataObj.basic.token = examToken.value;
+        examDataStr = JSON.stringify(examDataObj);
+        storage.setItem('examData', examDataStr);
+
+        if (!examToken.value) {
+            alert('密钥不正确！');
+        } else {
+            $('#submitModal').modal('hide');
+            $.ajax({
+                type: 'POST',
+                url: 'http://127.0.0.1/exam_add',
+                dataType: 'json',
+                data: JSON.parse(storage.getItem('examData')),
+                success: function(data) {
+                    storage.removeItem('examData');
+                    chooseType.value = '';
+                    chooseYear.value = '';
+                    chooseMonth.value = '';
+                    chooseDay.value = '';
+                    chooseSHour.value = '';
+                    chooseSMin.value = '';
+                    chooseEHour.value = '';
+                    chooseEMin.value = '';
+                    chooseLocation.value = '';
+                    explicitLocation.value = '';
+                    infoNote.value = '';
+                    addClass(pubAddBtn, 'disabled');
+                    pubAddBtn.addAttribute('disabled');
+                    addClass(pubCpltBtn, 'disabled');
+                    pubCpltBtn.addAttribute('disabled');
+                    window.location.reload();
+                    alert('提交成功!');
+                },
+                error: function() {
+                    alert('提交失败!');
+                }
+            });
+        }
     });
 
     EventUtil.addHandler(toggleBtn, 'click', function() {
@@ -342,6 +374,7 @@ function pageFinished() {
             toggleFlag = true;
         }
     });
+
 }
 
 // create Function createElement()
