@@ -11,10 +11,18 @@ function pageFinished() {
     console.log(JSON.parse(storage.getItem('examData')));
 
     var pubInfo = document.getElementsByClassName('publish-info')[0];
-    var pubInfoType = document.getElementById('chooseType');
-    var pubInfoST = document.getElementById('startTime');
-    var pubInfoET = document.getElementById('endTime');
-    var pubInfoNote = document.getElementById('infoNotes');
+
+    var chooseType = document.getElementById('chooseType');
+    var chooseYear = document.getElementById('chooseYear');
+    var chooseMonth = document.getElementById('chooseMonth');
+    var chooseDay = document.getElementById('chooseDay');
+    var chooseSHour = document.getElementById('chooseSHour');
+    var chooseSMin = document.getElementById('chooseSMin');
+    var chooseEHour = document.getElementById('chooseEHour');
+    var chooseEMin = document.getElementById('chooseEMin');
+    var chooseLocation = document.getElementById('chooseLocation');
+    var explicitLocation = document.getElementById('explicitLocation');
+    var infoNotes = document.getElementById('infoNotes');
 
     var pubAddBtn = document.getElementsByClassName('btn-js')[0];
     var cpltBtn = document.getElementById('cpltBtn');
@@ -35,67 +43,95 @@ function pageFinished() {
     if (JSON.parse(storage.getItem('examData'))) {
         alert('你还有考试题目没有发布，请继续');
         var checkExamData = JSON.parse(storage.getItem('examData'));
-        pubInfoType.value = checkExamData.basic.type;
-        pubInfoST.value = checkExamData.basic.startTime;
-        pubInfoET.value = checkExamData.basic.endTime;
-        pubInfoNote.value = checkExamData.basic.info;
+        chooseType.value = checkExamData.basic.type;
+        chooseYear.value = checkExamData.basic.date.slice(0, 4);
+        chooseMonth.value = checkExamData.basic.date.slice(5, 7);
+        chooseDay.value = checkExamData.basic.date.slice(8);
+        chooseSHour.value = checkExamData.basic.startTime.slice(0, 2);
+        chooseSMin.value = checkExamData.basic.startTime.slice(3);
+        chooseEHour.value = checkExamData.basic.endTime.slice(0, 2);
+        chooseEMin.value = checkExamData.basic.endTime.slice(3);
+
+        if (checkExamData.basic.location !== '明理楼C1011' || checkExamData.basic.location !== '明理楼B区4楼') {
+            explicitLocation.value = checkExamData.basic.location;
+        } else {
+            chooseLocation.value = checkExamData.basic.location;
+        }
+
+        infoNotes.value = checkExamData.basic.info;
         removeClass(pubAddBtn, 'disabled');
         pubAddBtn.removeAttribute('disabled');
         removeClass(cpltBtn, 'disabled');
         cpltBtn.removeAttribute('disabled');
     }
 
-    // EventUtil.addHandler(pubInfoType, 'change', checkChoice);
-    EventUtil.addHandler(pubInfoNote, 'blur', checkChoice);
+    EventUtil.addHandler(infoNotes, 'keyup', checkChoice);
 
     function checkChoice() {
-        var typeVal = pubInfoType.value;
-        var stVal = pubInfoST.value;
-        var etVal = pubInfoET.value;
-        var noteVal = pubInfoNote.value;
+        var typeVal = chooseType.value;
+        var yearVal = chooseYear.value;
+        var monthVal = chooseMonth.value;
+        var dayVal = chooseDay.value;
+        var shVal = chooseSHour.value;
+        var smVal = chooseSMin.value;
+        var ehVal = chooseEHour.value;
+        var emVal = chooseEMin.value;
+        var locVal = chooseLocation.value;
+        var eLocVal = explicitLocation.value;
+        var noteVal = infoNotes.value;
 
-        function getTime(sh, eh, sm, em) {
-            var time = (eh - sh) * 60 + (em - sm);
-            if (time <= 0) {
-                alert('选择时间有误！');
-                return;
-            }
-            return time * 60 * 1000;
-        }
+        var ms = calMS(shVal, smVal, ehVal, emVal);
 
-        if (typeVal) {
-            if (stVal) {
-                var stHour = stVal.substr(-5, 2);
-                var stMinu = stVal.substr(-2, 2);
-                if (etVal) {
-                    var etHour = etVal.substr(-5, 2);
-                    var etMinu = etVal.substr(-2, 2);
-                    var ms = getTime(stHour, etHour, stMinu, etMinu);
-                    if (noteVal && typeVal && ms) {
-                        removeClass(pubAddBtn, 'disabled');
-                        pubAddBtn.removeAttribute('disabled');
-
-                        examDataObj.basic.type = typeVal;
-                        examDataObj.basic.startTime = stVal;
-                        examDataObj.basic.endTime = etVal;
-                        examDataObj.basic.date = etVal.substr(0, 10);
-                        examDataObj.basic.time = ms;
-                        examDataObj.basic.info = noteVal;
-
-                        examDataStr = JSON.stringify(examDataObj);
-                        storage.setItem('examData', examDataStr);
-                    } else {
-                        alert('请填写备注');
-                    }
-                } else {
-                    alert('请选择结束时间');
-                }
-            } else {
-                alert('请选择开始时间');
-            }
+        if (!typeVal) {
+            alert('提示：您还未选择考试类型');
+        } else if (!shVal || !ehVal) {
+            alert('提示：您还未请选择考试时间');
         } else {
-            alert('请选择考试类型');
+            console.log(noteVal);
+            if (noteVal) {
+                removeClass(pubAddBtn, 'disabled');
+                pubAddBtn.removeAttribute('disabled');
+
+                examDataObj.basic.type = typeVal;
+                examDataObj.basic.date = yearVal + '-' + monthVal + '-' + dayVal;
+                examDataObj.basic.startTime = shVal + ':' + smVal;
+                examDataObj.basic.endTime = ehVal + ':' + emVal;
+                examDataObj.basic.time = ms;
+                examDataObj.basic.info = noteVal;
+
+                if (!eLocVal) { // 如果精确地点（自定义）不为空，则使用精确地点
+                    examDataObj.basic.location = eLocVal;
+                } else { // 否则使用默认选择地点
+                    examDataObj.basic.location = locVal;
+                }
+
+                examDataStr = JSON.stringify(examDataObj);
+                storage.setItem('examData', examDataStr);
+            } else {
+                if (!hasClass(pubAddBtn, 'disabled')) {
+                    addClass(pubAddBtn, 'disabled');
+                    pubAddBtn.setAttribute('disabled', 'disabled');
+                }
+            }
         }
+    }
+
+    function calMS(sh, sm, eh, em) {
+        var ms = 0;
+        sh = parseInt(sh);
+        sm = parseInt(sm);
+        eh = parseInt(eh);
+        em = parseInt(em);
+        if (eh < sh) {
+            return 0;
+        } else {
+            if (em < sm) {
+                return 0;
+            } else {
+                ms = (eh - sh) * 3600000 + (em - sm) * 60000;
+            }
+        }
+        return ms;
     }
 
     var examNote = document.getElementsByClassName('exam-note')[0];
@@ -192,19 +228,21 @@ function pageFinished() {
     //     }
     // });
 
+    examDataObj.basic.token = '23dP57';
+
     EventUtil.addHandler(eCfmBtn, 'click', function(event) {
         event.preventDefault();
         console.log('beforeAdd :', JSON.parse(storage.getItem('examData')));
         examDataObj = JSON.parse(storage.getItem('examData'));
         examDataObj.exam.push({
-            type: '单选',
-            desc: '123',
-            code: '456',
+            type: '题目类型',
+            desc: '题目描述',
+            code: '相关代码',
             choices: [
-                'a',
-                'b',
-                'c',
-                'd'
+                '选项 A',
+                '选项 B',
+                '选项 C',
+                '选项 D'
             ]
         });
         console.log('JSONstr', JSON.stringify(examDataObj));
@@ -222,6 +260,7 @@ function pageFinished() {
 
     EventUtil.addHandler(submitCfrmBtn, 'click', function(event) {
         event.preventDefault();
+        $('#submitModal').modal('hide');
         $.ajax({
             type: 'POST',
             url: '/',
@@ -229,10 +268,17 @@ function pageFinished() {
             data: JSON.parse(storage.getItem('examData')),
             success: function(data) {
                 storage.removeItem('examData');
-                pubInfoType.value = '';
-                pubInfoST.value = '';
-                pubInfoET.value = '';
-                pubInfoNote.value = '';
+                chooseType.value = '';
+                chooseYear.value = '';
+                chooseMonth.value = '';
+                chooseDay.value = '';
+                chooseSHour.value = '';
+                chooseSMin.value = '';
+                chooseEHour.value = '';
+                chooseEMin.value = '';
+                chooseLocation.value = '';
+                explicitLocation.value = '';
+                infoNote.value = '';
                 addClass(pubAddBtn, 'disabled');
                 pubAddBtn.addAttribute('disabled');
                 addClass(cpltBtn, 'disabled');
