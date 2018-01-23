@@ -28,12 +28,12 @@
 	$(function () {
 
 	    $.ajax({
-			url:"chart.json",
+			url:"http://127.0.0.1/onlineLib_result",
             type:"GET",
             dataType:"json",
 			success:function(data){
 			    var arrCategories=[], arrTotalCount=[], arrAccuracy=[];
-			    data.forEach(function (item,index) {
+			    data["chart"].forEach(function (item,index) {
                     arrCategories.push(item.type);
                     arrTotalCount.push(item.totalCount);
                     arrAccuracy.push((item.rightCount/item.totalCount).toFixed(2)*100)

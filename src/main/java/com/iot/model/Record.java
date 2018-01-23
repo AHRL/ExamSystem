@@ -31,6 +31,8 @@ public class Record {
 
 	private String answers;
 
+	private String langList;
+
 	public String getJsessionId() {
 		return jsessionId;
 	}
@@ -125,6 +127,13 @@ public class Record {
 		this.rightSerial = rightSerial;
 	}
 
+	public String getLangList() {
+		return langList;
+	}
+
+	public void setLangList(String typeList) {
+		this.langList = typeList;
+	}
 
 	public Record() {
 	}
@@ -146,7 +155,7 @@ public class Record {
 				'}';
 	}
 
-	public Record(String jsessionId, Integer type, User user, List<Question> questions, int score, String rightSerial, String answers, String answerList, int count, Date date) {
+	public Record(String jsessionId, Integer type, User user, List<Question> questions, int score, String rightSerial, String answers, String answerList, int count,String langList, Date date) {
 		this.jsessionId = jsessionId;
 		this.type = type;
 		this.user = user;
@@ -156,6 +165,7 @@ public class Record {
 		this.answers = answers;
 		this.answerList = answerList;
 		this.count = count;
+		this.langList=langList;
 		this.date = date;
 	}
 }

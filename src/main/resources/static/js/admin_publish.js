@@ -263,7 +263,7 @@ function pageFinished() {
         $('#submitModal').modal('hide');
         $.ajax({
             type: 'POST',
-            url: '/',
+            url: 'http://127.0.0.1/exam_add',
             dataType: 'json',
             data: JSON.parse(storage.getItem('examData')),
             success: function(data) {

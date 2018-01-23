@@ -13,14 +13,14 @@
     <meta name="keyword" content="Fun Exam" />
     <meta name="description" content="An exam system for students" />
     <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
-    <link rel="stylesheet" href="../static/stylesheets/css/funExam.css" />
-    <link rel="stylesheet" href="../static/lib/css/bootstrap-datetimepicker.css" />
-    <link rel="stylesheet" href="../static/stylesheets/css/admin_publish.css" />
+    <link rel="stylesheet" href="/stylesheets/css/funExam.css" />
+    <link rel="stylesheet" href="/lib/css/bootstrap-datetimepicker.css" />
+    <link rel="stylesheet" href="/stylesheets/css/admin_publish.css" />
 
-    <script src="../static/lib/modernizr-2.6.2.min.js"></script>
+    <script src="/lib/modernizr-2.6.2.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
     <!--[if (lt IE 9) & (!IEMobile)]>
-    <script src="../static/lib/respond.min.js"></script>
+    <script src="/lib/respond.min.js"></script>
     <![endif]-->
 </head>
 
@@ -30,7 +30,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="#">
-            <img src="../static/img/w3fun-inverse-40x40.png" id="userInfo" alt="user information" />
+            <img src="/img/w3fun-inverse-40x40.png" id="userInfo" alt="user information" />
             <span>Fun Exam</span>
         </a>
         <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -52,7 +52,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 
-                        欢迎您 <span th:inline="choices"> [[${#httpServletRequest.remoteUser}]]</span>
+                        欢迎您 <span th:inline="text"> [[${#httpServletRequest.remoteUser}]]</span>
+                        <!--欢迎您 <span th:inline="choices"> </span>-->
 
 
                     </a>
@@ -196,7 +197,7 @@
                     <div class="row">
                         <div class="col-sm-2">备注</div>
                         <div class="col-sm-10">
-                            <input type="text" id="infoNotes" class="form-control" placeholder="填写备注，比如：2017级C语言第2次测试" />
+                            <input type="text" name="infoNotes" id="infoNotes" class="form-control" placeholder="填写备注，比如：2017级C语言第2次测试" />
                         </div>
                     </div>
                     <div class="row">
@@ -365,10 +366,10 @@
         </div>
     </div> 
 
-    <script src="../static/lib/jquery-3.2.1.min.js"></script>
-    <script src="../static/lib/bootstrap.min.js"></script>
-    <script src="../static/lib/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="../static/lib/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="/lib/jquery-3.2.1.min.js"></script>
+    <script src="/lib/bootstrap.min.js"></script>
+    <script src="/lib/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/lib/js/bootstrap-datetimepicker.zh-CN.js"></script>
     <script>
         $(function() {
             $('.datetimepicker').datetimepicker({
@@ -380,8 +381,8 @@
             });
         });
     </script>
-    <script src="../static/js/funLib.js"></script>
-    <script src="../static/js/admin_publish.js"></script>
+    <script src="/js/funLib.js"></script>
+    <script src="/js/admin_publish.js"></script>
 </body>
 
 </ht30
