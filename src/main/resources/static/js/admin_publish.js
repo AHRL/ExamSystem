@@ -140,6 +140,7 @@ function pageFinished() {
     var eAddBtn = document.getElementById('examAddBtn');
     var eRmvBtn = document.getElementById('examRemoveBtn');
     var eCfmBtn = document.getElementById('examConfirmBtn');
+    var setChoices = document.getElementsByClassName('set-choices')[0];
 
     (function() {
         var examNote = document.getElementsByClassName('exam-note')[0];
@@ -153,7 +154,6 @@ function pageFinished() {
 
         var stChar = 'D';
         var stASC = stChar.charCodeAt(0);
-        var setChoices = document.getElementsByClassName('set-choices')[0];
         EventUtil.addHandler(eAddBtn, 'click', function(event) {
             event.preventDefault();
             stASC++;
@@ -174,7 +174,7 @@ function pageFinished() {
                 "type": "text",
                 "id": "examChoice" + newChar,
                 "name": "examChoice" + newChar,
-                "classNames": ["col-sm-9", "push-sm-1", "form-control"],
+                "classNames": ["col-sm-9", "push-sm-1", "form-control", "choiceIpt"],
                 "autocomplete": "off"
             });
             fieldsetEl.appendChild(divEl);
@@ -220,20 +220,30 @@ function pageFinished() {
 
     examDataObj.basic.token = '23dP57';
 
+    // var examChoiceA = document.getElementById('examChoiceA');
+    // var examChoiceB = document.getElementById('examChoiceB');
+    // var examChoiceC = document.getElementById('examChoiceC');
+    // var examChoiceD = document.getElementById('examChoiceD');
+    // var examChoiceE = document.getElementById('examChoiceE');
+    // var examChoiceF = document.getElementById('examChoiceF');
+    // var examChoiceArr = [];
+    var examChoicesArr = Array.prototype.slice.call(setChoices.getElementsByClassName('choiceIpt'));
+    var valOfExamChoicesArr = [];
+
     EventUtil.addHandler(eCfmBtn, 'click', function(event) {
         event.preventDefault();
+        (function() {
+            for (var i = 0; i < examChoicesArr.length; i++) {
+                valOfExamChoicesArr.push(examChoicesArr[i].value);
+            }
+        }());
         console.log('beforeAdd :', JSON.parse(storage.getItem('examData')));
         examDataObj = JSON.parse(storage.getItem('examData'));
         examDataObj.exam.push({
-            type: '题目类型',
-            desc: '题目描述',
-            code: '相关代码',
-            choices: [
-                '选项 A',
-                '选项 B',
-                '选项 C',
-                '选项 D'
-            ]
+            type: eType.value,
+            desc: eDesc.value,
+            code: eCode.value,
+            choices: valOfExamChoicesArr
         });
         console.log('JSONstr', JSON.stringify(examDataObj));
         examDataStr = JSON.stringify(examDataObj);
