@@ -38,14 +38,19 @@
     padding: .5rem;
 }
 
-.modal-body .btn.btn-success {
+
+/* .modal-body .btn.btn-success {
     font-size: 1.2rem;
     width: 2rem;
     height: 2rem;
     margin-right: 1rem;
     border-radius: 100%;
-}
+} */
 
 .examLibCon {
     display: none;
+}
+
+.exam-choice-btn {
+    font-size: 12px;
 }

@@ -25,7 +25,8 @@ function pageFinished() {
     var infoNotes = document.getElementById('infoNotes');
 
     var pubAddBtn = document.getElementsByClassName('btn-js')[0];
-    var cpltBtn = document.getElementById('cpltBtn');
+    var pubCpltBtn = document.getElementById('cpltBtn');
+    var pubClearBtn = document.getElementById('clearBtn')
     var submitCfrmBtn = document.getElementById('submitCfrmBtn');
     var toggleBtn = document.getElementById('toggleBtn');
     var toggleFlag = true;
@@ -52,35 +53,28 @@ function pageFinished() {
         chooseEHour.value = checkExamData.basic.endTime.slice(0, 2);
         chooseEMin.value = checkExamData.basic.endTime.slice(3);
 
-        if (checkExamData.basic.location !== '明理楼C1011' || checkExamData.basic.location !== '明理楼B区4楼') {
-            explicitLocation.value = checkExamData.basic.location;
-        } else {
+        if (checkExamData.basic.location === '明理楼C1011' || checkExamData.basic.location === '明理楼B区4楼') {
             chooseLocation.value = checkExamData.basic.location;
+        } else {
+            explicitLocation.value = checkExamData.basic.location;
         }
 
         infoNotes.value = checkExamData.basic.info;
         removeClass(pubAddBtn, 'disabled');
         pubAddBtn.removeAttribute('disabled');
-        removeClass(cpltBtn, 'disabled');
-        cpltBtn.removeAttribute('disabled');
+        removeClass(pubCpltBtn, 'disabled');
+        pubCpltBtn.removeAttribute('disabled');
+        removeClass(pubClearBtn, 'disbaled');
+        pubClearBtn.removeAttribute('disabled');
     }
 
     EventUtil.addHandler(infoNotes, 'keyup', checkChoice);
 
     function checkChoice() {
         var typeVal = chooseType.value;
-        var yearVal = chooseYear.value;
-        var monthVal = chooseMonth.value;
-        var dayVal = chooseDay.value;
         var shVal = chooseSHour.value;
-        var smVal = chooseSMin.value;
         var ehVal = chooseEHour.value;
-        var emVal = chooseEMin.value;
-        var locVal = chooseLocation.value;
-        var eLocVal = explicitLocation.value;
         var noteVal = infoNotes.value;
-
-        var ms = calMS(shVal, smVal, ehVal, emVal);
 
         if (!typeVal) {
             alert('提示：您还未选择考试类型');
@@ -91,22 +85,6 @@ function pageFinished() {
             if (noteVal) {
                 removeClass(pubAddBtn, 'disabled');
                 pubAddBtn.removeAttribute('disabled');
-
-                examDataObj.basic.type = typeVal;
-                examDataObj.basic.date = yearVal + '-' + monthVal + '-' + dayVal;
-                examDataObj.basic.startTime = shVal + ':' + smVal;
-                examDataObj.basic.endTime = ehVal + ':' + emVal;
-                examDataObj.basic.time = ms;
-                examDataObj.basic.info = noteVal;
-
-                if (!eLocVal) { // 如果精确地点（自定义）不为空，则使用精确地点
-                    examDataObj.basic.location = eLocVal;
-                } else { // 否则使用默认选择地点
-                    examDataObj.basic.location = locVal;
-                }
-
-                examDataStr = JSON.stringify(examDataObj);
-                storage.setItem('examData', examDataStr);
             } else {
                 if (!hasClass(pubAddBtn, 'disabled')) {
                     addClass(pubAddBtn, 'disabled');
@@ -134,172 +112,235 @@ function pageFinished() {
         return ms;
     }
 
-    var examNote = document.getElementsByClassName('exam-note')[0];
-    var examCount = document.getElementsByClassName('exam-count')[0];
-
-    EventUtil.addHandler(pubAddBtn, 'click', function(event) {
-        event.preventDefault();
-        examNote.innerText = JSON.parse(storage.getItem('examData')).basic.info;
-        examCount.innerText = JSON.parse(storage.getItem('examData')).exam.length + 1;
-    });
-
     var eType = document.getElementById('examType');
     var eDesc = document.getElementById('examDesc');
     var eCode = document.getElementById('examCode');
     var eAddBtn = document.getElementById('examAddBtn');
     var eRmvBtn = document.getElementById('examRemoveBtn');
     var eCfmBtn = document.getElementById('examConfirmBtn');
+    var setChoices = document.getElementsByClassName('set-choices')[0];
 
-    // EventUtil.addHandler(eType, 'change', function() {
-    //     storage.setItem('examType', eType.value);
-    // });
+    var closeExamModal = document.getElementById('closeExamModal');
+    EventUtil.addHandler(closeExamModal, 'click', clearExamModal);
 
-    // EventUtil.addHandler(eDesc, 'blur', function() {
-    //     storage.setItem('examDesc', eDesc.value);
-    // });
+    (function() {
+        var examNote = document.getElementsByClassName('exam-note')[0];
+        var examCount = document.getElementsByClassName('exam-count')[0];
 
-    // EventUtil.addHandler(eCode, 'blur', function() {
-    //     storage.setItem('examCode', eCode.value);
-    // });
+        EventUtil.addHandler(pubAddBtn, 'click', function(event) {
+            event.preventDefault();
+            var typeVal = chooseType.value;
+            var yearVal = chooseYear.value;
+            var monthVal = chooseMonth.value;
+            var dayVal = chooseDay.value;
+            var shVal = chooseSHour.value;
+            var smVal = chooseSMin.value;
+            var ehVal = chooseEHour.value;
+            var emVal = chooseEMin.value;
+            var locVal = chooseLocation.value;
+            var eLocVal = explicitLocation.value;
+            var noteVal = infoNotes.value;
 
+            var ms = calMS(shVal, smVal, ehVal, emVal);
 
-    // var stChar = 'D';
-    // var stASC = stChar.charCodeAt(0);
-    // var setChoices = document.getElementsByClassName('set-choices')[0];
-    // EventUtil.addHandler(eAddBtn, 'click', function(event) {
-    //     event.preventDefault();
-    //     stASC++;
-    //     var newChar = String.fromCharCode(stASC);
-    //     var choices = setChoices.getElementsByTagName('fieldset');
-    //     var fieldsetEl = createElement('fieldset', {
-    //         "classNames": ["form-group"]
-    //     });
-    //     var divEl = createElement('div', {
-    //         "classNames": ["row"]
-    //     });
-    //     var labelEl = createElement('label', {
-    //         "txt": newChar,
-    //         "classNames": ["col-sm-1", "push-sm-1", "form-check-label"]
-    //     });
-    //     var inputEl = createElement('input', {
-    //         "type": "text",
-    //         "id": "examChoice-" + newChar,
-    //         "name": "examChoice-" + newChar,
-    //         "classNames": ["col-sm-9", "push-sm-1", "form-control"],
-    //         "autocomplete": "off"
-    //     });
-    //     fieldsetEl.appendChild(divEl);
-    //     divEl.appendChild(labelEl);
-    //     divEl.appendChild(inputEl);
-    //     setChoices.insertBefore(fieldsetEl, choices[length - 1]);
-    //     if (setChoices.getElementsByTagName('fieldset').length === 8) {
-    //         this.setAttribute('disabled', 'disabled');
-    //         addClass(this, 'disabled');
-    //     }
-    //     if (setChoices.getElementsByTagName('fieldset').length < 8) {
-    //         if (hasClass(this, 'disabled')) {
-    //             this.removeAttribute('disabled');
-    //             removeClass(this, 'disabled');
-    //         }
-    //         if (hasClass(eRmvBtn, 'disabled')) {
-    //             removeChoiceBtn.removeAttribute('disabled');
-    //             removeClass(eRmvBtn, 'disabled');
-    //         }
-    //     }
-    // });
+            examDataObj.basic.type = typeVal;
+            examDataObj.basic.date = yearVal + '-' + monthVal + '-' + dayVal;
+            examDataObj.basic.startTime = shVal + ':' + smVal;
+            examDataObj.basic.endTime = ehVal + ':' + emVal;
+            examDataObj.basic.time = ms;
+            examDataObj.basic.info = noteVal;
 
-    // EventUtil.addHandler(eRmvBtn, 'click', function(event) {
-    //     event.preventDefault();
-    //     stASC--;
-    //     setChoices.removeChild(setChoices.getElementsByTagName('fieldset')[setChoices.getElementsByTagName('fieldset').length - 2]);
-    //     if (setChoices.getElementsByTagName('fieldset').length === 3) {
-    //         this.setAttribute('disabled', 'disabled');
-    //         addClass(this, 'disabled');
-    //     }
-    //     if (setChoices.getElementsByTagName('fieldset').length > 3) {
-    //         if (hasClass(this, 'disabled')) {
-    //             this.removeAttribute('disabled');
-    //             removeClass(this, 'disabled');
-    //         }
-    //         if (hasClass(eAddBtn, 'disabled')) {
-    //             addChoiceBtn.removeAttribute('disabled');
-    //             removeClass(eAddBtn, 'disabled');
-    //         }
-    //     }
-    // });
+            if (eLocVal) { // 如果精确地点（自定义）不为空，则使用精确地点
+                examDataObj.basic.location = eLocVal;
+            } else { // 否则使用默认选择地点
+                examDataObj.basic.location = locVal;
+            }
 
-    examDataObj.basic.token = '23dP57';
-
-    EventUtil.addHandler(eCfmBtn, 'click', function(event) {
-        event.preventDefault();
-        console.log('beforeAdd :', JSON.parse(storage.getItem('examData')));
-        examDataObj = JSON.parse(storage.getItem('examData'));
-        examDataObj.exam.push({
-            type: '题目类型',
-            desc: '题目描述',
-            code: '相关代码',
-            choices: [
-                '选项 A',
-                '选项 B',
-                '选项 C',
-                '选项 D'
-            ]
+            examDataStr = JSON.stringify(examDataObj);
+            storage.setItem('examData', examDataStr);
+            examNote.innerText = JSON.parse(storage.getItem('examData')).basic.info;
+            examCount.innerText = JSON.parse(storage.getItem('examData')).exam.length + 1;
         });
-        console.log('JSONstr', JSON.stringify(examDataObj));
-        examDataStr = JSON.stringify(examDataObj);
-        storage.setItem('examData', examDataStr);
-        console.log('afterAdd :', JSON.parse(storage.getItem('examData')));
 
-
-        $('#addExam').modal('hide');
-        if (hasClass(cpltBtn, 'disabled')) {
-            removeClass(cpltBtn, 'disabled');
-            cpltBtn.removeAttribute('disabled');
-        }
-    });
-
-    EventUtil.addHandler(submitCfrmBtn, 'click', function(event) {
-        event.preventDefault();
-        $('#submitModal').modal('hide');
-        $.ajax({
-            type: 'POST',
-            url: 'http://127.0.0.1/exam_add',
-            dataType: 'json',
-            data: JSON.parse(storage.getItem('examData')),
-            success: function(data) {
-                storage.removeItem('examData');
-                chooseType.value = '';
-                chooseYear.value = '';
-                chooseMonth.value = '';
-                chooseDay.value = '';
-                chooseSHour.value = '';
-                chooseSMin.value = '';
-                chooseEHour.value = '';
-                chooseEMin.value = '';
-                chooseLocation.value = '';
-                explicitLocation.value = '';
-                infoNote.value = '';
-                addClass(pubAddBtn, 'disabled');
-                pubAddBtn.addAttribute('disabled');
-                addClass(cpltBtn, 'disabled');
-                cpltBtn.addAttribute('disabled');
-                alert('提交成功!');
-            },
-            error: function() {
-
+        var stChar = 'D';
+        var stASC = stChar.charCodeAt(0);
+        EventUtil.addHandler(eAddBtn, 'click', function(event) {
+            event.preventDefault();
+            stASC++;
+            var newChar = String.fromCharCode(stASC);
+            var choices = setChoices.getElementsByTagName('fieldset');
+            var fieldsetEl = createElement('fieldset', {
+                "classNames": ["form-group"]
+            });
+            var divEl = createElement('div', {
+                "classNames": ["row"]
+            });
+            var labelEl = createElement('label', {
+                "txt": newChar,
+                "classNames": ["col-sm-1", "push-sm-1", "form-check-label"],
+                "for": "examChoice" + newChar
+            });
+            var inputEl = createElement('input', {
+                "type": "text",
+                "id": "examChoice" + newChar,
+                "name": "examChoice" + newChar,
+                "classNames": ["col-sm-9", "push-sm-1", "form-control", "choiceIpt"],
+                "autocomplete": "off"
+            });
+            fieldsetEl.appendChild(divEl);
+            divEl.appendChild(labelEl);
+            divEl.appendChild(inputEl);
+            setChoices.insertBefore(fieldsetEl, choices[length - 1]);
+            if (setChoices.getElementsByTagName('fieldset').length === 6) {
+                this.setAttribute('disabled', 'disabled');
+                addClass(this, 'disabled');
+            }
+            if (setChoices.getElementsByTagName('fieldset').length < 6) {
+                if (hasClass(this, 'disabled')) {
+                    this.removeAttribute('disabled');
+                    removeClass(this, 'disabled');
+                }
+                if (hasClass(eRmvBtn, 'disabled')) {
+                    eRmvBtn.removeAttribute('disabled');
+                    removeClass(eRmvBtn, 'disabled');
+                }
             }
         });
 
-        // storage.removeItem('examData');
-        // pubInfoType.value = '';
-        // pubInfoST.value = '';
-        // pubInfoET.value = '';
-        // pubInfoNote.value = '';
-        // addClass(pubAddBtn, 'disabled');
-        // pubAddBtn.setAttribute('disabled', 'disabled');
-        // addClass(cpltBtn, 'disabled');
-        // cpltBtn.setAttribute('disabled', 'disabled');
-        // alert('提交成功')
+        EventUtil.addHandler(eRmvBtn, 'click', function(event) {
+            event.preventDefault();
+            stASC--;
+            setChoices.removeChild(setChoices.getElementsByTagName('fieldset')[setChoices.getElementsByTagName('fieldset').length - 1]);
+            if (setChoices.getElementsByTagName('fieldset').length === 2) {
+                this.setAttribute('disabled', 'disabled');
+                addClass(this, 'disabled');
+            }
+            if (setChoices.getElementsByTagName('fieldset').length > 2) {
+                if (hasClass(this, 'disabled')) {
+                    this.removeAttribute('disabled');
+                    removeClass(this, 'disabled');
+                }
+                if (hasClass(eAddBtn, 'disabled')) {
+                    eAddBtn.removeAttribute('disabled');
+                    removeClass(eAddBtn, 'disabled');
+                }
+            }
+        });
+    }());
+
+    function quickExamModal() {
+        $('#addExam').modal('hide');
+        clearExamModal();
+    }
+
+    function clearExamModal() {
+        eType.value = '';
+        eDesc.value = '';
+        eCode.value = '';
+        var choiceIpt = setChoices.getElementsByClassName('choiceIpt');
+        for (var i = 0; i < choiceIpt.length; i++) {
+            choiceIpt[i].value = ''
+        }
+    }
+
+    function isEmptyExamModal() {
+        var choiceIpt = setChoices.getElementsByClassName('choiceIpt');
+        if (eType.value && eDesc.value) {
+            if ((eType.value === '单选' || eType.value === '多选') && (!choiceIpt[0].value || !choiceIpt[1].value)) {
+                return true;
+            }
+            return false;
+        }
+        return true;
+    }
+
+    function getExamChoice() {
+        var examChoicesArr = Array.prototype.slice.call(setChoices.getElementsByClassName('choiceIpt'));
+        var valOfExamChoicesArr = [];
+        for (var i = 0; i < examChoicesArr.length; i++) {
+            valOfExamChoicesArr.push(examChoicesArr[i].value);
+        }
+        return valOfExamChoicesArr;
+    }
+
+    EventUtil.addHandler(eCfmBtn, 'click', function(event) {
+        event.preventDefault();
+        var isEmpty = isEmptyExamModal();
+
+        var valOfExamChoices = [];
+
+        if (isEmpty) {
+            alert('您的题目信息还没填完！')
+        } else {
+            valOfExamChoices = getExamChoice();
+
+            console.log('beforeAdd :', JSON.parse(storage.getItem('examData')));
+            examDataObj = JSON.parse(storage.getItem('examData'));
+            examDataObj.exam.push({
+                type: eType.value,
+                desc: eDesc.value,
+                code: eCode.value,
+                choices: valOfExamChoices
+            });
+            console.log('JSONstr', JSON.stringify(examDataObj));
+            examDataStr = JSON.stringify(examDataObj);
+            storage.setItem('examData', examDataStr);
+            console.log('afterAdd :', JSON.parse(storage.getItem('examData')));
+
+            if (hasClass(pubCpltBtn, 'disabled')) {
+                removeClass(pubCpltBtn, 'disabled');
+                pubCpltBtn.removeAttribute('disabled');
+            }
+            quickExamModal();
+        }
+    });
+
+    function checkToken() {
+
+    }
+
+    EventUtil.addHandler(submitCfrmBtn, 'click', function(event) {
+        event.preventDefault();
+
+        var examToken = document.getElementById('examToken');
+        examDataObj.basic.token = examToken.value;
+        examDataStr = JSON.stringify(examDataObj);
+        storage.setItem('examData', examDataStr);
+
+        if (!examToken.value) {
+            alert('密钥不正确！');
+        } else {
+            $('#submitModal').modal('hide');
+            $.ajax({
+                type: 'POST',
+                url: 'http://127.0.0.1/exam_add',
+                dataType: 'json',
+                data: JSON.parse(storage.getItem('examData')),
+                success: function(data) {
+                    storage.removeItem('examData');
+                    chooseType.value = '';
+                    chooseYear.value = '';
+                    chooseMonth.value = '';
+                    chooseDay.value = '';
+                    chooseSHour.value = '';
+                    chooseSMin.value = '';
+                    chooseEHour.value = '';
+                    chooseEMin.value = '';
+                    chooseLocation.value = '';
+                    explicitLocation.value = '';
+                    infoNote.value = '';
+                    addClass(pubAddBtn, 'disabled');
+                    pubAddBtn.addAttribute('disabled');
+                    addClass(pubCpltBtn, 'disabled');
+                    pubCpltBtn.addAttribute('disabled');
+                    window.location.reload();
+                    alert('提交成功!');
+                },
+                error: function() {
+                    alert('提交失败!');
+                }
+            });
+        }
     });
 
     EventUtil.addHandler(toggleBtn, 'click', function() {
@@ -333,6 +374,7 @@ function pageFinished() {
             toggleFlag = true;
         }
     });
+
 }
 
 // create Function createElement()
@@ -359,6 +401,9 @@ function createElement(el, jsonObj) {
         }
         if (jsonObj.autocomplete) {
             element.setAttribute('autocomplete', jsonObj.autocomplete);
+        }
+        if (jsonObj.for) {
+            element.setAttribute('for', jsonObj.for)
         }
         return element;
     }

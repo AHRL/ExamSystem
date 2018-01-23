@@ -13,11 +13,11 @@
     <meta name="keyword" content="Fun Exam" />
     <meta name="description" content="An exam system for students" />
     <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
-    <link rel="stylesheet" href="/stylesheets/css/funExam.css" />
-    <link rel="stylesheet" href="/lib/css/bootstrap-datetimepicker.css" />
-    <link rel="stylesheet" href="/stylesheets/css/admin_publish.css" />
+    <link rel="stylesheet" href="../static/stylesheets/css/funExam.css" />
+    <link rel="stylesheet" href="../static/lib/css/bootstrap-datetimepicker.css" />
+    <link rel="stylesheet" href="../static/stylesheets/css/admin_publish.css" />
 
-    <script src="/lib/modernizr-2.6.2.min.js"></script>
+    <script src="../static/lib/modernizr-2.6.2.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
     <!--[if (lt IE 9) & (!IEMobile)]>
     <script src="/lib/respond.min.js"></script>
@@ -30,7 +30,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="#">
-            <img src="/img/w3fun-inverse-40x40.png" id="userInfo" alt="user information" />
+            <img src="../static/img/w3fun-inverse-40x40.png" id="userInfo" alt="user information" />
             <span>Fun Exam</span>
         </a>
         <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -208,7 +208,7 @@
                             <button class="btn btn-success btn-block disabled" id="cpltBtn" disabled data-toggle="modal" data-target="#submitModal">试题预览</button>
                         </div>
                         <div class="col-sm-3 push-sm-2">
-                            <button class="btn btn-danger btn-block" id="cpltBtn" data-toggle="modal" data-target="#clearModal">清空未发布的试题</button>
+                            <button class="btn btn-danger btn-block disabled" disabled id="clearBtn" data-toggle="modal" data-target="#clearModal">清空未发布的试题</button>
                         </div>
                     </div>
                 </div>
@@ -230,7 +230,7 @@
                     <div class="text-center">
                         <h6 class="h5">您想要清空未发布的题目？</h6>
                     </div>
-                    <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="upClose">
+                    <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="closeClearModal">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -258,7 +258,7 @@
                             试题预览
                         </figcaption>
                     </figure>
-                    <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="upClose">
+                    <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="closeSubmitModal">
                         <span aria-hidden="true ">&times;</span>
                     </button>
                 </div>
@@ -269,7 +269,7 @@
                                 <div class="col-sm-4">
                                     <label title="密令用于用户考试验证" class="form-control-label">填写本次考试密令 <sup><i class="fa fa-exclamation-circle"></i></sup> </label>
                                 </div>
-                                <div class="col-sm-8"><input type="text" class="form-control" placeholder="0-9, a-z, A-Z, 共六位" autocomplete="off" /></div>
+                                <div class="col-sm-8"><input type="text" class="form-control" id="examToken" placeholder="0-9, a-z, A-Z, 共六位" autocomplete="off" /></div>
                             </div>
                         </div>
                         <div class="from-group">
@@ -288,10 +288,10 @@
                     <figure class="text-center">
                         <img src="../static/img/w3fun-100x100.png" />
                         <figcaption class="h6 ">
-                            <span class="exam-note"></span> - 第<span class="exam-count"></span>题
+                            <span class="exam-note"></span> - 第 <span class="exam-count"></span> 题
                         </figcaption>
                     </figure>
-                    <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="upClose">
+                    <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="closeExamModal">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -301,7 +301,7 @@
                             <div class="row">
                                 <label class="form-control-label col-sm-2 text-right">题目类型</label>
                                 <select name="examType" id="examType" class="custom-select col-sm-9 form-control">
-                                    <option selected>请选择</option>
+                                    <option selected value="" disabled>请选择</option>
                                     <option value="单选">单选</option>
                                     <option value="多选">多选</option>
                                     <option value="填空">填空</option>
@@ -318,42 +318,42 @@
                         </div>
                         <div class="form-group">
                             <div class="row">
-                                <label for="examCode" class="form-control-label col-sm-2 text-right">粘贴代码</label>
+                                <label for="examCode" class="form-control-label col-sm-2 text-right">相关代码</label>
                                 <textarea class="form-control col-sm-9" name="examCode" id="examCode" rows="6"></textarea>
                             </div>
                         </div>
-                        <fiel class="set-choices">
+                        <div class="set-choices">
                             <div class="row">
-                                <span class="form-control-label col-sm-2 text-right">添加/删除</label>
-                                <button class="btn btn-success btn-sm" id="examAddBtn" type="button">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                                <button class="btn btn-success btn-sm" id="examRemoveBtn" type="button">
-                                    <i class="fa fa-minus"></i>
-                                </button>
+                                <div class="col-sm-3">
+                                    <label class="form-control-label text-right">添加/删除</label>
+                                </div>
+                                <div class="col-sm-9 pull-sm-1">
+                                    <button class="btn btn-primary btn-sm exam-choice-btn" id="examAddBtn">Add</button>
+                                    <button class="btn btn-warning btn-sm exam-choice-btn" id="examRemoveBtn">Delete</button>
+                                </div>
                             </div>
                             <fieldset class="form-group">
                                 <div class="row">
                                     <label class="col-sm-1 push-sm-1 form-check-label" for="examChoiceA">A</label>
-                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoiceA" id="examChoiceA" autocomplete="off" />
-                                </div>  
+                                    <input class="col-sm-9 push-sm-1 form-control choiceIpt" type="text" name="examChoiceA" id="examChoiceA" autocomplete="off" />
+                                </div>
                             </fieldset>
                             <fieldset class="form-group">
                                 <div class="row">
                                     <label class="col-sm-1 push-sm-1 form-check-label" for="examChoiceB">B</label>
-                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoiceB" id="examChoiceB" autocomplete="off" />
+                                    <input class="col-sm-9 push-sm-1 form-control choiceIpt" type="text" name="examChoiceB" id="examChoiceB" autocomplete="off" />
                                 </div>
                             </fieldset>
                             <fieldset class="form-group">
                                 <div class="row">
                                     <label class="col-sm-1 push-sm-1 form-check-label" for="examChoiceC">C</label>
-                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoiceC" id="examChoiceC" autocomplete="off" />
+                                    <input class="col-sm-9 push-sm-1 form-control choiceIpt" type="text" name="examChoiceC" id="examChoiceC" autocomplete="off" />
                                 </div>
                             </fieldset>
                             <fieldset class="form-group">
                                 <div class="row">
                                     <label class="col-sm-1 push-sm-1 form-check-label" for="examChoiceD">D</label>
-                                    <input class="col-sm-9 push-sm-1 form-control" type="text" name="examChoiceD" id="examChoiceD" autocomplete="off" />
+                                    <input class="col-sm-9 push-sm-1 form-control choiceIpt" type="text" name="examChoiceD" id="examChoiceD" autocomplete="off" />
                                 </div>
                             </fieldset>
                         </div>
@@ -364,25 +364,12 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 
-    <script src="/lib/jquery-3.2.1.min.js"></script>
-    <script src="/lib/bootstrap.min.js"></script>
-    <script src="/lib/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="/lib/js/bootstrap-datetimepicker.zh-CN.js"></script>
-    <script>
-        $(function() {
-            $('.datetimepicker').datetimepicker({
-                language: "zh-CN ",
-                autoclose: true,
-                clearBtn: true,
-                todayBtn: true,
-                format: "yyyy-mm-dd hh:ii"
-            });
-        });
-    </script>
-    <script src="/js/funLib.js"></script>
-    <script src="/js/admin_publish.js"></script>
+    <script src="../static/lib/jquery-3.2.1.min.js"></script>
+    <script src="../static/lib/bootstrap.min.js"></script>
+    <script src="../static/js/funLib.js"></script>
+    <script src="../static/js/admin_publish.js"></script>
 </body>
 
 </ht30
