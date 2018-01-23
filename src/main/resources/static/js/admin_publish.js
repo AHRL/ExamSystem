@@ -286,20 +286,9 @@ function pageFinished() {
                 alert('提交成功!');
             },
             error: function() {
-
+                alert('提交失败!');
             }
         });
-
-        // storage.removeItem('examData');
-        // pubInfoType.value = '';
-        // pubInfoST.value = '';
-        // pubInfoET.value = '';
-        // pubInfoNote.value = '';
-        // addClass(pubAddBtn, 'disabled');
-        // pubAddBtn.setAttribute('disabled', 'disabled');
-        // addClass(cpltBtn, 'disabled');
-        // cpltBtn.setAttribute('disabled', 'disabled');
-        // alert('提交成功')
     });
 
     EventUtil.addHandler(toggleBtn, 'click', function() {
