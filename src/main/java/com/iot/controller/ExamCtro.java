@@ -249,7 +249,8 @@ public class ExamCtro {
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         response.addHeader("Access-Control-Max-Age", "1800");
 
-        System.out.println("哈哈哈哈哈！");
+
+        System.out.println(basic+""+exam+"哈哈哈哈哈！");
 
 //        return "/404";
     }
