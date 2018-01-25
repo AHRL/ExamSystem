@@ -415,7 +415,8 @@ function pageFinished() {
                     window.location.reload();
                     alert('提交成功!');
                 },
-                error: function() {
+                error: function(err) {
+                    console.log(err);
                     alert('提交失败!');
                 }
             });
