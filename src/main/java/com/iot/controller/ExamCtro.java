@@ -241,7 +241,7 @@ public class ExamCtro {
 
 
     @RequestMapping("/exam_add")
-    public String exam_add(@RequestParam(required = false,value = "basic[]")List<String> basic,
+    public void exam_add(@RequestParam(required = false,value = "basic[]")List<String> basic,
                            @RequestParam(required = false,value = "exam[]")List<String> exam,HttpServletResponse response){
 
         response.addHeader("Access-Control-Allow-Origin", "*");
@@ -249,7 +249,9 @@ public class ExamCtro {
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         response.addHeader("Access-Control-Max-Age", "1800");
 
-        return "/404";
+        System.out.println("哈哈哈哈哈！");
+
+//        return "/404";
     }
 
 
