@@ -143,7 +143,7 @@ function pageFinished() {
         pubAddBtn.removeAttribute('disabled');
         removeClass(pubCpltBtn, 'disabled');
         pubCpltBtn.removeAttribute('disabled');
-        removeClass(pubClearBtn, 'disbaled');
+        removeClass(pubClearBtn, 'disabled');
         pubClearBtn.removeAttribute('disabled');
     }
 
@@ -393,7 +393,7 @@ function pageFinished() {
             $.ajax({
                 type: 'POST',
                 url: 'http://127.0.0.1/exam_add',
-                dataType: 'json',
+                dataType: '',
                 data: JSON.parse(storage.getItem('examData')),
                 success: function(data) {
                     storage.removeItem('examData');
@@ -407,15 +407,16 @@ function pageFinished() {
                     chooseEMin.value = '';
                     chooseLocation.value = '';
                     explicitLocation.value = '';
-                    infoNote.value = '';
+                    infoNotes.value = '';
                     addClass(pubAddBtn, 'disabled');
-                    pubAddBtn.addAttribute('disabled');
+                    pubAddBtn.setAttribute('disabled', 'disabled');
                     addClass(pubCpltBtn, 'disabled');
-                    pubCpltBtn.addAttribute('disabled');
+                    pubCpltBtn.setAttribute('disabled', 'disabled');
                     window.location.reload();
                     alert('提交成功!');
                 },
-                error: function() {
+                error: function(err) {
+                    console.log(err);
                     alert('提交失败!');
                 }
             });
