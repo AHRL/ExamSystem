@@ -394,7 +394,7 @@ function pageFinished() {
                 type: 'POST',
                 url: 'http://127.0.0.1/exam_add',
                 dataType: '',
-                data: JSON.parse(storage.getItem('examData')),
+                data: JSON.stringify(JSON.parse(storage.getItem('examData'))),
                 success: function(data) {
                     storage.removeItem('examData');
                     chooseType.value = '';
