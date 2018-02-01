@@ -251,18 +251,17 @@ public class ExamCtro {
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         response.addHeader("Access-Control-Max-Age", "1800");
 
-        //处理获取试卷信息
-        PaperInfo paperInfo=stringUtil.basicCut(examData);
-        paperInfo.setUser(userRepository.findByUsername(username));
-        paperInfoRepository.save(paperInfo);
-
         //处理考试题目，并与试卷级联
         List<ExamQuestion> list=stringUtil.examCut(examData);
         for (int i = 0; i < list.size(); i++) {
-            examQuestion=list.get(i);
-            examQuestion.setPaperInfo(paperInfo);
-            examQuestionRepository.save(examQuestion);
+            examQuestionRepository.save(list.get(i));
         }
+
+        //处理获取试卷信息
+        PaperInfo paperInfo=stringUtil.basicCut(examData,list);
+        paperInfo.setUser(userRepository.findByUsername(username));
+        paperInfoRepository.save(paperInfo);
+
 
     }
 

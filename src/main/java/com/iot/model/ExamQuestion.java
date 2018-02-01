@@ -1,6 +1,7 @@
 package com.iot.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
@@ -9,14 +10,11 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "examQuestion")
-public class ExamQuestion {
+public class ExamQuestion implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
-	@ManyToOne
-	private PaperInfo paperInfo;
 
 	private Date date;
 
@@ -28,24 +26,17 @@ public class ExamQuestion {
 	@Column(length=1024 )
 	private String desc;
 
-	@Column(length = 2048 )
-	private String choices;
+	@Column(length=1024 )
+	private String[] choices;
 
-	public PaperInfo getPaperInfo() {
-		return paperInfo;
+	public Long getId() {
+		return id;
 	}
 
-	public void setPaperInfo(PaperInfo paperInfo) {
-		this.paperInfo = paperInfo;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
 
 	public String getType() {
 		return type;
@@ -53,14 +44,6 @@ public class ExamQuestion {
 
 	public void setType(String type) {
 		this.type = type;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
 	}
 
 	public String getDesc() {
@@ -71,15 +54,32 @@ public class ExamQuestion {
 		this.desc = desc;
 	}
 
-	public String getChoices() {
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+
+	public String[] getChoices() {
 		return choices;
 	}
 
-	public void setChoices(String choices) {
+	public void setChoices(String[] choices) {
 		this.choices = choices;
 	}
 
-	public ExamQuestion(String type, String code, String desc, String choices) {
+	public ExamQuestion(String desc, String type,String code, String[] choices ) {
 		this.type = type;
 		this.code = code;
 		this.desc = desc;

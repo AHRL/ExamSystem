@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.iot.model.ExamQuestion;
 import com.iot.model.PaperInfo;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,6 @@ public class StringUtil {
 				}
 			}
 		}
-
 		return count;
 	}
 
@@ -59,20 +59,23 @@ public class StringUtil {
 		return count;
 	}
 
-	public PaperInfo basicCut(String examData){
+	public PaperInfo basicCut(String examData,List<ExamQuestion> list){
 		JSONObject jsonData= JSON.parseObject(examData);
 		PaperInfo paperInfo =
 				gson.fromJson(jsonData.get("basic").toString(),PaperInfo.class);
+		paperInfo.setExamQuestion(list);
 		return paperInfo;
 	}
 
 	public List<ExamQuestion> examCut(String examData){
 		List<ExamQuestion> list=new ArrayList<>();
-		System.out.println(JSON.parseObject(examData).get("exam").toString());
-		JSONArray ja=JSON.parseArray("{"+JSON.parseObject(examData).get("exam").toString()+"}");
+		JSONArray ja=JSON.parseArray(JSON.parseObject(examData).get("exam").toString());
+		System.out.println(ja.size());
 		for (int i = 0; i < ja.size(); i++) {
+			System.out.println(ja.get(i));
 			ExamQuestion examQuestion=
-					gson.fromJson(ja.toJSONString(i),ExamQuestion.class);
+					gson.fromJson(String.valueOf(ja.get(i)),ExamQuestion.class);
+			examQuestion.setDate(new Date(System.currentTimeMillis()));
 			list.add(examQuestion);
 		}
 		return list;
