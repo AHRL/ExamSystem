@@ -68,7 +68,8 @@ public class StringUtil {
 
 	public List<ExamQuestion> examCut(String examData){
 		List<ExamQuestion> list=new ArrayList<>();
-		JSONArray ja=JSON.parseArray(JSON.parseObject(examData).get("exam").toString());
+		System.out.println(JSON.parseObject(examData).get("exam").toString());
+		JSONArray ja=JSON.parseArray("{"+JSON.parseObject(examData).get("exam").toString()+"}");
 		for (int i = 0; i < ja.size(); i++) {
 			ExamQuestion examQuestion=
 					gson.fromJson(ja.toJSONString(i),ExamQuestion.class);
