@@ -38,11 +38,14 @@ import java.util.*;
 public class ExamCtro {
 
     private Jedis jedis=new Jedis("118.89.36.125", 6379);
+
     private Gson gson=new Gson();
 
     private PsdBack psdBack;
 
     private static  String lang[]=new String[]{"HTML+CSS","JavaScript","Java","C"};
+
+    private ExamQuestion examQuestion;
 
     private static String jsessionId;
 
@@ -57,10 +60,10 @@ public class ExamCtro {
     private UserRepository userRepository;
 
     @Autowired
-    private ExaminationRepository examinationRepository;
+    private ExamQuestionRepository examQuestionRepository;
 
     @Autowired
-    private PaperRecordRepository paperRecordRepository;
+    private PaperInfoRepository paperInfoRepository;
 
     @Autowired
     private QuestionRepository questionRepository;
@@ -241,18 +244,25 @@ public class ExamCtro {
 
 
     @RequestMapping("/exam_add")
-    public void exam_add(@RequestParam(required = false,value = "basic[]")List<String> basic,
-                           @RequestParam(required = false,value = "exam[]")List<String> exam,HttpServletResponse response){
+    public void exam_add(HttpServletResponse response, @RequestParam(required = false,value = "examData")String examData){
 
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         response.addHeader("Access-Control-Max-Age", "1800");
 
+        //处理考试题目，并与试卷级联
+        List<ExamQuestion> list=stringUtil.examCut(examData);
+        for (int i = 0; i < list.size(); i++) {
+            examQuestionRepository.save(list.get(i));
+        }
 
-        System.out.println(basic+""+exam+"哈哈哈哈哈！");
+        //处理获取试卷信息
+        PaperInfo paperInfo=stringUtil.basicCut(examData,list);
+        paperInfo.setUser(userRepository.findByUsername(username));
+        paperInfoRepository.save(paperInfo);
 
-//        return "/404";
+
     }
 
 
@@ -308,13 +318,6 @@ public class ExamCtro {
         String D=String.valueOf(jedis.hmget(jsessionId,"D").get(0));
         Integer count= Integer.valueOf(jedis.hmget(jsessionId,"count").get(0));
 
-        //session携带值
-//        String A= (String) request.getSession().getAttribute("A");
-//        String B= (String) request.getSession().getAttribute("B");
-//        String C= (String) request.getSession().getAttribute("C");
-//        String D= (String) request.getSession().getAttribute("D");
-//        Integer count= (Integer) request.getSession().getAttribute("count");
-
         List<Question> list=questionRepository.find(A,B,C,D,count);
         //查询得到数据放在record题目类型列
         List<String> langList=questionRepository.findLang(A,B,C,D,count);
@@ -326,20 +329,9 @@ public class ExamCtro {
         //使用构造器来new新的record
         Record record=new Record(jsessionId,0,userRepository.findByUsername(username),list,-1,
                 null,answers,null,count,langList.toString(),new Date(System.currentTimeMillis()));
-//        record.setQuestions(list);
-//        record.setUser(userRepository.findByUsername(jedis.get("username")));
-//        record.setType(0);
-//        record.setCount(count);
-//        record.setDate(new Date(System.currentTimeMillis()));
+
         recordRepository.save(record);
 
-        //iterator迭代器输出当前用户所有的查询记录
-//        List<Record> records=recordRepository.findAll();
-//        List<Record> records=recordRepository.findUserAnswers(jedis.get("username"));
-//        Iterator<Record> i=records.iterator();
-//        while(i.hasNext()){
-//            Record a=i.next();
-//            System.out.print(a.getQuestions());}
 
         return list;
     }

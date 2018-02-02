@@ -391,12 +391,18 @@ function pageFinished() {
         } else {
             $('#submitModal').modal('hide');
             $.ajax({
-                type: 'POST',
+                type: 'GET',
                 url: 'http://127.0.0.1/exam_add',
+<<<<<<< HEAD
                 dataType: '',
                 data: {
                     examData: JSON.stringify(JSON.parse(storage.getItem('examData'))),
                 },
+=======
+                dataType: 'JSONP',
+                // data: JSON.stringify(JSON.parse(storage.getItem('examData'))),
+                data: {examData:JSON.stringify(JSON.parse(storage.getItem('examData'))),},
+>>>>>>> 58997a5e8e3a8d5dd6d171ad1b87118b3f309ea3
                 success: function(data) {
                     storage.removeItem('examData');
                     chooseType.value = '';
@@ -418,7 +424,7 @@ function pageFinished() {
                     alert('提交成功!');
                 },
                 error: function(err) {
-                    console.log(err);
+                    console.log(err+'buxiaode');
                     alert('提交失败!');
                 }
             });
