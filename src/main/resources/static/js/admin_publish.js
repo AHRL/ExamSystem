@@ -192,7 +192,7 @@ function pageFinished() {
     }
 
     var eType = document.getElementById('examType');
-    var eDesc = document.getElementById('examDesc');
+    var eTitle = document.getElementById('examTitle');
     var eCode = document.getElementById('examCode');
     var eAddBtn = document.getElementById('examAddBtn');
     var eRmvBtn = document.getElementById('examRemoveBtn');
@@ -314,7 +314,7 @@ function pageFinished() {
 
     function clearExamModal() {
         eType.value = '';
-        eDesc.value = '';
+        eTitle.value = '';
         eCode.value = '';
         var choiceIpt = setChoices.getElementsByClassName('choiceIpt');
         for (var i = 0; i < choiceIpt.length; i++) {
@@ -324,7 +324,7 @@ function pageFinished() {
 
     function isEmptyExamModal() {
         var choiceIpt = setChoices.getElementsByClassName('choiceIpt');
-        if (eType.value && eDesc.value) {
+        if (eType.value && eTitle.value) {
             if ((eType.value === '单选' || eType.value === '多选') && (!choiceIpt[0].value || !choiceIpt[1].value)) {
                 return true;
             }
@@ -351,13 +351,13 @@ function pageFinished() {
         if (isEmpty) {
             alert('您的题目信息还没填完！')
         } else {
-            valOfExamChoices = getExamChoice();
+            valOfExamChoices = getExamChoice().toString();
 
             console.log('beforeAdd :', JSON.parse(storage.getItem('examData')));
             examDataObj = JSON.parse(storage.getItem('examData'));
             examDataObj.exam.push({
                 type: eType.value,
-                desc: eDesc.value,
+                title: eTitle.value,
                 code: eCode.value,
                 choices: valOfExamChoices
             });
@@ -391,10 +391,15 @@ function pageFinished() {
         } else {
             $('#submitModal').modal('hide');
             $.ajax({
-                type: 'POST',
+                type: 'GET',
                 url: 'http://127.0.0.1/exam_add',
                 dataType: '',
-                data: JSON.parse(storage.getItem('examData')),
+                data: {
+                    examData: JSON.stringify(JSON.parse(storage.getItem('examData'))),
+                },
+                dataType: 'JSONP',
+                // data: JSON.stringify(JSON.parse(storage.getItem('examData'))),
+                data: { examData: JSON.stringify(JSON.parse(storage.getItem('examData'))), },
                 success: function(data) {
                     storage.removeItem('examData');
                     chooseType.value = '';
@@ -416,7 +421,7 @@ function pageFinished() {
                     alert('提交成功!');
                 },
                 error: function(err) {
-                    console.log(err);
+                    console.log(err + 'buxiaode');
                     alert('提交失败!');
                 }
             });
