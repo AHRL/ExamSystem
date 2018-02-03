@@ -1,0 +1,87 @@
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" xmlns:th="http://www.thymeleaf.org">
+<!--<![endif]-->
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <title>发布考试 - FunExam</title>
+    <meta name="keyword" content="Fun Exam" />
+    <meta name="description" content="An exam system for students" />
+    <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../static/stylesheets/css/funExam.css" />
+    <style>
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+    <link rel="stylesheet" href="../static/stylesheets/css/examinee_info.css" />
+
+    <script src="lib/modernizr-2.6.2.min.js"></script>
+    <!-- Respond.js for IE 8 or less only-->
+    <!--[if (lt IE 9) & (!IEMobile)]>
+        <script src="/lib/respond.min.js"></script>
+        <![endif]-->
+</head>
+
+<body>
+    <div id="particles-js"></div>
+    <div class="container">
+        <div class="text-center" id="beforeSubmit">
+            <p class="h2">考生你好：</p>
+            <h1>距离 {{ 翼灵物联工作室 2018 届招新考试 }} 开始还有</h1>
+            <p class="h2"> {{ 00:10:00 }} </p>
+        </div>
+        <form>
+            <p class="h4">请如实填写以下信息</p>
+            <div class="form-group examInfoIpt">
+                <lebal for="examineeName" class="form-control-label">姓名</lebal>
+                <input type="text" class="form-control" id="examineeName" autocomplete="off" />
+            </div>
+            <div class="form-group examInfoIpt">
+                <lebal for="examineeId" class="form-control-label">学号</lebal>
+                <input type="text" class="form-control" id="examineeId" autocomplete="off" />
+            </div>
+            <div class="form-group examInfoIpt">
+                <lebal for="examineeMajor" class="form-control-label">专业</lebal>
+                <input type="text" class="form-control" id="examineeMajor" autocomplete="off" />
+            </div>
+            <div class="form-group examInfoIpt">
+                <lebal for="examineeContact" class="form-control-label">QQ</lebal>
+                <input type="text" class="form-control" id="examineeContact" autocomplete="off" />
+            </div>
+            <div class="form-group examInfoIpt">
+                <lebal for="examineeToken" class="form-control-label" title="本场考试密令请询问考官">考试密令 <sup><i class="fa fa-exclamation-circle"></i></sup> </lebal>
+                <input type="password" class="form-control" id="examineeToken" placeholder="本场考试密令请询问考官" autocomplete="off" />
+            </div>
+            <div class="form-group">
+                <input type="checkbox" id="readme" />
+                <label>我已阅读<a href="#">《考试须知》</a></label>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" id="subInfo">提交信息，准备考试</button>
+            </div>
+        </form>
+        <div class="text-center hidden" id="afterSubmit">
+            <p class="h2">考生 {{ 某某某 }} 你好：</p>
+            <h1>你即将参加 {{ 翼灵物联工作室 2018 届招新考试 }} </h1>
+            <p class="h5">{{ 00:10:00 }} 后本页面将自动跳转至答题页面，如未跳转，请点击 <a href="#">刷新</a></p>
+        </div>
+    </div>
+    <script src="../static/lib/jquery-3.2.1.min.js"></script>
+    <script src="../static/lib/bootstrap.min.js"></script>
+    <script src="../static/lib/particles.min.js"></script>
+    <script src="../static/js/particlesInit.js"></script>
+    <script src="../static/js/funLib.js"></script>
+    <script src="../static/js/examinee_info.js"></script>
+</body>
+
+</html>
