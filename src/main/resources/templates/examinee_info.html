@@ -38,9 +38,13 @@
         <div class="text-center" id="beforeSubmit">
             <p class="h2">考生你好：</p>
             <h1>距离 {{ 翼灵物联工作室 2018 届招新考试 }} 开始还有</h1>
-            <p class="h2"> {{ 00:10:00 }} </p>
+            <p class="h2 timeBlock">
+                <span class="hourBlock"></span> :
+                <span class="minuteBlock"></span> :
+                <span class="secondBlock"></span>
+            </p>
         </div>
-        <form>
+        <form id="examineeForm">
             <p class="h4">请如实填写以下信息</p>
             <div class="form-group examInfoIpt">
                 <lebal for="examineeName" class="form-control-label">姓名</lebal>
@@ -73,7 +77,7 @@
         <div class="text-center hidden" id="afterSubmit">
             <p class="h2">考生 {{ 某某某 }} 你好：</p>
             <h1>你即将参加 {{ 翼灵物联工作室 2018 届招新考试 }} </h1>
-            <p class="h5">{{ 00:10:00 }} 后本页面将自动跳转至答题页面，如未跳转，请点击 <a href="#">刷新</a></p>
+            <p class="h5">后本页面将自动跳转至答题页面，如未跳转，请点击 <a href="#">刷新</a></p>
         </div>
     </div>
     <script src="../static/lib/jquery-3.2.1.min.js"></script>
