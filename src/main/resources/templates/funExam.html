@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Home - FunExam</title>
-    <link rel="stylesheet" href=" /stylesheets/css/funExam.css" />
+    <link rel="stylesheet" href="../static/stylesheets/css/funExam.css" />
     <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
-    <script src=" /lib/modernizr-2.6.2.min.js"></script>
+    <script src="../static/lib/modernizr-2.6.2.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
     <!--[if (lt IE 9) & (!IEMobile)]>
-    <script src=" /lib/respond.min.js"></script>
+    <script src="../static/lib/respond.min.js"></script>
     <![endif]-->
     <style type="text/css">
         ._footer {
@@ -36,7 +36,7 @@
             <ul class="navbar-nav mt-2 mt-md-0">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                        <img src=" /img/logos/w3fun-50.png" alt="avator" class="avator" /> 欢迎您
+                        <img src="../static/img/logos/w3fun-50.png" alt="avator" class="avator" /> 欢迎您
                         <span th:inline="text"> [[${#httpServletRequest.remoteUser}]]</span>
                         <!--<span th:inline="text"> [[${#httpServletRequest.LocalAddr}]]</span>-->
                         <!--<span th:inline="text"> [[${#httpServletRequest.LocalName}]]</span>-->
@@ -63,32 +63,38 @@
             <header class="_header text-center col-sm-8 push-sm-2">
                 <h1>Fun Exam</h1>
                 <hr class="f-hr" />
-                <img src=" /img/w3fun-100x100.png" alt="w3fun" />
+                <img src="../static/img/w3fun-100x100.png" alt="w3fun" />
             </header>
             <main class="_main text-center col-sm-8 push-sm-2">
                 <form>
                     <fieldset class="form-group">
-                        <button class="btn btn-lg btn-block disabled">
-                            <strong>在线考试入口 - 暂未开放，准时开放</strong>
-                        </button>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th>考试</th>
+                                    <th>内容</th>
                                     <th>时间</th>
-                                    <th>考试内容</th>
                                     <th>地点</th>
-                                    <th>备注</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>2017/12/15 19:00-21:00</td>
-                                    <td>C 语言</td>
+                                    <td>{{ 2018 翼灵物联工作室招新考试 }}</td>
+                                    <td>招新笔试</td>
+                                    <td>2018/10/08 20:30-22:00</td>
                                     <td>明理楼 B412</td>
-                                    <td>请带好学生卡</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ 2018 届 C 语言第一次测试 }}</td>
+                                    <td>C 语言笔试</td>
+                                    <td>2018/12/01 15:00-17:00</td>
+                                    <td>明理楼 B412</td>
                                 </tr>
                             </tbody>
                         </table>
+                        <button class="btn btn-primary btn-lg btn-block">
+                                <span>{{ 2018 翼灵物联工作室招新考试 }}</span> 入口
+                            </button>
                     </fieldset>
                 </form>
                 <p class="text-right">
@@ -101,17 +107,19 @@
     </div>
 
     <footer id="footer" class="_footer text-center" role="contentinfo">
-        <span><i class="fa fa-copyright"></i>2017</span>
+        <span><i class="fa fa-copyright"></i>2018</span>
         <a href="https://github.com/w3fun/" target="_blank" class="_link"><i class="fa fa-heart"></i>W3Fun</a>
         <a href="https://github.com/swpuLeo/" target="_blank" class="_link _hover-male"><i class="fa fa-male"></i>Leo</a>
-        <a href="https://github.com/812913/" target="_blank" class="_link _hover-female"><i class="fa fa-female"></i>lwf</a>
         <a href="https://github.com/StaticWalk/" target="_blank" class="_link _hover-male"><i class="fa fa-male"></i>StaticWalk</a>
-        <a href="https://github.com/luqingying/" target="_blank" class="_link _hover-female"><i class="fa fa-female"></i>yqy</a>
+        <a href="https://github.com/812913/" target="_blank" class="_link _hover-female"><i class="fa fa-female"></i>lwf</a>
+        <a href="https://github.com/luqingying/" target="_blank" class="_link _hover-female"><i class="fa fa-female"></i>lqy</a>
     </footer>
-    <script src=" /lib/jquery-3.2.1.min.js"></script>
-    <script src=" /lib/bootstrap.min.js"></script>
-    <script src=" /lib/particles.min.js"></script>
-    <script src=" /js/particlesInit.js"></script>
+    <script src="../static/lib/jquery-3.2.1.min.js"></script>
+    <script src="../static/lib/bootstrap.min.js"></script>
+    <script src="../static/lib/particles.min.js"></script>
+    <script src="../static/js/particlesInit.js"></script>
+    <script src="../static/js/funLib.js"></script>
+    <script src="../static/js/funExam.js"></script>
 </body>
 
 </html>
