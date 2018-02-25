@@ -243,6 +243,22 @@ public class ExamCtro {
     }
 
 
+
+    @ResponseBody
+    @RequestMapping(value = "/isLimit",method = RequestMethod.GET)
+    public int isLimit() {
+        List<PaperInfo> list=paperInfoRepository.findAll();
+        Iterator<PaperInfo>  paperInfos= list.iterator();
+        while (paperInfos.hasNext()) {
+            PaperInfo paperInfo = paperInfos.next();
+            if (paperInfo.equals(target)) {
+                paperInfos.remove();
+            }
+        }
+        if(paperInfos!=null){return 1;}
+        else {return 0;}
+    }
+
     @RequestMapping("/exam_add")
     public void exam_add(HttpServletResponse response, @RequestParam(required = false,value = "examData")String examData){
 
@@ -261,7 +277,6 @@ public class ExamCtro {
         PaperInfo paperInfo=stringUtil.basicCut(examData,list);
         paperInfo.setUser(userRepository.findByUsername(username));
         paperInfoRepository.save(paperInfo);
-
 
     }
 
@@ -344,8 +359,6 @@ public class ExamCtro {
                                     @RequestParam(value = "choices")String choices){
         Question question=new Question(type,lang,info,code,choices, new Date(System.currentTimeMillis()));
         questionRepository.save(question);
-        System.out.print(question.toString());
-//        return "admin_add";
     }
 
     @ResponseBody
@@ -388,19 +401,5 @@ public class ExamCtro {
 //        return "funExam";
 //    }
 
-//    @RequestMapping("/report")
-//    @ResponseBody
-//    public String report(HttpServletRequest request,HttpServletResponse response){
-//        List list=new ArrayList();
-//        int score=0;
-//      String lang=(String)request.getSession().getAttribute("lang");
-//        String count=String.valueOf (request.getSession().getAttribute("count")) ;
-//        String time= String.valueOf(System.currentTimeMillis()-(long)request.getSession().getAttribute("before"));
-//        list.add(lang);
-//        list.add(score);
-//        list.add(count);
-//        list.add(time);
-//        return  gson.toJson(list);
-//    }
 
 }

@@ -24,10 +24,10 @@ public class ExamQuestion implements Serializable{
 	private String code;
 
 	@Column(length=1024 )
-	private String desc;
+	private String title;
 
 	@Column(length=1024 )
-	private String[] choices;
+	private String choices;
 
 	public Long getId() {
 		return id;
@@ -46,12 +46,12 @@ public class ExamQuestion implements Serializable{
 		this.type = type;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public Date getDate() {
@@ -71,18 +71,18 @@ public class ExamQuestion implements Serializable{
 	}
 
 
-	public String[] getChoices() {
+	public String getChoices() {
 		return choices;
 	}
 
-	public void setChoices(String[] choices) {
+	public void setChoices(String choices) {
 		this.choices = choices;
 	}
 
-	public ExamQuestion(String desc, String type,String code, String[] choices ) {
+	public ExamQuestion(String title, String type, String code, String choices ) {
 		this.type = type;
 		this.code = code;
-		this.desc = desc;
+		this.title = title;
 		this.choices = choices;
 	}
 }
