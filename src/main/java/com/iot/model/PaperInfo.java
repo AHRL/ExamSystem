@@ -127,4 +127,20 @@ public class PaperInfo {
 		this.time = time;
 		this.token = token;
 	}
+
+	public PaperInfo() {
+	}
+
+	//	public PaperInfo(User user, List<ExamQuestion> examQuestion, String date, String startTime, String location, String endTime, String type, String info, String time, String token) {
+//		this.user = user;
+//		this.examQuestion = examQuestion;
+//		this.date = date;
+//		this.startTime = startTime;
+//		this.location = location;
+//		this.endTime = endTime;
+//		this.type = type;
+//		this.info = info;
+//		this.time = time;
+//		this.token = token;
+//	}
 }

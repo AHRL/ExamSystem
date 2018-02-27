@@ -28,6 +28,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -245,18 +248,24 @@ public class ExamCtro {
 
 
     @ResponseBody
-    @RequestMapping(value = "/isLimit",method = RequestMethod.GET)
-    public int isLimit() {
+    @RequestMapping("/isLimit")
+    public String isLimit() {
+        java.util.Date now = new java.util.Date();
+        DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         List<PaperInfo> list=paperInfoRepository.findAll();
-        Iterator<PaperInfo>  paperInfos= list.iterator();
-        while (paperInfos.hasNext()) {
-            PaperInfo paperInfo = paperInfos.next();
-            if (paperInfo.equals(target)) {
-                paperInfos.remove();
+
+        for (int i = 0; i < list.size(); i++) {
+            String mix=list.get(i).getDate()+" "+list.get(i).getStartTime()+":00";
+            System.out.println(mix);
+            try {
+                if (format.parse(mix).getTime()> now.getTime()-600000&&format.parse(mix).getTime()< now.getTime()) {
+				return "ok";
+				}
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
         }
-        if(paperInfos!=null){return 1;}
-        else {return 0;}
+        return "error";
     }
 
     @RequestMapping("/exam_add")
@@ -265,7 +274,7 @@ public class ExamCtro {
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
-        response.addHeader("Access-Control-Max-Age", "1800");
+        response.addHeader("Access-Control-Max-Age","1800");
 
         //处理考试题目，并与试卷级联
         List<ExamQuestion> list=stringUtil.examCut(examData);
