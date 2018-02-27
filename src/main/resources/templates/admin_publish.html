@@ -14,13 +14,13 @@
     <meta name="keyword" content="Fun Exam" />
     <meta name="description" content="An exam system for students" />
     <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
-    <link rel="stylesheet" href="stylesheets/css/funExam.css" />
-    <link rel="stylesheet" href="stylesheets/css/admin_publish.css" />
+    <link rel="stylesheet" href="../static/stylesheets/css/funExam.css" />
+    <link rel="stylesheet" href="../static/stylesheets/css/admin_publish.css" />
 
-    <script src="lib/modernizr-2.6.2.min.js"></script>
+    <script src="../static/lib/modernizr-2.6.2.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
     <!--[if (lt IE 9) & (!IEMobile)]>
-    <script src="/lib/respond.min.js"></script>
+    <script src="/../static/lib/respond.min.js"></script>
     <![endif]-->
 </head>
 
@@ -195,6 +195,17 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-sm-2" title="内部考试指仅有翼灵团队成员参加，典型的非内部考试就是招新考试">考试性质 <sup><i class="fa fa-exclamation-circle"></i></sup></div>
+                        <div class="col-sm-4">
+                            <label>
+                                <input type="radio" name="examp-prop" id="isInnerExam" checked /> 内部考试
+                            </label>
+                            <label>
+                                <input type="radio" name="examp-prop" /> 非内部考试
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-sm-2">备注</div>
                         <div class="col-sm-10">
                             <input type="text" name="infoNotes" id="infoNotes" class="form-control" placeholder="填写备注，比如：2017级C语言第2次测试" />
@@ -366,10 +377,10 @@
         </div>
     </div>
 
-    <script src="lib/jquery-3.2.1.min.js"></script>
-    <script src="lib/bootstrap.min.js"></script>
-    <script src="js/funLib.js"></script>
-    <script src="js/admin_publish.js"></script>
+    <script src="../static/lib/jquery-3.2.1.min.js"></script>
+    <script src="../static/lib/bootstrap.min.js"></script>
+    <script src="../static/js/funLib.js"></script>
+    <script src="../static/js/admin_publish.js"></script>
 </body>
 
 </ht30
