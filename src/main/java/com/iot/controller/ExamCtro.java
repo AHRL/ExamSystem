@@ -83,6 +83,17 @@ public class ExamCtro {
         return "funExam";
     }
 
+
+    @ResponseBody
+    @RequestMapping("/.well-known/pki-validation/fileauth.txt")
+    public String https()  {
+        return "201802261233415544hvi872a7agweaqjpeg1whxfo32p4jbutjcsgmp54mxyh1r";
+    }
+
+
+
+
+
     @RequestMapping("/login")
     public String login() throws Exception {
         return "login";
@@ -107,6 +118,11 @@ public class ExamCtro {
     @RequestMapping("/skill_chart")
     public String skill_chart() throws Exception {
         return "skill_chart";
+    }
+
+    @RequestMapping("/examinee_info")
+    public String examinee_info() throws Exception {
+        return "examinee_info";
     }
 
     @RequestMapping("/funExam")
@@ -249,7 +265,7 @@ public class ExamCtro {
 
     @ResponseBody
     @RequestMapping("/isLimit")
-    public String isLimit() {
+    public int isLimit() {
         java.util.Date now = new java.util.Date();
         DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         List<PaperInfo> list=paperInfoRepository.findAll();
@@ -259,13 +275,13 @@ public class ExamCtro {
             System.out.println(mix);
             try {
                 if (format.parse(mix).getTime()> now.getTime()-600000&&format.parse(mix).getTime()< now.getTime()) {
-				return "ok";
+				return 1;
 				}
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
-        return "error";
+        return 0;
     }
 
     @RequestMapping("/exam_add")
