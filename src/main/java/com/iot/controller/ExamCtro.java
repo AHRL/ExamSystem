@@ -44,6 +44,10 @@ public class ExamCtro {
 
     private Gson gson=new Gson();
 
+    private User user;
+
+    private PaperInfo paperInfo;
+
     private PsdBack psdBack;
 
     private static  String lang[]=new String[]{"HTML+CSS","JavaScript","Java","C"};
@@ -78,20 +82,18 @@ public class ExamCtro {
     public String index(HttpServletRequest request) throws Exception {
          username=request.getRemoteUser();
          jsessionId=request.getSession().getId();
-         jedis.set(username,jsessionId);
+         jedis.set(jsessionId,username);
+
 //        System.out.println("jsessionId:"+jsessionId+"+username:"+username);
+
         return "funExam";
     }
-
 
     @ResponseBody
     @RequestMapping("/.well-known/pki-validation/fileauth.txt")
     public String https()  {
         return "201802261233415544hvi872a7agweaqjpeg1whxfo32p4jbutjcsgmp54mxyh1r";
     }
-
-
-
 
 
     @RequestMapping("/login")
@@ -262,10 +264,25 @@ public class ExamCtro {
     }
 
 
-
     @ResponseBody
     @RequestMapping("/isLimit")
     public int isLimit() {
+        return Integer.valueOf(jedis.get(jsessionId+"UserPaper"));
+    }
+
+    @ResponseBody
+    @RequestMapping("/isAdmin")
+    public int isAdmin() {
+        user = userRepository.findByUsername(jedis.get(jsessionId));
+        if (String.valueOf(user.getRole()).equals("admin")) return 1;
+        else return 0;
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/userPaper")
+    public String userPaper() {
+        jedis.set(jsessionId+"UserPaper",String.valueOf(0));
         java.util.Date now = new java.util.Date();
         DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         List<PaperInfo> list=paperInfoRepository.findAll();
@@ -274,14 +291,26 @@ public class ExamCtro {
             String mix=list.get(i).getDate()+" "+list.get(i).getStartTime()+":00";
             System.out.println(mix);
             try {
-                if (format.parse(mix).getTime()> now.getTime()-600000&&format.parse(mix).getTime()< now.getTime()) {
-				return 1;
-				}
+                if (format.parse(mix).getTime()-600000< now.getTime()&&format.parse(mix).getTime()+1800000> now.getTime()) {
+
+                    jedis.set(jsessionId+"UserPaper", String.valueOf(1));
+                    user = userRepository.findByUsername(jedis.get(jsessionId));
+                    paperInfo = list.get(i);
+
+				return "{\"role\":\""+user.getRole()+"\",\"email\":\""+user.getEmail()+"\",\"username\":\""+user.getUsername()
+                        + "\",\"examQuestion\":[" +
+                        // paperInfo.getExamQuestion()
+                        stringUtil.adjustFormat(paperInfo)
+                        +"],\"startTime\":\""+paperInfo.getStartTime()
+                        +"\",\"endTime\":\""+paperInfo.getEndTime()+"\",\"type\":\""+paperInfo.getType()+"\",\"info\":\""+
+                        paperInfo.getInfo()+"\",\"token\":\""+paperInfo.getToken()+"\"}";
+                }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
-        return 0;
+        return "error";
+
     }
 
     @RequestMapping("/exam_add")
