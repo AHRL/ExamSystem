@@ -85,4 +85,18 @@ public class ExamQuestion implements Serializable{
 		this.title = title;
 		this.choices = choices;
 	}
+
+	public ExamQuestion() {
+	}
+
+	@Override
+	public String toString() {
+		return "{\"id\":\"" + id +
+				"\", \"date\":\"" + date +
+				"\",\" type\":\"" + type +
+				"\",\" code\":\"" + code +
+				"\",\" title\":\"" + title +
+				"\",\" choices\":\"" + choices  +
+				"\"}";
+	}
 }

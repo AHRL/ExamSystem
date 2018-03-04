@@ -143,4 +143,22 @@ public class PaperInfo {
 //		this.time = time;
 //		this.token = token;
 //	}
+
+
+	@Override
+	public String toString() {
+		return "PaperInfo{" +
+				"id=" + id +
+				", user=" + user +
+				", examQuestion=" + examQuestion +
+				", date='" + date + '\'' +
+				", startTime='" + startTime + '\'' +
+				", location='" + location + '\'' +
+				", endTime='" + endTime + '\'' +
+				", type='" + type + '\'' +
+				", info='" + info + '\'' +
+				", time='" + time + '\'' +
+				", token='" + token + '\'' +
+				'}';
+	}
 }

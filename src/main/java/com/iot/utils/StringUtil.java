@@ -81,4 +81,17 @@ public class StringUtil {
 		return list;
 	}
 
+	public String adjustFormat(PaperInfo paperInfo){
+		String aa="",bb;
+		for (int j = 0; j < paperInfo.getExamQuestion().size(); j++) {
+			bb=paperInfo.getExamQuestion().get(j).toString();
+			aa+=bb;
+			if (j!=paperInfo.getExamQuestion().size()-1)
+			{
+				aa+=",";
+			}
+		}
+		return aa;
+	}
+
 }
