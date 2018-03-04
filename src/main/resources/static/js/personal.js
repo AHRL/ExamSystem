@@ -77,4 +77,15 @@ function pageFinished() {
             });
         }(i));
     }
+    $.ajax({
+        type: 'get',
+        url: 'http://127.0.0.1/personalInfo',
+        dataType: 'json',
+        success: function (data) {
+            console.log(JSON.parse(data));
+        },
+        error: function (err) {
+            console.log('err' + err);
+        }
+    })
 }

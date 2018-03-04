@@ -101,6 +101,12 @@ public class ExamCtro {
         return "login";
     }
 
+    @RequestMapping("/personal")
+    public String personal() throws Exception {
+        return "personal";
+    }
+
+
     @RequestMapping("/admin_add")
     public String admin_add() throws Exception {
         return "admin_add";
@@ -237,18 +243,18 @@ public class ExamCtro {
             psdBack=new PsdBack(lang[i],stringUtil.rightNumber(lang[i],hh),stringUtil.totalNumber(lang[i],hh));
             chart.add(psdBack);
         }
-        long time=System.currentTimeMillis()-Long.parseLong(String.valueOf(jedis.hmget(jsessionId,"begin").get(0)));
+        long time=System.currentTimeMillis()-Long.parseLong(String.valueOf(jedis.hmget(jsessionId+"map","begin").get(0)));
         Map map=new HashMap();
         map.put("score",score);
         map.put("count",record.getCount());
         map.put("time",time);
-        map.put("A",String.valueOf(jedis.hmget(jsessionId,"A").get(0)));
-        map.put("B",String.valueOf(jedis.hmget(jsessionId,"B").get(0)));
-        map.put("C",String.valueOf(jedis.hmget(jsessionId,"C").get(0)));
-        map.put("D",String.valueOf(jedis.hmget(jsessionId,"D").get(0)));
+        map.put("A",String.valueOf(jedis.hmget(jsessionId+"map","A").get(0)));
+        map.put("B",String.valueOf(jedis.hmget(jsessionId+"map","B").get(0)));
+        map.put("C",String.valueOf(jedis.hmget(jsessionId+"map","C").get(0)));
+        map.put("D",String.valueOf(jedis.hmget(jsessionId+"map","D").get(0)));
         map.put("chart",chart);
 
-        jedis.set("map"+jsessionId,gson.toJson(map));
+//        jedis.set("map"+jsessionId,gson.toJson(map));
         return "/practice_completed";
     }
 
@@ -259,8 +265,27 @@ public class ExamCtro {
 
     @RequestMapping("/onlineLib_result")
     @ResponseBody
-    public String onlineLib_result(){
-        return jedis.get("map"+jsessionId);
+    public String onlineLib_result( HttpServletResponse response){
+
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+        response.addHeader("Access-Control-Max-Age", "1800");
+
+        List<String> hh=recordRepository.findLangDetails(username);
+        List<PsdBack> chart=new ArrayList<>();
+        Map map=new HashMap();
+        for (int i = 0; i < 4; i++) {
+            psdBack=new PsdBack(lang[i],stringUtil.rightNumber(lang[i],hh),stringUtil.totalNumber(lang[i],hh));
+            chart.add(psdBack);
+        }
+
+        map.put("A",String.valueOf(jedis.hmget(jsessionId+"map","A").get(0)));
+        map.put("B",String.valueOf(jedis.hmget(jsessionId+"map","B").get(0)));
+        map.put("C",String.valueOf(jedis.hmget(jsessionId+"map","C").get(0)));
+        map.put("D",String.valueOf(jedis.hmget(jsessionId+"map","D").get(0)));
+        map.put("chart",chart);
+        return gson.toJson(map);
     }
 
 
@@ -271,11 +296,22 @@ public class ExamCtro {
     }
 
     @ResponseBody
-    @RequestMapping("/isAdmin")
-    public int isAdmin() {
-        user = userRepository.findByUsername(jedis.get(jsessionId));
-        if (String.valueOf(user.getRole()).equals("admin")) return 1;
-        else return 0;
+    @RequestMapping("/personalInfo")
+    public String personalInfo() {
+        int practiced=0;
+        int tested=0;
+//        user = userRepository.findByUsername(jedis.get(jsessionId));
+        user = userRepository.findByUsername(username);
+        List<String> hh=recordRepository.findLangDetails(user.getUsername());
+        for (int i = 0; i < lang.length; i++) {
+            practiced+= stringUtil.totalNumber(lang[i],hh);
+        }
+        if (String.valueOf(user.getRole()).equals("admin"))
+            return "{\"name\":"+user.getUsername()+"\",\"email\":\""+user.getEmail()+"\",\"practiced\":\""+practiced+
+                    "\",\"tested\":\""+0+"\",\"email\":\""+user.getEmail()+"\",\"isAdmin\":\"1\"}";
+        else
+            return  "{\"name\":"+user.getUsername()+"\",\"email\":\""+user.getEmail()+"\",\"practiced\":\""+0+
+                    "\",\"tested\":\""+0+"\",\"email\":\""+user.getEmail()+"\",\"isAdmin\":\"0\"}";
     }
 
 
@@ -355,7 +391,7 @@ public class ExamCtro {
         map.put("D",D);
         map.put("count",count);
         map.put("begin", String.valueOf(System.currentTimeMillis()));//答题练习的开始时间
-        jedis.hmset(jsessionId,map);
+        jedis.hmset(jsessionId+"map",map);
 
         //设置会话窗口的存活期
 //       jedis.expire(jsessionId,Integer.parseInt(String.valueOf(360)));//设置由就session生成的查询条件map生存期
@@ -381,11 +417,11 @@ public class ExamCtro {
         response.addHeader("Access-Control-Max-Age", "1800");
 
         //通过redis中的map拿到值
-        String A= String.valueOf(jedis.hmget(jsessionId,"A").get(0));
-        String B= String.valueOf(jedis.hmget(jsessionId,"B").get(0));
-        String C= String.valueOf(jedis.hmget(jsessionId,"C").get(0));
-        String D=String.valueOf(jedis.hmget(jsessionId,"D").get(0));
-        Integer count= Integer.valueOf(jedis.hmget(jsessionId,"count").get(0));
+        String A= String.valueOf(jedis.hmget(jsessionId+"map","A").get(0));
+        String B= String.valueOf(jedis.hmget(jsessionId+"map","B").get(0));
+        String C= String.valueOf(jedis.hmget(jsessionId+"map","C").get(0));
+        String D=String.valueOf(jedis.hmget(jsessionId+"map","D").get(0));
+        Integer count= Integer.valueOf(jedis.hmget(jsessionId+"map","count").get(0));
 
         List<Question> list=questionRepository.find(A,B,C,D,count);
         //查询得到数据放在record题目类型列
