@@ -40,7 +40,7 @@ $.ajax({
                 }
                 if(m>=60){
                     h=parseInt(m/60);
-                    m=parseInt(m%60)
+                    m=parseInt(m%60);
                 }
             }
             totalTime=checkTime(h)+":"+checkTime(m)+":"+checkTime(s);
