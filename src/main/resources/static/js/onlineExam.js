@@ -21,7 +21,7 @@ window.onload=function(){
     var arrCollectInputValue=[];
     var arrLabelSpanValue=[];
 
-    //全屏事件
+    //fullscreen 全屏
     var viewFullScreen = document.getElementsByTagName("body")[0];
     if (viewFullScreen) {
         viewFullScreen.addEventListener("click", function () {
@@ -78,7 +78,7 @@ window.onload=function(){
             fullscreenState.innerHTML = (document.webkitIsFullScreen)? "" : "not ";
         }, false);
     }
-
+//end of fullscreen
 
 
 

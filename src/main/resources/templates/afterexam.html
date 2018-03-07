@@ -23,6 +23,11 @@
     <script src="../static/lib/respond.min.js"></script>
     <![endif]-->
 </head>
+<style>
+    .exam-information{
+        border: none;
+    }
+</style>
 
 <body>
 <nav class="navbar navbar-toggleable-md fixed-top navbar-inverse bg-inverse">
@@ -72,20 +77,22 @@
             <div class="publish-info">
                 <div class="row">
                     <div class="col-sm-3">考试类型</div>
-                    <input type="text">
-
+                    <input class="exam-information" type="text" value="考试类型的内容" readonly="readonly" >
                 </div>
                 <div class="row">
                     <div class="col-sm-3">考试日期/时间</div>
-                    <input type="text">
+                    <input class="exam-information" type="text" value="时间和日期的内容" readonly="readonly" >
                 </div>
                 <div class="row">
                     <div class="col-sm-3">备注</div>
-                    <input type="text">
+                    <input class="exam-information" type="text" value="备注的内容" readonly="readonly" >
                 </div>
             </div>
-
-
+            <hr/>
+            <div id="exam-content">
+                <p class="title"></p>
+                <pre class="code"></pre>
+            </div>
         </main>
     </div>
 </div>
