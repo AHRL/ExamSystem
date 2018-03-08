@@ -14,16 +14,21 @@ window.onload=function(){
     });
     require(['commonfn'],function(commonfn){
         var time=document.getElementsByTagName('time')[0];
-        var timeIcon=document.getElementsByClassName('timeIcon')[0];
+        // var timeIcon=document.getElementsByClassName('timeIcon')[0];
+        var timeIcon=document.getElementById('timeIcon');
         var collect=document.getElementsByClassName('collect')[0];
         var share=document.getElementsByClassName('share')[0];
         var collectForm=document.forms["collectform"];
         var collectLabelInput=document.getElementById('collectLabel');
         var arrLabelSpan=document.getElementsByClassName('labelSpan');
-        var closeBtn=document.getElementsByClassName('closeBtn')[0];
-        var cancelBtn=document.getElementsByClassName('cancelBtn')[0];
-        var collectBtn=document.getElementsByClassName('collectBtn')[0];
-        var shareBtn=document.getElementsByClassName('shareBtn')[0];
+        // var closeBtn=document.getElementsByClassName('closeBtn')[0];
+        // var cancelBtn=document.getElementsByClassName('cancelBtn')[0];
+        var closeBtn=document.getElementById('closeBtn');
+        var cancelBtn=document.getElementById('cancelBtn');
+        // var collectBtn=document.getElementsByClassName('collectBtn')[0];
+        // var shareBtn=document.getElementsByClassName('shareBtn')[0];
+        var collectBtn=document.getElementById('collectBtn');
+        var shareBtn=document.getElementById('shareBtn');
         var aheadBtn=document.getElementsByClassName('aheadBtn')[0];
         var aheadModalBtn=document.getElementsByClassName('aheadModalBtn')[0];
         var sheetToggle=document.getElementsByClassName('sheetToggle')[0];
@@ -35,7 +40,6 @@ window.onload=function(){
         for(var i=0;i<arrLabelSpan.length;i++){
             arrLabelSpanValue.push(arrLabelSpan[i].innerHTML);
         }
-
         Array.prototype.removeByValue=function(val){
             for(var i=0;i<this.length;i++){
                 if(this[i]===val){
@@ -44,8 +48,6 @@ window.onload=function(){
                 }
             }
         };
-
-        //加载页面后，请求数据；
         var oItemType=document.getElementsByClassName('itemType')[0];
         var oItemTitle=document.getElementsByClassName('practice-specific-title')[0];
         var oItemCode=document.getElementsByClassName('practice-specific-code')[0];
@@ -65,6 +67,7 @@ window.onload=function(){
         var sendAction='';
         var progressNow;
 
+        //加载页面后，请求数据；
         $.ajax({
             url:'offjson.json',
             // url:'http://192.168.43.245/back',
@@ -76,12 +79,8 @@ window.onload=function(){
                 // alert(data);
                 newData=data.substring(1,data.length-1);
                 localStorage.setItem('items',newData);
-
                 items=localStorage.getItem('items');
                 arrItems=items.split('},{');
-
-
-
                 len=arrItems.length;
                 if(len>1){
                     arrItems[0]=arrItems[0]+'}';
@@ -90,12 +89,9 @@ window.onload=function(){
                         arrItems[i]='{'+arrItems[i]+'}';
                     }
                 }
-
-
                 arrItems.forEach(function(item,index,array){
                     jsonArrItems[index]=JSON.parse(array[index]);
                 });
-
 
                 //将title、code、choices中可能的出现的标签尖括号替换成相应编码
                 function replaceStr(strObject) {
@@ -108,6 +104,7 @@ window.onload=function(){
                     }
                     return strObject;//注意在if语句之外return，否则会出现undefined
                 }
+
                 //生成最终的题目格式
                 jsonArrItems.map(function(item,index,array){
                     item["info"]=replaceStr(item["info"]);
@@ -135,6 +132,7 @@ window.onload=function(){
                 }
                 var $oAnswerSheet=$(oAnswerSheet);
                 $oAnswerSheet.append(strAnswerSheet);
+
                 //填充页面
                 function fillPage(item){
                     strItemContent='';
@@ -301,7 +299,6 @@ window.onload=function(){
                     }
                 }
 
-
                 //页面初次加载时
                 var itemOrder=0;
                 fillPage(jsonArrItems[itemOrder]);
@@ -341,7 +338,8 @@ window.onload=function(){
                 }
 
                 //点击下一题时
-                oNextBtn.onclick=function(){
+                // oNextBtn.onclick=
+                    function nextBtnClick(){
                     itemOrder++;
                     // var uri=transURI();
                     // console.log(uri);
@@ -353,21 +351,22 @@ window.onload=function(){
                     }
                     if(itemOrder==len){
                         //提交并且提交一次后不可再用
-                        this.disabled=true;
+                        oNextBtn.disabled=true;
                         practiceForm.method="POST";
                         practiceForm.action=transURI();
                         practiceForm.submit();
                     }
-                };
+                }
 
                 //点击提前交卷后弹出的确定按钮，提前交卷
-                aheadModalBtn.onclick=function(){
+                // aheadModalBtn.onclick=
+                    function aheadModalBtnClick(){
                     //把本页添加到URI中
-                    this.disabled=true;
+                    aheadModalBtn.disabled=true;
                     practiceForm.method="POST";
                     practiceForm.action=transURI();
                     practiceForm.submit();
-                };
+                }
 
                 //点击答题卡的li时
                 $('.sheetLi').click(function(){
@@ -397,22 +396,22 @@ window.onload=function(){
                     return  i<10 ? "0"+i:i;
                 }
 
-                commonfn.EventUtil.addHandler(timeIcon,"click",timeIconClick);
-                function timeIconClick(){
-                    if(commonfn.hasClass(this,'fa-pause-circle')){
-                        commonfn.removeClass(this,'fa-pause-circle');
-                        commonfn.addClass(this,'fa-play-circle');
+                // commonfn.EventUtil.addHandler(timeIcon,"click",timeIconClick);
+                function timeIconClick(tarEle){//填加tarEle参数，将hasClass的参数this——>tarEle
+                    if(commonfn.hasClass(tarEle,'fa-pause-circle')){
+                        commonfn.removeClass(tarEle,'fa-pause-circle');
+                        commonfn.addClass(tarEle,'fa-play-circle');
                         clearInterval(mysetInterval);
                     }else{
-                        commonfn.removeClass(this,'fa-play-circle');
-                        commonfn.addClass(this,'fa-pause-circle');
+                        commonfn.removeClass(tarEle,'fa-play-circle');
+                        commonfn.addClass(tarEle,'fa-pause-circle');
                         mysetInterval=setInterval(timer, 1000);
                     }
                 }
 
                 //监控所有的关闭，取消按钮被点击时，输入框文字消失
                 commonfn.EventUtil.addHandler(closeBtn,"click",clearForm);
-                commonfn.EventUtil.addHandler(cancelBtn,"click",clearForm);
+                // commonfn.EventUtil.addHandler(cancelBtn,"click",clearForm);
                 function clearForm(){
                     for(var i=0;i<collectForm.elements.length;i++){
                         if(collectForm.elements[i].type==='text'){
@@ -486,14 +485,16 @@ window.onload=function(){
                 }
 
 // 点击收藏的确定按钮，提交表单
-                collectBtn.onclick=function(){
+//                 collectBtn.onclick=
+                    function collectBtnClick(){
                     $('.collectModal').modal('hide');
                     collectForm.submit();
-                };
+                }
 //点击分享本题的确定按钮，模态框消失
-                shareBtn.onclick=function(){
+//                 shareBtn.onclick=
+                    function shareBtnClick(){
                     $('.shareModal').modal('hide');
-                };
+                }
 //  点击收起答题卡
                 sheetToggle.onclick=function(){
                     if(commonfn.hasClass(toggleIcon,"fa-chevron-down")){
@@ -504,8 +505,34 @@ window.onload=function(){
                         commonfn.addClass(toggleIcon,"fa-chevron-down");
                     }
 
-                }
+                };
 
+                //    使用事件委托，，减少事件处理程序，减少内存占用、提高性能
+                commonfn.EventUtil.addHandler(document.body,'click',function (event) {
+                    event=commonfn.EventUtil.getEvent(event);
+                    var target=commonfn.EventUtil.getTarget(event);
+                    switch(target.id){
+                        case "aheadModalBtn":
+                            aheadModalBtnClick();
+                            break;
+                        case "nextBtn":
+                            nextBtnClick();
+                            break;
+                        case "timeIcon":
+                            timeIconClick(target);
+                            break;
+                        // case "closeBtn": 不起作用？
+                        case "cancelBtn":
+                            clearForm();
+                            break;
+                        case "collectBtn":
+                            collectBtnClick();
+                            break;
+                        case "shareBtn":
+                            shareBtnClick();
+                            break;
+                    }
+                });
             },
             error:function(){
                 alert('error');

@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div class="time-progress pull-right choices-center col-3">
-                    <i class="fa fa-pause-circle timeIcon"></i>
+                    <i class="fa fa-pause-circle timeIcon" id="timeIcon"></i>
                     <time>00:00:00</time>
             </div>
         </section>
@@ -99,8 +99,8 @@
                         <li class="pull-left share" data-toggle="modal" data-target=".shareModal"><i class="fa fa-share"></i>分享本题</li>
                     </ul>
                     <ul class="clearfix">
-                        <li class="pull-right  next-practice"><button type="button" class="btn  btn-primary btn-lg nextBtn">下一题</button></li>
-                        <li class="pull-right"><button type="button" class="btn  btn-danger btn-lg aheadBtn" data-toggle="modal" data-target=".aheadModal">提前交卷</button></li>
+                        <li class="pull-right  next-practice"><button type="button" class="btn  btn-primary btn-lg nextBtn" id="nextBtn">下一题</button></li>
+                        <li class="pull-right"><button type="button" class="btn  btn-danger btn-lg aheadBtn"  data-toggle="modal" data-target=".aheadModal">提前交卷</button></li>
                     </ul>
                 </div>
             </section>
@@ -126,7 +126,7 @@
                 <div class="modal-header">
                     <h4 class="modal-title" id="collectModalLabel"><span></span>收藏本题</h4>
 
-                    <button type="button" class="close closeBtn" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close closeBtn" id="closeBtn" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         <span class="sr-only">Close</span>
                     </button>
@@ -143,8 +143,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button form="collectform" type="button" class="btn btn-secondary cancelBtn" data-dismiss="modal">取消</button>
-                    <button form="collectform" type="button" class="btn btn-primary collectBtn">确定</button>
+                    <button form="collectform" type="button" class="btn btn-secondary cancelBtn" id="cancelBtn" data-dismiss="modal">取消</button>
+                    <button form="collectform" type="button" class="btn btn-primary collectBtn" id="collectBtn">确定</button>
                 </div>
             </div>
         </div>
@@ -164,7 +164,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary shareBtn">确定</button>
+                    <button type="button" class="btn btn-primary shareBtn" id="shareBtn">确定</button>
                 </div>
             </div>
         </div>
@@ -177,7 +177,7 @@
                 </div>
                 <div class="modal-footer aheadFooter">
                     <button  type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button  type="button" class="btn btn-primary aheadModalBtn">确定</button>
+                    <button  type="button" class="btn btn-primary aheadModalBtn" id="aheadModalBtn">确定</button>
                 </div>
             </div>
 
