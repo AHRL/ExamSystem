@@ -58,7 +58,8 @@ public class ExamCtro {
 
     private static String username;
 
-     StringUtil  stringUtil=new StringUtil();
+
+    StringUtil  stringUtil=new StringUtil();
 
     @Autowired
     private JavaMailSender mailSender;
@@ -79,12 +80,12 @@ public class ExamCtro {
     private RecordRepository recordRepository;
 
     @RequestMapping("/")
-    public String index(HttpServletRequest request) throws Exception {
+    public String index(HttpServletRequest request,Model model) throws Exception {
          username=request.getRemoteUser();
          jsessionId=request.getSession().getId();
          jedis.set(jsessionId,username);
-
 //        System.out.println("jsessionId:"+jsessionId+"+username:"+username);
+       model.addAttribute("username",username);
 
         return "funExam";
     }

@@ -37,7 +37,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                         <img src="img/logos/w3fun-50.png" alt="avator" class="avator" /> 欢迎您
-                        <span th:inline="text"> [[${#httpServletRequest.remoteUser}]]</span>
+                        <span th:text="${username}"> </span>
                         <!--<span th:inline="text"> [[${#httpServletRequest.LocalAddr}]]</span>-->
                         <!--<span th:inline="text"> [[${#httpServletRequest.LocalName}]]</span>-->
 
