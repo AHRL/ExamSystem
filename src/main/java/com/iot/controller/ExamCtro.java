@@ -28,6 +28,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -41,6 +44,10 @@ public class ExamCtro {
 
     private Gson gson=new Gson();
 
+    private User user;
+
+    private PaperInfo paperInfo;
+
     private PsdBack psdBack;
 
     private static  String lang[]=new String[]{"HTML+CSS","JavaScript","Java","C"};
@@ -51,7 +58,8 @@ public class ExamCtro {
 
     private static String username;
 
-     StringUtil  stringUtil=new StringUtil();
+
+    StringUtil  stringUtil=new StringUtil();
 
     @Autowired
     private JavaMailSender mailSender;
@@ -72,18 +80,33 @@ public class ExamCtro {
     private RecordRepository recordRepository;
 
     @RequestMapping("/")
-    public String index(HttpServletRequest request) throws Exception {
+    public String index(HttpServletRequest request,Model model) throws Exception {
          username=request.getRemoteUser();
          jsessionId=request.getSession().getId();
-         jedis.set(username,jsessionId);
+         jedis.set(jsessionId,username);
 //        System.out.println("jsessionId:"+jsessionId+"+username:"+username);
+       model.addAttribute("username",username);
+
         return "funExam";
     }
+
+    @ResponseBody
+    @RequestMapping("/.well-known/pki-validation/fileauth.txt")
+    public String https()  {
+        return "201802261233415544hvi872a7agweaqjpeg1whxfo32p4jbutjcsgmp54mxyh1r";
+    }
+
 
     @RequestMapping("/login")
     public String login() throws Exception {
         return "login";
     }
+
+    @RequestMapping("/personal")
+    public String personal() throws Exception {
+        return "personal";
+    }
+
 
     @RequestMapping("/admin_add")
     public String admin_add() throws Exception {
@@ -104,6 +127,11 @@ public class ExamCtro {
     @RequestMapping("/skill_chart")
     public String skill_chart() throws Exception {
         return "skill_chart";
+    }
+
+    @RequestMapping("/examinee_info")
+    public String examinee_info() throws Exception {
+        return "examinee_info";
     }
 
     @RequestMapping("/funExam")
@@ -216,18 +244,18 @@ public class ExamCtro {
             psdBack=new PsdBack(lang[i],stringUtil.rightNumber(lang[i],hh),stringUtil.totalNumber(lang[i],hh));
             chart.add(psdBack);
         }
-        long time=System.currentTimeMillis()-Long.parseLong(String.valueOf(jedis.hmget(jsessionId,"begin").get(0)));
+        long time=System.currentTimeMillis()-Long.parseLong(String.valueOf(jedis.hmget(jsessionId+"map","begin").get(0)));
         Map map=new HashMap();
         map.put("score",score);
         map.put("count",record.getCount());
         map.put("time",time);
-        map.put("A",String.valueOf(jedis.hmget(jsessionId,"A").get(0)));
-        map.put("B",String.valueOf(jedis.hmget(jsessionId,"B").get(0)));
-        map.put("C",String.valueOf(jedis.hmget(jsessionId,"C").get(0)));
-        map.put("D",String.valueOf(jedis.hmget(jsessionId,"D").get(0)));
+        map.put("A",String.valueOf(jedis.hmget(jsessionId+"map","A").get(0)));
+        map.put("B",String.valueOf(jedis.hmget(jsessionId+"map","B").get(0)));
+        map.put("C",String.valueOf(jedis.hmget(jsessionId+"map","C").get(0)));
+        map.put("D",String.valueOf(jedis.hmget(jsessionId+"map","D").get(0)));
         map.put("chart",chart);
 
-        jedis.set("map"+jsessionId,gson.toJson(map));
+//        jedis.set("map"+jsessionId,gson.toJson(map));
         return "/practice_completed";
     }
 
@@ -238,10 +266,89 @@ public class ExamCtro {
 
     @RequestMapping("/onlineLib_result")
     @ResponseBody
-    public String onlineLib_result(){
-        return jedis.get("map"+jsessionId);
+    public String onlineLib_result( HttpServletResponse response){
+
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+        response.addHeader("Access-Control-Max-Age", "1800");
+
+        List<String> hh=recordRepository.findLangDetails(username);
+        List<PsdBack> chart=new ArrayList<>();
+        Map map=new HashMap();
+        for (int i = 0; i < 4; i++) {
+            psdBack=new PsdBack(lang[i],stringUtil.rightNumber(lang[i],hh),stringUtil.totalNumber(lang[i],hh));
+            chart.add(psdBack);
+        }
+
+        map.put("A",String.valueOf(jedis.hmget(jsessionId+"map","A").get(0)));
+        map.put("B",String.valueOf(jedis.hmget(jsessionId+"map","B").get(0)));
+        map.put("C",String.valueOf(jedis.hmget(jsessionId+"map","C").get(0)));
+        map.put("D",String.valueOf(jedis.hmget(jsessionId+"map","D").get(0)));
+        map.put("chart",chart);
+        return gson.toJson(map);
     }
 
+
+    @ResponseBody
+    @RequestMapping("/isLimit")
+    public int isLimit() {
+        return Integer.valueOf(jedis.get(jsessionId+"UserPaper"));
+    }
+
+    @ResponseBody
+    @RequestMapping("/personalInfo")
+    public String personalInfo() {
+        int practiced=0;
+        int tested=0;
+//        user = userRepository.findByUsername(jedis.get(jsessionId));
+        user = userRepository.findByUsername(username);
+        List<String> hh=recordRepository.findLangDetails(user.getUsername());
+        for (int i = 0; i < lang.length; i++) {
+            practiced+= stringUtil.totalNumber(lang[i],hh);
+        }
+        if (String.valueOf(user.getRole()).equals("admin"))
+            return "{\"name\":"+user.getUsername()+"\",\"email\":\""+user.getEmail()+"\",\"practiced\":\""+practiced+
+                    "\",\"tested\":\""+0+"\",\"email\":\""+user.getEmail()+"\",\"isAdmin\":\"1\"}";
+        else
+            return  "{\"name\":"+user.getUsername()+"\",\"email\":\""+user.getEmail()+"\",\"practiced\":\""+0+
+                    "\",\"tested\":\""+0+"\",\"email\":\""+user.getEmail()+"\",\"isAdmin\":\"0\"}";
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/userPaper")
+    public String userPaper() {
+        jedis.set(jsessionId+"UserPaper",String.valueOf(0));
+        java.util.Date now = new java.util.Date();
+        DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<PaperInfo> list=paperInfoRepository.findAll();
+
+        for (int i = 0; i < list.size(); i++) {
+            String mix=list.get(i).getDate()+" "+list.get(i).getStartTime()+":00";
+            System.out.println(mix);
+            try {
+                if (format.parse(mix).getTime()-600000< now.getTime()&&format.parse(mix).getTime()+1800000> now.getTime()) {
+
+                    jedis.set(jsessionId+"UserPaper", String.valueOf(1));
+                    user = userRepository.findByUsername(jedis.get(jsessionId));
+                    paperInfo = list.get(i);
+
+				return "{\"role\":\""+user.getRole()+"\",\"email\":\""+user.getEmail()+"\",\"username\":\""+user.getUsername()
+                        + "\",\"examQuestion\":[" +
+                        // paperInfo.getExamQuestion()
+                        stringUtil.adjustFormat(paperInfo)
+                        +"],\"startTime\":\""+paperInfo.getStartTime()
+                        +"\",\"endTime\":\""+paperInfo.getEndTime()+"\",\"type\":\""+paperInfo.getType()+"\",\"info\":\""+
+                        paperInfo.getInfo()+"\",\"token\":\""+paperInfo.getToken()+"\"}";
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return "error";
+
+    }
 
     @RequestMapping("/exam_add")
     public void exam_add(HttpServletResponse response, @RequestParam(required = false,value = "examData")String examData){
@@ -249,7 +356,7 @@ public class ExamCtro {
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
-        response.addHeader("Access-Control-Max-Age", "1800");
+        response.addHeader("Access-Control-Max-Age","1800");
 
         //处理考试题目，并与试卷级联
         List<ExamQuestion> list=stringUtil.examCut(examData);
@@ -261,7 +368,6 @@ public class ExamCtro {
         PaperInfo paperInfo=stringUtil.basicCut(examData,list);
         paperInfo.setUser(userRepository.findByUsername(username));
         paperInfoRepository.save(paperInfo);
-
 
     }
 
@@ -286,7 +392,7 @@ public class ExamCtro {
         map.put("D",D);
         map.put("count",count);
         map.put("begin", String.valueOf(System.currentTimeMillis()));//答题练习的开始时间
-        jedis.hmset(jsessionId,map);
+        jedis.hmset(jsessionId+"map",map);
 
         //设置会话窗口的存活期
 //       jedis.expire(jsessionId,Integer.parseInt(String.valueOf(360)));//设置由就session生成的查询条件map生存期
@@ -312,11 +418,11 @@ public class ExamCtro {
         response.addHeader("Access-Control-Max-Age", "1800");
 
         //通过redis中的map拿到值
-        String A= String.valueOf(jedis.hmget(jsessionId,"A").get(0));
-        String B= String.valueOf(jedis.hmget(jsessionId,"B").get(0));
-        String C= String.valueOf(jedis.hmget(jsessionId,"C").get(0));
-        String D=String.valueOf(jedis.hmget(jsessionId,"D").get(0));
-        Integer count= Integer.valueOf(jedis.hmget(jsessionId,"count").get(0));
+        String A= String.valueOf(jedis.hmget(jsessionId+"map","A").get(0));
+        String B= String.valueOf(jedis.hmget(jsessionId+"map","B").get(0));
+        String C= String.valueOf(jedis.hmget(jsessionId+"map","C").get(0));
+        String D=String.valueOf(jedis.hmget(jsessionId+"map","D").get(0));
+        Integer count= Integer.valueOf(jedis.hmget(jsessionId+"map","count").get(0));
 
         List<Question> list=questionRepository.find(A,B,C,D,count);
         //查询得到数据放在record题目类型列
@@ -344,8 +450,6 @@ public class ExamCtro {
                                     @RequestParam(value = "choices")String choices){
         Question question=new Question(type,lang,info,code,choices, new Date(System.currentTimeMillis()));
         questionRepository.save(question);
-        System.out.print(question.toString());
-//        return "admin_add";
     }
 
     @ResponseBody
@@ -388,19 +492,5 @@ public class ExamCtro {
 //        return "funExam";
 //    }
 
-//    @RequestMapping("/report")
-//    @ResponseBody
-//    public String report(HttpServletRequest request,HttpServletResponse response){
-//        List list=new ArrayList();
-//        int score=0;
-//      String lang=(String)request.getSession().getAttribute("lang");
-//        String count=String.valueOf (request.getSession().getAttribute("count")) ;
-//        String time= String.valueOf(System.currentTimeMillis()-(long)request.getSession().getAttribute("before"));
-//        list.add(lang);
-//        list.add(score);
-//        list.add(count);
-//        list.add(time);
-//        return  gson.toJson(list);
-//    }
 
 }

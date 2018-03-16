@@ -83,11 +83,11 @@ window.onload = function() {
                     addClass(this, 'validationStyle-successed');
                 } else {
                     addClass(this, 'validationStyle-failed');
-                    showTip.call(this.nextElementSibling, '用户名不符合要求！');
+                    showTip.call(this.nextElementSibling, '姓名不符合要求！');
                 }
             } else {
                 addClass(this, 'validationStyle-failed');
-                showTip.call(this.nextElementSibling, '请填写用户名！');
+                showTip.call(this.nextElementSibling, '请填写姓名！');
             }
 
         });

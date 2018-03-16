@@ -73,6 +73,7 @@ window.onload=function(){
                 strTip='';
                 submitTip.innerHTML='';
             }
+
         }
         for(var j=0;j<arrProgramme.length;j++){
             var definedHeight = opracticeDefined.clientHeight;
@@ -147,42 +148,9 @@ window.onload=function(){
                 }
                 this.disabled=true;
                 form.submit();
-                // dataString=$(form).serialize();
-                // alert(dataString);
-                // $.ajax({
-                //     url:'http://192.168.1.139/select',
-                //     type:'POST',
-                //     data:dataString,
-                //     dataType:'json',
-                //     success:function(data){
-                //         alert(JSON.stringify(data));
-                //         window.open('onlineLib_practice.html');
-                //     },
-                //     error:function(){
-                //         alert('Error');
-                //     }
-                // })
-
-
             }
 
     });
-    // var $osubBtn=$(osubBtn);
-    // $osubBtn.click(function(){
-    //     $.ajax({
-    //         url:'/select',
-    //         type:'POST',
-    //         dataType:'json',
-    //         data:dataString,
-    //         success:function(data){
-    //             alert('Success');
-    //         },
-    //         error:function(){
-    //             alert(dataString);
-    //             alert('Error');
-    //         }
-    //     })
-    // });
     //selectNone（重选）
     function selectNone(){
         var definedHeight=opracticeDefined.clientHeight;

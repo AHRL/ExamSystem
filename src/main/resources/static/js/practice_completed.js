@@ -8,7 +8,8 @@ var practiceRight=document.getElementsByClassName('practiceRight')[0];
 var practiceTime=document.getElementsByClassName('practiceTime')[0];
 var skillType=document.getElementsByClassName('skillType')[0];
 $.ajax({
-    url:'http://127.0.0.1/onlineLib_result',//改
+    // url:'http://127.0.0.1/onlineLib_result',//改
+    url:"completed.json",
     type:"GET",
     dataType:"json",
     success:function(data){
@@ -40,7 +41,7 @@ $.ajax({
                 }
                 if(m>=60){
                     h=parseInt(m/60);
-                    m=parseInt(m%60)
+                    m=parseInt(m%60);
                 }
             }
             totalTime=checkTime(h)+":"+checkTime(m)+":"+checkTime(s);

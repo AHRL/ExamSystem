@@ -28,12 +28,14 @@
 	$(function () {
 
 	    $.ajax({
-			url:"http://127.0.0.1/onlineLib_result",
+//			url:"http://127.0.0.1/onlineLib_result",
+			url:"chart.json",
             type:"GET",
             dataType:"json",
 			success:function(data){
 			    var arrCategories=[], arrTotalCount=[], arrAccuracy=[];
-			    data["chart"].forEach(function (item,index) {
+//			    alert(data);
+			    data.forEach(function (item,index) {
                     arrCategories.push(item.type);
                     arrTotalCount.push(item.totalCount);
                     arrAccuracy.push((item.rightCount/item.totalCount).toFixed(2)*100)
@@ -41,7 +43,7 @@
                 $('#container').highcharts({
                     chart: {
                         polar: true,
-                        type: 'area'
+                        type: 'line'
                     },
                     title: {
                         text: '你的技能图谱',

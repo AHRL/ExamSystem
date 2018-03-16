@@ -101,6 +101,7 @@ function pageFinished() {
     var chooseEMin = document.getElementById('chooseEMin');
     var chooseLocation = document.getElementById('chooseLocation');
     var explicitLocation = document.getElementById('explicitLocation');
+    var isInnerExam = document.getElementById('isInnerExam');
     var infoNotes = document.getElementById('infoNotes');
 
     var pubAddBtn = document.getElementsByClassName('btn-js')[0];
@@ -218,6 +219,12 @@ function pageFinished() {
             var emVal = chooseEMin.value;
             var locVal = chooseLocation.value;
             var eLocVal = explicitLocation.value;
+            var isInnerVal;
+            if (isInnerExam.checked) {
+                isInnerVal = true;
+            } else {
+                isInnerVal = false;
+            }
             var noteVal = infoNotes.value;
 
             var ms = calMS(shVal, smVal, ehVal, emVal);
@@ -227,6 +234,7 @@ function pageFinished() {
             examDataObj.basic.startTime = shVal + ':' + smVal;
             examDataObj.basic.endTime = ehVal + ':' + emVal;
             examDataObj.basic.time = ms;
+            examDataObj.basic.isInner = isInnerVal;
             examDataObj.basic.info = noteVal;
 
             if (eLocVal) { // 如果精确地点（自定义）不为空，则使用精确地点

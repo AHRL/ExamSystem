@@ -5,7 +5,7 @@
 
     <groupId>com.iot</groupId>
     <artifactId>ExamSystem</artifactId>
-    <version>0.0.1-SNAPSHOT</version>3
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
 
@@ -138,6 +138,7 @@
                     <mainClass>com.iot.ExamSystemApplication</mainClass>
                 </configuration>
             </plugin>
+            <!--这个插件是用来打jar包的java -jar 可以运行s-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

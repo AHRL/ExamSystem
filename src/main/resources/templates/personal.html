@@ -3,25 +3,28 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" xmlns:th="http://www.thymeleaf.org">
+<!--<![endif]-->
 
 <head>
-    <meta charset="UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>个人中心 - FunExam</title>
-    <meta name="keyword" content="Fun Exam"/>
-    <meta name="description" content="An exam system for students"/>
-    <link rel="short icon" type="image/x-icon" href="../favicon.ico"/>
-    <link rel="stylesheet" href="../static/stylesheets/css/funExam.css"/>
-    <link rel="stylesheet" href="../static/stylesheets/css/personal.css"/>
+    <meta name="keyword" content="Fun Exam" />
+    <meta name="description" content="An exam system for students" />
+    <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="/stylesheets/css/funExam.css" />
+    <link rel="stylesheet" href="/stylesheets/css/personal.css" />
 
-    <script src="../static/lib/modernizr-2.6.2.min.js"></script>
+    <script src="/lib/modernizr-2.6.2.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
     <!--[if (lt IE 9) & (!IEMobile)]>
-    <script src="../static/lib/respond.min.js"></script>
+    <script src="/lib/respond.min.js"></script>
     <![endif]-->
 </head>
+
 <body>
     <!--[if lte IE 7]>
     <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
@@ -30,32 +33,59 @@
     <div class="container">
         <div class="row">
             <aside class="col-sm-3 push-sm-1">
-                <figure class="text-center profile-img">
-                    <img src="../static/img/w3fun-100x100.png" alt="#"/>
-                </figure>
-                <ul class="list-group">
-                    <li class="list-group-item"><i class="fa fa-user"></i>Leo</li>
-                    <li class="list-group-item"><i class="fa fa-pencil"></i>To be btter to do more.</li>
-                    <li class="list-group-item"><i class="fa fa-map-marker"></i> ChengDu</li>
-                    <li class="list-group-item"><i class="fa fa-envelope"></i> 1620896714@qq.com</li>
-                    <li class="list-group-item"><i class="fa fa-globe"></i>http://swpuleo.github.io/</li>
-                </ul>
-                <form>
-                    <fieldset class="form-group">
-                        <button class="btn btn-block">编辑信息</button>
-                        <button class="btn btn-block">返回首页</button>
-                    </fieldset>
-                </form>
+                <!-- <figure class="text-center profile-img">
+                    <img src="/img/w3fun-100x100.png" alt="#" />
+                </figure> -->
                 <section class="collect">
+                    <p class="text-center">账 号 信 息</p>
+                    <hr/>
                     <div class="collect-info">
-                        <i class="fa fa-tag"></i>
-                        已练习 <span>75</span> 题
-                        <button class="btn btn-sm">点击查看</button>
+                        <i class="fa fa-user"></i> {{姓名}}
+                        <button class="btn btn-primary btn-sm btn-hover-show">修改姓名</button>
+                    </div>
+                    <!-- ajax 填充 -->
+                    <div class="collect-info">
+                        <i class="fa fa-envelope"></i> {{邮箱}}
+                        <button class="btn btn-primary btn-sm btn-hover-show" data-toggle="modal" data-target="#commonModal">修改邮箱</button>
+                    </div>
+                    <!-- ajax 填充 -->
+                    <div class="collect-info">
+                        <i class="fa fa-lock"></i> *************
+                        <button class="btn btn-primary btn-sm btn-hover-show" data-toggle="modal" data-target="#commonModal">修改密码</button>
+                    </div>
+                    <hr/>
+                    <div class="collect-info">
+                        <a href="/" class="btn btn-primary btn-block">返回首页</a>
+                    </div>
+
+                </section>
+                <section class="collect">
+                    <p class="text-center">实 战 面 板</p>
+                    <hr/>
+                    <div class="collect-info">
+                        <i class="fa fa-tag"></i> 已练习 <span>{{75}}</span> 题
+                        <button class="btn btn-primary btn-sm btn-hover-show">点击查看</button>
                     </div>
                     <div class="collect-info">
-                        <i class="fa fa-star"></i>
-                        已收藏 <span>13</span> 题
-                        <button class="btn btn-sm">点击查看</button>
+                        <i class="fa fa-star"></i> 参与过 <span>{{2}}</span> 场考试
+                        <button class="btn btn-primary btn-sm btn-hover-show">点击查看</button>
+                    </div>
+                    <div class="collect-info text-center">
+                        ... 更多功能，尽情期待 ...
+                    </div>
+                    <hr/>
+                </section>
+                <section class="collect">
+                    <p class="text-center">管 理 权 限</p>
+                    <hr/>
+                    <div class="collect-info">
+                        <button class="btn btn-block btn-primary">发布考试</button>
+                    </div>
+                    <div class="collect-info">
+                        <button class="btn btn-block btn-primary">添加题库</button>
+                    </div>
+                    <div class="collect-info">
+                        <button class="btn btn-block btn-primary">查看提交信息</button>
                     </div>
                     <hr/>
                 </section>
@@ -65,16 +95,46 @@
                 <hr/>
                 <h2 class="h4">技能图谱</h2>
                 <iframe class="skill-chart" width="100%" height="450" src="skill_chart.html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-                <h2 class="h4">登录次数</h2>
             </main>
+        </div>
+        <div class="modal fade" id="commonModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        {{修改邮箱/密码}}
+                    </div>
+                    <div class="modal-body">
+                        <form id="commonForm">
+                            <div class="form-group">
+                                <label for="originItem" class="form-control-label">{{原邮箱/原密码}}</label>
+                                <input type="" id="originItem" class="form-control" placeholder="" autocomplete="off" />
+                            </div>
+                            <div class="form-group">
+                                <label for="newItem" class="form-control-label">{{新邮箱/新密码}}</label>
+                                <input type="" id="newItem" class="form-control" placeholder="" autocomplete="off" />
+                            </div>
+                            <div class="form-group">
+                                <label for="valiCode" class="from-control-label">验证码</label>
+                                <input type="text" id="valiCode" class="form-control" placeholder="" autocomplete="off" />
+                                <button class="btn btn-primary">获取验证码</button>
+                            </div>
+                            <button class="btn btn-primary btn-block">
+                                确认修改
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
 
-    <script src="../static/lib/jquery-3.2.1.min.js"></script>
-    <script src="../static/lib/bootstrap.min.js"></script>
-    <script src="../static/lib/particles.min.js"></script>
-    <script src="../static/js/particlesInit.js"></script>
-    <script src="../static/js/personal.js"></script>
+    <script src="/lib/jquery-3.2.1.min.js"></script>
+    <script src="/lib/bootstrap.min.js"></script>
+    <script src="/lib/particles.min.js"></script>
+    <script src="/js/particlesInit.js"></script>
+    <script src="/js/funLib.js"></script>
+    <script src="/js/personal.js"></script>
 </body>
+
 </html>
