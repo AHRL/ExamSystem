@@ -11,130 +11,273 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>个人中心 - FunExam</title>
-    <meta name="keyword" content="Fun Exam" />
-    <meta name="description" content="An exam system for students" />
+    <title>个人中心 | FunExam</title>
+    <meta name="keyword" content="个人中心，Fun Exam" />
+    <meta name="description" content="完善个人资料" />
     <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
-    <link rel="stylesheet" href="/stylesheets/css/funExam.css" />
-    <link rel="stylesheet" href="/stylesheets/css/personal.css" />
-
-    <script src="/lib/modernizr-2.6.2.min.js"></script>
+    <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/dest/css/main.css" />
+    <script src="https://cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
     <!--[if (lt IE 9) & (!IEMobile)]>
-    <script src="/lib/respond.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.bootcss.com/holder/2.9.4/holder.min.js"></script>
 </head>
 
 <body>
     <!--[if lte IE 7]>
     <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
     <![endif]-->
-    <div id="particles-js"></div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Fun Exam</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">个人中心 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">返回首页</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    李友波
+                                </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">个人中心</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">退出登录</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div class="container">
         <div class="row">
-            <aside class="col-sm-3 push-sm-1">
-                <!-- <figure class="text-center profile-img">
-                    <img src="/img/w3fun-100x100.png" alt="#" />
-                </figure> -->
-                <section class="collect">
-                    <p class="text-center">账 号 信 息</p>
-                    <hr/>
-                    <div class="collect-info">
-                        <i class="fa fa-user"></i> {{姓名}}
-                        <button class="btn btn-primary btn-sm btn-hover-show">修改姓名</button>
+            <div class="col-3">
+                <ul class="list-group">
+                    <li class="list-group-item">我的考试</li>
+                    <li class="list-group-item disabled">我的题库</li>
+                    <li class="list-group-item disabled">我的成就</li>
+                    <li class="list-group-item">账号设置</li>
+                    <li class="list-group-item">{{管理员中心}}</li>
+                </ul>
+            </div>
+            <div class="col-9">
+                <!-- Tab My Exam -->
+                <div class="">
+                    <div class="jumbotron">
+                        <h1 class="h4">{{李友波}}，您好！</h1>
+                        <p class="lead">
+                            欢迎使用 Fun Exam 考试系统。
+                        </p>
+                        <hr class="my-4" />
+                        <p>找到适合自己的工作从来不是一件容易的事。我们希望通过科学严谨的面试流程，确保能充分了解每一位候选人。但同时我们也希望您能理解面试并不是对个人能力的单方面考核，而是关于匹配程度的双向选择。 <br />在开始申请前，我们建议您先查看官网上的 这篇攻略，以便了解 CVTE 校招面试的各个环节。如果还有疑问，可以关注“CVTE校园招聘”微信公众号并在后台留言，或者在工作时段拨打 020-86154330，我们会尽全力帮您解答问题。</p>
                     </div>
-                    <!-- ajax 填充 -->
-                    <div class="collect-info">
-                        <i class="fa fa-envelope"></i> {{邮箱}}
-                        <button class="btn btn-primary btn-sm btn-hover-show" data-toggle="modal" data-target="#commonModal">修改邮箱</button>
+                    <div class="jumbotron">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">即将参加的考试</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">已参加的考试</a>
+                            </li>
+                        </ul>
+                        <div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="card" style="width: 100%;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">翼灵物联工作室2018级招新笔试</h5>
+                                            <p class="card-text">2018/6/9 09:00-10:40</p>
+                                            <p class="card-text">2018/6/8 23:59</p>
+                                            <p class="card-text">明理楼B区4楼 - 待定</p>
+                                            <button href="#" class="btn btn-sm btn-primary">开始答题</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="card" style="width: 100%;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">翼灵物联工作室2018级招新笔试</h5>
+                                            <p class="card-text">2018/6/9 09:00-10:40</p>
+                                            <p class="card-text">2018/6/8 23:59</p>
+                                            <p class="card-text">明理楼B区4楼 - 待定</p>
+                                            <button href="#" class="btn btn-sm btn-primary">开始答题</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="card" style="width: 100%;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">翼灵物联工作室2018级招新笔试</h5>
+                                            <p class="card-text">2018/6/9 09:00-10:40</p>
+                                            <p class="card-text">2018/6/8 23:59</p>
+                                            <p class="card-text">明理楼B区4楼 - 待定</p>
+                                            <button href="#" class="btn btn-sm btn-primary">开始答题</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">时间</th>
+                                        <th scope="col">名称</th>
+                                        <th scope="col">成绩</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">2018/03/04</th>
+                                        <td>2018翼灵FEG基础测试（上）</td>
+                                        <td>72</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2017/11/25</th>
+                                        <td>2017翼灵物联工作室C语言测试一</td>
+                                        <td>66</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2017/10/10</th>
+                                        <td>2017翼灵物联工作室招新笔试</td>
+                                        <td>前15%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <!-- ajax 填充 -->
-                    <div class="collect-info">
-                        <i class="fa fa-lock"></i> *************
-                        <button class="btn btn-primary btn-sm btn-hover-show" data-toggle="modal" data-target="#commonModal">修改密码</button>
-                    </div>
-                    <hr/>
-                    <div class="collect-info">
-                        <a href="/" class="btn btn-primary btn-block">返回首页</a>
-                    </div>
+                </div>
 
-                </section>
-                <section class="collect">
-                    <p class="text-center">实 战 面 板</p>
-                    <hr/>
-                    <div class="collect-info">
-                        <i class="fa fa-tag"></i> 已练习 <span>{{75}}</span> 题
-                        <button class="btn btn-primary btn-sm btn-hover-show">点击查看</button>
-                    </div>
-                    <div class="collect-info">
-                        <i class="fa fa-star"></i> 参与过 <span>{{2}}</span> 场考试
-                        <button class="btn btn-primary btn-sm btn-hover-show">点击查看</button>
-                    </div>
-                    <div class="collect-info text-center">
-                        ... 更多功能，尽情期待 ...
-                    </div>
-                    <hr/>
-                </section>
-                <section class="collect">
-                    <p class="text-center">管 理 权 限</p>
-                    <hr/>
-                    <div class="collect-info">
-                        <button class="btn btn-block btn-primary">发布考试</button>
-                    </div>
-                    <div class="collect-info">
-                        <button class="btn btn-block btn-primary">添加题库</button>
-                    </div>
-                    <div class="collect-info">
-                        <button class="btn btn-block btn-primary">查看提交信息</button>
-                    </div>
-                    <hr/>
-                </section>
-            </aside>
-            <main class="_main col-sm-7 push-sm-1">
-                <h1 class="h3">个人中心</h1>
-                <hr/>
-                <h2 class="h4">技能图谱</h2>
-                <iframe class="skill-chart" width="100%" height="450" src="skill_chart.html" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-            </main>
-        </div>
-        <div class="modal fade" id="commonModal" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        {{修改邮箱/密码}}
-                    </div>
-                    <div class="modal-body">
-                        <form id="commonForm">
-                            <div class="form-group">
-                                <label for="originItem" class="form-control-label">{{原邮箱/原密码}}</label>
-                                <input type="" id="originItem" class="form-control" placeholder="" autocomplete="off" />
+
+                <!-- Tab Account Setting -->
+                <div class="">
+                    <div class="jumbotron">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">基本信息</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">账号绑定</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">密码修改</a>
+                            </li>
+                        </ul>
+                        <form>
+                            <div class="form-group row">
+                                <label for="staticEmail" class="col-sm-2 col-form-label">真实姓名</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="staticEmail" placeholder="为了您后续的笔试、面试，我们建议你实名">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword" class="col-sm-2 col-form-label">专业年级</label>
+                                <div class="col-sm-3">
+                                    <select class="custom-select">
+                                                <option selected>专业</option>
+                                                <option value="物联网工程">物联网工程</option>
+                                                <option value="软件">软件工程</option>
+                                                <option value="计算机科学与技术">计算机科学与技术</option>
+                                                <option value="网络工程">网络工程</option>
+                                            </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <select class="custom-select">
+                                                <option selected>年级</option>
+                                                <option value="2018">2018</option>
+                                                <option value="2017">2017</option>
+                                                <option value="2016">2016</option>
+                                            </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" placeholder="非计科院专业请手动填写专业名称" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword4" class="col-sm-2 col-form-label">邮箱</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control-plaintext" id="inputPassword4" value="email@example.com">
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label for="newItem" class="form-control-label">{{新邮箱/新密码}}</label>
-                                <input type="" id="newItem" class="form-control" placeholder="" autocomplete="off" />
+                                <button class="btn btn-primary btn-sm" type="button">修改资料</button>
+                            </div>
+                        </form>
+                        <form>
+                            <div class="form-group row">
+                                <label for="staticEmail" class="col-sm-2 col-form-label">绑定邮箱</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly class="form-control-plaintext" id="inputPassword5" value="您当前的邮箱是 email@example.com">
+                                </div>
+                                <div class="col-sm-2">
+                                    <button class="btn btn-primary btn-sm" type="button">重新绑定</button>
+                                </div>
+                            </div>
+                        </form>
+                        <form>
+                            <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-2 col-form-label">原始密码</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="inputPassword3" placeholder="原始密码" autocomplete="off" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword2" class="col-sm-2 col-form-label">新密码</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="inputPassword2" placeholder="新密码" autocomplete="off" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword1" class="col-sm-2 col-form-label">确认新密码</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="inputPassword1" placeholder="确认新密码" autocomplete="off" />
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label for="valiCode" class="from-control-label">验证码</label>
-                                <input type="text" id="valiCode" class="form-control" placeholder="" autocomplete="off" />
-                                <button class="btn btn-primary">获取验证码</button>
+                                <button class="btn btn-primary btn-sm" type="button">保存</button>
                             </div>
-                            <button class="btn btn-primary btn-block">
-                                确认修改
-                            </button>
                         </form>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
 
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <footer class="page-copyright" role="contentinfo">
+                <span><i class="fa fa-cc"></i> 2018</span>
+                <a href="https://github.com/w3fun/" target="_blank"><i class="fa fa-heart"></i> W3Fun</a>
+                <a href="https://github.com/YiLing-IOT-Studio/" target="_blank"><i class="fa fa-heart"></i> YiLing-IOT-Studio</a>
+                <a href="https://github.com/swpuLeo/" target="_blank"><i class="fa fa-male"></i> Leo</a>
+                <a href="https://github.com/812913/" target="_blank"><i class="fa fa-female"></i> lwf</a>
+                <a href="https://github.com/StaticWalk/" target="_blank"><i class="fa fa-male"></i> StaticWalk</a>
+                <a href="https://github.com/luqingying/" target="_blank"><i class="fa fa-female"></i> lqy</a>
+                <a href="https://github.com/w3fun/ExamSystem/blob/master/LICENSE" target="_blank"><i class="fa fa-copyright"></i> MIT</a>
+            </footer>
+        </div>
+    </nav>
 
-    <script src="/lib/jquery-3.2.1.min.js"></script>
-    <script src="/lib/bootstrap.min.js"></script>
-    <script src="/lib/particles.min.js"></script>
-    <script src="/js/particlesInit.js"></script>
-    <script src="/js/funLib.js"></script>
-    <script src="/js/personal.js"></script>
+    <script src="../static/dest/js/personal.js"></script>
 </body>
 
 </html>
