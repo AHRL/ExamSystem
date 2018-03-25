@@ -1,0 +1,41 @@
+{
+    "name": "examsystem",
+    "version": "1.0.0",
+    "description": "SWPU翼灵在线考试系统",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "gulp": "gulp"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/w3fun/ExamSystem.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/w3fun/ExamSystem/issues"
+    },
+    "homepage": "https://github.com/w3fun/ExamSystem#readme",
+    "devDependencies": {
+        "babel-core": "^6.26.0",
+        "babel-preset-env": "^1.6.1",
+        "body-parser": "^1.18.2",
+        "browserify": "^16.1.1",
+        "cookie-parser": "^1.4.3",
+        "del": "^3.0.0",
+        "express": "^4.16.3",
+        "gulp": "^4.0.0",
+        "gulp-autoprefixer": "^5.0.0",
+        "gulp-babel": "^7.0.1",
+        "gulp-clean-css": "^3.9.3",
+        "gulp-concat": "^2.6.1",
+        "gulp-rename": "^1.2.2",
+        "gulp-sass": "^3.1.0",
+        "gulp-uglify": "^3.0.0",
+        "multer": "^1.3.0",
+        "vinyl-buffer": "^1.0.1",
+        "vinyl-source-stream": "^2.0.0"
+    }
+}
