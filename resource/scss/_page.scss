@@ -1,0 +1,24 @@
+/* login page*/
+
+$btn-sign-width: 5rem;
+.btn-sign {
+    width: $btn-sign-width;
+}
+
+.block-mail-valcode {
+    position: relative;
+}
+
+.btn-mail-valcode {
+    position: absolute;
+    top: 1.8125rem;
+    right: 0;
+}
+
+.modal-footer {
+    justify-content: space-between;
+}
+
+.modal-header {
+    height: 4rem;
+}

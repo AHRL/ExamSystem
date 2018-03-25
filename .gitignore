@@ -25,3 +25,6 @@ nbdist/
 
 ### Visual Studio Code ###
 .vscode
+
+### npm ###
+node_modules/

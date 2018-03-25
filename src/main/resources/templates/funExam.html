@@ -1,132 +1,144 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if gt IE 8]>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org">
+<![endif]-->
 
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Home - FunExam</title>
-    <link rel="stylesheet" href="stylesheets/css/funExam.css" />
+    <title>首页 | FunExam</title>
+    <meta name="keyword" content="FunExam，翼灵物联工作室，在线考试" />
+    <meta name="description" content="FunExam - SWPU 翼灵在线考试系统首页" />
     <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
-    <script src="lib/modernizr-2.6.2.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/dest/css/main.css" />
+    <script src="https://cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
     <!--[if (lt IE 9) & (!IEMobile)]>
-    <script src="lib/respond.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <style type="text/css">
-        ._footer {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            width: 100%;
-            padding: 2rem;
-            margin-top: 6rem;
-            font-size: 12px;
-        }
-    </style>
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.bootcss.com/holder/2.9.4/holder.min.js"></script>
 </head>
 
 <body>
-    <nav class="navbar navbar-toggleable-md fixed-top">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav mt-2 mt-md-0">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                        <img src="img/logos/w3fun-50.png" alt="avator" class="avator" /> 欢迎您
-                        <span th:text="${username}"> </span>
-                        <!--<span th:inline="text"> [[${#httpServletRequest.LocalAddr}]]</span>-->
-                        <!--<span th:inline="text"> [[${#httpServletRequest.LocalName}]]</span>-->
+    <!-- Tab home page -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Fun Exam</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                        <!--<a th:href="@{/user}" th:if="${#httpServletRequest.remoteUser}}">个人中心</a>-->
-                        <!--<a th:href="@{/login]" th:unless="${#httpServletRequest.remoteUser}}">登陆</a>-->
-
-                    </a>
-
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="personal.html">个人主页</a>
-                        <a class="dropdown-item" href="settingAccount.html">账号设置</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" th:href="@{/logout}">退出登录</a>
-                        <!--<a class="dropdown-item"  href="login.html">退出登录</a>-->
-                    </div>
-                </li>
-            </ul>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">首页 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">题库</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">翼灵物联工作室</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">关于我们</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="avator" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                        <div class="dropdown-menu" aria-labelledby="avator">
+                            <a class="dropdown-item" href="#">个人中心</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" id="logout">退出登录</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
-    <div id="particles-js"></div>
-    <div class="container" style="margin-top: 10rem">
-        <div class="row">
-            <header class="_header text-center col-sm-8 push-sm-2">
-                <h1>Fun Exam</h1>
-                <hr class="f-hr" />
-                <img src="img/w3fun-100x100.png" alt="w3fun" />
-            </header>
-            <main class="_main text-center col-sm-8 push-sm-2">
-                <form>
-                    <fieldset class="form-group">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>考试</th>
-                                    <th>内容</th>
-                                    <th>时间</th>
-                                    <th>地点</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>{{ 2018 翼灵物联工作室招新考试 }}</td>
-                                    <td>招新笔试</td>
-                                    <td>2018/10/08 20:30-22:00</td>
-                                    <td>明理楼 B412</td>
-                                </tr>
-                                <tr>
-                                    <td>{{ 2018 届 C 语言第一次测试 }}</td>
-                                    <td>C 语言笔试</td>
-                                    <td>2018/12/01 15:00-17:00</td>
-                                    <td>明理楼 B412</td>
-                                </tr>
-                            </tbody>
-                        </table>
-<<<<<<< Updated upstream
-                        <button class="btn btn-primary btn-lg btn-block" id="exam-entry">
-                                <span>{{ 2018 翼灵物联工作室招新考试 }}</span> 入口
-=======
-                        <button class="btn btn-primary btn-lg btn-block">
-                                <!--<span >{{ 2018 翼灵物联工作室招新考试 }}</span> 入口-->
+    <div class="container">
+        <header class="jumbotron">
+            <h1 class="display-4">Fun Exam</h1>
+            <p class="lead">Powered by W3Fun</p>
+            <hr class="my-4" />
+            <p>翼灵物联工作室（ YiLing-IOT-Studio ），成立于 2013 年，是西南石油大学物联网工程学生实验室。现工作室主要学习方向为嵌入式开发、Andriod 开发、Web 前后端开发。</p>
+            <p class="lead">
+                <a class="btn btn-primary" href="http://www.swpuiot.com/" target="_blank" role="button">Learn more</a>
+            </p>
+        </header>
+        <main>
+            <h2 class="display-6">考试报名</h2>
+            <hr class="my-4" />
+            <div class="row" id="examListForSign">
+                <p class="col-12">暂无考试</p>
+                <!-- <div class="col-4">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">翼灵物联工作室2018级招新笔试</h5>
+                            <p class="card-text">考试时间：2018/6/9 09:00-10:40</p>
+                            <p class="card-text">报名截止：2018/6/8 23:59</p>
+                            <p class="card-text">明理楼B区4楼 - 待定</p>
+                            <button class="btn btn-sm btn-primary" type="button">点击报名</button>
+                        </div>
+                    </div>
+                </div>
 
-                            <a th:href="@{/examinee_info}">{{ 2018 翼灵物联工作室招新考试 }}入口</a>
->>>>>>> Stashed changes
-                            </button>
-                    </fieldset>
-                </form>
-                <p class="text-right">
-                    您还可以在线练题:
-                    <a th:href="@{/onlineLib}" target="_blank">在线题库入口</a>
-                    <a href="@{}" target="_blank">考试真题入口</a>
-                </p>
-            </main>
-        </div>
+                <div class="col-4">
+                    <div class="card" style="width: 18rem; position: relative; left: 10%;">
+                        <div class="card-body">
+                            <h5 class="card-title">翼灵物联工作室2017级 C 语言测试一</h5>
+                            <p class="card-text">2018/6/9</p>
+                            <p class="card-text">明理楼B区4楼 - 待定</p>
+                            <a href="#" class="btn btn-sm btn-primary">点击报名</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="card" style="width: 18rem; position: absolute; right: 15px;">
+                        <div class="card-body">
+                            <h5 class="card-title">翼灵物联工作室 FEG 统一笔试 2018年（上）</h5>
+                            <p class="card-text">2018/6/9</p>
+                            <p class="card-text">明理楼B区4楼 - 待定</p>
+                            <a href="#" class="btn btn-sm btn-primary">点击报名</a>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </main>
     </div>
 
-    <footer id="footer" class="_footer text-center" role="contentinfo">
-        <span><i class="fa fa-copyright"></i>2018</span>
-        <a href="https://github.com/w3fun/" target="_blank" class="_link"><i class="fa fa-heart"></i>W3Fun</a>
-        <a href="https://github.com/swpuLeo/" target="_blank" class="_link _hover-male"><i class="fa fa-male"></i>Leo</a>
-        <a href="https://github.com/StaticWalk/" target="_blank" class="_link _hover-male"><i class="fa fa-male"></i>StaticWalk</a>
-        <a href="https://github.com/812913/" target="_blank" class="_link _hover-female"><i class="fa fa-female"></i>lwf</a>
-        <a href="https://github.com/luqingying/" target="_blank" class="_link _hover-female"><i class="fa fa-female"></i>lqy</a>
-    </footer>
-    <script src="lib/jquery-3.2.1.min.js"></script>
-    <script src="lib/bootstrap.min.js"></script>
-    <script src="lib/particles.min.js"></script>
-    <script src="js/particlesInit.js"></script>
-    <script src="js/funLib.js"></script>
-    <script src="js/funExam.js"></script>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <footer class="page-copyright" role="contentinfo">
+                <span><i class="fa fa-cc"></i> 2018</span>
+                <a href="https://github.com/w3fun/" target="_blank"><i class="fa fa-heart"></i> W3Fun</a>
+                <a href="https://github.com/YiLing-IOT-Studio/" target="_blank"><i class="fa fa-heart"></i> YiLing-IOT-Studio</a>
+                <a href="https://github.com/swpuLeo/" target="_blank"><i class="fa fa-male"></i> Leo</a>
+                <a href="https://github.com/812913/" target="_blank"><i class="fa fa-female"></i> lwf</a>
+                <a href="https://github.com/StaticWalk/" target="_blank"><i class="fa fa-male"></i> StaticWalk</a>
+                <a href="https://github.com/luqingying/" target="_blank"><i class="fa fa-female"></i> lqy</a>
+                <a href="https://github.com/w3fun/ExamSystem/blob/master/LICENSE" target="_blank"><i class="fa fa-copyright"></i> MIT</a>
+            </footer>
+        </div>
+    </nav>
+
+    <!-- Tab YiLing page -->
+
+    <!-- Tab Info page -->
+
+    <script src="../static/dest/js/homepage.js"></script>
 </body>
 
 </html>
