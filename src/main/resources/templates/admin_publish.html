@@ -1,386 +1,485 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
-<!--[if gt IE 8]><!-->
+<!--[if gt IE 8]>
 <html class="no-js" xmlns:th="http://www.thymeleaf.org">
-<!--<![endif]-->
+<![endif]-->
 
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
-    <title>发布考试 - FunExam</title>
-    <meta name="keyword" content="Fun Exam" />
-    <meta name="description" content="An exam system for students" />
+    <title>后台管理 | FunExam</title>
+    <meta name="keyword" content="FunExam，翼灵物联工作室，后台管理" />
+    <meta name="description" content="FunExam - SWPU 翼灵在线考试系统后台管理" />
     <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
-    <link rel="stylesheet" href="../static/stylesheets/css/funExam.css" />
-    <link rel="stylesheet" href="../static/stylesheets/css/admin_publish.css" />
-
-    <script src="../static/lib/modernizr-2.6.2.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/dest/css/main.css" />
+    <script src="https://cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
     <!--[if (lt IE 9) & (!IEMobile)]>
-    <script src="/../static/lib/respond.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.bootcss.com/holder/2.9.4/holder.min.js"></script>
 </head>
 
 <body>
-    <nav class="navbar navbar-toggleable-md fixed-top navbar-inverse bg-inverse">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="#">
-            <img src="img/w3fun-inverse-40x40.png" id="userInfo" alt="user information" />
-            <span>Fun Exam</span>
-        </a>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="admin.html">在线统计</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin_add.html">添加题库</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">编辑题库</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="admin_publish.html">发布考试<span class="sr-only">(current)</span> </a>
-                </li>
-            </ul>
-            <ul class="navbar-nav mt-2 mt-md-0">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Fun Exam</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                        欢迎您 <span th:inline="text"> [[${#httpServletRequest.remoteUser}]]</span>
-                        <!--欢迎您 <span th:inline="choices"> </span>-->
-
-
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="login.html">退出登录</a>
-                    </div>
-                </li>
-            </ul>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">后台管理系统 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">考试管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">题库管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">在线统计</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                admin <span>李友波</span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">退出登录</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <div class="container" style="padding-top: 10rem">
-        <div class="row">
-            <div class="col-sm-8 push-sm-2">
-                <h1>发布考试</h1>
-                <hr />
-                <button type="button" class="btn btn-success btn-positioned" id="toggleBtn">查看考试题库</button>
+    <div class="container">
+        <div class="con-item">
+            <div class="row">
+                <div class="col-4">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">已考试卷</h5>
+                            <p class="card-text">2018/6/9</p>
+                            <p class="card-text">明理楼B区4楼 - 待定</p>
+                            <a href="#" class="btn btn-sm btn-primary">查看更多</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="card" style="width: 18rem; position: relative; left: 10%;">
+                        <div class="card-body">
+                            <h5 class="card-title">待考试卷</h5>
+                            <p class="card-text">2018/6/9</p>
+                            <p class="card-text">明理楼B区4楼 - 待定</p>
+                            <a href="#" class="btn btn-sm btn-primary">查看更多</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="card" style="width: 18rem; position: absolute; right: 15px;">
+                        <div class="card-body">
+                            <h5 class="card-title">试卷分类</h5>
+                            <p class="card-text">2018/6/9</p>
+                            <p class="card-text">明理楼B区4楼 - 待定</p>
+                            <a href="#" class="btn btn-sm btn-primary">查看更多</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="con-item">
+            <div class="row">
+                <header class="col-12">
+                    <h1 class="h4">考试管理</h1>
+                    <hr class="my-4" />
+                </header>
+                <main class="col-12">
+                    <div class="row">
+                        <div class="col-3">
+                            <ul class="list-group">
+                                <li class="list-group-item">填写考试信息</li>
+                                <li class="list-group-item">添加考试题目</li>
+                                <li class="list-group-item">准备发布考试</li>
+                            </ul>
+                            <ul class="list-group">
+                                <li class="list-group-item">试题答案设置</li>
+                                <li class="list-group-item">试题批阅结果</li>
+                            </ul>
+                        </div>
+                        <div class="col-9">
+                            <!-- Basic info -->
+                            <div class="jumbotron">
+                                <h2 class="h5">填写考试信息</h2>
+                                <hr class="my-4" />
+                                <form class="publish-info form-control-sm">
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">考试名称</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="infoNotes" id="infoNotes" class="form-control form-control-sm" placeholder="填写考试名称，比如：翼灵物联工作室2017级招新笔试" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-2 col-form-label">考试类型</label>
+                                        <div class="col-10">
+                                            <select name="chooseType" id="chooseType" class="custom-select form-control-sm">
+                                                        <option selected value="">选择考试类型</option>
+                                                        <option value="招新笔试">招新笔试</option>
+                                                        <option value="嵌入式">嵌入式</option>
+                                                        <option value="web后端">web后端</option>
+                                                        <option value="Android">Android</option>
+                                                        <option value="web前端">web前端</option>
+                                                        <option value="数据结构">数据结构</option>
+                                                        <option value="C">C</option>
+                                                    </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">考试日期</label>
+                                        <div class="col-sm-2">
+                                            <select name="chooseYear" id="chooseYear" class="custom-select form-control-sm">
+                                                                <option selected value="">年</option>
+                                                                <option value="2018">2018</option>
+                                                                <option value="2019">2019</option>
+                                                            </select>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <select name="chooseMonth" id="chooseMonth" class="custom-select form-control-sm">
+                                                                <option selected value="">月</option>
+                                                                <option value="01">01</option>
+                                                                <option value="02">02</option>
+                                                            </select>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <select name="chooseDay" id="chooseDay" class="custom-select form-control-sm">
+                                                                <option selected value="">日</option>
+                                                                <option value="17">17</option>
+                                                                <option value="18">18</option>
+                                                                <option value="19">19</option>
+                                                                <option value="20">20</option>
+                                                                <option value="21">21</option>
+                                                                <option value="22">22</option>
+                                                                <option value="23">23</option>
+                                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">考试时段</label>
+                                        <div class="col-sm-5">
+                                            <select name="chooseTime" id="chooseTime" class="custom-select form-control-sm">
+                                                                <option selected value="">选择考试时段</option>
+                                                                <option value="09:00-10:40">09:00-10:40</option>
+                                                                <option value="09:30-11:10">09:30-11:10</option>
+                                                                <option value="15:00-16:40">15:00-16:40</option>
+                                                                <option value="16:00-17:40">16:00-17:40</option>
+                                                                <option value="19:00-20:40">19:00-20:40</option>
+                                                                <option value="19:30-20:10">19:30-20:10</option>
+                                                            </select>
+
+                                        </div>
+                                        <div class="col-5">
+                                            <input type="text" class="form-control form-control-sm" placeholder="其他时间段，格式：hh:mm-hh:mm" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">考试地点</label>
+                                        <div class="col-sm-5">
+                                            <select name="chooseTime" id="chooseTime" class="custom-select form-control-sm">
+                                                            <option selected value="">选择考试地点</option>
+                                                            <option value="明理楼B401">明理楼B401</option>
+                                                            <option value="明理楼B402">明理楼B402</option>
+                                                            <option value="明理楼B403">明理楼B403</option>
+                                                            <option value="明理楼B404">明理楼B404</option>
+                                                            <option value="明理楼B405">明理楼B405</option>
+                                                            <option value="明理楼B407">明理楼B407</option>
+                                                            <option value="明理楼B409">明理楼B409</option>
+                                                            <option value="明理楼B413">明理楼B413</option>
+                                                            <option value="明理楼B413">明理楼B413</option>
+                                                        </select>
+
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control form-control-sm" placeholder="其他地点" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label" title="内部考试指仅有翼灵团队成员参加，典型的非内部考试就是招新考试">内部考试 <sup><i class="fa fa-exclamation-circle"></i></sup></label>
+                                        <div class="col-sm-10">
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                                <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                                                <label class="custom-control-label" for="customRadio1">是</label>
+                                            </div>
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                                <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                                                <label class="custom-control-label" for="customRadio2">否</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label" title="随机生成，考生进入考试时使用">考试密令 <sup><i class="fa fa-exclamation-circle"></i></sup></label>
+                                        <input type="text" readonly class="col-sm-10 form-control form-control-plaintext" value="456H1B" />
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-success btn-sm">确认信息</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Add exam -->
+                            <div class="jumbotron">
+                                <h2 class="h5">添加考试题目</h2>
+                                <hr class="my-4" />
+                                <form class="form-control-sm">
+                                    <div class="form-group row">
+                                        <label class="col-2 col-form-label">题目描述</label>
+                                        <input type="text" class="col-10 form-control form-control-sm" placeholder="题目描述" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-2 col-form-label">题目类型</label>
+                                        <select name="chooseTime" id="chooseTime" class="col-10 custom-select form-control-sm">
+                                            <option selected value="">选择题目类型</option>
+                                            <option value="单选">单选</option>
+                                            <option value="多选">多选</option>
+                                            <option value="编程">编程</option>
+                                            <option value="简述">简述</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-2 col-form-label">题目分值</label>
+                                        <input type="text" class="col-4 form-control form-control-sm" placeholder="设置题目分值，如 10 分" />
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-2 col-form-label">题目选项</label>
+                                        <div class="col-10">
+                                            <div class="row">
+                                                <label class="col-1 col-from-label">A</label>
+                                                <input type="text" class="form-control form-control-sm col-11" placeholder="选项A" />
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-1 col-from-label">B</label>
+                                                <input type="text" class="form-control form-control-sm col-11" placeholder="选项B" />
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-1 col-from-label">C</label>
+                                                <input type="text" class="form-control form-control-sm col-11" placeholder="选项C" />
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-1 col-from-label">D</label>
+                                                <input type="text" class="form-control form-control-sm col-11" placeholder="选项D" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-2 col-form-label" title="题目描述涉及代码，可采取上传截图的方式">上传图片 <sup><i class="fa fa-exclamation-circle"></i></sup></label>
+                                        <div class="custom-file col-10">
+                                            <input type="file" class="custom-file-input" id="customFile">
+                                            <label class="custom-file-label" for="customFile">Choose file</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <button class="btn btn-success btn-sm btn-block" type="button">确认添加</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Confirm -->
+                            <div class="jumbotron">
+                                <h2 class="h5">准备发布考试</h2>
+                                <hr class="my-4" />
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="card" style="width: 12rem;">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{试卷1}}</h5>
+                                                <p class="card-text">状态：待发布</p>
+                                                <a href="#" class="btn btn-sm btn-primary">试题预览</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <div class="card" style="width: 12rem; position: relative; left: 10%;">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{试卷2}}</h5>
+                                                <p class="card-text">状态：待发布</p>
+                                                <a href="#" class="btn btn-sm btn-primary">试题预览</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <div class="card" style="width: 12rem; position: absolute; right: 15px;">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{试卷3}}</h5>
+                                                <p class="card-text">状态：待发布</p>
+                                                <a href="#" class="btn btn-sm btn-primary">试题预览</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form class="form-control-sm">
+                                    <div class="form-group row">
+                                        <label class="col-2 col-form-label">试题修改</label>
+                                        <div class="input-group input-group-sm mb-3 col-10">
+                                            <div class="input-group-prepend">
+                                                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">试卷名称</button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="#">{{试卷1}}</a>
+                                                    <a class="dropdown-item" href="#">{{试卷2}}</a>
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="输入要修改的题目序号，序号可以通过“试题预览”按钮查看" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-success btn-sm" type="button">查找</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="">
+                                    <form class="form-control-sm">
+                                        <p class="h6">您准备修改第{{10}}题</p>
+                                        <div class="form-group row">
+                                            <label class="col-2 col-form-label">题目描述</label>
+                                            <input type="text" class="col-10 form-control form-control-sm" placeholder="题目描述" />
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-2 col-form-label">题目类型</label>
+                                            <select name="chooseTime" id="chooseTime" class="col-10 custom-select form-control-sm">
+                                                        <option selected value="">选择题目类型</option>
+                                                        <option value="单选">单选</option>
+                                                        <option value="多选">多选</option>
+                                                        <option value="编程">编程</option>
+                                                        <option value="简述">简述</option>
+                                                    </select>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-2 col-form-label">题目分值</label>
+                                            <input type="text" class="col-4 form-control form-control-sm" placeholder="设置题目分值，如 10 分" />
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-2 col-form-label">题目选项</label>
+                                            <div class="col-10">
+                                                <div class="row">
+                                                    <label class="col-1 col-from-label">A</label>
+                                                    <input type="text" class="form-control form-control-sm col-11" placeholder="选项A" />
+                                                </div>
+                                                <div class="row">
+                                                    <label class="col-1 col-from-label">B</label>
+                                                    <input type="text" class="form-control form-control-sm col-11" placeholder="选项B" />
+                                                </div>
+                                                <div class="row">
+                                                    <label class="col-1 col-from-label">C</label>
+                                                    <input type="text" class="form-control form-control-sm col-11" placeholder="选项C" />
+                                                </div>
+                                                <div class="row">
+                                                    <label class="col-1 col-from-label">D</label>
+                                                    <input type="text" class="form-control form-control-sm col-11" placeholder="选项D" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-2 col-form-label" title="题目描述涉及代码，可采取上传截图的方式">上传图片 <sup><i class="fa fa-exclamation-circle"></i></sup></label>
+                                            <div class="custom-file col-10">
+                                                <input type="file" class="custom-file-input" id="customFile">
+                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-2">
+                                                <button class="btn btn-info btn-sm" type="button">保存</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- Setting answer -->
+                            <div class="jumbotron">
+                                <h2 class="h5">试题答案设置</h2>
+                                <hr class="my-4" />
+                                <p class="">** 注意：只支持设置选择题答案 **</p>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="card" style="width: 12rem;">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{试卷1}}</h5>
+                                                <p class="card-text">状态：未设置</p>
+                                                <a href="#" class="btn btn-sm btn-primary">设置答案</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <div class="card" style="width: 12rem; position: relative; left: 10%;">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{试卷2}}</h5>
+                                                <p class="card-text">状态：未设置</p>
+                                                <a href="#" class="btn btn-sm btn-primary">设置答案</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <div class="card" style="width: 12rem; position: absolute; right: 15px;">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{试卷3}}</h5>
+                                                <p class="card-text">状态：未设置</p>
+                                                <a href="#" class="btn btn-sm btn-primary">设置答案</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Result -->
+                            <div class="jumbotron">
+                                <h2 class="h5">试题批阅结果</h2>
+                                <hr class="my-4" />
+                                <div class="row">
+                                    <div class=""></div>
+                                    <div class=""></div>
+                                    <div class=""></div>
+                                    <div class=""></div>
+                                </div>
+                            </div>
+                        </div>
+                </main>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="container" id="publishCon">
-        <div class="row">
-            <main class="col-sm-8 push-sm-2">
-                <div class="publish-info">
-                    <div class="row">
-                        <div class="col-sm-2">考试类型</div>
-                        <div class="col-sm-10">
-                            <select name="chooseType" id="chooseType" class="custom-select">
-                                <option selected value="" disabled>--</option>
-                                <option value="嵌入式">嵌入式</option>
-                                <option value="web后端">web后端</option>
-                                <option value="Android">Android</option>
-                                <option value="web前端">web前端</option>
-                                <option value="招新笔试">招新笔试</option>
-                                <option value="数据结构">数据结构</option>
-                                <option value="C/C++">C/C++</option>
-                                <option value="Java">Java</option>
-                                <option value="JavaScript">JavaScript</option>
-                                <option value="其他">其他</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-2">考试日期</div>
-                        <div class="col-sm-2">
-                            <select name="chooseYear" id="chooseYear" class="custom-select">
-                                <option selected value="" disabled>--</option>
-                                <option value="2018">2018</option>
-                                <option value="2019">2019</option>
-                            </select>
-                            <span style="margin-left: 10px;">年</span>
-                        </div>
-                        <div class="col-sm-2">
-                            <select name="chooseMonth" id="chooseMonth" class="custom-select">
-                                <option selected value="" disabled>--</option>
-                                <option value="01">01</option>
-                                <option value="02">02</option>
-                            </select>
-                            <span style="margin-left: 10px;">月</span>
-                        </div>
-                        <div class="col-sm-2">
-                            <select name="chooseDay" id="chooseDay" class="custom-select">
-                                <option selected value="" disabled>--</option>
-                                <option value="17">17</option>
-                                <option value="18">18</option>
-                                <option value="19">19</option>
-                                <option value="20">20</option>
-                                <option value="21">21</option>
-                                <option value="22">22</option>
-                                <option value="23">23</option>
-                            </select>
-                            <span style="margin-left: 10px;">日</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-2" title="考试时间不少于半小时">考试时间 <sup><i class="fa fa-exclamation-circle"></i></sup></div>
-                        <div class="col-sm-6">
-                            <select name="chooseSHour" id="chooseSHour" class="custom-select">
-                                <option selected value="" disabled>--</option>
-                                <option value="08">08</option>
-                                <option value="09">09</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="14">14</option>
-                                <option value="15">15</option>
-                                <option value="16">16</option>
-                                <option value="17">17</option>
-                                <option value="18">18</option>
-                                <option value="19">19</option>
-                                <option value="20">20</option>
-                                <option value="21">21</option>
-                            </select>
-                            <span style="margin: 0 5px;"> : </span>
-                            <select name="chooseSMin" id="chooseSMin" class="custom-select">
-                                <option value="" selected disabled>--</option>
-                                <option value="00">00</option>
-                                <option value="15">15</option>
-                                <option value="30">30</option>
-                                <option value="45">45</option>
-                            </select>
-                            <span style="margin: 0 5px;"> - </span>
-                            <select name="chooseEHour" id="chooseEHour" class="custom-select">
-                                <option selected value="" disabled>--</option>
-                                <option value="08">08</option>
-                                <option value="09">09</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="14">14</option>
-                                <option value="15">15</option>
-                                <option value="16">16</option>
-                                <option value="17">17</option>
-                                <option value="18">18</option>
-                                <option value="19">19</option>
-                                <option value="20">20</option>
-                                <option value="21">21</option>
-                            </select>
-                            <span style="margin: 0 5px;"> : </span>
-                            <select name="chooseEMin" id="chooseEMin" class="custom-select">
-                                <option value="" selected disabled>--</option>
-                                <option value="00">00</option>
-                                <option value="15">15</option>
-                                <option value="30">30</option>
-                                <option value="45">45</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-2">考试地点</div>
-                        <div class="col-sm-4">
-                            <select name="chooseLocation" id="chooseLocation" class="custom-select">
-                                <option selected value="" disabled>--</option>
-                                <option value="明理楼C1011">明理楼 C1011</option>
-                                <option value="明理楼B区4楼">明理楼 B 区 4 楼</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-5 pull-sm-1">
-                            <input type="text" id="explicitLocation" class="form-control" placeholder="具体地点，比如：明理楼 B412，可不填" autocomplete="off" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-2" title="内部考试指仅有翼灵团队成员参加，典型的非内部考试就是招新考试">考试性质 <sup><i class="fa fa-exclamation-circle"></i></sup></div>
-                        <div class="col-sm-4">
-                            <label>
-                                <input type="radio" name="examp-prop" id="isInnerExam" checked /> 内部考试
-                            </label>
-                            <label>
-                                <input type="radio" name="examp-prop" /> 非内部考试
-                            </label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-2">备注</div>
-                        <div class="col-sm-10">
-                            <input type="text" name="infoNotes" id="infoNotes" class="form-control" placeholder="填写备注，比如：2017级C语言第2次测试" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-3 push-sm-2">
-                            <button class="btn btn-info btn-block disabled btn-js" disabled data-toggle="modal" data-target="#addExam">开始添加题目</button>
-                        </div>
-                        <div class="col-sm-3 push-sm-2">
-                            <button class="btn btn-success btn-block disabled" id="cpltBtn" disabled data-toggle="modal" data-target="#submitModal">试题预览</button>
-                        </div>
-                        <div class="col-sm-3 push-sm-2">
-                            <button class="btn btn-danger btn-block disabled" disabled id="clearBtn" data-toggle="modal" data-target="#clearModal">清空未发布的试题</button>
-                        </div>
-                    </div>
-                </div>
-            </main>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <footer class="page-copyright" role="contentinfo">
+                <span><i class="fa fa-cc"></i> 2018</span>
+                <a href="https://github.com/w3fun/" target="_blank"><i class="fa fa-heart"></i> W3Fun</a>
+                <a href="https://github.com/YiLing-IOT-Studio/" target="_blank"><i class="fa fa-heart"></i> YiLing-IOT-Studio</a>
+                <a href="https://github.com/swpuLeo/" target="_blank"><i class="fa fa-male"></i> Leo</a>
+                <a href="https://github.com/812913/" target="_blank"><i class="fa fa-female"></i> lwf</a>
+                <a href="https://github.com/StaticWalk/" target="_blank"><i class="fa fa-male"></i> StaticWalk</a>
+                <a href="https://github.com/luqingying/" target="_blank"><i class="fa fa-female"></i> lqy</a>
+                <a href="https://github.com/w3fun/ExamSystem/blob/master/LICENSE" target="_blank"><i class="fa fa-copyright"></i> MIT</a>
+            </footer>
         </div>
-    </div>
-
-    <div class="container examLibCon" id="examLibCon">
-        <div class="row">
-            <main class="col-sm-8 push-sm-2">考试题库</main>
-        </div>
-    </div>
-
-
-    <div class="modal fade" id="clearModal" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="text-center">
-                        <h6 class="h5">您想要清空未发布的题目？</h6>
-                    </div>
-                    <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="closeClearModal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="from-group">
-                            <div class="row">
-                                <div class="col-sm-4 push-sm-2"><button class="btn btn-danger btn-block" id="clearCfrmBtn">确定</button></div>
-                                <div class="col-sm-4 push-sm-2"><button class="btn btn-info btn-block" id="clearCancelBtn">取消</button></div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="submitModal" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <figure class="text-center">
-                        <img src="img/w3fun-100x100.png" />
-                        <figcaption class="h6 ">
-                            试题预览
-                        </figcaption>
-                    </figure>
-                    <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="closeSubmitModal">
-                        <span aria-hidden="true ">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="from-group">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <label title="密令用于用户考试验证" class="form-control-label">填写本次考试密令 <sup><i class="fa fa-exclamation-circle"></i></sup> </label>
-                                </div>
-                                <div class="col-sm-8"><input type="text" class="form-control" id="examToken" placeholder="0-9, a-z, A-Z, 共六位" autocomplete="off" /></div>
-                            </div>
-                        </div>
-                        <div class="from-group">
-                            <button class="btn btn-block btn-info" id="submitCfrmBtn">确定提交</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="addExam" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <figure class="text-center">
-                        <img src="img/w3fun-100x100.png" />
-                        <figcaption class="h6 ">
-                            <span class="exam-note"></span> - 第 <span class="exam-count"></span> 题
-                        </figcaption>
-                    </figure>
-                    <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="closeExamModal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id=" ">
-                        <div class="form-group">
-                            <div class="row">
-                                <label class="form-control-label col-sm-2 text-right">题目类型</label>
-                                <select name="examType" id="examType" class="custom-select col-sm-9 form-control">
-                                    <option selected value="" disabled>请选择</option>
-                                    <option value="单选">单选</option>
-                                    <option value="多选">多选</option>
-                                    <option value="填空">填空</option>
-                                    <option value="简答">简答</option>
-                                    <option value="代码">代码</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <label for="examTitle" class="form-control-label col-sm-2 text-right">题目描述</label>
-                                <input type="text" name="examTitle" id="examTitle" class="form-control col-sm-9 form-control-sm" autocomplete="off" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <label for="examCode" class="form-control-label col-sm-2 text-right">相关代码</label>
-                                <textarea class="form-control col-sm-9" name="examCode" id="examCode" rows="6"></textarea>
-                            </div>
-                        </div>
-                        <div class="set-choices">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <label class="form-control-label text-right">添加/删除</label>
-                                </div>
-                                <div class="col-sm-9 pull-sm-1">
-                                    <button class="btn btn-primary btn-sm exam-choice-btn" id="examAddBtn">Add</button>
-                                    <button class="btn btn-warning btn-sm exam-choice-btn" id="examRemoveBtn">Delete</button>
-                                </div>
-                            </div>
-                            <fieldset class="form-group">
-                                <div class="row">
-                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoiceA">A</label>
-                                    <input class="col-sm-9 push-sm-1 form-control choiceIpt" type="text" name="examChoiceA" id="examChoiceA" autocomplete="off" />
-                                </div>
-                            </fieldset>
-                            <fieldset class="form-group">
-                                <div class="row">
-                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoiceB">B</label>
-                                    <input class="col-sm-9 push-sm-1 form-control choiceIpt" type="text" name="examChoiceB" id="examChoiceB" autocomplete="off" />
-                                </div>
-                            </fieldset>
-                            <fieldset class="form-group">
-                                <div class="row">
-                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoiceC">C</label>
-                                    <input class="col-sm-9 push-sm-1 form-control choiceIpt" type="text" name="examChoiceC" id="examChoiceC" autocomplete="off" />
-                                </div>
-                            </fieldset>
-                            <fieldset class="form-group">
-                                <div class="row">
-                                    <label class="col-sm-1 push-sm-1 form-check-label" for="examChoiceD">D</label>
-                                    <input class="col-sm-9 push-sm-1 form-control choiceIpt" type="text" name="examChoiceD" id="examChoiceD" autocomplete="off" />
-                                </div>
-                            </fieldset>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-block btn-info" id="examConfirmBtn">确定添加</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="../static/lib/jquery-3.2.1.min.js"></script>
-    <script src="../static/lib/bootstrap.min.js"></script>
-    <script src="../static/js/funLib.js"></script>
-    <script src="../static/js/admin_publish.js"></script>
+    </nav>
 </body>
 
-</ht30
+</html>
