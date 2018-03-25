@@ -1,27 +1,41 @@
 <!DOCTYPE html>
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
-<!--[if gt IE 8]><!-->
+<!--[if gt IE 8]>
 <html class="no-js" xmlns:th="http://www.thymeleaf.org">
-<!--<![endif]-->
+<![endif]-->
 
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>登录 - FunExam</title>
-    <meta name="keyword" content="Fun Exam" />
-    <meta name="description" content="An exam system for students" />
+    <title>登录注册 | FunExam</title>
+    <meta name="keyword" content="登录注册" />
+    <meta name="description" content="FunExam - SWPU 翼灵在线考试系统登录注册页面" />
     <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
-    <link rel="stylesheet" href="stylesheets/css/funExam.css" />
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/dest/css/main.css" />
 
-    <script src="lib/modernizr-2.6.2.min.js"></script>
+    <script src="https://cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
     <!--[if (lt IE 9) & (!IEMobile)]>
-    <script src="lib/respond.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        .h-v-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
 </head>
 
 <body>
@@ -29,144 +43,120 @@
         <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
     <![endif]-->
     <div id="particles-js"></div>
-    <div class="container-fluid">
-        <h1 class="animated">Fun Exam</h1>
-        <h2 class="animated">Welcome to Fun Exam :)</h2>
-
-        <p class="_brand">
-            <span class="txt-rotate" data-period="1000" data-rotate='["Practice makes perfect."]'>
-            </span>
-        </p>
-
-        <div class="form-group" id="from-group-btns">
-            <button type="button" id="signIn" class="btn btn-lg" data-toggle="modal" data-target="#signInModal">登录</button>
-            <button type="button" id="signUp" class="btn btn-lg" data-toggle="modal" data-target="#signUpModal">注册</button>
-        </div>
-
-        <footer id="footer" class="_footer" role="contentinfo">
-            <span><i class="fa fa-copyright"></i>2017</span>
-            <a href="https://github.com/w3fun/" target="_blank" class="_link"><i class="fa fa-heart"></i>W3Fun</a>
-            <a href="https://github.com/swpuLeo/" target="_blank" class="_link _hover-male"><i class="fa fa-male"></i>Leo</a>
-            <a href="https://github.com/812913/" target="_blank" class="_link _hover-female"><i class="fa fa-female"></i>lwf</a>
-            <a href="https://github.com/StaticWalk/" target="_blank" class="_link _hover-male"><i class="fa fa-male"></i>StaticWalk</a>
-            <a href="https://github.com/luqingying/" target="_blank" class="_link _hover-female"><i class="fa fa-female"></i>lqy</a>
-            <a href="#" target="_blank" class="_link"><i class="fa fa-copyright"></i> MIT</a>
-        </footer>
-
-        <!-- modal -->
-        <div class="modal fade" id="signInModal" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <figure class="text-center">
-                            <img src=" /img/w3fun-100x100.png" />
-                            <figcaption class="h5">登&nbsp;&nbsp;&nbsp;&nbsp;录</figcaption>
-                        </figure>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="signInForm" method="post" th:action="@{/login}" role="form">
-                            <div class="form-group">
-                                <label for="username" class="form-control-label">姓名</label>
-                                <input type="text" id="username" name="username" class="form-control" placeholder="请输入姓名" />
-                            </div>
-                            <div class="form-group">
-                                <label for="password" class="form-control-label">密码</label>
-                                <input type="password" name="password" id="password" class="form-control" placeholder="请输入密码" maxlength="16" />
-                                <div class="alert alert-danger" role="alert">
-                                    <strong>Error! </strong> <span></span>
-                                </div>
-                                <i class="fa fa-eye-slash" style="color: #666;"></i>
-                            </div>
-                            <div class="form-group text-center">
-                                <button type="submit" class="btn btn-lg btn-primary btn-block" id="inSubmitButton">登 录</button>
-                                <button type="button" class="btn btn-lg btn-primary btn-block" id="qqSubmitButton">
-                                    <a href="https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=101445154&redirect_uri=http://fun.swpuiot.com/login/qq&state=test" class="qq_link"><i class="fa fa-qq"></i> QQ 登 录</a>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="find-psd">
-                            忘记密码?&nbsp;&nbsp;<a href="findPsd.html" target="_blank">去找回</a>
-                        </div>
-                        还没账号?&nbsp;&nbsp;
-                        <button class="btn btn-primary btn-lg" data-dismiss="modal">
-                            去注册 <i class="fa fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </div>
+    <div class="container h-v-center">
+        <div class="jumbotron">
+            <h1 class="display-3">Fun Exam</h1>
+            <h2 class="h4">SWPU 翼灵在线考试系统</h2>
+            <hr class="m-y-md" />
+            <p>
+                <span class="lead">Fun Exam</span> 是翼灵物联工作室开发和维护的一个在线考试系统，用于工作室每年招收新成员以及内部考试。<br/>
+            </p>
+            <div class="form-group" id="from-group-btns">
+                <button type="button" id="signIn" class="btn btn-success btn-sign" data-toggle="modal" data-target="#signInModal">登 录</button>
+                <button type="button" id="signUp" class="btn btn-primary btn-sign" data-toggle="modal" data-target="#signUpModal">注 册</button>
             </div>
         </div>
 
-        <div class="modal fade" id="signUpModal" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <figure class="text-center">
-                            <img src=" /img/w3fun-100x100.png" />
-                            <figcaption class="h5">注&nbsp;&nbsp;&nbsp;&nbsp;册</figcaption>
-                        </figure>
-                        <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="upClose">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="signUpForm" method="post" role="form" th:action="@{/register}">
-                            <div class="form-group">
-                                <label for="upEmail" class="form-control-label">邮箱</label>
-                                <input type="email" name="upEmail" id="upEmail" class="form-control" placeholder="请正确填写邮箱, 如 aaa@bb.ccc" />
-                                <div class="alert alert-danger" role="alert">
-                                    <strong>Error! </strong> <span></span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="upUsername" class="form-control-label">姓名</label>
-                                <input type="text" name="upUsername" id="upUsername" class="form-control" placeholder="请填写姓名" />
-                                <div class="alert alert-danger" role="alert">
-                                    <strong>Error! </strong> <span></span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="upPassword" class="form-control-label">密码</label>
-                                <input type="password" name="upPassword" id="upPassword" class="form-control" placeholder="密码长度为8~16位，可使用数字、字母、点号" maxlength="16" />
-                                <div class="alert alert-danger" role="alert">
-                                    <strong>Error! </strong> <span></span>
-                                </div>
-                                <i class="fa fa-eye-slash" style="color: #666;"></i>
-                            </div>
-                            <div class="form-group">
-                                <label for="upEnsurePassword" class="form-control-label">确认密码</label>
-                                <input type="password" name="upEnsurePassword" id="upEnsurePassword" class="form-control" placeholder="请确认密码" maxlength="16" />
-                                <div class="alert alert-danger" role="alert">
-                                    <strong>Error! </strong> <span></span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="upValMsg" class="form-control-label">填写验证码</label>
-                                <input type="text" name="upEnsurePassword" id="upValMsg" class="form-control" placeholder="请填写验证码" maxlength="6" />
-                                <div class="alert alert-danger" role="alert">
-                                    <strong>Error! </strong> <span></span>
-                                </div>
-                                <button type="button" id="getValMsgBtn" class="btn btn-primary getValMsgBtn">获取邮箱验证码</button>
-                            </div>
-                            <div class="form-group text-center ">
-                                <button type="button" id="upSubmitButton" class="btn btn-lg btn-primary btn-block">注 册</button>
-                            </div>
-                        </form>
-                    </div>
+        <!-- <p class="_brand">
+            <span class="txt-rotate" data-period="1000" data-rotate='["Practice makes perfect."]'>
+            </span>
+        </p> -->
+
+        <footer id="footer" class="page-footer page-copyright" role="contentinfo">
+            <span><i class="fa fa-cc"></i> 2018</span>
+            <a href="https://github.com/w3fun/" target="_blank"><i class="fa fa-heart"></i> W3Fun</a>
+            <a href="https://github.com/YiLing-IOT-Studio/" target="_blank"><i class="fa fa-heart"></i> YiLing-IOT-Studio</a>
+            <a href="https://github.com/swpuLeo/" target="_blank"><i class="fa fa-male"></i> Leo</a>
+            <a href="https://github.com/812913/" target="_blank"><i class="fa fa-female"></i> lwf</a>
+            <a href="https://github.com/StaticWalk/" target="_blank"><i class="fa fa-male"></i> StaticWalk</a>
+            <a href="https://github.com/luqingying/" target="_blank"><i class="fa fa-female"></i> lqy</a>
+            <a href="https://github.com/w3fun/ExamSystem/blob/master/LICENSE" target="_blank"><i class="fa fa-copyright"></i> MIT</a>
+        </footer>
+
+    </div>
+
+    <!-- modal -->
+    <div class="modal fade" id="signInModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="h4">Fun Exam | 登录</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-control-sm needs-validation" role="form" novalidate>
+                        <div class="form-group">
+                            <label for="emailIn" class="form-control-label">邮箱</label>
+                            <input type="text" id="emailIn" name="emailIn" class="form-control form-control-sm" placeholder="使用邮箱登录" />
+                            <div class="invalid-feedback">邮箱格式不正确</div>
+                        </div>
+                        <div class="form-group has-error">
+                            <label for="pswdIn" class="form-control-label">密码</label>
+                            <input type="password" name="pswdIn" id="pswdIn" class="form-control form-control-sm" placeholder="请输入密码" maxlength="16" />
+                            <div class="invalid-feedback">密码格式不对</div>
+                        </div>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary btn-sm btn-block" id="submitIn">登 录</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <a href="https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=101445154&redirect_uri=http://fun.swpuiot.com/login/qq&state=test" class="btn btn-sm btn-primary"><i class="fa fa-qq"></i> QQ 登录</a>
+                    <a href="" data-dismiss="modal">注册账号</i></a>
+                    <a href="findPsd.html">找回密码</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="lib/jquery-3.2.1.min.js"></script>
-    <script src="lib/bootstrap.min.js"></script>
-    <script src="lib/particles.min.js"></script>
-    <script src="js/particlesInit.js"></script>
-    <script src="js/index_page.js"></script>
+    <div class="modal fade" id="signUpModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="h4">Fun Exam | 注册</p>
+                    <button type="button" class="close js-upDismiss" data-dismiss="modal" aria-label="Close" id="upClose">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-control-sm needs-validation" role="form" novalidate>
+                        <div class="form-group">
+                            <label for="emailUp" class="form-control-label">邮箱</label>
+                            <input type="email" name="emailUp" id="emailUp" class="form-control form-control-sm" placeholder="请使用常用邮箱，建议使用 QQ 邮箱" />
+                            <div class="invalid-feedback">邮箱格式不正确</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nameSignUp" class="form-control-label">姓名</label>
+                            <input type="text" name="nameUp" id="nameUp" class="form-control form-control-sm" placeholder="请填写真实姓名" />
+                            <div class="invalid-feedback">姓名不能为空</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pswdSignUp" class="form-control-label">密码</label>
+                            <input type="password" name="pswdUp" id="pswdUp" class="form-control form-control-sm" placeholder="请设置密码" maxlength="16" />
+                            <div class="invalid-feedback">密码格式不正确</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="enPswdSignUp" class="form-control-label">确认密码</label>
+                            <input type="password" name="enPswdUp" id="enPswdUp" class="form-control form-control-sm" placeholder="请确认密码" maxlength="16" />
+                            <div class="invalid-feedback">两次密码不一致</div>
+                        </div>
+                        <div class="form-group block-mail-valcode">
+                            <label for="valCode" class="form-control-label">填写验证码</label>
+                            <input type="text" name="valCode" id="valCode" class="form-control form-control-sm" placeholder="请填写验证码" maxlength="6" />
+                            <div class="invalid-feedback">验证码不正确</div>
+                            <button type="button" id="sendValCode" class="btn btn-info btn-sm btn-mail-valcode">获取邮箱验证码</button>
+                        </div>
+                        <button type="button" id="submitUp" class="btn btn-primary btn-sm btn-block">注 册</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <script src="../static/js/particlesInit.js"></script> -->
+    <script src="../static/dest/js/main.js"></script>
 </body>
 
 </html>
