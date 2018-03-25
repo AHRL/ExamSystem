@@ -6,60 +6,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>404 - FunExam</title>
-    <link rel="stylesheet" href="../static/lib/normalize.css" />
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
     <style type="text/css">
-        .container {
+        .h-v-center {
             position: absolute;
-            top: 30%;
+            top: 50%;
             left: 50%;
-            width: 50%;
-            height: 30%;
-            padding: 20px;
-            text-align: center;
             transform: translate(-50%, -50%);
-        }
-        
-        h1 {
-            font-size: 28px;
-            font-weight: 500
-        }
-        
-        .link-block {
-            margin: 20px 0 40px 0
-        }
-        
-        .link-block a {
-            margin: 0 15px;
-            color: #4cc9f3;
-            text-decoration: none
-        }
-        
-        .link-block a:hover {
-            text-decoration: underline;
-            color: #46738f
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Oops...你要访问的页面不存在<br />或者暂未开放</h1>
-        <div class="link-block">
-            <a href="#" id="turnBack">退回上一页</a>
-            <a href="#">返回首页</a>
+    <div class="container h-v-center">
+        <div class="jumbotron">
+            <h1 class="display-5">
+                FunExam / 404
+            </h1>
+            <hr class="m-y-md" />
+            <p class="lead">Your page was lost...</p>
+            <p>You can try click 'button' to return home page.</p>
+            <a class="btn btn-primary" href="/" role="button">Home page</a>
         </div>
-        <img src="../static/img/404.png" alt="404 Page" />
+        <!-- <img src="../static/img/404.png" alt="404 Page" /> -->
     </div>
-    <script>
-        window.onload = function() {
-            var turnBack = document.getElementById('turnBack');
-            turnBack.addEventListener('click', function(e) {
-                e.preventDefault();
-                history.back();
-            });
-        }
-    </script>
 </body>
 
 </html>
