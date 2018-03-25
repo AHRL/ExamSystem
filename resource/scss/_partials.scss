@@ -1,0 +1,18 @@
+.page-footer {
+    position: relative;
+    bottom: 4rem;
+    left: 2rem;
+}
+
+.page-copyright {
+    font-size: 0.875rem;
+    color: $gray;
+    a {
+        margin-left: 0.625rem;
+        color: $gray;
+    }
+}
+
+.card {
+    margin-bottom: 1.25rem;
+}
