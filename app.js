@@ -30,12 +30,12 @@ app.get('/', function(req, res) {
     res.send('home');
 });
 
-app.post('/signin', function(req, res) {
+app.post('/api/signin', function(req, res) {
     console.log(req.body);
     res.json(JSON.stringify({ 'status': 'ok' }));
 });
 
-app.post('/signup', function(req, res) {
+app.post('/api/signup', function(req, res) {
     console.log(req.body);
     res.json(JSON.stringify({ 'status': 'ok' }));
 });
@@ -79,7 +79,11 @@ app.post('/api/user-sign-for-exam', function(req, res) {
 
 app.get('/api/userinfo', function(req, res) {
     res.json(JSON.stringify({ "name": "李友波" }));
-})
+});
+
+app.get('/api/user-will-exam', function(req, res) {
+    res.json(JSON.stringify({ "name": "sss" }));
+});
 
 app.use(router);
 

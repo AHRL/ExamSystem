@@ -10,22 +10,23 @@ const del = require('del');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
+const es = require('event-stream');
 
-const output = 'src/main/resources/static/dest/';
+const output = './src/main/resources/static/dest/';
 
 const path = {
     scripts: {
-        src: 'resource/js/main.js',
-        dest: 'src/main/resources/static/dest/js'
+        src: './resource/js/*.js',
+        dest: './src/main/resources/static/dest/js'
     },
     styles: {
-        src: 'resource/scss/*.scss',
-        dest: 'src/main/resources/static/dest/css'
+        src: './resource/scss/*.scss',
+        dest: './src/main/resources/static/dest/css'
     }
 };
 
 function clean() {
-    return del(['src/main/resources/static/dest/']);
+    return del(['./src/main/resources/static/dest/']);
 }
 
 function scripts() {
@@ -42,6 +43,16 @@ function scripts() {
     //     .pipe(buffer())
     //     .pipe(uglify())
     //     .pipe(gulp.dest(path.scripts.dest));
+    // let tasks = path.scripts.src.map(function(entry) {
+    //     return browserify({ entries: [entry] })
+    //         .bundle()
+    //         .pipe(source(entry))
+    //         .pipe(rename({
+    //             extname: '.bundle.js'
+    //         }))
+    //         .pipe(gulp.dest(path.scripts.dest));
+    // });
+    // return es.merge.apply(null, tasks);
 }
 
 function styles() {
