@@ -79,15 +79,21 @@ public class ExamCtro {
     @Autowired
     private RecordRepository recordRepository;
 
-    @RequestMapping("/")
-    public String index(HttpServletRequest request,Model model) throws Exception {
+
+    @ResponseBody
+    @RequestMapping(value = "/",produces="application/json;charset=UTF-8")
+    public String index(HttpServletRequest request,Model model,HttpServletResponse response) throws Exception {
          username=request.getRemoteUser();
          jsessionId=request.getSession().getId();
          jedis.set(jsessionId,username);
 //        System.out.println("jsessionId:"+jsessionId+"+username:"+username);
        model.addAttribute("username",username);
 
-        return "funExam";
+
+//       response.encodeRedirectURL("/funExam");
+
+        return "{\"username\":\""+username+"\",\"JsessionId\":\""+jsessionId+"\"}";
+//        return "funExam";
     }
 
     @ResponseBody
@@ -97,12 +103,17 @@ public class ExamCtro {
     }
 
 
-    @RequestMapping("/login")
-    public String login() throws Exception {
+    @RequestMapping(value = "/login")
+    public String login(){
         return "login";
     }
 
-    @RequestMapping("/personal")
+    @RequestMapping(value = "/api/login")
+    public String api_login(){
+                return "funExam";
+    }
+
+    @RequestMapping(value = "/personal")
     public String personal() throws Exception {
         return "personal";
     }
@@ -453,7 +464,7 @@ public class ExamCtro {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/isExist",method = RequestMethod.GET)
+    @RequestMapping(value = "/api/isExist",method = RequestMethod.GET)
     public int isExist(@RequestParam(value = "email")String email) {
         User user=userRepository.findByEmail(email);
         if(user!=null){return 1;}
