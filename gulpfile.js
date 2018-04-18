@@ -10,7 +10,7 @@ const del = require('del');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
-const es = require('event-stream');
+// const es = require('event-stream');
 
 const output = './src/main/resources/static/dest/';
 

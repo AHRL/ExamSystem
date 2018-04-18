@@ -1,40 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
-<!--[if gt IE 8]><!-->
+<!--[if gt IE 8]>
 <html class="no-js" xmlns:th="http://www.thymeleaf.org">
-<!--<![endif]-->
+<![endif]-->
 
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
-    <title>发布考试 - FunExam</title>
-    <meta name="keyword" content="Fun Exam" />
-    <meta name="description" content="An exam system for students" />
+    <title>在线考试 | FunExam</title>
+    <meta name="keyword" content="FunExam，翼灵物联工作室，在线考试" />
+    <meta name="description" content="FunExam - SWPU 翼灵在线考试系统首页" />
     <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
-    <link rel="stylesheet" href="stylesheets/css/funExam.css" />
-    <style>
-        .container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-    </style>
-    <link rel="stylesheet" href="stylesheets/css/examinee_info.css" />
-
-    <script src="lib/modernizr-2.6.2.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/dest/css/main.css" />
+    <script src="https://cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
     <!--[if (lt IE 9) & (!IEMobile)]>
-        <script src="/lib/respond.min.js"></script>
-        <![endif]-->
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.bootcss.com/holder/2.9.4/holder.min.js"></script>
 </head>
 
 <body>
-    <div id="particles-js"></div>
     <div class="container">
+        <div class="jumbotron">
+            <form>
+                <div class="form-group">
+                </div>
+                <div class="form-group">
+                </div>
+            </form>
+        </div>
         <div class="text-center" id="beforeSubmit">
             <p class="h2">考生你好：</p>
             <h1>距离 {{ 翼灵物联工作室 2018 届招新考试 }} 开始还有</h1>
@@ -80,12 +85,21 @@
             <p class="h5">后本页面将自动跳转至答题页面，如未跳转，请点击 <a href="#">刷新</a></p>
         </div>
     </div>
-    <script src="lib/jquery-3.2.1.min.js"></script>
-    <script src="lib/bootstrap.min.js"></script>
-    <script src="lib/particles.min.js"></script>
-    <script src="js/particlesInit.js"></script>
-    <script src="js/funLib.js"></script>
-    <script src="js/examinee_info.js"></script>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <footer class="page-copyright" role="contentinfo">
+                <span><i class="fa fa-cc"></i> 2018</span>
+                <a href="https://github.com/w3fun/" target="_blank"><i class="fa fa-heart"></i> W3Fun</a>
+                <a href="https://github.com/YiLing-IOT-Studio/" target="_blank"><i class="fa fa-heart"></i> YiLing-IOT-Studio</a>
+                <a href="https://github.com/swpuLeo/" target="_blank"><i class="fa fa-male"></i> Leo</a>
+                <a href="https://github.com/812913/" target="_blank"><i class="fa fa-female"></i> lwf</a>
+                <a href="https://github.com/StaticWalk/" target="_blank"><i class="fa fa-male"></i> StaticWalk</a>
+                <a href="https://github.com/luqingying/" target="_blank"><i class="fa fa-female"></i> lqy</a>
+                <a href="https://github.com/w3fun/ExamSystem/blob/master/LICENSE" target="_blank"><i class="fa fa-copyright"></i> MIT</a>
+            </footer>
+        </div>
+    </nav>
 </body>
 
 </html>
