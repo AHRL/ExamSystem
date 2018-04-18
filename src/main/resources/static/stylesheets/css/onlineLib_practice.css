@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-@import "../../lib/lib.css";
+/* @import "../../lib/lib.css"; */
 @import "main.css";
 ul{
     list-style: none;
