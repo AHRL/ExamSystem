@@ -18,7 +18,7 @@
     <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
     <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../static/dest/css/main.css" />
+    <link rel="stylesheet" href="../static/dist/css/personal.bundle.css" />
     <script src="https://cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
     <!--[if (lt IE 9) & (!IEMobile)]>
@@ -53,10 +53,9 @@
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    李友波
+                        <a class="nav-link dropdown-toggle" href="#" id="avator" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu" aria-labelledby="avator">
                             <a class="dropdown-item" href="#">个人中心</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">退出登录</a>
@@ -72,10 +71,8 @@
             <div class="col-3">
                 <ul class="list-group">
                     <li class="list-group-item active">我的考试</li>
-                    <li class="list-group-item disabled" title="尽情期待">我的题库</li>
-                    <li class="list-group-item disabled" title="尽情期待">我的成就</li>
                     <li class="list-group-item">账号设置</li>
-                    <li class="list-group-item"><a href="http://www.swpuiot.com">{{管理员中心}}</a></li>
+                    <li class="list-group-item" style="display: none;" id="isAdmin"><a href="http://www.swpuiot.com">{{管理员中心}}</a></li>
                 </ul>
             </div>
             <div class="col-9">
@@ -135,7 +132,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tabCon1">
+                        <div class="tabCon1" style="display: none;">
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
@@ -165,23 +162,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="listBox"></div>
-                <div class="listBox"></div>
                 <!-- Tab Account Setting -->
-                <div class="listBox">
+                <div class="listBox" style="display: none;">
                     <div class="jumbotron">
                         <ul class="nav nav-tabs tabGroup2">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#">基本信息</a>
+                                <span class="nav-link active" href="#">基本信息</span>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">账号绑定</a>
+                                <span class="nav-link" href="#">账号绑定</span>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">密码修改</a>
+                                <span class="nav-link" href="#">密码修改</span>
                             </li>
                         </ul>
-                        <form>
+                        <form class="tabCon2">
                             <div class="form-group row">
                                 <label for="staticEmail" class="col-sm-2 col-form-label">真实姓名</label>
                                 <div class="col-sm-10">
@@ -221,7 +216,7 @@
                                 <button class="btn btn-primary btn-sm" type="button">修改资料</button>
                             </div>
                         </form>
-                        <form>
+                        <form class="tabCon2" style="display: none;">
                             <div class="form-group row">
                                 <label for="staticEmail" class="col-sm-2 col-form-label">绑定邮箱</label>
                                 <div class="col-sm-8">
@@ -232,7 +227,7 @@
                                 </div>
                             </div>
                         </form>
-                        <form>
+                        <form class="tabCon2" style="display: none;">
                             <div class="form-group row">
                                 <label for="inputPassword3" class="col-sm-2 col-form-label">原始密码</label>
                                 <div class="col-sm-10">
@@ -277,7 +272,7 @@
         </div>
     </nav>
 
-    <script src="../static/dest/js/personal.js"></script>
+    <script src="../static/dist/js/personal.bundle.js"></script>
 </body>
 
 </html>

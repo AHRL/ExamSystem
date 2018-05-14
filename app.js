@@ -17,28 +17,68 @@ app.use(cookieParser('signed'));
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(path.join(__dirname, 'src/main/resources/static/dest')));
 
-app.all('*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type");
-    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
-    res.header("X-Powered-By", ' 3.2.1')
-    res.header("Content-Type", "application/json;charset=utf-8");
-    next();
+// app.all('*', function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "Content-Type");
+//     res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+//     res.header("X-Powered-By", ' 3.2.1')
+//     res.header("Content-Type", "application/json;charset=utf-8");
+//     next();
+// });
+
+app.get('/api/userinfo', (req, res) => {
+    res.json(JSON.stringify({
+        ret: true,
+        data: {
+            username: 'Leo'
+        }
+    }))
 });
 
-app.get('/v2/user/signup', function(req, res) {
-
+app.get('/api/logout', (req, res) => {
+    res.json(JSON.stringify({
+        ret: true
+    }))
 });
 
-app.post('/v2/user', function(req, res) {
-
+app.get('/api/exam-list-for-sign', (req, res) => {
+    res.json(JSON.stringify({
+        ret: true,
+        data: [{
+            name: '翼灵招新考试',
+            date: '2018/06/15 15:00-17:00',
+            deadline: '2018/6/14 23:59',
+            loc: '明理楼B404'
+        }]
+    }))
 });
 
-app.get('/v2/valicode', function(req, res) {
-    res.json({
-        "success": true
-    })
+app.post('/api/user-sign-for-exam', (req, res) => {
+    res.json(JSON.stringify({
+        ret: true,
+        data: {
+            'status': 'OK'
+        }
+    }))
 });
+
+app.get('/api/isExsit', (req, res) => {
+    res.json(JSON.stringify({
+        ret: true,
+        data: {
+            isExsit: false
+        }
+    }))
+});
+
+app.get('/api/getValCode', (req, res) => {
+    res.json(JSON.stringify({
+        ret: true,
+        data: {
+            valCode: 'HJ5Is9'
+        }
+    }))
+})
 
 app.get('404', function(req, res) {
     res.send('404');

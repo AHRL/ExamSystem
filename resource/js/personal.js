@@ -1,92 +1,96 @@
 $(document).ready(pageReady);
 
-var server = 'http://127.0.0.1:3000';
-
 function pageReady() {
-    $.ajax({
-        type: 'GET',
-        url: server + '/api/userinfo',
-        dataType: 'json',
-        success: function(data) {
+    const $avator = $('#avator');
+    $.get('/api/userinfo')
+        .then(data => {
             data = JSON.parse(data);
-            if (data.name) {
-
-            } else {
-
-            }
-            if (data.isAdmin) {
-
-            } else {
-
-            }
-        }
-    });
-
-    var $logout = $('#logout');
-    $logout.on('click', function() {
-        $.ajax({
-            type: 'GET',
-            url: server + '/api/logout'
-        });
-    });
-
-    var $listGroup = $('.list-group');
-    var $listBox = $('.listBox');
-
-    $listBox.toArray().forEach(function(box, item) {
-        if (item !== 0) {
-            $(box).hide();
-        }
-    });
-
-    $listGroup.on('click', function(e) {
-        var $target = $(e.target);
-        var index = $target.index();
-
-        var children = $listGroup.children().toArray();
-        if (index === 1 || index === 2) {
-            return;
-        } else {
-            children.forEach(function(child) {
-                if ($(child).hasClass('active')) {
-                    $(child).removeClass('active');
+            const res = data.data;
+            if (data.ret && res) {
+                $avator.text(res.username);
+                if (res.isAdmin === 'admin') {
+                    $('#isAdmin').show();
                 }
-            });
-            $target.addClass('active');
-            if (index === 0 || index === 3) {
-                $listBox.toArray().forEach(function(box) {
-                    $(box).hide();
-                });
-                $($listBox.toArray()[index]).show();
-            } else {
-                return;
             }
-        }
+        })
+        .fail(err => {
+            console.error(err);
+        });
+
+    const $listGroup = $('.list-group');
+    const $listBox = $('.listBox');
+    $listGroup.on('click', e => {
+        let $target = $(e.target);
+        let index = $target.index();
+
+        let children = $listGroup.children().toArray();
+        children.forEach((item, idx) => {
+            if ($(item).hasClass('active')) {
+                $(item).removeClass('active');
+            }
+            if (index === idx) {
+                $(item).addClass('active');
+            }
+        });
+        $listBox.toArray().forEach((item, idx) => {
+            $(item).hide();
+            if (index === idx) {
+                $(item).show();
+            }
+        })
     });
 
-    var $tabGroup1 = $('.tabGroup1');
-    var tabCon1 = $('.tabCon1').toArray();
+    const $logout = $('#logout');
+    $logout.on('click', () => {});
 
-    tabCon1.forEach(function(con, index) {
-        if (index !== 0) {
-            $(con).hide();
-        }
-    });
+    const $tabGroup1 = $('.tabGroup1');
+    const $tabCon1 = $('.tabCon1');
 
-    $tabGroup1.on('click', function(e) {
-        var $target = $(e.target);
-        var index = $target.index();
-        var children = $tabGroup1.children().toArray().map(function(child) {
+    $tabGroup1.on('click', (e) => {
+        let $target = $(e.target);
+        let index = $target.index('.tabGroup1 .nav-link');
+        let children = $tabGroup1.children().toArray().map((child) => {
             return $(child).children();
         });
-        console.log(children);
-        children.forEach(function(child) {
+        children.forEach((child, idx) => {
             if ($(child).hasClass('active')) {
                 $(child).removeClass('active');
             }
+            if (index === idx) {
+                $(child).addClass('active');
+            }
         });
-        $target.addClass('active');
-        $(tabCon1[index]).show();
+        
+        $tabCon1.toArray().forEach((item, idx) => {
+            $(item).hide();
+            if (index === idx) {
+                $(item).show();
+            }
+        })
     });
 
+    const $tabGroup2 = $('.tabGroup2');
+    const $tabCon2 = $('.tabCon2');
+    $tabGroup2.on('click', e => {
+        let $target = $(e.target);
+        let index = $target.index('.tabGroup2 .nav-link');
+        let children = $tabGroup2.children().toArray().map((child) => {
+            return $(child).children();
+        });
+        children.forEach((child, idx) => {
+            if ($(child).hasClass('active')) {
+                $(child).removeClass('active');
+            }
+            if (index === idx) {
+                $(child).addClass('active');
+            }
+        });
+        
+        $tabCon2.toArray().forEach((item, idx) => {
+            $(item).hide();
+            if (index === idx) {
+                $(item).show();
+            }
+        })
+    })
 }

@@ -5,8 +5,8 @@ const extractSass = new ExtractTextPlugin({
 });
 module.exports = {
     entry: {
-        main: path.resolve(__dirname, 'resource/js', 'main.js'),
-        homepage: path.resolve(__dirname, 'resource/js', 'homepage.js'),
+        login: path.resolve(__dirname, 'resource/js', 'login.js'),
+        funExam: path.resolve(__dirname, 'resource/js', 'funExam.js'),
         personal: path.resolve(__dirname, 'resource/js', 'personal.js')
     },
     output: {

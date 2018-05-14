@@ -17,7 +17,7 @@
     <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
     <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../static/dist/css/main.bundle.css" />
+    <link rel="stylesheet" href="../static/dist/css/login.bundle.css" />
 
     <script src="https://cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
@@ -86,6 +86,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <p class="alert alert-danger" id="logIn" style="display: none;"></p>
                     <form class="form-control-sm needs-validation" id="formIn" role="form" novalidate>
                         <div class="form-group">
                             <label for="username" class="form-control-label">邮箱</label>
@@ -121,6 +122,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <p class="alert alert-danger" id="logUp" style="display: none;"></p>
                     <form class="form-control-sm needs-validation" role="form" novalidate>
                         <div class="form-group">
                             <label for="emailUp" class="form-control-label">邮箱</label>
@@ -156,7 +158,7 @@
     </div>
 
     <!-- <script src="../static/js/particlesInit.js"></script> -->
-    <script src="../static/dist/js/main.bundle.js"></script>
+    <script src="../static/dist/js/login.bundle.js"></script>
 </body>
 
 </html>
