@@ -30,7 +30,10 @@ app.get('/api/userinfo', (req, res) => {
     res.json(JSON.stringify({
         ret: true,
         data: {
-            username: 'Leo'
+            username: 'Leo',
+            major: '物联网工程',
+            grade: '2015',
+            other: 'll'
         }
     }))
 });
@@ -76,6 +79,34 @@ app.get('/api/getValCode', (req, res) => {
         ret: true,
         data: {
             valCode: 'HJ5Is9'
+        }
+    }))
+});
+
+app.get('/api/exam-detail', (req, res) => {
+    res.json(JSON.stringify({
+        ret: true,
+        data: {
+            examing: [{
+                name: '翼灵招新考试',
+                date: '2018/06/15 15:00-17:00',
+                deadline: '2018/6/14 23:59',
+                loc: '明理楼B404' 
+            }],
+            examed: [{
+                name: '翼灵招新考试',
+                date: '2018/06/15 15:00-17:00',
+                score: 75 
+            }]
+        }
+    }));
+});
+
+app.post('/api/ready-exam', (req, res) => {
+    res.json(JSON.stringify({
+        ret: true,
+        data: {
+            status: 'OK'
         }
     }))
 })
