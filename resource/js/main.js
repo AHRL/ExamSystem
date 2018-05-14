@@ -23,29 +23,33 @@ function pageReady() {
     $emailIn.on('focus', rmValidationClass);
     $pswdIn.on('blur', checkValue(matchLength));
     $pswdIn.on('focus', rmValidationClass);
-    // $submitIn.on('click', function(e) {
+    $submitIn.on('click', function(e) {
+        e.preventDefault();
+        // /* $.ajax({
+        //     type: 'POST',
+        //     url: server + '/login',
+        //     data: JSON.stringify({
+        //         email: $emailIn.val(),
+        //         pswd: $pswdIn.val()
+        //     }),
+        //     // dataType: '', // 我期望得到的数据类型
+        //     contentType: 'application/json', // 我准备以该数据类型发送数据
+        //     success: function(data) {
+        //         console.log(data);
+        //     },
+        //     error: function(err) {
+        //         console.error(err);
+        //     }
+        // }); */
+    });
+
+    // $formIn.on('submit', function(e) {
     //     e.preventDefault();
-    //     // /* $.ajax({
-    //     //     type: 'POST',
-    //     //     url: server + '/login',
-    //     //     data: JSON.stringify({
-    //     //         email: $emailIn.val(),
-    //     //         pswd: $pswdIn.val()
-    //     //     }),
-    //     //     // dataType: '', // 我期望得到的数据类型
-    //     //     contentType: 'application/json', // 我准备以该数据类型发送数据
-    //     //     success: function(data) {
-    //     //         console.log(data);
-    //     //     },
-    //     //     error: function(err) {
-    //     //         console.error(err);
-    //     //     }
-    //     // }); */
     //     $.ajax({
     //         type: 'POST',
-    //         url: '',
+    //         url: '/login',
     //         contentType: 'application/x-www-form-urlencoded',
-    //         data: $,
+    //         data: $formIn.serialize(),
     //         success: function(data) {
     //             console.log(data);
     //         },
@@ -54,22 +58,6 @@ function pageReady() {
     //         }
     //     })
     // });
-
-    $formIn.on('submit', function(e) {
-        e.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: '/login',
-            contentType: 'application/x-www-form-urlencoded',
-            data: $formIn.serialize(),
-            success: function(data) {
-                console.log(data);
-            },
-            error: function(err) {
-                console.error(err);
-            }
-        })
-    });
 
     // Sign up
     var $emailUp = $('#emailUp'),
@@ -81,11 +69,12 @@ function pageReady() {
         $submitUp = $('#submitUp');
 
     $emailUp.on('blur', function() {
+        var email = $emailUp.val();
         $.ajax({
             type: 'POST',
-            url: server + '/api/isExist',
+            url: server + '/v2/user?email=' + email,
             data: JSON.stringify({
-                emila: $emailUp.val()
+                email: email
             }),
             dataType: 'json',
             contentType: 'application/json',
