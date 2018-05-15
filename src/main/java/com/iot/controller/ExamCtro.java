@@ -325,8 +325,7 @@ public class ExamCtro {
             return  "{\"name\":"+user.getUsername()+"\",\"email\":\""+user.getEmail()+"\",\"practiced\":\""+0+
                     "\",\"tested\":\""+0+"\",\"email\":\""+user.getEmail()+"\",\"isAdmin\":\"0\"}";
     }
-
-
+    
 
     @ResponseBody
     @RequestMapping("/userPaper")
@@ -383,7 +382,7 @@ public class ExamCtro {
 
     }
 
-    
+
     @RequestMapping("/select")
     public String select(@RequestParam(required = false,defaultValue = "null",value = "programmeA")String A,
                          @RequestParam(required = false,defaultValue = "null",value = "programmeB")String B,

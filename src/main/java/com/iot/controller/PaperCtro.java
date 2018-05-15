@@ -71,37 +71,70 @@ public class PaperCtro {
 	@RequestMapping(value = "/api/ready_exam",method = RequestMethod.GET)
 	public String ready_exam() {
 
+		Boolean status =false;
 		java.util.Date now = new java.util.Date();
 		DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<PaperInfo> list=paperInfoRepository.findAll();
 
 		for (int i = 0; i < list.size(); i++) {
 			String mix=list.get(i).getDate()+" "+list.get(i).getStartTime()+":00";
-			System.out.println(mix);
+//			System.out.println(mix);
 			try {
 				if (format.parse(mix).getTime()-600000< now.getTime()&&format.parse(mix).getTime()+1800000> now.getTime()) {
 
-					jedis.set(jsessionId+"UserPaper", String.valueOf(1));
-					user = userRepository.findByUsername(jedis.get(jsessionId));
-					paperInfo = list.get(i);
-
-					return "{\"role\":\""+user.getRole()+"\",\"email\":\""+user.getEmail()+"\",\"username\":\""+user.getUsername()
-							+ "\",\"examQuestion\":[" +
-							// paperInfo.getExamQuestion()
-							stringUtil.adjustFormat(paperInfo)
-							+"],\"startTime\":\""+paperInfo.getStartTime()
-							+"\",\"endTime\":\""+paperInfo.getEndTime()+"\",\"type\":\""+paperInfo.getType()+"\",\"info\":\""+
-							paperInfo.getInfo()+"\",\"token\":\""+paperInfo.getToken()+"\"}";
+					jedis.set(jsessionId+"PaperCode",String.valueOf(list.get(i).getId()));
+					jedis.expire(jsessionId+"PaperCode",2400);
+					status=true;
+					return "{ret:"+status+",data:{status:'OK'";
 				}
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
 		}
-		return "error";
+		return "{ret:"+status+"}";
+
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/api/exam_detail",method = RequestMethod.GET)
+	public String exam_detail() {
+
+		user = userRepository.findByUsername(jedis.get(jsessionId));
+
+		paperInfo =paperInfoRepository.findById(Integer.valueOf(jedis.get(jsessionId+"PaperCode")));
+
+
+		return "{\"role\":\""+user.getRole()+"\",\"email\":\""+user.getEmail()+"\",\"username\":\""+user.getUsername()
+				+ "\",\"examQuestion\":[" +
+				// paperInfo.getExamQuestion()
+				stringUtil.adjustFormat(paperInfo)
+				+"],\"startTime\":\""+paperInfo.getStartTime()
+				+"\",\"endTime\":\""+paperInfo.getEndTime()+"\",\"type\":\""+paperInfo.getType()+"\",\"info\":\""+
+				paperInfo.getInfo()+"\",\"token\":\""+paperInfo.getToken()+"\"}";
 
 	}
 
 
+	@ResponseBody
+	@RequestMapping(value = "/api/userinfo",method = RequestMethod.GET)
+	public  String userinfo() {
+		return "1";
+	}
 
+	@ResponseBody
+	@RequestMapping(value = "/api/getValCode",method = RequestMethod.GET)
+	public  String getValCode() {
+		return "1";
+	}
+	@ResponseBody
+	@RequestMapping(value = "/api/exam",method = RequestMethod.GET)
+	public  String exam() {
+		return "1";
+	}
 
+	@ResponseBody
+	@RequestMapping(value = "/api/exam_submit",method = RequestMethod.GET)
+	public  String exam_submit() {
+		return "1";
+	}
 }
