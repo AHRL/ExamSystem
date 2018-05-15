@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if gt IE 8]>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org">
+<![endif]-->
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>在线考试 | FunExam</title>
+    <meta name="keyword" content="FunExam，翼灵物联工作室，在线考试" />
+    <meta name="description" content="FunExam - SWPU 翼灵在线考试系统首页" />
+    <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/dist/css/exam.bundle.css" />
+    <script src="https://cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
+    <!-- Respond.js for IE 8 or less only-->
+    <!--[if (lt IE 9) & (!IEMobile)]>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/holder/2.9.4/holder.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <main class="jumbotron">
+            <div class="hzone">
+                <span class="hzone-type"></span>
+                <span class="hzone-time"></span>
+            </div>
+            <div class="content">
+                <p class="content-desc"></p>
+            </div>
+            <div class="answer-card">
+                <span style="margin-right: 1rem">答题卡</span>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal fade" id="submitAlert" tabindex="-1" role="dialog" aria-labelledby="submitAlertTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="submitAlertTitle">确定提交</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-sm" id="confirmSubmit"></button>
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"></button>
+                </div>
+          </div>
+        </div>
+    </div>
+
+    <script src="../static/dist/js/exam.bundle.js"></script>
+</body>
+
+</html>

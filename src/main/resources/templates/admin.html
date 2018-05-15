@@ -17,7 +17,7 @@
     <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
     <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../static/dest/css/main.css" />
+    <link rel="stylesheet" href="../static/dist/css/admin.bundle.css" />
     <script src="https://cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
     <!-- Respond.js for IE 8 or less only-->
     <!--[if (lt IE 9) & (!IEMobile)]>
@@ -26,8 +26,7 @@
 
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="https://cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
-    <script src="https://cdn.bootcss.com/holder/2.9.4/holder.min.js"></script>
+    <script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
 </head>
 
 <body>
@@ -40,8 +39,8 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">后台管理系统 <span class="sr-only">(current)</span></a>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">后台管理系统 <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">考试管理</a>
@@ -70,42 +69,56 @@
     <div class="container">
         <div class="con-item">
             <div class="row">
-                <div class="col-4">
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">已考试卷</h5>
-                            <p class="card-text">2018/6/9</p>
-                            <p class="card-text">明理楼B区4楼 - 待定</p>
-                            <a href="#" class="btn btn-sm btn-primary">查看更多</a>
-                        </div>
-                    </div>
-                </div>
+                <div class="col-12">
+                    <div class="jumbotron">
+                        <h1 class="h2">后台管理</h2>
+                        <hr class="my-4"/>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="card" style="width: 18rem;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">已考试卷</h5>
+                                        <p class="card-text">累计试卷 {{12}} 份</p>
+                                        <p class="card-text">累计参考人数 {{448}} 人</p>
+                                        <a href="#" class="btn btn-sm btn-primary btn-more">查看更多</a>
+                                    </div>
+                                </div>
+                            </div>
 
-                <div class="col-4">
-                    <div class="card" style="width: 18rem; position: relative; left: 10%;">
-                        <div class="card-body">
-                            <h5 class="card-title">待考试卷</h5>
-                            <p class="card-text">2018/6/9</p>
-                            <p class="card-text">明理楼B区4楼 - 待定</p>
-                            <a href="#" class="btn btn-sm btn-primary">查看更多</a>
-                        </div>
-                    </div>
-                </div>
+                            <div class="col-4">
+                                <div class="card" style="width: 18rem; position: relative; left: 10%;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">待考试卷</h5>
+                                        <p class="card-text">待考试卷 {{2}} 份</p>
+                                        <p class="card-text">待考报名人数 {{27}} 人</p>
+                                        <a href="#" class="btn btn-sm btn-primary btn-more">查看更多</a>
+                                    </div>
+                                </div>
+                            </div>
 
-                <div class="col-4">
-                    <div class="card" style="width: 18rem; position: absolute; right: 15px;">
-                        <div class="card-body">
-                            <h5 class="card-title">试卷分类</h5>
-                            <p class="card-text">2018/6/9</p>
-                            <p class="card-text">明理楼B区4楼 - 待定</p>
-                            <a href="#" class="btn btn-sm btn-primary">查看更多</a>
+                            <div class="col-4">
+                                <div class="card" style="width: 18rem; position: absolute; right: 15px;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">试卷分类</h5>
+                                        <p class="card-text">热门分类 {{招新考试}}</p>
+                                        <p class="card-text">最近分类 {{C 语言}}</p>
+                                        <a href="#" class="btn btn-sm btn-primary btn-more">查看更多</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <div class="jumbotron more" style="display: none;">
+                        <h2 class="h4">{{已考试卷}}</h2>
+                        <hr class="my-4"/>
+                        <div id="more-content" style="width: 100%; height: 20rem"></div>
+                    </div>
                 </div>
+                
             </div>
         </div>
 
-        <div class="con-item">
+        <div class="con-item" style="display: none;">
             <div class="row">
                 <header class="col-12">
                     <h1 class="h4">考试管理</h1>
@@ -464,9 +477,12 @@
                 </div>
             </div>
         </div>
+
+        <div class="con-item" style="display: none;">题库管理</div>
+        <div class="con-item" style="display: none;">在线统计</div>
     </div>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <footer class="page-copyright" role="contentinfo">
                 <span><i class="fa fa-cc"></i> 2018</span>
@@ -479,7 +495,9 @@
                 <a href="https://github.com/w3fun/ExamSystem/blob/master/LICENSE" target="_blank"><i class="fa fa-copyright"></i> MIT</a>
             </footer>
         </div>
-    </nav>
+    </nav> -->
+
+    <script src="../static/dist/js/admin.bundle.js"></script>
 </body>
 
 </html>

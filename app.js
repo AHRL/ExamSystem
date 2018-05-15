@@ -109,7 +109,47 @@ app.post('/api/ready-exam', (req, res) => {
             status: 'OK'
         }
     }))
-})
+});
+
+app.get('/api/exam', (req, res) => {
+    res.json(JSON.stringify({
+        ret: true,
+        time: '120',
+        data: [{
+            type: 'radio',
+            desc: '下列哪个样式定义后,内联(非块状)元素可以定义宽度和高度',
+            content: [
+                'Check this custom checkbox',
+                'Check this custom checkbox',
+                'Check this custom checkbox',
+                'Check this custom checkbox'
+            ]
+        }, {
+            type: 'checkbox',
+            desc: '下列哪个样式定义后,内联(非块状)元素可以定义宽度和高度',
+            content: [
+                'Check this custom checkbox',
+                'Check this custom checkbox',
+                'Check this custom checkbox',
+                'Check this custom checkbox'
+            ]
+        }, {
+            type: 'jianda',
+            desc: '下列哪个样式定义后,内联(非块状)元素可以定义宽度和高度',
+            content: []
+        }]
+    }))
+});
+
+app.post('/api/exam-submit', upload.array(), (req, res) => {
+    console.log(req.body);
+    res.json(JSON.stringify({
+        ret: true,
+        data: [{
+            status: 'OK'
+        }]
+    }))
+});
 
 app.get('404', function(req, res) {
     res.send('404');

@@ -1,5 +1,6 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const extractSass = new ExtractTextPlugin({
     filename: "./css/[name].bundle.css"
 });
@@ -7,7 +8,9 @@ module.exports = {
     entry: {
         login: path.resolve(__dirname, 'resource/js', 'login.js'),
         funExam: path.resolve(__dirname, 'resource/js', 'funExam.js'),
-        personal: path.resolve(__dirname, 'resource/js', 'personal.js')
+        personal: path.resolve(__dirname, 'resource/js', 'personal.js'),
+        exam: path.resolve(__dirname, 'resource/js', 'exam.js'),
+        admin: path.resolve(__dirname, 'resource/js', 'admin.js')
     },
     output: {
         filename: './js/[name].bundle.js',
@@ -23,6 +26,7 @@ module.exports = {
         }]
     },
     plugins: [
-        extractSass
+        extractSass,
+        new CleanWebpackPlugin(['src/main/resources/static/dist'])
     ]
 };
