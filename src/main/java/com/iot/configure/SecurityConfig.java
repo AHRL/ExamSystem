@@ -62,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         ,"/admin","/admin_add","/add","/select","/mailSender"
                         ,"/answersSender","/test","/onlineLib_result","/skill_chart"
                         ,"/admin_publish","/exam_add","/.well-known/pki-validation/fileauth.txt"
-                        ,"/personal","/personalInfo").permitAll()
+                        ,"/personal","/personalInfo","/api/*","/userPaper").permitAll()
 //                .antMatchers("/onlineLib").access("hasRole('admin')")
                 .anyRequest().authenticated()
                 .and()

@@ -325,7 +325,7 @@ public class ExamCtro {
             return  "{\"name\":"+user.getUsername()+"\",\"email\":\""+user.getEmail()+"\",\"practiced\":\""+0+
                     "\",\"tested\":\""+0+"\",\"email\":\""+user.getEmail()+"\",\"isAdmin\":\"0\"}";
     }
-
+    
 
     @ResponseBody
     @RequestMapping("/userPaper")
@@ -465,10 +465,11 @@ public class ExamCtro {
 
     @ResponseBody
     @RequestMapping(value = "/api/isExist",method = RequestMethod.GET)
-    public int isExist(@RequestParam(value = "email")String email) {
-        User user=userRepository.findByEmail(email);
-        if(user!=null){return 1;}
-        else {return 0;}
+    public String isExist(@RequestParam(value = "email")String email) {
+
+        Boolean  status = userRepository.findByEmail(email)==null?false:true;
+        return  "{ret:true,date:{isExist:"+status+"}}";
+
     }
 
     @RequestMapping(value = "/registered")
