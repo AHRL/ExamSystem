@@ -46,12 +46,12 @@ class Login {
             if (val) {
                 result = this.check('email', val);
                 if (result) {
-                    $.get('/api/isExsit')
+                    $.get('/api/isExist')
                     .then(data => {
                         data = JSON.parse(data);
                         const res = data.data;
                         if (data.ret && res) {
-                            if (res.isExsit === false) {
+                            if (res.isExist === false) {
                                 this.fadeIn('邮箱未被注册');
                                 this.flag.email = false;
                             }

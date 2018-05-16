@@ -45,12 +45,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">考试管理</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">题库管理</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">在线统计</a>
-                    </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown">
@@ -78,8 +72,6 @@
                                 <div class="card" style="width: 18rem;">
                                     <div class="card-body">
                                         <h5 class="card-title">已考试卷</h5>
-                                        <p class="card-text">累计试卷 {{12}} 份</p>
-                                        <p class="card-text">累计参考人数 {{448}} 人</p>
                                         <a href="#" class="btn btn-sm btn-primary btn-more">查看更多</a>
                                     </div>
                                 </div>
@@ -89,8 +81,6 @@
                                 <div class="card" style="width: 18rem; position: relative; left: 10%;">
                                     <div class="card-body">
                                         <h5 class="card-title">待考试卷</h5>
-                                        <p class="card-text">待考试卷 {{2}} 份</p>
-                                        <p class="card-text">待考报名人数 {{27}} 人</p>
                                         <a href="#" class="btn btn-sm btn-primary btn-more">查看更多</a>
                                     </div>
                                 </div>
@@ -100,8 +90,6 @@
                                 <div class="card" style="width: 18rem; position: absolute; right: 15px;">
                                     <div class="card-body">
                                         <h5 class="card-title">试卷分类</h5>
-                                        <p class="card-text">热门分类 {{招新考试}}</p>
-                                        <p class="card-text">最近分类 {{C 语言}}</p>
                                         <a href="#" class="btn btn-sm btn-primary btn-more">查看更多</a>
                                     </div>
                                 </div>
@@ -128,25 +116,21 @@
                     <div class="row">
                         <div class="col-3">
                             <ul class="list-group">
-                                <li class="list-group-item">填写考试信息</li>
+                                <li class="list-group-item active">填写考试信息</li>
                                 <li class="list-group-item">添加考试题目</li>
-                                <li class="list-group-item">准备发布考试</li>
-                            </ul>
-                            <ul class="list-group">
-                                <li class="list-group-item">试题答案设置</li>
-                                <li class="list-group-item">试题批阅结果</li>
+                                <li class="list-group-item">准备提交试卷</li>
                             </ul>
                         </div>
                         <div class="col-9">
                             <!-- Basic info -->
-                            <div class="jumbotron">
+                            <div class="jumbotron list-con">
                                 <h2 class="h5">填写考试信息</h2>
                                 <hr class="my-4" />
                                 <form class="publish-info form-control-sm">
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">考试名称</label>
                                         <div class="col-sm-10">
-                                            <input type="text" name="infoNotes" id="infoNotes" class="form-control form-control-sm" placeholder="填写考试名称，比如：翼灵物联工作室2017级招新笔试" />
+                                            <input type="text" name="chooseTitle" id="chooseTitle" class="form-control form-control-sm" placeholder="填写考试名称，比如：翼灵物联工作室2017级招新笔试" />
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -207,14 +191,11 @@
                                                             </select>
 
                                         </div>
-                                        <div class="col-5">
-                                            <input type="text" class="form-control form-control-sm" placeholder="其他时间段，格式：hh:mm-hh:mm" />
-                                        </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">考试地点</label>
                                         <div class="col-sm-5">
-                                            <select name="chooseTime" id="chooseTime" class="custom-select form-control-sm">
+                                            <select name="chooseLoc" id="chooseLoc" class="custom-select form-control-sm">
                                                             <option selected value="">选择考试地点</option>
                                                             <option value="明理楼B401">明理楼B401</option>
                                                             <option value="明理楼B402">明理楼B402</option>
@@ -228,45 +209,25 @@
                                                         </select>
 
                                         </div>
-                                        <div class="col-sm-5">
-                                            <input type="text" class="form-control form-control-sm" placeholder="其他地点" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" title="内部考试指仅有翼灵团队成员参加，典型的非内部考试就是招新考试">内部考试 <sup><i class="fa fa-exclamation-circle"></i></sup></label>
-                                        <div class="col-sm-10">
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                                                <label class="custom-control-label" for="customRadio1">是</label>
-                                            </div>
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                                                <label class="custom-control-label" for="customRadio2">否</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" title="随机生成，考生进入考试时使用">考试密令 <sup><i class="fa fa-exclamation-circle"></i></sup></label>
-                                        <input type="text" readonly class="col-sm-10 form-control form-control-plaintext" value="456H1B" />
                                     </div>
                                     <div class="form-group">
-                                        <button class="btn btn-success btn-sm">确认信息</button>
+                                        <button class="btn btn-success btn-sm" id="basicBtn">确认信息</button>
                                     </div>
                                 </form>
                             </div>
 
                             <!-- Add exam -->
-                            <div class="jumbotron">
+                            <div class="jumbotron list-con" style="display: none;">
                                 <h2 class="h5">添加考试题目</h2>
                                 <hr class="my-4" />
-                                <form class="form-control-sm">
+                                <form class="form-control-sm qform">
                                     <div class="form-group row">
                                         <label class="col-2 col-form-label">题目描述</label>
-                                        <input type="text" class="col-10 form-control form-control-sm" placeholder="题目描述" />
+                                        <input type="text" class="col-10 form-control form-control-sm" id="questionDesc" placeholder="题目描述" />
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-2 col-form-label">题目类型</label>
-                                        <select name="chooseTime" id="chooseTime" class="col-10 custom-select form-control-sm">
+                                        <select name="questionType" id="questionType" class="col-10 custom-select form-control-sm">
                                             <option selected value="">选择题目类型</option>
                                             <option value="单选">单选</option>
                                             <option value="多选">多选</option>
@@ -276,193 +237,48 @@
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-2 col-form-label">题目分值</label>
-                                        <input type="text" class="col-4 form-control form-control-sm" placeholder="设置题目分值，如 10 分" />
+                                        <input type="text" class="col-4 form-control form-control-sm" id="questionScore" placeholder="设置题目分值，如 10 分" />
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-2 col-form-label">题目选项</label>
                                         <div class="col-10">
                                             <div class="row">
                                                 <label class="col-1 col-from-label">A</label>
-                                                <input type="text" class="form-control form-control-sm col-11" placeholder="选项A" />
+                                                <input type="text" class="form-control form-control-sm col-11 questionChoice" placeholder="选项A" />
                                             </div>
                                             <div class="row">
                                                 <label class="col-1 col-from-label">B</label>
-                                                <input type="text" class="form-control form-control-sm col-11" placeholder="选项B" />
+                                                <input type="text" class="form-control form-control-sm col-11 questionChoice" placeholder="选项B" />
                                             </div>
                                             <div class="row">
                                                 <label class="col-1 col-from-label">C</label>
-                                                <input type="text" class="form-control form-control-sm col-11" placeholder="选项C" />
+                                                <input type="text" class="form-control form-control-sm col-11 questionChoice" placeholder="选项C" />
                                             </div>
                                             <div class="row">
                                                 <label class="col-1 col-from-label">D</label>
-                                                <input type="text" class="form-control form-control-sm col-11" placeholder="选项D" />
+                                                <input type="text" class="form-control form-control-sm col-11 questionChoice" placeholder="选项D" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-2 col-form-label" title="题目描述涉及代码，可采取上传截图的方式">上传图片 <sup><i class="fa fa-exclamation-circle"></i></sup></label>
-                                        <div class="custom-file col-10">
-                                            <input type="file" class="custom-file-input" id="customFile">
-                                            <label class="custom-file-label" for="customFile">Choose file</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <button class="btn btn-success btn-sm btn-block" type="button">确认添加</button>
+                                        <button class="btn btn-success btn-sm btn-block questionBtn" type="button">确认添加</button>
                                     </div>
                                 </form>
                             </div>
 
-                            <!-- Confirm -->
-                            <div class="jumbotron">
-                                <h2 class="h5">准备发布考试</h2>
+                            <div class="jumbotron list-con" style="display: none;">
+                                <h2 class="h5">准备提交试卷</h2>
                                 <hr class="my-4" />
-                                <div class="row">
-                                    <div class="col-4">
-                                        <div class="card" style="width: 12rem;">
-                                            <div class="card-body">
-                                                <h5 class="card-title">{{试卷1}}</h5>
-                                                <p class="card-text">状态：待发布</p>
-                                                <a href="#" class="btn btn-sm btn-primary">试题预览</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-4">
-                                        <div class="card" style="width: 12rem; position: relative; left: 10%;">
-                                            <div class="card-body">
-                                                <h5 class="card-title">{{试卷2}}</h5>
-                                                <p class="card-text">状态：待发布</p>
-                                                <a href="#" class="btn btn-sm btn-primary">试题预览</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-4">
-                                        <div class="card" style="width: 12rem; position: absolute; right: 15px;">
-                                            <div class="card-body">
-                                                <h5 class="card-title">{{试卷3}}</h5>
-                                                <p class="card-text">状态：待发布</p>
-                                                <a href="#" class="btn btn-sm btn-primary">试题预览</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="exam-info">
+                                    <div></div><div></div><div></div><div></div><div></div>
                                 </div>
-                                <form class="form-control-sm">
-                                    <div class="form-group row">
-                                        <label class="col-2 col-form-label">试题修改</label>
-                                        <div class="input-group input-group-sm mb-3 col-10">
-                                            <div class="input-group-prepend">
-                                                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">试卷名称</button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#">{{试卷1}}</a>
-                                                    <a class="dropdown-item" href="#">{{试卷2}}</a>
-                                                </div>
-                                            </div>
-                                            <input type="text" class="form-control" placeholder="输入要修改的题目序号，序号可以通过“试题预览”按钮查看" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-success btn-sm" type="button">查找</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                <div class="">
-                                    <form class="form-control-sm">
-                                        <p class="h6">您准备修改第{{10}}题</p>
-                                        <div class="form-group row">
-                                            <label class="col-2 col-form-label">题目描述</label>
-                                            <input type="text" class="col-10 form-control form-control-sm" placeholder="题目描述" />
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-2 col-form-label">题目类型</label>
-                                            <select name="chooseTime" id="chooseTime" class="col-10 custom-select form-control-sm">
-                                                        <option selected value="">选择题目类型</option>
-                                                        <option value="单选">单选</option>
-                                                        <option value="多选">多选</option>
-                                                        <option value="编程">编程</option>
-                                                        <option value="简述">简述</option>
-                                                    </select>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-2 col-form-label">题目分值</label>
-                                            <input type="text" class="col-4 form-control form-control-sm" placeholder="设置题目分值，如 10 分" />
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-2 col-form-label">题目选项</label>
-                                            <div class="col-10">
-                                                <div class="row">
-                                                    <label class="col-1 col-from-label">A</label>
-                                                    <input type="text" class="form-control form-control-sm col-11" placeholder="选项A" />
-                                                </div>
-                                                <div class="row">
-                                                    <label class="col-1 col-from-label">B</label>
-                                                    <input type="text" class="form-control form-control-sm col-11" placeholder="选项B" />
-                                                </div>
-                                                <div class="row">
-                                                    <label class="col-1 col-from-label">C</label>
-                                                    <input type="text" class="form-control form-control-sm col-11" placeholder="选项C" />
-                                                </div>
-                                                <div class="row">
-                                                    <label class="col-1 col-from-label">D</label>
-                                                    <input type="text" class="form-control form-control-sm col-11" placeholder="选项D" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-2 col-form-label" title="题目描述涉及代码，可采取上传截图的方式">上传图片 <sup><i class="fa fa-exclamation-circle"></i></sup></label>
-                                            <div class="custom-file col-10">
-                                                <input type="file" class="custom-file-input" id="customFile">
-                                                <label class="custom-file-label" for="customFile">Choose file</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-2">
-                                                <button class="btn btn-info btn-sm" type="button">保存</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-
-                            <!-- Setting answer -->
-                            <div class="jumbotron">
-                                <h2 class="h5">试题答案设置</h2>
-                                <hr class="my-4" />
-                                <p class="">** 注意：只支持设置选择题答案 **</p>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <div class="card" style="width: 12rem;">
-                                            <div class="card-body">
-                                                <h5 class="card-title">{{试卷1}}</h5>
-                                                <p class="card-text">状态：未设置</p>
-                                                <a href="#" class="btn btn-sm btn-primary">设置答案</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-4">
-                                        <div class="card" style="width: 12rem; position: relative; left: 10%;">
-                                            <div class="card-body">
-                                                <h5 class="card-title">{{试卷2}}</h5>
-                                                <p class="card-text">状态：未设置</p>
-                                                <a href="#" class="btn btn-sm btn-primary">设置答案</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-4">
-                                        <div class="card" style="width: 12rem; position: absolute; right: 15px;">
-                                            <div class="card-body">
-                                                <h5 class="card-title">{{试卷3}}</h5>
-                                                <p class="card-text">状态：未设置</p>
-                                                <a href="#" class="btn btn-sm btn-primary">设置答案</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div>
+                                    <button class="btn btn-sm btn-success btn-submit disabled" disabled>提交</button>
                                 </div>
                             </div>
 
                             <!-- Result -->
-                            <div class="jumbotron">
+                            <div class="jumbotron list-con" style="display: none;">
                                 <h2 class="h5">试题批阅结果</h2>
                                 <hr class="my-4" />
                                 <div class="row">
@@ -477,25 +293,7 @@
                 </div>
             </div>
         </div>
-
-        <div class="con-item" style="display: none;">题库管理</div>
-        <div class="con-item" style="display: none;">在线统计</div>
     </div>
-
-    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <footer class="page-copyright" role="contentinfo">
-                <span><i class="fa fa-cc"></i> 2018</span>
-                <a href="https://github.com/w3fun/" target="_blank"><i class="fa fa-heart"></i> W3Fun</a>
-                <a href="https://github.com/YiLing-IOT-Studio/" target="_blank"><i class="fa fa-heart"></i> YiLing-IOT-Studio</a>
-                <a href="https://github.com/swpuLeo/" target="_blank"><i class="fa fa-male"></i> Leo</a>
-                <a href="https://github.com/812913/" target="_blank"><i class="fa fa-female"></i> lwf</a>
-                <a href="https://github.com/StaticWalk/" target="_blank"><i class="fa fa-male"></i> StaticWalk</a>
-                <a href="https://github.com/luqingying/" target="_blank"><i class="fa fa-female"></i> lqy</a>
-                <a href="https://github.com/w3fun/ExamSystem/blob/master/LICENSE" target="_blank"><i class="fa fa-copyright"></i> MIT</a>
-            </footer>
-        </div>
-    </nav> -->
 
     <script src="../static/dist/js/admin.bundle.js"></script>
 </body>
