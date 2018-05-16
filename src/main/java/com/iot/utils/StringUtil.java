@@ -63,7 +63,7 @@ public class StringUtil {
 		JSONObject jsonData= JSON.parseObject(examData);
 		PaperInfo paperInfo =
 				gson.fromJson(jsonData.get("basic").toString(),PaperInfo.class);
-		paperInfo.setExamQuestion(list);
+		paperInfo.setExamQuestions(list);
 		return paperInfo;
 	}
 
@@ -83,10 +83,10 @@ public class StringUtil {
 
 	public String adjustFormat(PaperInfo paperInfo){
 		String aa="",bb;
-		for (int j = 0; j < paperInfo.getExamQuestion().size(); j++) {
-			bb=paperInfo.getExamQuestion().get(j).toString();
+		for (int j = 0; j < paperInfo.getExamQuestions().size(); j++) {
+			bb=paperInfo.getExamQuestions().get(j).toString();
 			aa+=bb;
-			if (j!=paperInfo.getExamQuestion().size()-1)
+			if (j!=paperInfo.getExamQuestions().size()-1)
 			{
 				aa+=",";
 			}

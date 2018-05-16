@@ -1,5 +1,9 @@
 package com.iot.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
@@ -8,6 +12,11 @@ import java.sql.Date;
  * Created by xiongxiaoyu on 2017/11/5.
  */
 
+
+
+@Setter
+@Getter
+@ToString
 @Entity
 @Table(name = "question")
 public class Question implements Serializable{
@@ -33,70 +42,6 @@ public class Question implements Serializable{
     @Column(length = 2048 )
     private String choices;
 
-
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getLang() {
-        return lang;
-    }
-
-    public void setLang(String lang) {
-        this.lang = lang;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getChoices() {
-        return choices;
-    }
-
-    public void setChoices(String choices) {
-        this.choices = choices;
-    }
 
     public Question(String type, String Lang, String info, String code, String choices, Date date) {
         this.type = type;

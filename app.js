@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'src/main/resources/static/dist')));
 //     res.header("X-Powered-By", ' 3.2.1')
 //     res.header("Content-Type", "application/json;charset=utf-8");
 //     next();
-// });
+// });lo
 
 app.get('/api/userinfo', (req, res) => {
     res.json(JSON.stringify({

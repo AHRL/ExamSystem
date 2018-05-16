@@ -1,5 +1,9 @@
 package com.iot.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -7,6 +11,11 @@ import java.sql.Date;
  * Created by xiongxiaoyu on 2017/10/9.
  */
 
+
+
+@Setter
+@Getter
+@ToString
 @Entity
 @Table(name = "user")
 public class User {
@@ -27,38 +36,9 @@ public class User {
     private String username;
     private String password;
     private String email;
-
-    public ROLE getRole() {
-        return role;
-    }
-
-    public void setRole(ROLE role) {
-        this.role = role;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    private String grade;
+    private String major;
+    private String other;
 
 
     public User() {
@@ -79,13 +59,6 @@ public class User {
         this.date = date;
     }
 
-//    public List<Record> getRecordes() {
-//        return recordes;
-//    }
-//
-//    public void setRecordes(List<Record> recordes) {
-//        this.recordes = recordes;
-//    }
 
     @Override
     public String toString() {

@@ -1,5 +1,6 @@
 package com.iot.controller;
 
+import com.google.gson.Gson;
 import com.iot.model.ExamQuestion;
 import com.iot.model.PaperInfo;
 import com.iot.model.PsdBack;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import redis.clients.jedis.Jedis;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,6 +34,8 @@ public class PaperCtro {
 	private Jedis jedis=new Jedis("118.89.36.125", 6379);
 
 	private User user;
+
+	private Gson gson;
 
 	private PaperInfo paperInfo;
 
@@ -69,8 +73,9 @@ public class PaperCtro {
 
 	@ResponseBody
 	@RequestMapping(value = "/api/ready_exam",method = RequestMethod.GET)
-	public String ready_exam() {
+	public String ready_exam(HttpServletRequest request){
 
+		jsessionId =request.getSession().getId();
 		Boolean status =false;
 		java.util.Date now = new java.util.Date();
 		DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -82,10 +87,12 @@ public class PaperCtro {
 			try {
 				if (format.parse(mix).getTime()-600000< now.getTime()&&format.parse(mix).getTime()+1800000> now.getTime()) {
 
+//					System.out.println(list.get(i).getId() + jsessionId);
+
 					jedis.set(jsessionId+"PaperCode",String.valueOf(list.get(i).getId()));
 					jedis.expire(jsessionId+"PaperCode",2400);
 					status=true;
-					return "{ret:"+status+",data:{status:'OK'";
+					return "{ret:"+status+",data:{status:'OK'}";
 				}
 			} catch (ParseException e) {
 				e.printStackTrace();
@@ -97,24 +104,32 @@ public class PaperCtro {
 
 	@ResponseBody
 	@RequestMapping(value = "/api/exam_detail",method = RequestMethod.GET)
-	public String exam_detail() {
+	public String exam_detail(HttpServletRequest request) {
+		jsessionId=request.getSession().getId();
+		Boolean status =true;
+		try{
+			user = userRepository.findByUsername(jedis.get(jsessionId));
+			paperInfo =paperInfoRepository.findById(Long.valueOf(jedis.get(jsessionId+"PaperCode")));
+		}catch (Exception e){status = false;}
 
-		user = userRepository.findByUsername(jedis.get(jsessionId));
-
-		paperInfo =paperInfoRepository.findById(Integer.valueOf(jedis.get(jsessionId+"PaperCode")));
+		System.out.println(paperInfo.getExamQuestions().toString());
 
 
-		return "{\"role\":\""+user.getRole()+"\",\"email\":\""+user.getEmail()+"\",\"username\":\""+user.getUsername()
-				+ "\",\"examQuestion\":[" +
-				// paperInfo.getExamQuestion()
-				stringUtil.adjustFormat(paperInfo)
-				+"],\"startTime\":\""+paperInfo.getStartTime()
-				+"\",\"endTime\":\""+paperInfo.getEndTime()+"\",\"type\":\""+paperInfo.getType()+"\",\"info\":\""+
-				paperInfo.getInfo()+"\",\"token\":\""+paperInfo.getToken()+"\"}";
+		return  "45";
+
+//
+//				"{\"role\":\""+user.getRole()+"\",\"email\":\""+user.getEmail()+"\",\"username\":\""+user.getUsername()
+//				+ "\",\"examQuestion\":[" +
+//				 paperInfo.getExamQuestions().toString()+
+//				stringUtil.adjustFormat(paperInfo)
+//				+"],\"startTime\":\""+paperInfo.getStartTime()
+//				+"\",\"endTime\":\""+paperInfo.getEndTime()+"\",\"type\":\""+paperInfo.getType()+"\",\"info\":\""+
+//				paperInfo.getInfo()+"\",\"token\":\""+paperInfo.getToken()+"\"}";
 
 	}
 
 
+	//这里的userInfo应该是注册用户信息还是登陆考试的用户的信息  ！！必须登陆才行
 	@ResponseBody
 	@RequestMapping(value = "/api/userinfo",method = RequestMethod.GET)
 	public  String userinfo() {
@@ -124,12 +139,23 @@ public class PaperCtro {
 	@ResponseBody
 	@RequestMapping(value = "/api/getValCode",method = RequestMethod.GET)
 	public  String getValCode() {
-		return "1";
+
+		return "{ret:true,data:{valCode:'"
+				+paperInfoRepository.findById(Long.valueOf(jedis.get(jsessionId+"PaperCode"))).getToken()
+				+"'}";
 	}
 	@ResponseBody
 	@RequestMapping(value = "/api/exam",method = RequestMethod.GET)
-	public  String exam() {
-		return "1";
+	public String exam(HttpServletRequest request) {
+
+		jsessionId=request.getSession().getId();
+		Boolean status =true;
+		try{
+			user = userRepository.findByUsername(jedis.get(jsessionId));
+			paperInfo =paperInfoRepository.findById(Long.valueOf(jedis.get(jsessionId+"PaperCode")));
+		}catch (Exception e){status = false;}
+
+		return "{ret:"+status+",time:'"+ (Integer.valueOf(paperInfo.getTime())/60000)+"',data:"+paperInfo.getExamQuestions().toString() +"}"	;
 	}
 
 	@ResponseBody
@@ -137,4 +163,28 @@ public class PaperCtro {
 	public  String exam_submit() {
 		return "1";
 	}
+@ResponseBody
+	@RequestMapping(value = "/api/user_sign_for_exam",method = RequestMethod.GET)
+	public  String user_sign_for_exam() {
+		return "1";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/api/exam_list_for_sign",method = RequestMethod.GET)
+	public  String exam_list_for_sign() {
+		return "{\n" +
+				"        ret: true," +
+				"        data: [{" +
+				"            name: '翼灵招新考试'," +
+				"            date: '2018/06/15 15:00-17:00'," +
+				"            deadline: '2018/6/14 23:59'," +
+				"            loc: '明理楼B404'" +
+				"        }]" +
+				"    }";
+	}
+
+
+
+
+
 }

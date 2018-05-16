@@ -1,5 +1,9 @@
 package com.iot.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
@@ -7,6 +11,12 @@ import java.util.List;
 /**
  * Created by xiongxiaoyu on 2017/12/17.
  */
+
+
+
+@Setter
+@Getter
+@ToString
 @Entity
 @Table(name = "record")
 public class Record {

@@ -82,7 +82,7 @@ public class ExamCtro {
 
     @ResponseBody
     @RequestMapping(value = "/",produces="application/json;charset=UTF-8")
-    public String index(HttpServletRequest request,Model model,HttpServletResponse response) throws Exception {
+    public String index(HttpServletRequest request,Model model){
          username=request.getRemoteUser();
          jsessionId=request.getSession().getId();
          jedis.set(jsessionId,username);
@@ -103,14 +103,18 @@ public class ExamCtro {
     }
 
 
-    @RequestMapping(value = "/login")
+    @RequestMapping(value = "/api/login")
     public String login(){
         return "login";
     }
 
-    @RequestMapping(value = "/api/login")
-    public String api_login(){
-                return "funExam";
+    @RequestMapping(value = "/")
+    public String api_login(HttpServletRequest request){
+
+        username=request.getRemoteUser();
+        jsessionId=request.getSession().getId();
+        jedis.set(jsessionId,username);
+        return "funExam";
     }
 
     @RequestMapping(value = "/personal")

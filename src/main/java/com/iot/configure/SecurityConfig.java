@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/img/**","/js/**","/lib/**","/fonts/**","/dest/**","/stylesheets/**");
+        web.ignoring().antMatchers("/img/**","/js/**","/lib/**","/fonts/**","/dist/**","/aip/**","/stylesheets/**");
     }
 
     @Override
@@ -57,18 +57,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 //
         http.authorizeRequests()
-                .antMatchers("/register","/*.html","/onlineLib","/api/*","/report"
+                .antMatchers("/register","/*.html","/onlineLib","/report"
                         ,"/back","/onlineLib_practice","/select","/registered","/validcode"
                         ,"/admin","/admin_add","/add","/select","/mailSender"
                         ,"/answersSender","/test","/onlineLib_result","/skill_chart"
                         ,"/admin_publish","/exam_add","/.well-known/pki-validation/fileauth.txt"
-                        ,"/personal","/personalInfo","/api/*","/userPaper").permitAll()
+                        ,"/personal","/personalInfo","/api/**","/userPaper").permitAll()
 //                .antMatchers("/onlineLib").access("hasRole('admin')")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").defaultSuccessUrl("/")
+                .formLogin().loginPage("/api/login").defaultSuccessUrl("/")
                 .permitAll()
-                .and().logout().logoutSuccessUrl("/login")
+                .and().logout().logoutSuccessUrl("/api/login")
                 .permitAll();
 
         http.addFilterBefore(qqAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
