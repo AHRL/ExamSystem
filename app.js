@@ -151,12 +151,6 @@ app.post('/api/exam-submit', upload.array(), (req, res) => {
     }))
 });
 
-app.get('/api/exam-admin-info', (req, res) => {
-    res.json(JSON.stringify({
-        
-    }));
-});
-
 app.get('/api/examd-detail', (req, res) => {
     res.json(JSON.stringify({
         ret: true,
