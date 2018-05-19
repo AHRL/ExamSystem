@@ -1,10 +1,7 @@
 package com.iot.controller;
 
 import com.google.gson.Gson;
-import com.iot.model.ExamQuestion;
-import com.iot.model.PaperInfo;
-import com.iot.model.PsdBack;
-import com.iot.model.User;
+import com.iot.model.*;
 import com.iot.repository.*;
 import com.iot.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import redis.clients.jedis.Jedis;
 
@@ -47,10 +45,14 @@ public class PaperCtro {
 
 	private static String jsessionId;
 
+	private static PaperRecord paperRecord;
+
 	private static String username;
 
-
 	StringUtil stringUtil=new StringUtil();
+
+	@Autowired
+	private PaperRecordRepository paperRecordRepository;
 
 	@Autowired
 	private JavaMailSender mailSender;
@@ -83,12 +85,10 @@ public class PaperCtro {
 
 		for (int i = 0; i < list.size(); i++) {
 			String mix=list.get(i).getDate()+" "+list.get(i).getStartTime()+":00";
-//			System.out.println(mix);
+//System.out.println(mix);
 			try {
 				if (format.parse(mix).getTime()-600000< now.getTime()&&format.parse(mix).getTime()+1800000> now.getTime()) {
-
-//					System.out.println(list.get(i).getId() + jsessionId);
-
+//System.out.println(list.get(i).getId() + jsessionId);
 					jedis.set(jsessionId+"PaperCode",String.valueOf(list.get(i).getId()));
 					jedis.expire(jsessionId+"PaperCode",2400);
 					status=true;
@@ -102,29 +102,47 @@ public class PaperCtro {
 
 	}
 
+
+	//shame
 	@ResponseBody
 	@RequestMapping(value = "/api/exam_detail",method = RequestMethod.GET)
 	public String exam_detail(HttpServletRequest request) {
 		jsessionId=request.getSession().getId();
 		Boolean status =true;
+		List<PaperRecord> examing = null;
+		List<PaperRecord> examed = null;
 		try{
 			user = userRepository.findByUsername(jedis.get(jsessionId));
-			paperInfo =paperInfoRepository.findById(Long.valueOf(jedis.get(jsessionId+"PaperCode")));
-		}catch (Exception e){status = false;}
-
-		System.out.println(paperInfo.getExamQuestions().toString());
+			System.err.println(user.getUsername());
 
 
-		return  "45";
-
+//			examing = paperRecordRepository.findExamingPaperByUsername(user.getUsername());
+//			examed =  paperRecordRepository.findExamedPaperByUsername(user.getUsername());
+			examed =  paperRecordRepository.findExamedPaperByUsername();
 //
-//				"{\"role\":\""+user.getRole()+"\",\"email\":\""+user.getEmail()+"\",\"username\":\""+user.getUsername()
-//				+ "\",\"examQuestion\":[" +
-//				 paperInfo.getExamQuestions().toString()+
-//				stringUtil.adjustFormat(paperInfo)
-//				+"],\"startTime\":\""+paperInfo.getStartTime()
-//				+"\",\"endTime\":\""+paperInfo.getEndTime()+"\",\"type\":\""+paperInfo.getType()+"\",\"info\":\""+
-//				paperInfo.getInfo()+"\",\"token\":\""+paperInfo.getToken()+"\"}";
+		}catch (Exception e){
+			status = false;
+			System.err.println(e);
+		}
+		return  status?"{ret:true,date:{"+examing+","+examed+"}}":"{ret:false}";
+
+	}
+
+
+	@ResponseBody
+	@RequestMapping(value = "/api/isExist",method = RequestMethod.GET)
+	public String isExist(@RequestParam(value = "email")String email) {
+
+		Boolean status =true;
+		Boolean isExist = true;
+		try {
+			isExist=userRepository.findByEmail(email)!=null;
+		}catch (Exception e){
+			status=false;
+			System.err.println(e);
+		}
+
+		return  status?"{ret:true,date:{isExist:"+isExist+"}}":"{ret:false}";
 
 	}
 
@@ -136,6 +154,7 @@ public class PaperCtro {
 		return "1";
 	}
 
+
 	@ResponseBody
 	@RequestMapping(value = "/api/getValCode",method = RequestMethod.GET)
 	public  String getValCode() {
@@ -144,6 +163,8 @@ public class PaperCtro {
 				+paperInfoRepository.findById(Long.valueOf(jedis.get(jsessionId+"PaperCode"))).getToken()
 				+"'}";
 	}
+
+
 	@ResponseBody
 	@RequestMapping(value = "/api/exam",method = RequestMethod.GET)
 	public String exam(HttpServletRequest request) {
@@ -155,18 +176,52 @@ public class PaperCtro {
 			paperInfo =paperInfoRepository.findById(Long.valueOf(jedis.get(jsessionId+"PaperCode")));
 		}catch (Exception e){status = false;}
 
-		return "{ret:"+status+",time:'"+ (Integer.valueOf(paperInfo.getTime())/60000)+"',data:"+paperInfo.getExamQuestions().toString() +"}"	;
+		return "{ret:"+status+",time:'"+ (Integer.valueOf(paperInfo.getTime())/60000)+"',data:"+paperInfo.getExamQuestions().toString() +"}";
 	}
+
 
 	@ResponseBody
 	@RequestMapping(value = "/api/exam_submit",method = RequestMethod.GET)
-	public  String exam_submit() {
-		return "1";
+	public  String exam_submit(HttpServletRequest request,@RequestParam(value = "paperAnswer") String paperAnswer,@RequestParam(value = "token")String token) {
+
+		Boolean status =true;
+		jsessionId = request.getSession().getId();
+		user = userRepository.findByUsername(jedis.get(jsessionId));
+
+		try{
+			paperRecord=paperRecordRepository.findByTokenAndName(token,user.getUsername());
+			paperRecord.setPaperAnswer(paperAnswer);
+			paperRecordRepository.saveAndFlush(paperRecord);
+		}catch (Exception e){
+			System.err.println(e);
+			status=false;
+		}
+
+		return status?"{ret:"+ true +",data:[{status:'OK'}]}":"{ret:"+ false +"}";
 	}
-@ResponseBody
-	@RequestMapping(value = "/api/user_sign_for_exam",method = RequestMethod.GET)
-	public  String user_sign_for_exam() {
-		return "1";
+
+
+	//用户考试报名
+	@ResponseBody
+	@RequestMapping( value = "/api/user_sign_for_exam",method = RequestMethod.GET)
+	public  String user_sign_for_exam(HttpServletRequest request,@RequestParam(value = "token") String token) {
+
+		Boolean status=true;
+		jsessionId=request.getSession().getId();
+
+		try{
+			paperInfo = paperInfoRepository.findByToken(token);
+			user = userRepository.findByUsername(jedis.get(jsessionId));
+			String date =paperInfo.getDate().replace("-","/")+" "+paperInfo.getStartTime()+"-"+paperInfo.getEndTime();
+System.out.println(date);
+			PaperRecord  paperRecord=new PaperRecord(user,paperInfo,0,token,paperInfo.getName(),"deadline",-1
+					,date,paperInfo.getLocation());
+			paperRecordRepository.save(paperRecord);
+		}catch (Exception e){
+			status= false;
+		}
+
+		return "{ret:"+status+"}";
 	}
 
 	@ResponseBody
@@ -182,9 +237,6 @@ public class PaperCtro {
 				"        }]" +
 				"    }";
 	}
-
-
-
 
 
 }

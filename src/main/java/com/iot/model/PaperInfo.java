@@ -28,6 +28,8 @@ public class PaperInfo {
 	@OneToMany()
 	List<ExamQuestion> examQuestions;
 
+	private String name;
+
 	private  String date;
 	private  String startTime;
 	private  String location;
@@ -37,8 +39,10 @@ public class PaperInfo {
 	private  String time;
 	private  String token;
 
+	private int apolicants;
 
-	public PaperInfo( String startTime, String location, String endTime, String type, String info, String time, String token) {
+
+	public PaperInfo(String name, String startTime, String location, String endTime, String type, String info, String time, String token) {
 		this.startTime = startTime;
 		this.location = location;
 		this.endTime = endTime;

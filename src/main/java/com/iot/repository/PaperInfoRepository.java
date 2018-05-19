@@ -11,7 +11,12 @@ import java.util.List;
  */
 @Repository
 public interface PaperInfoRepository extends JpaRepository<PaperInfo,Long>{
+
 	List<PaperInfo> findAll();
 
+	PaperInfo findByToken(String token);
+
 	PaperInfo findById(Long id);
+
+
 }
