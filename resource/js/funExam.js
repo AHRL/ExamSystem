@@ -31,7 +31,7 @@ class Home {
     }
 
     getExamList() {
-        $.get('/api/exam-list-for-sign')
+        $.get('/api/exam_list_for_sign')
             .then(data => {
                 data = JSON.parse(data);
                 const res = data.data;
@@ -73,7 +73,7 @@ class Home {
         let $btn = $('<button>').addClass('btn btn-sm btn-primary').attr('type', 'button').text('点击报名');
         $btn.on('click', e => {
             e.preventDefault();
-            $.post('/api/user-sign-for-exam', JSON.stringify({
+            $.post('/api/user_sign_for_exam', JSON.stringify({
                 // TODO
             })).then(data => {
                 data = JSON.parse(data);

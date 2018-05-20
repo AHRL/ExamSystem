@@ -19,7 +19,7 @@ function pageReady() {
             console.error(err);
         });
 
-    $.get('/api/exam-detail')
+    $.get('/api/exam_detail')
         .then(data => {
             data = JSON.parse(data);
             const res = data.data;
@@ -50,7 +50,7 @@ function pageReady() {
         ];
         let $btn = $('<button>').addClass('btn btn-sm btn-primary').attr('type', 'button').text('开始考试');
         $btn.on('click', e => {
-            $.post('/api/ready-exam', JSON.stringify({
+            $.post('/api/ready_exam', JSON.stringify({
                 // TODO
                 'id': 'id'
             })).then(data => {

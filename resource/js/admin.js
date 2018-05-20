@@ -76,7 +76,7 @@ class Admin {
                     const $title = this.$moreBlock.find('.h4');
                     $title.text($target.text());
                     this.$moreBlock.hide();
-                    $.get('/api/examd-detail')
+                    $.get('/api/examd_detail')
                         .done(data => {
                             data = JSON.parse(data);
                             const res = data.data;
@@ -93,7 +93,7 @@ class Admin {
                     const $title = this.$moreBlock.find('.h4');
                     $title.text($target.text());
                     this.$moreBlock.hide();
-                    $.get('/api/exam-sign-detail')
+                    $.get('/api/exam_sign_detail')
                         .done(data => {
                             data = JSON.parse(data);
                             const res = data.data;
@@ -110,7 +110,7 @@ class Admin {
                     const $title = this.$moreBlock.find('.h4');
                     $title.text($target.text());
                     this.$moreBlock.hide();
-                    $.get('/api/exam-categroy')
+                    $.get('/api/exam_categroy')
                         .done(data => {
                             data = JSON.parse(data);
                             const res = data.data;
@@ -224,7 +224,7 @@ class Admin {
             this.$submit.removeClass('disabled').removeAttr('disabled');
             this.$submit.on('click', e => {
                 e.preventDefault();
-                $.post('/api/exam-add', JSON.stringify(this.exam))
+                $.post('/api/exam_add', JSON.stringify(this.exam))
                     .done(data => {
                         data = JSON.parse(data);
                         if (data.ret && data.data.status === 'OK') {

@@ -6,7 +6,7 @@ class Exam {
         this.$time = $('.hzone-time');
         this.$content = $('.content');
         this.$form = $('<form>').addClass('exam-form');
-        this.$desc = $('.content-desc');
+        this.$describe = $('.content-describe');
         this.$submitAhead = $('<button>').addClass('btn btn-danger btn-sm btn-ahead').attr({
             'data-toggle': 'modal',
             'data-target': '#submitAlert'
@@ -35,7 +35,7 @@ class Exam {
                 if (data.ret && res) {
                     this.$time.text(data.time);
                     this.$type.text(res[0].type);
-                    this.descInit(res[0].desc);
+                    this.describeInit(res[0].describe);
                     this.contentInit(res[0].type, res[0].content);
                     this.btnInit();
                     this.itemsInit(res.length);
@@ -118,8 +118,8 @@ class Exam {
         this.$form.append($('<textarea>').addClass('content-box'));
     }
 
-    descInit(content) {
-        $('.content-desc').text(content);
+    describeInit(content) {
+        $('.content-describe').text(content);
     }
 
     nextItem() {
@@ -134,7 +134,7 @@ class Exam {
                     this.$next.text('完成并交卷');
                 }
                 this.$type.text(res[current].type);
-                this.$desc.text(res[current].desc);
+                this.$describe.text(res[current].describe);
                 this.replaceContent(res[current].type, res[current].content);
 
                 this.$items.children().toArray().forEach((item, index) => {
@@ -238,7 +238,7 @@ class Exam {
                 this.$next.text('下一题');
             }
             this.$type.text(res[index].type);
-            this.$desc.text(res[index].desc);
+            this.$describe.text(res[index].describe);
             this.replaceContent(res[index].type, res[index].content);
             this.recover();
         })
@@ -322,7 +322,7 @@ class Exam {
     submit() {
         this.$confirmSubmit.on('click', e => {
             e.preventDefault();
-            $.post('/api/exam-submit', JSON.stringify(this.result))
+            $.post('/api/exam_submit', JSON.stringify(this.result))
                 .then(data => {
                     data = JSON.parse(data);
                     const res = data.data;
