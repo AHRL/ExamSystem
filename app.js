@@ -44,7 +44,7 @@ app.get('/api/logout', (req, res) => {
     }))
 });
 
-app.get('/api/exam-list-for-sign', (req, res) => {
+app.get('/api/exam_list_for_sign', (req, res) => {
     res.json(JSON.stringify({
         ret: true,
         data: [{
@@ -56,7 +56,7 @@ app.get('/api/exam-list-for-sign', (req, res) => {
     }))
 });
 
-app.post('/api/user-sign-for-exam', (req, res) => {
+app.post('/api/user_sign_for_exam', (req, res) => {
     res.json(JSON.stringify({
         ret: true,
         data: {
@@ -83,7 +83,7 @@ app.get('/api/getValCode', (req, res) => {
     }))
 });
 
-app.get('/api/exam-detail', (req, res) => {
+app.get('/api/exam_detail', (req, res) => {
     res.json(JSON.stringify({
         ret: true,
         data: {
@@ -102,7 +102,7 @@ app.get('/api/exam-detail', (req, res) => {
     }));
 });
 
-app.post('/api/ready-exam', (req, res) => {
+app.post('/api/ready_exam', (req, res) => {
     res.json(JSON.stringify({
         ret: true,
         data: {
@@ -141,7 +141,7 @@ app.get('/api/exam', (req, res) => {
     }))
 });
 
-app.post('/api/exam-submit', upload.array(), (req, res) => {
+app.post('/api/exam_submit', upload.array(), (req, res) => {
     console.log(req.body);
     res.json(JSON.stringify({
         ret: true,
@@ -151,7 +151,7 @@ app.post('/api/exam-submit', upload.array(), (req, res) => {
     }))
 });
 
-app.get('/api/examd-detail', (req, res) => {
+app.get('/api/examd_detail', (req, res) => {
     res.json(JSON.stringify({
         ret: true,
         data: {
@@ -219,7 +219,7 @@ app.get('/api/examd-detail', (req, res) => {
     }))
 });
 
-app.get('/api/exam-sign-detail', (req, res) => {
+app.get('/api/exam_sign_detail', (req, res) => {
     res.json(JSON.stringify({
         ret: true,
         data: {
@@ -278,7 +278,7 @@ app.get('/api/exam-sign-detail', (req, res) => {
     }))
 });
 
-app.get('/api/exam-categroy', (req, res) => {
+app.get('/api/exam_categroy', (req, res) => {
     res.json(JSON.stringify({
         ret: true,
         data: {

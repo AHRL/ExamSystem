@@ -59,7 +59,7 @@ function pageReady() {
                 const res = data.data;
                 if (data.ret && res.status === 'OK') {
                     // TODO
-                    location.assign('http://localhost:8080/404.html');
+                    location.assign('http://localhost:8080/exam.html');
                 }
             })
         });
