@@ -110,21 +110,32 @@ public class PaperCtro {
 		jsessionId=request.getSession().getId();
 		Boolean status =true;
 		List<PaperRecord> examing = null;
-		List<PaperRecord> examed = null;
+		List<String> examed = null;
 		try{
+
 			user = userRepository.findByUsername(jedis.get(jsessionId));
 			System.err.println(user.getUsername());
 
-
 //			examing = paperRecordRepository.findExamingPaperByUsername(user.getUsername());
-//			examed =  paperRecordRepository.findExamedPaperByUsername(user.getUsername());
-			examed =  paperRecordRepository.findExamedPaperByUsername();
-//
+			examed = paperRecordRepository.findExamedPaperByUsername(user.getUsername());
+//			examed =  paperRecordRepository.findExamedPaperByUsername();
+
+
+			if (examed==null)
+			{
+				System.out.println("rinidie");
+			}
+
+//			for (Iterator iterable = examed.iterator(); iterable.hasNext();){
+//				String a= (String) iterable.next();
+//				System.out.println(a);
+//			}
+
 		}catch (Exception e){
 			status = false;
 			System.err.println(e);
 		}
-		return  status?"{ret:true,date:{"+examing+","+examed+"}}":"{ret:false}";
+		return  status?"{ret:true,date:{"+examed+","+"}}":"{ret:false}";
 
 	}
 

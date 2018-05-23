@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 /**
  * Created by xiongxiaoyu on 2018/1/22.
  */
+
 @Repository
 public interface ExamQuestionRepository extends JpaRepository<ExamQuestion,Long>{
 }

@@ -281,7 +281,9 @@ public class ExamCtro {
 
     @RequestMapping("/onlineLib_result")
     @ResponseBody
-    public String onlineLib_result( HttpServletResponse response){
+    public String onlineLib_result( HttpServletResponse response,HttpServletRequest request){
+
+        username=jedis.get(request.getSession().getId());
 
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
@@ -440,6 +442,7 @@ public class ExamCtro {
         Integer count= Integer.valueOf(jedis.hmget(jsessionId+"map","count").get(0));
 
         List<Question> list=questionRepository.find(A,B,C,D,count);
+
         //查询得到数据放在record题目类型列
         List<String> langList=questionRepository.findLang(A,B,C,D,count);
 

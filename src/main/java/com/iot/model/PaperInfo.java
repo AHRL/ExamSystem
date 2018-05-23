@@ -30,6 +30,8 @@ public class PaperInfo {
 
 	private String name;
 
+	int [][] a[][];
+
 	private  String date;
 	private  String startTime;
 	private  String location;
