@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -110,24 +111,23 @@ public class PaperCtro {
 		jsessionId=request.getSession().getId();
 		Boolean status =true;
 		List<PaperRecord> examing = null;
-		List<String> examed = null;
-		try{
+		List<PaperRecord> examed = null;
 
+		try{
 			user = userRepository.findByUsername(jedis.get(jsessionId));
-			System.err.println(user.getUsername());
 
 //			examing = paperRecordRepository.findExamingPaperByUsername(user.getUsername());
 			examed = paperRecordRepository.findExamedPaperByUsername(user.getUsername());
-//			examed =  paperRecordRepository.findExamedPaperByUsername();
+
+//			String a=Arrays.toString();
+
+			Arrays.asList(examed.toArray());
 
 
-			if (examed==null)
-			{
-				System.out.println("rinidie");
-			}
+//	System.out.println(stringUtil.stringToExamed(examed));
 
-//			for (Iterator iterable = examed.iterator(); iterable.hasNext();){
-//				String a= (String) iterable.next();
+//			for (Iterator iterator = examed.iterator(); iterator.hasNext();){
+//				String a= (String) iterator.next();
 //				System.out.println(a);
 //			}
 
@@ -135,7 +135,7 @@ public class PaperCtro {
 			status = false;
 			System.err.println(e);
 		}
-		return  status?"{ret:true,date:{"+examed+","+"}}":"{ret:false}";
+		return  status?"{ret:true,date:{"+examed+"}}":"{ret:false}";
 
 	}
 

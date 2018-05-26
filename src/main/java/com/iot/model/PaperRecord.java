@@ -5,7 +5,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * Created by xiongxiaoyu
@@ -18,7 +17,7 @@ import java.io.Serializable;
 @ToString
 @Entity
 @Table(name = "paperRecord")
-public class PaperRecord implements Serializable{
+public class PaperRecord {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -65,9 +64,11 @@ public class PaperRecord implements Serializable{
 		this.location=location;
 	}
 
-//	public String toExamedString() {
-//		return
-//	}
+
+
+	public String toExamedString() {
+		return "sa";
+	}
 
 	public PaperRecord() {
 	}

@@ -6,9 +6,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.iot.model.ExamQuestion;
 import com.iot.model.PaperInfo;
+import com.iot.model.PaperRecord;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -23,6 +25,13 @@ public class StringUtil {
 		String[] b=s.replace("[","").replace("]","").replace(" ","").split(",");
 		return b;
 	}
+
+	public String  stringToExamed(List<PaperRecord> list){
+
+
+		return Arrays.toString(list.toArray());
+	}
+
 
 	public int totalNumber(String a,List<String> hh){
 		int count=0;
