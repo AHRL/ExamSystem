@@ -52,6 +52,7 @@ public class PaperRecord {
 		this.date = date;
 	}
 
+
 	public PaperRecord(User user, PaperInfo paperInfo, int status, String token, String name, String deadline, int score, String date, String location) {
 		this.user = user;
 		this.paperInfo = paperInfo;
@@ -64,7 +65,22 @@ public class PaperRecord {
 		this.location=location;
 	}
 
+	public String getExamed() {
+		return "{" +
+				"name='" + name + '\'' +
+				", score=" + score +
+				", date='" + date + '\'' +
+				'}';
+	}
 
+	public String getExaming() {
+		return "{" +
+				"location='" + location + '\'' +
+				", name='" + name + '\'' +
+				", deadline='" + deadline + '\'' +
+				", date='" + date + '\'' +
+				'}';
+	}
 
 	public String toExamedString() {
 		return "sa";

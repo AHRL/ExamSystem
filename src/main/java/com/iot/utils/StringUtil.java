@@ -103,4 +103,26 @@ public class StringUtil {
 		return aa;
 	}
 
+	public String getExamedRecord(List<PaperRecord> a){
+		StringBuffer s=new StringBuffer();
+		s.append("examed:[");
+		for (int i = 0; i < a.size(); i++) {
+			s.append(a.get(i).getExamed());
+			if (i<a.size()-1) s.append(",");
+		}
+		s.append("]");
+		return String.valueOf(s);
+	}
+
+	public String getExamingRecord(List<PaperRecord> a){
+		StringBuffer s=new StringBuffer();
+		s.append("examing:[");
+		for (int i = 0; i < a.size(); i++) {
+			s.append(a.get(i).getExaming());
+			if (i<a.size()-1) s.append(",");
+		}
+		s.append("]");
+		return String.valueOf(s);
+	}
+
 }

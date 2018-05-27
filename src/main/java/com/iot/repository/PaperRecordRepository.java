@@ -22,13 +22,13 @@ public interface PaperRecordRepository extends CrudRepository<PaperRecord,Long> 
 	@Query(value = "select * from paper_record  p  where p.paper_info_id=?1",nativeQuery = true)
 	List<PaperRecord> findByPaperInfoId(Long id);
 
-//	@Query(value = "select r.lang_list,r.right_serial from Record r where r.User_Username=?1 and r.type=1",nativeQuery = true)
-	@Query(value = "select * from paper_record  p where p.user_username=?1",nativeQuery = true)
-	List<PaperRecord>  findExamedPaperByUsername(String username);
-//	List<PaperRecord>  findExamedPaperByUsername();
 
+	@Query(value = "select * from paper_record  p where p.user_username=?1 AND p.status = 1",nativeQuery = true)
+	List<PaperRecord>  findExamedPaperByUsername(String username);
+
+	//JPA返回的是Object，当返回指定查讯类型的时候应该是返回真实类型？？
 	//这里出现了bug，很难受examing，status不要或是 =0/<0 仍然会Error0,SQLState:S0022  score=-1?
-	@Query(value = "select p.date,p.name, p.deadline,p.location from paper_record  p  where  p.user_username=?1 AND p.status = 0  " ,nativeQuery = true)
+	@Query(value = "select * from paper_record  p  where  p.user_username=?1 AND p.status = 0  " ,nativeQuery = true)
 	List<PaperRecord>  findExamingPaperByUsername(String username);
 
 	@Query(value = "select * from paper_record p where p.token=?1 and p.user_username=?2",nativeQuery = true)
