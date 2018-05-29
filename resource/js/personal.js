@@ -4,7 +4,9 @@ function pageReady() {
     const $avator = $('#avator');
     $.get('/api/userinfo')
         .then(data => {
+            console.log(data);
             data = JSON.parse(data);
+            console.log(data);
             const res = data.data;
             if (data.ret && res) {
                 $avator.text(res.username);
