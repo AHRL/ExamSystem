@@ -59,6 +59,14 @@ public class User {
         this.date = date;
     }
 
+    public String userInfo() {
+        return "{" +
+                "username='" + username + '\'' +
+                ", grade='" + grade + '\'' +
+                ", major='" + major + '\'' +
+                ", other='" + other + '\'' +
+                '}';
+    }
 
     @Override
     public String toString() {

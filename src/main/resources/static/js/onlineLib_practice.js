@@ -69,10 +69,10 @@ window.onload=function(){
 
         //加载页面后，请求数据；
         $.ajax({
-            url:'offjson.json',
+            // url:'offjson.json',
             // url:'http://192.168.43.245/back',
             // url:'http://194oe84904.iok.la/back',
-            // url:'http://127.0.0.1/back',
+            url:'http://127.0.0.1/back',
             type:"GET",
             dataType:"text",
             success:function(data){
