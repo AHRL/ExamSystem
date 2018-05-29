@@ -186,7 +186,7 @@ public class ExamCtro {
         String Email = request.getParameter("upEmail");
         request.getSession().setAttribute("Username", Username);
         User user = new User(Username, Password, Email, new Date(System.currentTimeMillis()));
-        user.setRole(User.ROLE.user);
+        user.setRole(User.ROLE.ROLE_user);
         userRepository.save(user);
         return "/funExam";
     }

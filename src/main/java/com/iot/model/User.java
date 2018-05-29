@@ -23,7 +23,7 @@ public class User {
     Date date;
 
     public enum ROLE{
-    admin,user;
+    ROLE_admin,ROLE_user;
     }
 
     @Enumerated(EnumType.STRING)
