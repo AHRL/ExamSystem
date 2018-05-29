@@ -9,7 +9,7 @@ module.exports = merge(common, {
         open: true,
         publicPath: '/dist/',
         proxy: {
-            '/api': 'http://194oe84904.iok.la'
+            '/api': 'http://localhost:3000'
         }
     }
 });

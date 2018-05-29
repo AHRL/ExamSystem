@@ -68,7 +68,7 @@ class Home {
         let textArr = [
             $('<p>').addClass('card-text').text('考试时间：' + data.date),
             $('<p>').addClass('card-text').text('报名截止：' + data.deadline),
-            $('<p>').addClass('card-text').text('考试地点：' + data.loc)
+            $('<p>').addClass('card-text').text('考试地点：' + data.location)
         ];
         let $btn = $('<button>').addClass('btn btn-sm btn-primary').attr('type', 'button').text('点击报名');
         $btn.on('click', e => {
