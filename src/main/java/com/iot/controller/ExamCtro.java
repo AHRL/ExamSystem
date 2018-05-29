@@ -103,7 +103,7 @@ public class ExamCtro {
     }
 
 
-    @RequestMapping(value = "/api/login")
+    @RequestMapping(value = "/login")
     public String login(){
         return "login";
     }

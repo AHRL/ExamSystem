@@ -458,6 +458,23 @@ public class PaperCtro {
 
 
 	@ResponseBody
+	@RequestMapping(value = "/api/login",method = RequestMethod.GET)
+	public String isLogin(){
+
+		try {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			if (auth!=null){
+				return "ret:true";
+			}
+		}catch (Exception e){
+			System.out.println(e);
+		}
+
+		return "ret:false";
+	}
+
+
+	@ResponseBody
 	@RequestMapping(value = "/api/exam_list_for_sign",method = RequestMethod.GET)
 	public  String exam_list_for_sign() {
 		return "{\n" +

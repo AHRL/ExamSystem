@@ -66,9 +66,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/onlineLib").access("hasRole('admin')")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/api/login").defaultSuccessUrl("/")
+                .formLogin().loginPage("/login").defaultSuccessUrl("/")
                 .permitAll()
-                .and().logout().logoutSuccessUrl("/api/login")
+                .and().logout().logoutSuccessUrl("/login")
                 .permitAll();
 
         http.addFilterBefore(qqAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
