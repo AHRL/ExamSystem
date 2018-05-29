@@ -1,0 +1,220 @@
+ul{
+    list-style: none;
+}
+body{
+    background-color: #eeeeee;
+    min-width: 400px;
+}
+.practice-progress{
+    height:80px;
+    line-height:80px;
+    background-color: #232c31;
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+}
+.count-progress,.time-progress{
+    display: inline-block;
+}
+.progress-bar_show{
+    float:left;
+    width:80%;
+    margin-top:31px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+.progress-bar_span{
+    float: left;
+    width:20%;
+    padding-left:3px;
+    line-height:78px;
+    color: #fff;
+}
+.progress-bar_span span{
+    font-size: 1.2em;
+    color: #fff;
+}
+.time-progress{
+    background-color: #2d3339;
+    border-top-right-radius:5px;
+
+}
+.time-progress i{
+    font-size: 2.5em;
+    color: #ff4d46;
+    vertical-align: middle;
+    margin-right:10px;
+}
+.time-progress time{
+    font-size:1em;
+    color: #fff;
+}
+.practice-main,.practice-answer_sheet{
+    background: #ffffff;
+    padding:25px;
+}
+.practice-type i{
+    vertical-align: middle;
+    font-size: 25px;
+    color: #ff4d46;
+}
+.practice-type-describe{
+    display: inline-block;
+    vertical-align: middle;
+}
+.practice-type-describe span{
+    font-size:1.4em;
+}
+.practice-specific-title{
+    margin:12px 0;
+    font-size:1.2em;
+}
+.practice-specific-code{
+    margin: 8px  5px;
+    line-height:22px;
+    /*font-size: 16px;*/
+    background-color: #eee;
+    /*color: #fff;*/
+}
+.practice-specific-content{
+    margin-top:15px;
+}
+.practice-single_choice>li,.practice-multiple_choice>li{
+    margin-bottom: 12px;
+}
+.practice-single_choice>li label,.practice-multiple_choice>li label{
+    margin-bottom:0;
+    cursor: pointer;
+    font-size:1.1em;
+}
+.practice-specific-content ul li{
+
+}
+.practice-single_choice input[type='radio'],.practice-multiple_choice input[type='checkbox']{
+    margin-right:3px;
+    vertical-align: -2px;
+}
+.practice-question_and_answers{
+    position: relative;
+}
+.practice-question_and_answers>textarea{
+    padding:3px 5px;
+}
+.practice-question_and_answers>.areaTip{
+    position: absolute;
+    top:3px;
+    left:6px;
+    line-height:20px;
+    padding:3px 5px;
+    color: rgb(125, 125, 125);
+}
+.practice-share_submit{
+    margin-top:12px;
+}
+.practice-share_submit ul{
+    padding-left:0;
+}
+.practice-share_submit li,.practice-share_submit li input[type='submit']{
+    margin-right:12px;
+    cursor: pointer;
+}
+.practice-share_submit li i{
+    font-size:1em;
+    color: #5f5f5f;
+    margin-right:3px;
+}
+.collect:hover,.share:hover,.collect:hover i,.share:hover i{
+    color: #028df7;
+}
+.practice-share_submit .next-practice{
+     margin-right:0;
+ }
+.mainsheethr{
+    margin:0;
+    border:1px dashed #f5f5f5;
+}
+.practice-answer_sheet{
+    min-height:120px;
+}
+.toggleDiv{
+    margin-bottom:12px; ;
+}
+.sheetToggle{
+    cursor: pointer;
+}
+.toggleIcon{
+    cursor: pointer;
+}
+.practice-answer_sheet ul li{
+    float: left;
+    width:25px;
+    height:25px;
+    line-height:25px;
+    text-align: center;
+    margin-left:3px;
+    cursor: pointer;
+}
+.myCollectLabel{
+    margin-top:10px;
+}
+.labelSpan{
+    margin-right:5px;
+    border:1px solid rgba(0, 0, 0, 0.15);
+    padding:5px;
+    font-size: 1rem;
+    line-height:1.25;
+    color: #464a4c;
+    cursor: pointer;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+.labelHover{
+    color: #028df7;
+    border:1px solid #028df7;
+    background-color: #ffffff;
+}
+.labelSelected{
+    color: #fff;
+    background-color: #028df7;
+    border:1px solid transparent;
+}
+.shareImg{
+    width:50%;
+    cursor: pointer;
+}
+.aheadSure{
+    margin:20px 0;
+}
+.aheadSure>span{
+    font-size: 1.2em;
+}
+.aheadSure>span>i{
+    vertical-align: -2px;
+    font-size: 25px;
+    color: #ff4d46;
+    margin-right:5px;
+}
+.aheadFooter{
+    background-color: #f0f0f0;
+}
+.sheetToggle>i{
+    margin-left:5px;
+}
+
+/*分享图标*/
+.modal-content{
+    min-width: 670px;
+}
+.shareModal .social-share{
+    width:85%;
+    margin:0 auto;
+    min-width:640px;
+}
+.shareModal .social-share .social-share-icon{
+    width: 100px;
+    height:100px;
+    font-size:60px;
+    line-height:100px;
+    margin:0 25px;
+}

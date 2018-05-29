@@ -117,7 +117,7 @@ app.get('/api/exam', (req, res) => {
         time: '120',
         data: [{
             type: 'radio',
-            desc: '下列哪个样式定义后,内联(非块状)元素可以定义宽度和高度',
+            describe: '下列哪个样式定义后,内联(非块状)元素可以定义宽度和高度',
             content: [
                 'Check this custom checkbox',
                 'Check this custom checkbox',
@@ -126,7 +126,7 @@ app.get('/api/exam', (req, res) => {
             ]
         }, {
             type: 'checkbox',
-            desc: '下列哪个样式定义后,内联(非块状)元素可以定义宽度和高度',
+            describe: '下列哪个样式定义后,内联(非块状)元素可以定义宽度和高度',
             content: [
                 'Check this custom checkbox',
                 'Check this custom checkbox',
@@ -135,7 +135,7 @@ app.get('/api/exam', (req, res) => {
             ]
         }, {
             type: 'jianda',
-            desc: '下列哪个样式定义后,内联(非块状)元素可以定义宽度和高度',
+            describe: '下列哪个样式定义后,内联(非块状)元素可以定义宽度和高度',
             content: []
         }]
     }))

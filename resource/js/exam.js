@@ -33,8 +33,10 @@ class Exam {
                 data = JSON.parse(data);
                 const res = data.data;
                 if (data.ret && res) {
-                    this.$time.text(data.time);
-                    this.$type.text(res[0].type);
+                    //this.$time.text(data.time);
+                    if (res[0].type === 'radio') {
+                        this.$type.text('单选');
+                    }
                     this.describeInit(res[0].describe);
                     this.contentInit(res[0].type, res[0].content);
                     this.btnInit();
@@ -115,7 +117,7 @@ class Exam {
     }
 
     defaultInit() {
-        this.$form.append($('<textarea>').addClass('content-box'));
+        this.$form.append($('<textarea col="50" raw="20">').addClass('content-box'));
     }
 
     describeInit(content) {
@@ -133,7 +135,14 @@ class Exam {
                 if (current === res.length - 1) {
                     this.$next.text('完成并交卷');
                 }
-                this.$type.text(res[current].type);
+                let type = res[current].type;
+                if (type === 'radio') {
+                    this.$type.text('单选');
+                } else if (type === 'checkbox') {
+                    this.$type.text('多选');
+                } else {
+                    this.$type.text('简答');
+                }
                 this.$describe.text(res[current].describe);
                 this.replaceContent(res[current].type, res[current].content);
 
@@ -237,7 +246,6 @@ class Exam {
             } else {
                 this.$next.text('下一题');
             }
-            this.$type.text(res[index].type);
             this.$describe.text(res[index].describe);
             this.replaceContent(res[index].type, res[index].content);
             this.recover();
