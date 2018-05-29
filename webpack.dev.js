@@ -7,9 +7,9 @@ module.exports = merge(common, {
     devServer: {
         contentBase: path.join(__dirname, 'src/main/resources/templates'),
         open: true,
-        publicPath: '/static/dist/',
+        publicPath: '/dist/',
         proxy: {
-            '/api': 'http://localhost:3000'
+            '/api': 'http://194oe84904.iok.la/'
         }
     }
 });
