@@ -29,7 +29,7 @@ public class ExamQuestion implements Serializable{
 	private String type;
 
 	@Column(length=1024 )
-	private String description;
+	private String describe;
 
 	@Column(length=1024 )
 	private String content;
@@ -37,7 +37,7 @@ public class ExamQuestion implements Serializable{
 	public ExamQuestion(Date date, String type, String description, String content) {
 		this.date = date;
 		this.type = type;
-		this.description = description;
+		this.describe = description;
 		this.content = content;
 	}
 
@@ -48,7 +48,7 @@ public class ExamQuestion implements Serializable{
 	public String toString() {
 		return "{" +
 				"type:'" + type + '\'' +
-				", description:'" + description + '\'' +
+				", description:'" + describe + '\'' +
 				", content:'" + content + '\'' +
 				'}';
 	}

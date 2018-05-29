@@ -67,24 +67,21 @@ public class PaperRecord {
 
 	public String getExamed() {
 		return "{" +
-				"name='" + name + '\'' +
-				", score=" + score +
-				", date='" + date + '\'' +
-				'}';
+				"\"name\":\"" + name + "\"" +
+				", \"score\":\"" + score + "\""+
+				", \"date\":\"" + date + "\"" +
+				"}";
 	}
 
 	public String getExaming() {
 		return "{" +
-				"location='" + location + '\'' +
-				", name='" + name + '\'' +
-				", deadline='" + deadline + '\'' +
-				", date='" + date + '\'' +
-				'}';
+				"\"location\":\"" + location + "\"," +
+				"\"name\":\"" + name + "\"," +
+				"\"deadline\":\"" + deadline + "\"," +
+				"\"date\":\"" + date + "\"" +
+				"}";
 	}
 
-	public String toExamedString() {
-		return "sa";
-	}
 
 	public PaperRecord() {
 	}

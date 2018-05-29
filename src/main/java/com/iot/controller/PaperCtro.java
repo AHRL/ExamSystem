@@ -96,13 +96,13 @@ public class PaperCtro {
 					jedis.set(jsessionId+"PaperCode",String.valueOf(list.get(i).getId()));
 					jedis.expire(jsessionId+"PaperCode",2400);
 					status=true;
-					return "{ret:"+status+",data:{status:'OK'}";
+					return "{\"ret\":true,\"data\":{\"status\":\"OK\"}}";
 				}
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
 		}
-		return "{ret:"+status+"}";
+		return "{\"ret\":false}";
 
 	}
 
@@ -122,9 +122,9 @@ public class PaperCtro {
 
 		}catch (Exception e){
 			status = false;
-			System.err.println(e);
+			System.err.println(e+"/api/");
 		}
-		return  status?"{ret:true,date:{"+stringUtil.getExamedRecord(examed)+","+stringUtil.getExamingRecord(examing)+"}}":"{ret:false}";
+		return  status?"{\"ret\":true,\"date\":{"+stringUtil.getExamedRecord(examed)+","+stringUtil.getExamingRecord(examing)+"}}":"{\"ret\":false}";
 	}
 
 
@@ -211,10 +211,10 @@ public class PaperCtro {
 			isExist=userRepository.findByEmail(email)!=null;
 		}catch (Exception e){
 			status=false;
-			System.err.println(e);
+			System.err.println(e+"/api/");
 		}
 
-		return  status?"{ret:true,date:{isExist:"+isExist+"}}":"{ret:false}";
+		return  status?"{\"ret\":true,\"date\":{\"isExist\":\""+isExist+"\"}}":"{\"ret\":false}";
 
 	}
 
@@ -229,9 +229,19 @@ public class PaperCtro {
 			user=userRepository.findByUsername(jedis.get(jsessionId));
 		}catch (Exception e){
 			status=false;
-			System.err.println(e);
+			System.err.println(e+"/api/");
 		}
-		return status?"{ret:true,date:"+user.userInfo()+"}}":"{ret:false}";
+		return status?"{\"ret\":true,\"data\":"+ user.userInfo() +"}":"{\"ret\":false}";
+
+//		return  "{\n" +
+//				"       \"ret\": true,\n" +
+//				"        \"data\": {\n" +
+//				"            \"username\": \"Leo\",\n" +
+//				"           \"major\": \"物联网工程\",\n" +
+//				"            \"grade\": \"2015\",\n" +
+//				"            \"other\": \"ll\"\n" +
+//				"        }\n" +
+//				"    }";
 	}
 
 
@@ -245,9 +255,9 @@ public class PaperCtro {
 			token = paperInfoRepository.findById(Long.valueOf(jedis.get(jsessionId+"PaperCode"))).getToken();
 		}catch (Exception e){
 			status=false;
-			System.err.println(e);
+			System.err.println(e+"/api/");
 		}
-		return status?"{ret:true,data:{valCode:'" +token +"'}":"{ret:false}";
+		return status?"{\"ret\":true,\"data\":{\"valCode\":'" +token +"'}":"{\"ret\":false}";
 	}
 
 
@@ -262,7 +272,7 @@ public class PaperCtro {
 			paperInfo =paperInfoRepository.findById(Long.valueOf(jedis.get(jsessionId+"PaperCode")));
 		}catch (Exception e){status = false;}
 
-		return status?"{ret:true,time:'"+ (Integer.valueOf(paperInfo.getTime())/60000)+"',data:"+paperInfo.getExamQuestions().toString() +"}":"{ret:false}";
+		return status?"{\"ret\":true,\"time\":\""+ (Integer.valueOf(paperInfo.getTime())/60000)+"\",\"data\":\""+paperInfo.getExamQuestions().toString() +"\"}":"{\"ret\":false}";
 	}
 
 
@@ -279,11 +289,11 @@ public class PaperCtro {
 			paperRecord.setPaperAnswer(paperAnswer);
 			paperRecordRepository.saveAndFlush(paperRecord);
 		}catch (Exception e){
-			System.err.println(e);
+			System.err.println(e+"/api/");
 			status=false;
 		}
 
-		return status?"{ret:true,data:[{status:'OK'}]}":"{ret:false}";
+		return status?"{\"ret\":true,\"data\":[{\"status\":\"OK\"}]}":"{\"ret\":false}";
 	}
 
 
@@ -298,10 +308,10 @@ public class PaperCtro {
 
 
 		}catch (Exception e){
-			System.err.println(e);
+			System.err.println(e+"/api/");
 		}
 
-		return 	status?"{ret:true}":"{ret:false}";
+		return 	status?"{\"ret\":true}":"{\"ret\":false}";
 	}
 
 
@@ -434,9 +444,9 @@ public class PaperCtro {
 			paperRecordRepository.save(paperRecord);
 		}catch (Exception e){
 			status= false;
-			System.err.println(e);
+			System.err.println(e+"/api/");
 		}
-		return status?"{ret:true}":"{ret:false}";
+		return status?"{\"ret\":true}":"{\"ret\":false}";
 	}
 
 	@ResponseBody
@@ -451,9 +461,9 @@ public class PaperCtro {
 			}
 		}catch (Exception e){
 			status =false;
-			System.err.println(e);
+			System.err.println(e+"/api/");
 		}
-		return status?"{ret:true}":"{ret:false}";
+		return status?"{\"ret\":true}":"{\"ret\":false}";
 	}
 
 
@@ -464,13 +474,13 @@ public class PaperCtro {
 		try {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			if (auth!=null){
-				return "ret:true";
+				return "\"ret\":true";
 			}
 		}catch (Exception e){
-			System.out.println(e);
+			System.out.println(e+"/api/");
 		}
 
-		return "ret:false";
+		return "\"ret\":false";
 	}
 
 
@@ -478,12 +488,12 @@ public class PaperCtro {
 	@RequestMapping(value = "/api/exam_list_for_sign",method = RequestMethod.GET)
 	public  String exam_list_for_sign() {
 		return "{\n" +
-				"        ret: true," +
-				"        data: [{" +
-				"            name: '翼灵招新考试'," +
-				"            date: '2018/06/15 15:00-17:00'," +
-				"            deadline: '2018/6/14 23:59'," +
-				"            loc: '明理楼B404'" +
+				"        \"ret \": true," +
+				"         \"data \": [{" +
+				"             \"name \":   \"翼灵招新考试 \"," +
+				"             \"date \":  \"2018/06/15 15:00-17:00 \"," +
+				"             \"deadline \":  \"2018/6/14 23:59 \"," +
+				"             \"location: '明理楼B404'" +
 				"        }]" +
 				"    }";
 	}

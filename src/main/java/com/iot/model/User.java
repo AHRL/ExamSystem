@@ -61,20 +61,11 @@ public class User {
 
     public String userInfo() {
         return "{" +
-                "username='" + username + '\'' +
-                ", grade='" + grade + '\'' +
-                ", major='" + major + '\'' +
-                ", other='" + other + '\'' +
-                '}';
+                "\"username\":\"" + username + "\"," +
+                "\"major\":\"" +major + "\"," +
+                "\"grade\":\"" + grade + "\"," +
+                "\"other\":\"" + other + "\"" +
+                "}";
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "role=" + role +
-                ", email='" + email + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }

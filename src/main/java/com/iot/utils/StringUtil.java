@@ -105,7 +105,7 @@ public class StringUtil {
 
 	public String getExamedRecord(List<PaperRecord> a){
 		StringBuffer s=new StringBuffer();
-		s.append("examed:[");
+		s.append("\"examed\":[");
 		for (int i = 0; i < a.size(); i++) {
 			s.append(a.get(i).getExamed());
 			if (i<a.size()-1) s.append(",");
@@ -116,7 +116,7 @@ public class StringUtil {
 
 	public String getExamingRecord(List<PaperRecord> a){
 		StringBuffer s=new StringBuffer();
-		s.append("examing:[");
+		s.append("\"examing\":[");
 		for (int i = 0; i < a.size(); i++) {
 			s.append(a.get(i).getExaming());
 			if (i<a.size()-1) s.append(",");
