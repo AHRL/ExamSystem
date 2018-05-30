@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by xiongxiaoyu
@@ -37,6 +38,8 @@ public class PaperRecord {
 
 	private String name;
 
+	private Date time;
+
 	private String deadline;
 
 	private  int  score;
@@ -53,7 +56,7 @@ public class PaperRecord {
 	}
 
 
-	public PaperRecord(User user, PaperInfo paperInfo, int status, String token, String name, String deadline, int score, String date, String location) {
+	public PaperRecord(User user, PaperInfo paperInfo, int status, String token, String name, String deadline, int score, String date, String location,Date time) {
 		this.user = user;
 		this.paperInfo = paperInfo;
 		this.status = status;
@@ -63,6 +66,7 @@ public class PaperRecord {
 		this.score = score;
 		this.date = date;
 		this.location=location;
+		this.time=time;
 	}
 
 	public String getExamed() {

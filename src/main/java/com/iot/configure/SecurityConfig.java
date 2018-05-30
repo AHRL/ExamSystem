@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http)throws Exception{
         http.headers().frameOptions().disable();
         http.csrf().disable();
-//
+
         http.authorizeRequests()
                 .antMatchers("/register","/*.html","/onlineLib","/report"
                         ,"/back","/onlineLib_practice","/select","/registered","/validcode"
@@ -63,7 +63,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         ,"/answersSender","/test","/onlineLib_result","/skill_chart"
                         ,"/admin_publish","/exam_add","/.well-known/pki-validation/fileauth.txt"
                         ,"/personal","/personalInfo","/api/**","/userPaper").permitAll()
-//                .antMatchers("/onlineLib").access("hasRole('admin')")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").defaultSuccessUrl("/")

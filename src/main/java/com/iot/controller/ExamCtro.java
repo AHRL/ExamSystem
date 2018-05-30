@@ -90,8 +90,6 @@ public class ExamCtro {
        model.addAttribute("username",username);
 
 
-//       response.encodeRedirectURL("/funExam");
-
         return "{\"username\":\""+username+"\",\"JsessionId\":\""+jsessionId+"\"}";
 //        return "funExam";
     }

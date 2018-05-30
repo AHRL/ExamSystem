@@ -39,12 +39,17 @@ public class PaperInfo {
 	private  String type;
 	private  String info;
 	private  String time;
+
+	private Boolean  isSigned;
+
 	private  String token;
+
+	private String deadline;
 
 	private int apolicants;
 
 
-	public PaperInfo(String name, String startTime, String location, String endTime, String type, String info, String time, String token) {
+	public PaperInfo(String name, String startTime, String location, String endTime, String type, String info, String time, String token,Boolean isSigned) {
 		this.startTime = startTime;
 		this.location = location;
 		this.endTime = endTime;
@@ -52,10 +57,32 @@ public class PaperInfo {
 		this.info = info;
 		this.time = time;
 		this.token = token;
+		this.isSigned=isSigned;
 	}
 
 	public PaperInfo() {
 	}
+	
+	public String toBeExaming() {
 
+	return	"{" +
+			"\"name\":\"" + name + "\"," +
+			"\"date\":\"" + date + "\"," +
+			"\"token\":\"" + token + "\"," +
+			"\"deadline\":\"" + deadline + "\"," +
+			"\"location\":\"" + location + "\"" +
+			"}";
+	}
 
+	public String getExaming() {
+	 return "{" +
+			"\"name\":\"" + name + "\"," +
+			"\"date\":\"" + date + "\"," +
+			"\"token\":\"" + token + "\"," +
+			"\"deadline\":\"" + deadline + "\"," +
+			"\"isSigned\":\"" + isSigned + "\"," +
+			"\"location\":\"" + location + "\"" +
+
+			"}";
+	}
 }
