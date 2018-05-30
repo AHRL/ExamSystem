@@ -58,7 +58,7 @@ function pageReady() {
                     const res = data.data;
                     if (data.ret && res.status === 'OK') {
                         // TODO
-                        location.assign('/exam.html');
+                        location.assign('/exam');
                     } else {
                         alert('还没到考试时间');
                     }
