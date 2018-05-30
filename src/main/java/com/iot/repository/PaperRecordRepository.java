@@ -36,4 +36,9 @@ public interface PaperRecordRepository extends CrudRepository<PaperRecord,Long> 
 
 	PaperRecord saveAndFlush(PaperRecord paperRecord);
 
+
+//	@Query(value = "select * from paper_record p where p.token=?1 and p.user_username=?2",nativeQuery = true)
+//	List<PaperRecord> findIsSigned(String username,String token);
+
+
 }

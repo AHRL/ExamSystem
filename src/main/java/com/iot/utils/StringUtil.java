@@ -125,4 +125,16 @@ public class StringUtil {
 		return String.valueOf(s);
 	}
 
+	public  String getExamingPaper(List<PaperInfo> a){
+
+		StringBuffer s=new StringBuffer();
+		for (int i = 0; i < a.size(); i++) {
+			s.append(a.get(i).getExaming());
+			if (i<a.size()-1) s.append(",");
+		}
+		return String.valueOf(s);
+
+	}
+
+
 }

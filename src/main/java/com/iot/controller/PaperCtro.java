@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -56,6 +57,7 @@ public class PaperCtro {
 	StringUtil stringUtil=new StringUtil();
 
 	@Autowired
+
 	private PaperRecordRepository paperRecordRepository;
 
 	@Autowired
@@ -82,20 +84,20 @@ public class PaperCtro {
 	public String ready_exam(HttpServletRequest request){
 
 		jsessionId =request.getSession().getId();
-		Boolean status =false;
+
 		java.util.Date now = new java.util.Date();
 		DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<PaperInfo> list=paperInfoRepository.findAll();
 
 		for (int i = 0; i < list.size(); i++) {
 			String mix=list.get(i).getDate()+" "+list.get(i).getStartTime()+":00";
-//System.out.println(mix);
+
 			try {
 				if (format.parse(mix).getTime()-600000< now.getTime()&&format.parse(mix).getTime()+1800000> now.getTime()) {
-//System.out.println(list.get(i).getId() + jsessionId);
+
 					jedis.set(jsessionId+"PaperCode",String.valueOf(list.get(i).getId()));
 					jedis.expire(jsessionId+"PaperCode",2400);
-					status=true;
+
 					return "{\"ret\":true,\"data\":{\"status\":\"OK\"}}";
 				}
 			} catch (ParseException e) {
@@ -108,95 +110,96 @@ public class PaperCtro {
 
 
 	@ResponseBody
-	@RequestMapping(value = "/api/exam_detail",method = RequestMethod.GET)
+	@RequestMapping(value = "/api/exam_detail",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
 	public String exam_detail(HttpServletRequest request) {
+
 		jsessionId=request.getSession().getId();
 		Boolean status =true;
 		List<PaperRecord> examing = null;
 		List<PaperRecord> examed = null;
+
 		try{
 			user = userRepository.findByUsername(jedis.get(jsessionId));
 			examing = paperRecordRepository.findExamingPaperByUsername(user.getUsername());
 			examed = paperRecordRepository.findExamedPaperByUsername(user.getUsername());
-//			Arrays.asList(examed.toArray());
-
 		}catch (Exception e){
 			status = false;
 			System.err.println(e+"/api/");
 		}
-		return  status?"{\"ret\":true,\"date\":{"+stringUtil.getExamedRecord(examed)+","+stringUtil.getExamingRecord(examing)+"}}":"{\"ret\":false}";
+		return  status?"{\"ret\":true,\"data\":{"+stringUtil.getExamedRecord(examed)+","+stringUtil.getExamingRecord(examing)+"}}":"{\"ret\":false}";
 	}
+
 
 
 	@ResponseBody
 	@RequestMapping(value = "/api/examed_detail")
 	public String examed_detail(){
 
-		return "{\n" +
-				"        ret: true,\n" +
-				"        data: {\n" +
-				"            chart: {\n" +
-				"                type: 'column'\n" +
-				"            },\n" +
-				"            title: {\n" +
-				"                text: '已考试卷'\n" +
-				"            },\n" +
-				"            subtitle: {\n" +
-				"                text: '数据截止 2018-05'\n" +
-				"            },\n" +
-				"            xAxis: {\n" +
-				"                type: 'category',\n" +
-				"                labels: {\n" +
-				"                    rotation: -45  // 设置轴标签旋转角度\n" +
-				"                }\n" +
-				"            },\n" +
-				"            yAxis: {\n" +
-				"                min: 0,\n" +
-				"                title: {\n" +
-				"                    text: '参考人数 (人)'\n" +
-				"                }\n" +
-				"            },\n" +
-				"            legend: {\n" +
-				"                enabled: false\n" +
-				"            },\n" +
-				"            tooltip: {\n" +
-				"                pointFormat: '参考人数: <b>{point.y} 人次</b>'\n" +
-				"            },\n" +
-				"            series: [{\n" +
-				"                name: '总人数',\n" +
-				"                data: [\n" +
-				"                    ['上海', 24],\n" +
-				"                    ['卡拉奇', 23],\n" +
-				"                    ['北京', 21],\n" +
-				"                    ['德里', 16],\n" +
-				"                    ['拉各斯', 16],\n" +
-				"                    ['天津', 15],\n" +
-				"                    ['伊斯坦布尔', 14],\n" +
-				"                    ['东京', 13],\n" +
-				"                    ['广州', 13],\n" +
-				"                    ['孟买', 12],\n" +
-				"                    ['莫斯科', 12],\n" +
-				"                    ['圣保罗', 12],\n" +
-				"                    ['深圳', 10],\n" +
-				"                    ['雅加达', 10],\n" +
-				"                    ['拉合尔', 10],\n" +
-				"                    ['首尔', 9],\n" +
-				"                    ['武汉', 9],\n" +
-				"                    ['金沙萨', 9],\n" +
-				"                    ['开罗', 9],\n" +
-				"                    ['墨西哥', 8]\n" +
-				"                ],\n" +
-				"                dataLabels: {\n" +
-				"                    enabled: true,\n" +
-				"                    rotation: -90,\n" +
-				"                    color: '#FFFFFF',\n" +
-				"                    align: 'right',\n" +
-				"                    // format: '{point.y:.1f}', // :.1f 为保留 1 位小数\n" +
-				"                    y: 10\n" +
-				"                }\n" +
-				"            }]\n" +
-				"        }\n" +
-				"    }";
+		return "{\n"+
+				"ret:true,\n"+
+				"data:{\n"+
+				"chart:{\n"+
+				"type:'column'\n"+
+				"},\n"+
+				"title:{\n"+
+				"text:'已考试卷'\n"+
+				"},\n"+
+				"subtitle:{\n"+
+				"text:'数据截止2018-05'\n"+
+				"},\n"+
+				"xAxis:{\n"+
+				"type:'category',\n"+
+				"labels:{\n"+
+				"rotation:-45//设置轴标签旋转角度\n"+
+				"}\n"+
+				"},\n"+
+				"yAxis:{\n"+
+				"min:0,\n"+
+				"title:{\n"+
+				"text:'参考人数(人)'\n"+
+				"}\n"+
+				"},\n"+
+				"legend:{\n"+
+				"enabled:false\n"+
+				"},\n"+
+				"tooltip:{\n"+
+				"pointFormat:'参考人数:<b>{point.y}人次</b>'\n"+
+				"},\n"+
+				"series:[{\n"+
+				"name:'总人数',\n"+
+				"data:[\n"+
+				"['上海',24],\n"+
+				"['卡拉奇',23],\n"+
+				"['北京',21],\n"+
+				"['德里',16],\n"+
+				"['拉各斯',16],\n"+
+				"['天津',15],\n"+
+				"['伊斯坦布尔',14],\n"+
+				"['东京',13],\n"+
+				"['广州',13],\n"+
+				"['孟买',12],\n"+
+				"['莫斯科',12],\n"+
+				"['圣保罗',12],\n"+
+				"['深圳',10],\n"+
+				"['雅加达',10],\n"+
+				"['拉合尔',10],\n"+
+				"['首尔',9],\n"+
+				"['武汉',9],\n"+
+				"['金沙萨',9],\n"+
+				"['开罗',9],\n"+
+				"['墨西哥',8]\n"+
+				"],\n"+
+				"dataLabels:{\n"+
+				"enabled:true,\n"+
+				"rotation:-90,\n"+
+				"color:'#FFFFFF',\n"+
+				"align:'right',\n"+
+				"//format:'{point.y:.1f}',//:.1f为保留1位小数\n"+
+				"y:10\n"+
+				"}\n"+
+				"}]\n"+
+				"}\n"+
+				"}";
 
 	}
 
@@ -221,27 +224,20 @@ public class PaperCtro {
 
 	//这里的userInfo应该是注册用户信息还是登陆考试的用户的信息  ！！必须登陆才行
 	@ResponseBody
-	@RequestMapping(value = "/api/userinfo",method = RequestMethod.GET)
+	@RequestMapping(value = "/api/userinfo",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
 	public  String userinfo(HttpServletRequest request) {
+		request.getRemoteUser();
 		Boolean status =true;
 		jsessionId =request.getSession().getId();
 		try {
-			user=userRepository.findByUsername(jedis.get(jsessionId));
+//			user=userRepository.findByUsername(jedis.get(jsessionId));
+			user=userRepository.findByUsername(request.getRemoteUser());
 		}catch (Exception e){
 			status=false;
-			System.err.println(e+"/api/");
+			System.err.println(e+"/api/userinfo");
 		}
 		return status?"{\"ret\":true,\"data\":"+ user.userInfo() +"}":"{\"ret\":false}";
 
-//		return  "{\n" +
-//				"       \"ret\": true,\n" +
-//				"        \"data\": {\n" +
-//				"            \"username\": \"Leo\",\n" +
-//				"           \"major\": \"物联网工程\",\n" +
-//				"            \"grade\": \"2015\",\n" +
-//				"            \"other\": \"ll\"\n" +
-//				"        }\n" +
-//				"    }";
 	}
 
 
@@ -270,7 +266,8 @@ public class PaperCtro {
 		try{
 			user = userRepository.findByUsername(jedis.get(jsessionId));
 			paperInfo =paperInfoRepository.findById(Long.valueOf(jedis.get(jsessionId+"PaperCode")));
-		}catch (Exception e){status = false;}
+		}catch (Exception e){
+			status = false;}
 
 		return status?"{\"ret\":true,\"time\":\""+ (Integer.valueOf(paperInfo.getTime())/60000)+"\",\"data\":\""+paperInfo.getExamQuestions().toString() +"\"}":"{\"ret\":false}";
 	}
@@ -285,7 +282,7 @@ public class PaperCtro {
 		user = userRepository.findByUsername(jedis.get(jsessionId));
 
 		try{
-			paperRecord=paperRecordRepository.findByTokenAndName(token,user.getUsername());
+			paperRecord=paperRecordRepository. findByTokenAndName(token,user.getUsername());
 			paperRecord.setPaperAnswer(paperAnswer);
 			paperRecordRepository.saveAndFlush(paperRecord);
 		}catch (Exception e){
@@ -306,7 +303,6 @@ public class PaperCtro {
 
 		try {
 
-
 		}catch (Exception e){
 			System.err.println(e+"/api/");
 		}
@@ -320,65 +316,64 @@ public class PaperCtro {
 	@RequestMapping(value = "/api/exam_sign_detail",method = RequestMethod.GET)
 	public  String exam_sign_detail() {
 
-		return "{\n" +
-				"        ret: true,\n" +
-				"        data: {\n" +
-				"            chart: {\n" +
-				"                type: 'bar'\n" +
-				"            },\n" +
-				"            title: {\n" +
-				"                text: '待考试卷/报名人数'\n" +
-				"            },\n" +
-				"            subtitle: {\n" +
-				"                text: '数据截止：2018-05-15'\n" +
-				"            },\n" +
-				"            xAxis: {\n" +
-				"                categories: ['C', '招新'],\n" +
-				"                title: {\n" +
-				"                    text: null\n" +
-				"                }\n" +
-				"            },\n" +
-				"            yAxis: {\n" +
-				"                min: 0,\n" +
-				"                title: {\n" +
-				"                    text: '报名人数 (人)',\n" +
-				"                    align: 'high'\n" +
-				"                },\n" +
-				"                labels: {\n" +
-				"                    overflow: 'justify'\n" +
-				"                }\n" +
-				"            },\n" +
-				"            tooltip: {\n" +
-				"                valueSuffix: ' 人次'\n" +
-				"            },\n" +
-				"            plotOptions: {\n" +
-				"                bar: {\n" +
-				"                    dataLabels: {\n" +
-				"                        enabled: true,\n" +
-				"                        allowOverlap: true // 允许数据标签重叠\n" +
-				"                    }\n" +
-				"                }\n" +
-				"            },\n" +
-				"            legend: {\n" +
-				"                layout: 'vertical',\n" +
-				"                align: 'right',\n" +
-				"                verticalAlign: 'top',\n" +
-				"                x: -40,\n" +
-				"                y: 100,\n" +
-				"                floating: true,\n" +
-				"                borderWidth: 1,\n" +
-				"                backgroundColor: '#FFFFFF',\n" +
-				"                shadow: true\n" +
-				"            },\n" +
-				"            series: [{\n" +
-				"                name: '2018 年',\n" +
-				"                data: [11, 99]\n" +
-				"            }]\n" +
-				"        }\n" +
-				"    }";
+		return "{\n"+
+				"ret:true,\n"+
+				"data:{\n"+
+				"chart:{\n"+
+				"type:'bar'\n"+
+				"},\n"+
+				"title:{\n"+
+				"text:'待考试卷/报名人数'\n"+
+				"},\n"+
+				"subtitle:{\n"+
+				"text:'数据截止：2018-05-15'\n"+
+				"},\n"+
+				"xAxis:{\n"+
+				"categories:['C','招新'],\n"+
+				"title:{\n"+
+				"text:null\n"+
+				"}\n"+
+				"},\n"+
+				"yAxis:{\n"+
+				"min:0,\n"+
+				"title:{\n"+
+				"text:'报名人数(人)',\n"+
+				"align:'high'\n"+
+				"},\n"+
+				"labels:{\n"+
+				"overflow:'justify'\n"+
+				"}\n"+
+				"},\n"+
+				"tooltip:{\n"+
+				"valueSuffix:'人次'\n"+
+				"},\n"+
+				"plotOptions:{\n"+
+				"bar:{\n"+
+				"dataLabels:{\n"+
+				"enabled:true,\n"+
+				"allowOverlap:true//允许数据标签重叠\n"+
+				"}\n"+
+				"}\n"+
+				"},\n"+
+				"legend:{\n"+
+				"layout:'vertical',\n"+
+				"align:'right',\n"+
+				"verticalAlign:'top',\n"+
+				"x:-40,\n"+
+				"y:100,\n"+
+				"floating:true,\n"+
+				"borderWidth:1,\n"+
+				"backgroundColor:'#FFFFFF',\n"+
+				"shadow:true\n"+
+				"},\n"+
+				"series:[{\n"+
+				"name:'2018年',\n"+
+				"data:[11,99]\n"+
+				"}]\n"+
+				"}\n"+
+				"}";
 
 	}
-
 
 
 
@@ -386,51 +381,52 @@ public class PaperCtro {
 	@ResponseBody
 	@RequestMapping(value = "/api/exam_categroy",method = RequestMethod.GET)
 	public  String exam_categroy(){
-		return "{\n" +
-				"        ret: true,\n" +
-				"        data: {\n" +
-				"            title: {\n" +
-				"                text: '试卷分类'\n" +
-				"            },\n" +
-				"            tooltip: {\n" +
-				"                headerFormat: '{series.name}<br>',\n" +
-				"                pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'\n" +
-				"            },\n" +
-				"            plotOptions: {\n" +
-				"                pie: {\n" +
-				"                    allowPointSelect: true,\n" +
-				"                    cursor: 'pointer',\n" +
-				"                    dataLabels: {\n" +
-				"                        enabled: false\n" +
-				"                    },\n" +
-				"                    showInLegend: true // 设置饼图是否在图例中显示\n" +
-				"                }\n" +
-				"            },\n" +
-				"            series: [{\n" +
-				"                type: 'pie',\n" +
-				"                name: '试卷类型占比',\n" +
-				"                data: [\n" +
-				"                    ['数据结构',   22.0],\n" +
-				"                    ['web 前端',       26.8],\n" +
-				"                    {\n" +
-				"                        name: 'C语言',\n" +
-				"                        y: 12.8,\n" +
-				"                        sliced: true,\n" +
-				"                        selected: true\n" +
-				"                    },\n" +
-				"                    ['web 后端',    8.5],\n" +
-				"                    ['Android',     6.2],\n" +
-				"                    ['嵌入式',   23.7]\n" +
-				"                ]\n" +
-				"            }]\n" +
-				"        }\n" +
-				"    }";
+		return "{\n"+
+				"ret:true,\n"+
+				"data:{\n"+
+				"title:{\n"+
+				"text:'试卷分类'\n"+
+				"},\n"+
+				"tooltip:{\n"+
+				"headerFormat:'{series.name}<br>',\n"+
+				"pointFormat:'{point.name}:<b>{point.percentage:.1f}%</b>'\n"+
+				"},\n"+
+				"plotOptions:{\n"+
+				"pie:{\n"+
+				"allowPointSelect:true,\n"+
+				"cursor:'pointer',\n"+
+				"dataLabels:{\n"+
+				"enabled:false\n"+
+				"},\n"+
+				"showInLegend:true//设置饼图是否在图例中显示\n"+
+				"}\n"+
+				"},\n"+
+				"series:[{\n"+
+				"type:'pie',\n"+
+				"name:'试卷类型占比',\n"+
+				"data:[\n"+
+				"['数据结构',22.0],\n"+
+				"['web前端',26.8],\n"+
+				"{\n"+
+				"name:'C语言',\n"+
+				"y:12.8,\n"+
+				"sliced:true,\n"+
+				"selected:true\n"+
+				"},\n"+
+				"['web后端',8.5],\n"+
+				"['Android',6.2],\n"+
+				"['嵌入式',23.7]\n"+
+				"]\n"+
+				"}]\n"+
+				"}\n"+
+				"}";
 	}
 
 
-	//用户考试报名
+	//用户报名考试
 	@ResponseBody
-	@RequestMapping( value = "/api/user_sign_for_exam",method = RequestMethod.GET)
+	@RequestMapping( value = "/api/user_sign_for_exam",method = RequestMethod.POST)
+//	@RequestMapping( value = "/api/user_sign_for_exam",method = RequestMethod.GET,produces="application/json;charset=UTF-8")
 	public  String user_sign_for_exam(HttpServletRequest request,@RequestParam(value = "token") String token) {
 
 		Boolean status=true;
@@ -438,16 +434,22 @@ public class PaperCtro {
 		try{
 			paperInfo = paperInfoRepository.findByToken(token);
 			user = userRepository.findByUsername(jedis.get(jsessionId));
+
+			if (paperRecordRepository.findByTokenAndName(token,user.getUsername())!=null){
+				return "{\"ret\":false}";
+			}
+
 			String date =paperInfo.getDate().replace("-","/")+" "+paperInfo.getStartTime()+"-"+paperInfo.getEndTime();
 			PaperRecord  paperRecord=new PaperRecord(user,paperInfo,0,token,paperInfo.getName(),"deadline",-1
-					,date,paperInfo.getLocation());
+					,date,paperInfo.getLocation(),new Date());
 			paperRecordRepository.save(paperRecord);
 		}catch (Exception e){
 			status= false;
-			System.err.println(e+"/api/");
+			System.err.println(e+"/api/user_sign_for_exam");
 		}
-		return status?"{\"ret\":true}":"{\"ret\":false}";
+		return status?"{\"ret\":true,\"data\":{\"status\":\"OK\"}}":"{\"ret\":false}";
 	}
+
 
 	@ResponseBody
 	@RequestMapping(value = "/api/logout",method = RequestMethod.GET)
@@ -461,7 +463,7 @@ public class PaperCtro {
 			}
 		}catch (Exception e){
 			status =false;
-			System.err.println(e+"/api/");
+			System.err.println(e+"/api/logout");
 		}
 		return status?"{\"ret\":true}":"{\"ret\":false}";
 	}
@@ -477,26 +479,77 @@ public class PaperCtro {
 				return "\"ret\":true";
 			}
 		}catch (Exception e){
-			System.out.println(e+"/api/");
+			System.out.println(e+"/api/login");
 		}
 
 		return "\"ret\":false";
 	}
 
 
+
+	//用户可以报名参加的考试列表
 	@ResponseBody
-	@RequestMapping(value = "/api/exam_list_for_sign",method = RequestMethod.GET)
-	public  String exam_list_for_sign() {
-		return "{\n" +
-				"        \"ret \": true," +
-				"         \"data \": [{" +
-				"             \"name \":   \"翼灵招新考试 \"," +
-				"             \"date \":  \"2018/06/15 15:00-17:00 \"," +
-				"             \"deadline \":  \"2018/6/14 23:59 \"," +
-				"             \"location: '明理楼B404'" +
-				"        }]" +
-				"    }";
+	@RequestMapping(value = "/api/exam_list_for_sign",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
+	public String exam_list_for_sign(HttpServletRequest request){
+
+		jsessionId=request.getSession().getId();
+		Boolean status =true;
+		java.util.Date now = new java.util.Date();
+		DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		List<PaperInfo> list=paperInfoRepository.findAll();
+		try{
+			for (int i = 0; i < list.size(); i++) {
+				String mix=list.get(i).getDeadline().replace("/","-")+":00";
+
+//				format.parse(mix).getTime() > now.getTime()?
+//						list.remove(i): paperRecordRepository.findByTokenAndName(list.get(i).getToken(),user.getUsername())!=null?
+//						list.get(i).setIsSigned(true):list.get(i).setIsSigned(true);
+
+				if (format.parse(mix).getTime() > now.getTime()){
+					list.remove(i);
+					if (paperRecordRepository.findByTokenAndName(list.get(i).getToken(),user.getUsername())!=null){
+						list.get(i).setIsSigned(true);
+					}
+				}
+			}
+
+			return "{\"ret\":true,\"data\":["+stringUtil.getExamingPaper(list)+"]}";
+
+		}catch (ParseException e){
+			System.err.println(e+"/api/exam_list_for_sign");
+			e.printStackTrace();
+			status=false;
+		}
+		return "{\"ret\":false}";
 	}
 
+
+	//用户马上进行考试的标题
+	@ResponseBody
+	@RequestMapping(value = "/api/exam_title",method = RequestMethod.GET)
+	public  String exam_title(HttpServletRequest request) {
+
+		jsessionId=request.getSession().getId();
+		Boolean status =true;
+		try{
+			user = userRepository.findByUsername(jedis.get(jsessionId));
+			paperInfo =paperInfoRepository.findById(Long.valueOf(jedis.get(jsessionId+"PaperCode")));
+		}catch (Exception e){
+			System.err.println(e+"/api/exam_title");
+			status = false;
+		}
+
+		return status?"\"ret\":true,\"data\":[" +paperInfo.toBeExaming()+"]}":"\"ret\":false";
+
+//		return "{" +
+//				"\"ret\":true," +
+//				"\"data\":[{" +
+//				"\"name\":\"翼灵招新考试\"," +
+//				"\"date\":\"2018/06/15 15:00-17:00\"," +
+//				"\"deadline\":\"2018/6/14 23:59\"," +
+//				"\"location\":\"明理楼B404\"" +
+//				"}]" +
+//				"}";
+	}
 
 }
