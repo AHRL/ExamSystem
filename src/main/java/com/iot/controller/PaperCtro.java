@@ -84,16 +84,17 @@ public class PaperCtro {
 	public String ready_exam(HttpServletRequest request){
 
 		jsessionId =request.getSession().getId();
-//		Boolean status =false;
+
 		java.util.Date now = new java.util.Date();
 		DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<PaperInfo> list=paperInfoRepository.findAll();
 
 		for (int i = 0; i < list.size(); i++) {
 			String mix=list.get(i).getDate()+" "+list.get(i).getStartTime()+":00";
-//System.out.println(mix);
+
 			try {
 				if (format.parse(mix).getTime()-600000< now.getTime()&&format.parse(mix).getTime()+1800000> now.getTime()) {
+
 					jedis.set(jsessionId+"PaperCode",String.valueOf(list.get(i).getId()));
 					jedis.expire(jsessionId+"PaperCode",2400);
 
@@ -281,7 +282,7 @@ public class PaperCtro {
 		user = userRepository.findByUsername(jedis.get(jsessionId));
 
 		try{
-			paperRecord=paperRecordRepository.findByTokenAndName(token,user.getUsername());
+			paperRecord=paperRecordRepository. findByTokenAndName(token,user.getUsername());
 			paperRecord.setPaperAnswer(paperAnswer);
 			paperRecordRepository.saveAndFlush(paperRecord);
 		}catch (Exception e){
@@ -433,14 +434,18 @@ public class PaperCtro {
 		try{
 			paperInfo = paperInfoRepository.findByToken(token);
 			user = userRepository.findByUsername(jedis.get(jsessionId));
+
+			if (paperRecordRepository.findByTokenAndName(token,user.getUsername())!=null){
+				return "{\"ret\":false}";
+			}
+
 			String date =paperInfo.getDate().replace("-","/")+" "+paperInfo.getStartTime()+"-"+paperInfo.getEndTime();
 			PaperRecord  paperRecord=new PaperRecord(user,paperInfo,0,token,paperInfo.getName(),"deadline",-1
 					,date,paperInfo.getLocation(),new Date());
 			paperRecordRepository.save(paperRecord);
-System.out.println("sign success");
 		}catch (Exception e){
 			status= false;
-			System.err.println(e+"/api/");
+			System.err.println(e+"/api/user_sign_for_exam");
 		}
 		return status?"{\"ret\":true,\"data\":{\"status\":\"OK\"}}":"{\"ret\":false}";
 	}
@@ -458,7 +463,7 @@ System.out.println("sign success");
 			}
 		}catch (Exception e){
 			status =false;
-			System.err.println(e+"/api/");
+			System.err.println(e+"/api/logout");
 		}
 		return status?"{\"ret\":true}":"{\"ret\":false}";
 	}
@@ -474,7 +479,7 @@ System.out.println("sign success");
 				return "\"ret\":true";
 			}
 		}catch (Exception e){
-			System.out.println(e+"/api/");
+			System.out.println(e+"/api/login");
 		}
 
 		return "\"ret\":false";
@@ -530,6 +535,7 @@ System.out.println("sign success");
 			user = userRepository.findByUsername(jedis.get(jsessionId));
 			paperInfo =paperInfoRepository.findById(Long.valueOf(jedis.get(jsessionId+"PaperCode")));
 		}catch (Exception e){
+			System.err.println(e+"/api/exam_title");
 			status = false;
 		}
 
@@ -545,6 +551,5 @@ System.out.println("sign success");
 //				"}]" +
 //				"}";
 	}
-
 
 }
