@@ -50,11 +50,10 @@ function pageReady() {
             $('<p>').addClass('card-text').text('报名截止：' + data.deadline),
             $('<p>').addClass('card-text').text('考试地点：' + data.location)
         ];
-        let $btn = $('<button>').addClass('btn btn-sm btn-primary').attr('type', 'button').text('开始考试');
+        let $btn = $('<button>').addClass('btn btn-sm btn-primary').attr('type', 'button').text('开始考试').val(data.token);
         $btn.on('click', e => {
             $.post('/api/ready_exam', JSON.stringify({
-                // TODO
-                'id': 'id'
+                token: $btn.val()
             })).then(data => {
                 console.log(data);
                 data = JSON.parse(data);

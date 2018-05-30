@@ -75,7 +75,7 @@ class Home {
             e.preventDefault();
             $.post('/api/user_sign_for_exam', JSON.stringify({
                 token: $btn.val()
-            })).then(data => {
+            }), 'text/plain').then(data => {
                 data = JSON.parse(data);
                 const res = data.data;
                 if (data.ret && res.status === 'OK') {
