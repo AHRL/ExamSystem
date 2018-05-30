@@ -50,18 +50,18 @@ function pageReady() {
             $('<p>').addClass('card-text').text('报名截止：' + data.deadline),
             $('<p>').addClass('card-text').text('考试地点：' + data.location)
         ];
-        let $btn = $('<button>').addClass('btn btn-sm btn-primary').attr('type', 'button').text('开始考试').val(data.token);
+        let $btn = $('<button>').addClass('btn btn-sm btn-primary').attr('type', 'button').text('开始考试');
         $btn.on('click', e => {
-            $.post('/api/ready_exam', {
-                token: $btn.val()
-            }).then(data => {
-                console.log(data);
-                data = JSON.parse(data);
-                const res = data.data;
-                if (data.ret && res.status === 'OK') {
-                    // TODO
-                    location.assign('http://localhost:8080/exam.html');
-                }
+            $.get('/api/ready_exam')
+                .then(data => {
+                    data = JSON.parse(data);
+                    const res = data.data;
+                    if (data.ret && res.status === 'OK') {
+                        // TODO
+                        location.assign('http://localhost:8080/exam.html');
+                    } else {
+                        alert('还没到考试时间');
+                    }
             })
         });
         let $bd = $('<div>').addClass('card-body');
