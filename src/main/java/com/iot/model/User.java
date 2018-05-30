@@ -40,6 +40,8 @@ public class User {
     private String major;
     private String other;
 
+//    private String admin="admin";
+
 
     public User() {
     }
@@ -63,6 +65,7 @@ public class User {
         return "{" +
                 "\"username\":\"" + username + "\"," +
                 "\"major\":\"" +major + "\"," +
+                "\"isAdmin\":" + role.equals(ROLE.ROLE_admin) + "," +
                 "\"grade\":\"" + grade + "\"," +
                 "\"other\":\"" + other + "\"" +
                 "}";
