@@ -501,16 +501,14 @@ public class PaperCtro {
 			for (int i = 0; i < list.size(); i++) {
 				String mix=list.get(i).getDeadline().replace("/","-")+":00";
 
-//				format.parse(mix).getTime() > now.getTime()?
-//						list.remove(i): paperRecordRepository.findByTokenAndName(list.get(i).getToken(),user.getUsername())!=null?
-//						list.get(i).setIsSigned(true):list.get(i).setIsSigned(true);
-
-				if (format.parse(mix).getTime() > now.getTime()){
+				if (format.parse(mix).getTime() > now.getTime()) {
 					list.remove(i);
-					if (paperRecordRepository.findByTokenAndName(list.get(i).getToken(),user.getUsername())!=null){
+					list.get(i).setIsSigned(false);
+					if (paperRecordRepository.findByTokenAndName(list.get(i).getToken(), user.getUsername()) != null) {
 						list.get(i).setIsSigned(true);
 					}
 				}
+
 			}
 
 			return "{\"ret\":true,\"data\":["+stringUtil.getExamingPaper(list)+"]}";

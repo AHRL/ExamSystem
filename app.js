@@ -44,6 +44,8 @@ app.get('/api/logout', (req, res) => {
     }))
 });
 
+
+//加一项token
 app.get('/api/exam_list_for_sign', (req, res) => {
     res.json(JSON.stringify({
         ret: true,

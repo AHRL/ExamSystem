@@ -80,7 +80,7 @@ public class PaperInfo {
 			"\"date\":\"" + date + "\"," +
 			"\"token\":\"" + token + "\"," +
 			"\"deadline\":\"" + deadline + "\"," +
-			"\"isSigned\":\"" + isSigned + "\"," +
+			"\"isSigned\":" + isSigned + "," +
 			"\"location\":\"" + location + "\"" +
 
 			"}";
