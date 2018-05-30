@@ -51,12 +51,14 @@ app.get('/api/exam_list_for_sign', (req, res) => {
             name: '翼灵招新考试',
             date: '2018/06/15 15:00-17:00',
             deadline: '2018/6/14 23:59',
-            location: '明理楼B404'
+            location: '明理楼B404',
+            token: '123456'
         }]
     }))
 });
 
 app.post('/api/user_sign_for_exam', (req, res) => {
+    console.log(req.body);
     res.json(JSON.stringify({
         ret: true,
         data: {

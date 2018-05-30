@@ -70,11 +70,11 @@ class Home {
             $('<p>').addClass('card-text').text('报名截止：' + data.deadline),
             $('<p>').addClass('card-text').text('考试地点：' + data.location)
         ];
-        let $btn = $('<button>').addClass('btn btn-sm btn-primary').attr('type', 'button').text('点击报名');
+        let $btn = $('<button>').addClass('btn btn-sm btn-primary').attr('type', 'button').text('点击报名').val(data.token);
         $btn.on('click', e => {
             e.preventDefault();
             $.post('/api/user_sign_for_exam', JSON.stringify({
-                // TODO
+                token: $btn.val()
             })).then(data => {
                 data = JSON.parse(data);
                 const res = data.data;
