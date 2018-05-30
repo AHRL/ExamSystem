@@ -52,9 +52,9 @@ function pageReady() {
         ];
         let $btn = $('<button>').addClass('btn btn-sm btn-primary').attr('type', 'button').text('开始考试').val(data.token);
         $btn.on('click', e => {
-            $.post('/api/ready_exam', JSON.stringify({
+            $.post('/api/ready_exam', {
                 token: $btn.val()
-            })).then(data => {
+            }).then(data => {
                 console.log(data);
                 data = JSON.parse(data);
                 const res = data.data;

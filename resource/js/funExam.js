@@ -73,9 +73,9 @@ class Home {
         let $btn = $('<button>').addClass('btn btn-sm btn-primary').attr('type', 'button').text('点击报名').val(data.token);
         $btn.on('click', e => {
             e.preventDefault();
-            $.post('/api/user_sign_for_exam', JSON.stringify({
+            $.post('/api/user_sign_for_exam', {
                 token: $btn.val()
-            })).then(data => {
+            }).then(data => {
                 data = JSON.parse(data);
                 const res = data.data;
                 if (data.ret && res.status === 'OK') {
