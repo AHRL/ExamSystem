@@ -28,7 +28,7 @@ class Exam {
     }
 
     renderInit() {
-        $.get('/api/exam')
+        $.getJSON('/api/exam')
             .then(data => {
                 data = JSON.parse(data);
                 const res = data.data;
