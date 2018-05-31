@@ -28,9 +28,10 @@ class Exam {
     }
 
     renderInit() {
-        $.getJSON('/api/exam')
+        $.get('/api/exam')
             .then(data => {
                 data = JSON.parse(data);
+                console.log(data.ret)
                 const res = data.data;
                 if (data.ret && res) {
                     //this.$time.text(data.time);
