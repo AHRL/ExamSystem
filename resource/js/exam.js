@@ -33,7 +33,7 @@ class Exam {
                 const str = data;
                 console.log(str);
                 console.log(typeof str);
-                data = JSON.parse(str);
+                data = JSON.parse(str.toString());
                 console.log(data.ret)
                 const res = data.data;
                 if (data.ret && res) {
