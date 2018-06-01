@@ -30,7 +30,7 @@ class Exam {
     renderInit() {
         $.get('/api/exam')
             .then(data => {
-                //data = JSON.parse(data);
+                data = JSON.parse(data);
                 console.log(data.ret)
                 const res = data.data;
                 if (data.ret && res) {
