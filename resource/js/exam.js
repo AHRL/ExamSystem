@@ -31,6 +31,8 @@ class Exam {
         $.get('/api/exam')
             .then(data => {
                 const str = data;
+                console.log(str);
+                console.log(typeof str);
                 data = JSON.parse(str);
                 console.log(data.ret)
                 const res = data.data;
