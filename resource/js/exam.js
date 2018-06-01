@@ -33,6 +33,7 @@ class Exam {
                 const str = data;
                 console.log(str);
                 console.log(typeof str);
+                console.log(str.toString());
                 data = JSON.parse(str.toString());
                 console.log(data.ret)
                 const res = data.data;
