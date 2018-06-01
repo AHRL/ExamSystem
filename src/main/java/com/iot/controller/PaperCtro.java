@@ -80,7 +80,7 @@ public class PaperCtro {
 
 
 	@ResponseBody
-	@RequestMapping(value = "/api/ready_exam",method = RequestMethod.GET)
+	@RequestMapping(value = "/api/ready_exam",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
 	public String ready_exam(HttpServletRequest request){
 
 		jsessionId =request.getSession().getId();
@@ -108,9 +108,15 @@ public class PaperCtro {
 
 	}
 
+	@RequestMapping(value = "exam")
+	public String exam(){
+		return "exam";
+	}
+
 
 	@ResponseBody
-	@RequestMapping(value = "/api/exam_detail",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
+	@RequestMapping(value = "/api/exam_detail")
+//	@RequestMapping(value = "/api/exam_detail",produces="application/json;charsetD=UTF-8")
 	public String exam_detail(HttpServletRequest request) {
 
 		jsessionId=request.getSession().getId();
@@ -124,7 +130,7 @@ public class PaperCtro {
 			examed = paperRecordRepository.findExamedPaperByUsername(user.getUsername());
 		}catch (Exception e){
 			status = false;
-			System.err.println(e+"/api/");
+			System.err.println(e+"/api/exam_detail");
 		}
 		return  status?"{\"ret\":true,\"data\":{"+stringUtil.getExamedRecord(examed)+","+stringUtil.getExamingRecord(examing)+"}}":"{\"ret\":false}";
 	}
@@ -205,7 +211,7 @@ public class PaperCtro {
 
 
 	@ResponseBody
-	@RequestMapping(value = "/api/isExist",method = RequestMethod.GET)
+	@RequestMapping(value = "/api/isExist",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
 	public String isExist(@RequestParam(value = "email")String email) {
 
 		Boolean status =true;
@@ -214,7 +220,7 @@ public class PaperCtro {
 			isExist=userRepository.findByEmail(email)!=null;
 		}catch (Exception e){
 			status=false;
-			System.err.println(e+"/api/");
+			System.err.println(e+"/api/isExist");
 		}
 
 		return  status?"{\"ret\":true,\"date\":{\"isExist\":\""+isExist+"\"}}":"{\"ret\":false}";
@@ -242,7 +248,7 @@ public class PaperCtro {
 
 
 	@ResponseBody
-	@RequestMapping(value = "/api/getValCode",method = RequestMethod.GET)
+	@RequestMapping(value = "/api/getValCode",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
 	public  String getValCode() {
 		Boolean status =true;
 		String token=null;
@@ -269,12 +275,14 @@ public class PaperCtro {
 		}catch (Exception e){
 			status = false;}
 
-		return status?"{\"ret\":true,\"time\":\""+ (Integer.valueOf(paperInfo.getTime())/60000)+"\",\"data\":\""+paperInfo.getExamQuestions().toString() +"\"}":"{\"ret\":false}";
+		return status?"{\"ret\":true,\"time\":\""+ (Integer.valueOf(paperInfo.getTime())/60000)+"\",\"data\":["+stringUtil.toExamQuestionsString(paperInfo.getExamQuestions()) +"]}":"{\"ret\":false}";
+
+
 	}
 
 
 	@ResponseBody
-	@RequestMapping(value = "/api/exam_submit",method = RequestMethod.GET)
+	@RequestMapping(value = "/api/exam_submit",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
 	public  String exam_submit(HttpServletRequest request,@RequestParam(value = "paperAnswer") String paperAnswer,@RequestParam(value = "token")String token) {
 
 		Boolean status =true;
@@ -295,7 +303,7 @@ public class PaperCtro {
 
 
 	@ResponseBody
-	@RequestMapping(value = "/api/exam_add",method = RequestMethod.GET)
+	@RequestMapping(value = "/api/exam_add",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
 	public String exam_add(HttpServletRequest request){
 		jsessionId =request.getSession().getId();
 		Boolean status=true;
@@ -313,7 +321,7 @@ public class PaperCtro {
 
 
 	@ResponseBody
-	@RequestMapping(value = "/api/exam_sign_detail",method = RequestMethod.GET)
+	@RequestMapping(value = "/api/exam_sign_detail",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
 	public  String exam_sign_detail() {
 
 		return "{\n"+
@@ -379,7 +387,7 @@ public class PaperCtro {
 
 
 	@ResponseBody
-	@RequestMapping(value = "/api/exam_categroy",method = RequestMethod.GET)
+	@RequestMapping(value = "/api/exam_categroy",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
 	public  String exam_categroy(){
 		return "{\n"+
 				"ret:true,\n"+
@@ -426,7 +434,6 @@ public class PaperCtro {
 	//用户报名考试
 	@ResponseBody
 	@RequestMapping( value = "/api/user_sign_for_exam",method = RequestMethod.POST)
-//	@RequestMapping( value = "/api/user_sign_for_exam",method = RequestMethod.GET,produces="application/json;charset=UTF-8")
 	public  String user_sign_for_exam(HttpServletRequest request,@RequestParam(value = "token") String token) {
 
 		Boolean status=true;
@@ -440,7 +447,7 @@ public class PaperCtro {
 			}
 
 			String date =paperInfo.getDate().replace("-","/")+" "+paperInfo.getStartTime()+"-"+paperInfo.getEndTime();
-			PaperRecord  paperRecord=new PaperRecord(user,paperInfo,0,token,paperInfo.getName(),"deadline",-1
+			PaperRecord  paperRecord=new PaperRecord(user,paperInfo,0,token,paperInfo.getName(),paperInfo.getDeadline(),-1
 					,date,paperInfo.getLocation(),new Date());
 			paperRecordRepository.save(paperRecord);
 		}catch (Exception e){
@@ -452,7 +459,7 @@ public class PaperCtro {
 
 
 	@ResponseBody
-	@RequestMapping(value = "/api/logout",method = RequestMethod.GET)
+	@RequestMapping(value = "/api/logout",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
 	public String logout(HttpServletRequest request, HttpServletResponse response){
 		Boolean status =true;
 
@@ -470,7 +477,7 @@ public class PaperCtro {
 
 
 	@ResponseBody
-	@RequestMapping(value = "/api/login",method = RequestMethod.GET)
+	@RequestMapping(value = "/api/login",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
 	public String isLogin(){
 
 		try {
@@ -524,7 +531,7 @@ public class PaperCtro {
 
 	//用户马上进行考试的标题
 	@ResponseBody
-	@RequestMapping(value = "/api/exam_title",method = RequestMethod.GET)
+	@RequestMapping(value = "/api/exam_title",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
 	public  String exam_title(HttpServletRequest request) {
 
 		jsessionId=request.getSession().getId();

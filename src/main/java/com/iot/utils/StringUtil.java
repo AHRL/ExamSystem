@@ -136,5 +136,16 @@ public class StringUtil {
 
 	}
 
+	public String toExamQuestionsString(List<ExamQuestion> a){
+
+		StringBuffer s=new StringBuffer();
+		for (int i = 0; i < a.size(); i++) {
+			s.append(a.get(i).toString());
+			if (i<a.size()-1) s.append(",");
+		}
+		return String.valueOf(s);
+
+	}
+
 
 }

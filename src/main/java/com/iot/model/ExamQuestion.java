@@ -44,12 +44,14 @@ public class ExamQuestion implements Serializable{
 	public ExamQuestion() {
 	}
 
+
 	@Override
 	public String toString() {
 		return "{" +
-				"type:'" + type + '\'' +
-				", description:'" + describe + '\'' +
-				", content:'" + content + '\'' +
-				'}';
+//				"\"id\":\"" + id +"\","+
+				"\"type\":\"" + type + "\"," +
+				"\"describe\":\"" + describe + "\"," +
+				"\"content\":" + content + "" +
+				"}";
 	}
 }
