@@ -35,8 +35,10 @@ class Exam {
                 console.log(typeof str);
                 console.log(str.toString());
                 data = JSON.parse(str.toString());
-                console.log(data.ret)
+                console.log(data.ret);
                 const res = data.data;
+                console.log(res);
+                console.log(typeof res);
                 if (data.ret && res) {
                     //this.$time.text(data.time);
                     if (res[0].type === 'radio') {
