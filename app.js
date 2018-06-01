@@ -155,7 +155,7 @@ app.post('/api/exam_submit', upload.array(), (req, res) => {
     }))
 });
 
-app.get('/api/examd_detail', (req, res) => {
+app.get('/api/examed_detail', (req, res) => {
     res.json(JSON.stringify({
         ret: true,
         data: {

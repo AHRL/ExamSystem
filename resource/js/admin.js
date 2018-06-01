@@ -76,7 +76,7 @@ class Admin {
                     const $title = this.$moreBlock.find('.h4');
                     $title.text($target.text());
                     this.$moreBlock.hide();
-                    $.get('/api/examd_detail')
+                    $.get('/api/examed_detail')
                         .done(data => {
                             data = JSON.parse(data);
                             const res = data.data;

@@ -344,7 +344,7 @@ class Exam {
                     if (data.ret && res) {
                         $('#submitAlert').modal('hide');
                         // TODO 跳转到 personal.html
-                        location.assign('http://localhost:8080/personal.html');
+                        location.assign('/personal.html');
                     }
                 })
         })
