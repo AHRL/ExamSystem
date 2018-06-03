@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -53,6 +54,10 @@ public class PaperCtro {
 	private static PaperRecord paperRecord;
 
 	private static String username;
+
+	private Transfer transfer;
+
+//	private EventListenerComponent eventListenerComponent;
 
 	StringUtil stringUtil=new StringUtil();
 
@@ -142,65 +147,65 @@ public class PaperCtro {
 	public String examed_detail(){
 
 		return "{\n"+
-				"ret:true,\n"+
-				"data:{\n"+
-				"chart:{\n"+
-				"type:'column'\n"+
+				"\"ret\":true,\n"+
+				"\"data\":{\n"+
+				"\"chart\":{\n"+
+				"\"type\":\"column\"\n"+
 				"},\n"+
-				"title:{\n"+
-				"text:'已考试卷'\n"+
+				"\"title\":{\n"+
+				"\"text\":\"已考试卷\"\n"+
 				"},\n"+
-				"subtitle:{\n"+
-				"text:'数据截止2018-05'\n"+
+				"\"subtitle\":{\n"+
+				"\"text\":\"数据截止2018-05\"\n"+
 				"},\n"+
-				"xAxis:{\n"+
-				"type:'category',\n"+
-				"labels:{\n"+
-				"rotation:-45//设置轴标签旋转角度\n"+
+				"\"xAxis\":{\n"+
+				"\"type\":\"category\",\n"+
+				"\"labels\":{\n"+
+				"\"rotation\":\"-45//设置轴标签旋转角度\"\n"+
 				"}\n"+
 				"},\n"+
-				"yAxis:{\n"+
-				"min:0,\n"+
-				"title:{\n"+
-				"text:'参考人数(人)'\n"+
+				"\"yAxis\":{\n"+
+				"\"min\":0,\n"+
+				"\"title\":{\n"+
+				"\"text\":\"参考人数(人)\"\n"+
 				"}\n"+
 				"},\n"+
-				"legend:{\n"+
-				"enabled:false\n"+
+				"\"legend\":{\n"+
+				"\"enabled\":false\n"+
 				"},\n"+
-				"tooltip:{\n"+
-				"pointFormat:'参考人数:<b>{point.y}人次</b>'\n"+
+				"\"tooltip\":{\n"+
+				"\"pointFormat\":\"参考人数\":\"<b>{point.y}人次</b>\"\n"+
 				"},\n"+
 				"series:[{\n"+
-				"name:'总人数',\n"+
+				"name:\"总人数\",\n"+
 				"data:[\n"+
-				"['上海',24],\n"+
-				"['卡拉奇',23],\n"+
-				"['北京',21],\n"+
-				"['德里',16],\n"+
-				"['拉各斯',16],\n"+
-				"['天津',15],\n"+
-				"['伊斯坦布尔',14],\n"+
-				"['东京',13],\n"+
-				"['广州',13],\n"+
-				"['孟买',12],\n"+
-				"['莫斯科',12],\n"+
-				"['圣保罗',12],\n"+
-				"['深圳',10],\n"+
-				"['雅加达',10],\n"+
-				"['拉合尔',10],\n"+
-				"['首尔',9],\n"+
-				"['武汉',9],\n"+
-				"['金沙萨',9],\n"+
-				"['开罗',9],\n"+
-				"['墨西哥',8]\n"+
+				"[\"上海\",24],\n"+
+				"[\"卡拉奇\",23],\n"+
+				"[\"北京\",21],\n"+
+				"[\"德里\",16],\n"+
+				"[\"拉各斯\",16],\n"+
+				"[\"天津\",15],\n"+
+				"[\"伊斯坦布尔\",14],\n"+
+				"[\"东京\",13],\n"+
+				"[\"广州\",13],\n"+
+				"[\"孟买\",12],\n"+
+				"[\"莫斯科\",12],\n"+
+				"[\"圣保罗\",12],\n"+
+				"[\"深圳\",10],\n"+
+				"[\"雅加达\",10],\n"+
+				"[\"拉合尔\",10],\n"+
+				"[\"首尔\",9],\n"+
+				"[\"武汉\",9],\n"+
+				"[\"金沙萨\",9],\n"+
+				"[\"开罗\",9],\n"+
+				"[\"墨西哥\",8]\n"+
 				"],\n"+
 				"dataLabels:{\n"+
 				"enabled:true,\n"+
 				"rotation:-90,\n"+
-				"color:'#FFFFFF',\n"+
-				"align:'right',\n"+
-				"//format:'{point.y:.1f}',//:.1f为保留1位小数\n"+
+				"color:\"#FFFFFF\",\n"+
+				"align:\"right\",\n"+
+				"//format:\"{point.y:.1f}\",//:.1f为保留1位小数\n"+
 				"y:10\n"+
 				"}\n"+
 				"}]\n"+
@@ -282,7 +287,7 @@ public class PaperCtro {
 
 
 	@ResponseBody
-	@RequestMapping(value = "/api/exam_submit",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
+	@RequestMapping(value = "/api/exam_submit",method = RequestMethod.POST)
 	public  String exam_submit(HttpServletRequest request,@RequestParam(value = "paperAnswer") String paperAnswer,@RequestParam(value = "token")String token) {
 
 		Boolean status =true;
@@ -303,16 +308,39 @@ public class PaperCtro {
 
 
 	@ResponseBody
-	@RequestMapping(value = "/api/exam_add",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
-	public String exam_add(HttpServletRequest request){
+	@RequestMapping(value = "/api/exam_add",method = RequestMethod.POST)
+	public String exam_add(HttpServletRequest request,@RequestParam(value = "token" ) String token,@RequestParam(value = "deadline") String deadline
+			,@RequestParam(value = "time") String time,@RequestParam(value = "name") String name,@RequestParam(value = "date") String date
+			,@RequestParam(value = "type") String type,@RequestParam(value = "location") String location
+			,@RequestParam(value = "startTime") String startTime,@RequestParam(value = "endTime") String endTime
+						   ,@RequestParam(value = "data") String data) throws InterruptedException {
+		//处理ExamQuestions
+
+		//这里的gson、examQuestion都引入了局部声明，全局声明不到位？？？
+		Gson gson =new Gson();
+
+		//处理字符串数据data，引入了一个中转类 有没有必要？
+		String[] b=data.substring(2,data.length()-2).split("},\\{");
+		List<ExamQuestion> list=new ArrayList<>();
+		for (int i = 0; i < b.length; i++) {
+			transfer=gson.fromJson("{"+b[i]+"}",Transfer.class);
+			ExamQuestion examQuestion=new ExamQuestion(new java.sql.Date(System.currentTimeMillis()),transfer.getType(),transfer.getDescribe(),transfer.getContent());
+			list.add(examQuestion);
+			examQuestionRepository.save(examQuestion);
+		}
+
 		jsessionId =request.getSession().getId();
 		Boolean status=true;
 		user=userRepository.findByUsername(jedis.get(jsessionId));
 
 		try {
+			//deadline的时间格式2018/6/14 23:59   date格式2018-01-18(2018/01/18)
+			paperInfo=new PaperInfo(date,name,user,startTime,location,endTime,type,time,token,false,deadline);
+			//保存试卷
+			paperInfoRepository.save(paperInfo);
 
 		}catch (Exception e){
-			System.err.println(e+"/api/");
+			System.err.println(e+"/api/exam_add");
 		}
 
 		return 	status?"{\"ret\":true}":"{\"ret\":false}";
@@ -504,21 +532,21 @@ public class PaperCtro {
 		java.util.Date now = new java.util.Date();
 		DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<PaperInfo> list=paperInfoRepository.findAll();
+		List<PaperInfo> a=list;
 		try{
 			for (int i = 0; i < list.size(); i++) {
 				String mix=list.get(i).getDeadline().replace("/","-")+":00";
-
+				a.get(i).setIsSigned(false);
 				if (format.parse(mix).getTime() > now.getTime()) {
-					list.remove(i);
-					list.get(i).setIsSigned(false);
 					if (paperRecordRepository.findByTokenAndName(list.get(i).getToken(), user.getUsername()) != null) {
-						list.get(i).setIsSigned(true);
+						a.get(i).setIsSigned(true);
 					}
+					a.remove(i);
 				}
 
 			}
 
-			return "{\"ret\":true,\"data\":["+stringUtil.getExamingPaper(list)+"]}";
+			return "{\"ret\":true,\"data\":["+stringUtil.getExamingPaper(a)+"]}";
 
 		}catch (ParseException e){
 			System.err.println(e+"/api/exam_list_for_sign");
@@ -546,15 +574,19 @@ public class PaperCtro {
 
 		return status?"\"ret\":true,\"data\":[" +paperInfo.toBeExaming()+"]}":"\"ret\":false";
 
-//		return "{" +
-//				"\"ret\":true," +
-//				"\"data\":[{" +
-//				"\"name\":\"翼灵招新考试\"," +
-//				"\"date\":\"2018/06/15 15:00-17:00\"," +
-//				"\"deadline\":\"2018/6/14 23:59\"," +
-//				"\"location\":\"明理楼B404\"" +
-//				"}]" +
-//				"}";
 	}
+
+	@RequestMapping(value = "/api/register", method = RequestMethod.POST)
+	public String register(HttpServletRequest request) throws Exception {
+		String Username = request.getParameter("upUsername");
+		String Password = request.getParameter("upPassword");
+		String Email = request.getParameter("upEmail");
+		request.getSession().setAttribute("Username", Username);
+		User user = new User(Username, Password, Email, new java.sql.Date(System.currentTimeMillis()));
+		user.setRole(User.ROLE.ROLE_user);
+		userRepository.save(user);
+		return "/funExam";
+	}
+
 
 }

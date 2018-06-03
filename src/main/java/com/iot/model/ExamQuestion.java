@@ -4,8 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by xiongxiaoyu on 2018/1/14.
@@ -18,7 +17,7 @@ import java.sql.Date;
 @Getter
 @Entity
 @Table(name = "examQuestion")
-public class ExamQuestion implements Serializable{
+public class ExamQuestion {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,15 +28,15 @@ public class ExamQuestion implements Serializable{
 	private String type;
 
 	@Column(length=1024 )
-	private String describe;
+	private String description;
 
 	@Column(length=1024 )
 	private String content;
 
-	public ExamQuestion(Date date, String type, String description, String content) {
-		this.date = date;
+	public ExamQuestion(Date date,String type, String describe, String content) {
+		this.date=date;
 		this.type = type;
-		this.describe = description;
+		this.description = describe;
 		this.content = content;
 	}
 
@@ -50,8 +49,9 @@ public class ExamQuestion implements Serializable{
 		return "{" +
 //				"\"id\":\"" + id +"\","+
 				"\"type\":\"" + type + "\"," +
-				"\"describe\":\"" + describe + "\"," +
+				"\"describe\":\"" + description + "\"," +
 				"\"content\":" + content + "" +
 				"}";
 	}
+
 }
