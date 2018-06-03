@@ -152,6 +152,7 @@ class Admin {
                 type: this.$examType.val(),
                 date: `${this.$examYear.val()}/${this.$examMonth.val()}/${this.$examDay.val()}`,
                 time: this.$examTime.val(),
+                deadline: `${this.date} 0${parseInt(this.time.slice(0, 2))}${this.time.slice(2, 5)}`,
                 loc: this.$examLoc.val()
             }
             alert('提交成功');
