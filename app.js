@@ -17,14 +17,14 @@ app.use(cookieParser('signed'));
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(path.join(__dirname, 'src/main/resources/static/dist')));
 
-// app.all('*', function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Headers", "Content-Type");
-//     res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
-//     res.header("X-Powered-By", ' 3.2.1')
-//     res.header("Content-Type", "application/json;charset=utf-8");
-//     next();
-// });lo
+app.all('*', function(req, res, next) {
+    // res.header("Access-Control-Allow-Origin", "*");
+    // res.header("Access-Control-Allow-Headers", "Content-Type");
+    // res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+    // res.header("X-Powered-By", ' 3.2.1')
+    res.header("Content-Type", "application/json;charset=utf-8");
+    next();
+});
 
 app.get('/api/userinfo', (req, res) => {
     res.json(JSON.stringify({
@@ -320,6 +320,16 @@ app.get('/api/exam_categroy', (req, res) => {
                     ['嵌入式',   23.7]
                 ]
             }]
+        }
+    }))
+});
+
+app.post('/api/exam_add', upload.array(), (req, res) => {
+    console.log(req.body);
+    res.json(JSON.stringify({
+        ret: true,
+        data: {
+            status: 'OK'
         }
     }))
 })

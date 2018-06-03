@@ -148,7 +148,7 @@ class Admin {
         this.$basicBtn.on('click', e => {
             e.preventDefault();
             this.exam.basic = {
-                title: this.$examTitle.val(),
+                describe: this.$examTitle.val(),
                 type: this.$examType.val(),
                 date: `${this.$examYear.val()}/${this.$examMonth.val()}/${this.$examDay.val()}`,
                 time: this.$examTime.val(),
@@ -171,17 +171,17 @@ class Admin {
                 type = 'other';
             }
             this.exam.question.push({
-                title: this.$qTitle.val(),
+                describe: this.$qTitle.val(),
                 type: type,
                 score: this.$qScore.val(),
-                choice: this.$qChoice.toArray().map(item => {
+                content: this.$qChoice.toArray().map(item => {
                     return $(item).val();
                 })
             });
             console.log(this.exam);
             this.renderExamInfo();
-            alert('添加成功')
-            this.clear()
+            alert('添加成功');
+            this.clear();
         })
     }
 
@@ -192,7 +192,7 @@ class Admin {
             score += parseInt(this.exam.question[i].score);
         }
         let arr = [
-            `试卷名称：${this.exam.basic.title}`,
+            `试卷名称：${this.exam.basic.describe}`,
             `考试时间：${this.exam.basic.date} ${this.exam.basic.time}`,
             `考试地点：${this.exam.basic.loc}`,
             `试题数量：${len}`,
@@ -220,19 +220,17 @@ class Admin {
     }
 
     submit() {
-        if (this.exam.basic && this.exam.question.length) {
-            this.$submit.removeClass('disabled').removeAttr('disabled');
-            this.$submit.on('click', e => {
-                e.preventDefault();
-                $.post('/api/exam_add', JSON.stringify(this.exam))
-                    .done(data => {
-                        data = JSON.parse(data);
-                        if (data.ret && data.data.status === 'OK') {
-                            alert('提交成功')
-                        }
-                    })
-            });
-        }
+        this.$submit.on('click', e => {
+            e.preventDefault();
+            $.post('/api/exam_add', JSON.stringify(this.exam))
+                .done(data => {
+                    data = JSON.parse(data);
+                    console.log(data)
+                    if (data.ret && data.data.status === 'OK') {
+                        alert('提交成功');
+                    }
+                });
+        });
     }
 }
 
