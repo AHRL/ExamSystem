@@ -30,14 +30,11 @@ public class PaperInfo {
 
 	private String name;
 
-	int [][] a[][];
-
 	private  String date;
 	private  String startTime;
 	private  String location;
 	private  String endTime;
 	private  String type;
-	private  String info;
 	private  String time;
 
 	private Boolean  isSigned;
@@ -46,22 +43,25 @@ public class PaperInfo {
 
 	private String deadline;
 
-	private int apolicants;
+	private int apolicants = 0;
 
+	public PaperInfo() {
+	}
 
-	public PaperInfo(String name, String startTime, String location, String endTime, String type, String info, String time, String token,Boolean isSigned) {
+	public PaperInfo(String date, String name, User user, String startTime, String location, String endTime, String type, String time, String token, Boolean isSigned, String deadline) {
+		this.date=date;
+		this.name=name;
+		this.user=user;
 		this.startTime = startTime;
 		this.location = location;
 		this.endTime = endTime;
 		this.type = type;
-		this.info = info;
 		this.time = time;
 		this.token = token;
 		this.isSigned=isSigned;
+		this.deadline=deadline;
 	}
 
-	public PaperInfo() {
-	}
 	
 	public String toBeExaming() {
 

@@ -177,17 +177,6 @@ public class ExamCtro {
         return "login";
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(HttpServletRequest request) throws Exception {
-        String Username = request.getParameter("upUsername");
-        String Password = request.getParameter("upPassword");
-        String Email = request.getParameter("upEmail");
-        request.getSession().setAttribute("Username", Username);
-        User user = new User(Username, Password, Email, new Date(System.currentTimeMillis()));
-        user.setRole(User.ROLE.ROLE_user);
-        userRepository.save(user);
-        return "/funExam";
-    }
 
     @RequestMapping(value = "/mailSender")
     @ResponseBody
@@ -355,7 +344,7 @@ public class ExamCtro {
                         stringUtil.adjustFormat(paperInfo)
                         +"],\"startTime\":\""+paperInfo.getStartTime()
                         +"\",\"endTime\":\""+paperInfo.getEndTime()+"\",\"type\":\""+paperInfo.getType()+"\",\"info\":\""+
-                        paperInfo.getInfo()+"\",\"token\":\""+paperInfo.getToken()+"\"}";
+                        paperInfo.getName()+"\",\"token\":\""+paperInfo.getToken()+"\"}";
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
