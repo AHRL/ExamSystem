@@ -229,7 +229,7 @@ class Admin {
             let questionJson = JSON.stringify(this.exam.question);
             let basic = `basic=${basicJson}`;
             let question = `questions=${questionJson}`;
-            let data = `${basic}&&${question};`
+            let data = `${basic}&&${question}`;
             console.log(data);
             e.preventDefault();
             $.ajax({
