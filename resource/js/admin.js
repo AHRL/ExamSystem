@@ -224,12 +224,18 @@ class Admin {
 
     submit() {
         this.$submit.on('click', e => {
+            console.log(JSON.stringify(this.exam));
+            let basicJson = JSON.stringify(this.exam.basic);
+            let questionJson = JSON.stringify(this.exam.question);
+            let basic = `basic=${basicJson}`;
+            let question = `questions=${questionJson}`;
+            let data = `${basic}&&${question};`
+            console.log(data);
             e.preventDefault();
             $.ajax({
                 type: 'POST',
                 url: '/api/exam_add',
-                data: JSON.stringify(this.exam),
-                contentType: 'application/json'
+                data: data
             })
                 .done(data => {
                     data = JSON.parse(data);
