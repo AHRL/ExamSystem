@@ -152,7 +152,7 @@ class Admin {
                 type: this.$examType.val(),
                 date: `${this.$examYear.val()}/${this.$examMonth.val()}/${this.$examDay.val()}`,
                 time: this.$examTime.val(),
-                loc: this.$examLoc.val()
+                location: this.$examLoc.val()
             }
             const time = this.exam.basic.time;
             const deadline = parseInt(time.slice(0, 2)) - 2 + time.slice(2, 5);
@@ -197,7 +197,7 @@ class Admin {
         let arr = [
             `试卷名称：${this.exam.basic.describe}`,
             `考试时间：${this.exam.basic.date} ${this.exam.basic.time}`,
-            `考试地点：${this.exam.basic.loc}`,
+            `考试地点：${this.exam.basic.location}`,
             `试题数量：${len}`,
             `试题总分：${score}`
         ]
@@ -225,7 +225,12 @@ class Admin {
     submit() {
         this.$submit.on('click', e => {
             e.preventDefault();
-            $.post('/api/exam_add', JSON.stringify(this.exam))
+            $.ajax({
+                type: 'POST',
+                url: '/api/exam_add',
+                data: JSON.stringify(this.exam),
+                contentType: 'application/json'
+            })
                 .done(data => {
                     data = JSON.parse(data);
                     console.log(data)
