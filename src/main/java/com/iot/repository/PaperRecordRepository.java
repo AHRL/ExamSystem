@@ -31,8 +31,8 @@ public interface PaperRecordRepository extends CrudRepository<PaperRecord,Long> 
 	@Query(value = "select * from paper_record  p  where  p.user_username=?1 AND p.status = 0  " ,nativeQuery = true)
 	List<PaperRecord>  findExamingPaperByUsername(String username);
 
-	@Query(value = "select * from paper_record p where p.token=?1 and p.user_username=?2",nativeQuery = true)
-	PaperRecord findByTokenAndName(String token,String username);
+	@Query(value = "select * from paper_record p where p.paper_info_id=?1 and p.user_username=?2",nativeQuery = true)
+	PaperRecord findByPaperInfoAndName(Long id,String username);
 
 	PaperRecord saveAndFlush(PaperRecord paperRecord);
 

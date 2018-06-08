@@ -32,7 +32,7 @@ public class PaperRecord {
 
 	private int status;
 
-    private String token;
+//    private Long token;
 
     private String location;
 
@@ -56,11 +56,11 @@ public class PaperRecord {
 	}
 
 
-	public PaperRecord(User user, PaperInfo paperInfo, int status, String token, String name, String deadline, int score, String date, String location,Date time) {
+	public PaperRecord(User user, PaperInfo paperInfo, int status, String name, String deadline, int score, String date, String location,Date time) {
 		this.user = user;
 		this.paperInfo = paperInfo;
 		this.status = status;
-		this.token = token;
+//		this.token = token;
 		this.name = name;
 		this.deadline = deadline;
 		this.score = score;

@@ -7,7 +7,8 @@ import com.google.gson.Gson;
 import com.iot.model.ExamQuestion;
 import com.iot.model.PaperInfo;
 import com.iot.model.PaperRecord;
-import com.iot.model.Transfer;
+import com.iot.model.Question;
+import com.iot.model.jsonObject.Transfer;
 import com.iot.repository.ExamQuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -126,6 +127,7 @@ public class StringUtil {
 		return String.valueOf(s);
 	}
 
+
 	public String getExamingRecord(List<PaperRecord> a){
 		StringBuffer s=new StringBuffer();
 		s.append("\"examing\":[");
@@ -160,18 +162,33 @@ public class StringUtil {
 	}
 
 
-	public void toExamQuestionArray(String a){
+	public String toQuestionsString(List<Question> a){
 
-		String[] b=a.substring(2,a.length()-2).split("},\\{");
-		List<ExamQuestion> list=new ArrayList<>();
-		for (int i = 0; i < b.length; i++) {
-			transfer=gson.fromJson("{"+b[i]+"}",Transfer.class);
-			ExamQuestion examQuestion=new ExamQuestion(new Date(System.currentTimeMillis()),transfer.getType(),transfer.getDescribe(),transfer.getContent());
-			list.add(examQuestion);
-			examQuestionRepository.save(examQuestion);
+		StringBuffer s=new StringBuffer();
+		for (int i = 0; i < a.size(); i++) {
+			s.append(a.get(i).toString());
+			if (i<a.size()-1) s.append(",");
 		}
-//		return list;
+		return String.valueOf(s);
 	}
+
+
+
+
+
+	//本来是来解决ExamQuesion 的save功能的
+//	public String toExamQuestionArray(String a){
+//
+//		String[] b=a.substring(2,a.length()-2).split("},\\{");
+//		List<ExamQuestion> list=new ArrayList<>();
+//		for (int i = 0; i < b.length; i++) {
+//			transfer=gson.fromJson("{"+b[i]+"}",Transfer.class);
+//			ExamQuestion examQuestion=new ExamQuestion(new Date(System.currentTimeMillis()),transfer.getType(),transfer.getDescribe(),transfer.getContent());
+//			list.add(examQuestion);
+//			examQuestionRepository.save(examQuestion);
+//		}
+//		return list;
+//	}
 
 
 }

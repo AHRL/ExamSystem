@@ -34,36 +34,29 @@ public class Question implements Serializable{
     private String lang;
 
     @Column(length=1024 )
-    private String info;
+    private String description;
 
-    @Column(length=1024 )
-    private String code;
+    @Column(length = 1024 )
+    private String content;
 
-    @Column(length = 2048 )
-    private String choices;
-
-
-    public Question(String type, String Lang, String info, String code, String choices, Date date) {
-        this.type = type;
-        this.lang = Lang;
-        this.info = info;
-        this.code = code;
-        this.choices = choices;
+    public Question(Date date, String answer, String type, String lang, String description, String content) {
         this.date = date;
+        this.type = type;
+        this.answer = answer;
+        this.lang = lang;
+        this.description = description;
+        this.content = content;
     }
 
     public Question() {
     }
 
-
     @Override
     public String toString() {
-        return "Question{" +
-                "type='" + type + '\'' +
-                ", lang='" + lang + '\'' +
-                ", info='" + info + '\'' +
-                ", code='" + code + '\'' +
-                ", choices='" + choices + '\'' +
-                '}';
+        return "{"+
+                "\"lang\":\""+lang+"\""+
+                ",\"description\":\""+description+"\""+
+                ",\"content\":"+content+""+
+                "}";
     }
 }

@@ -1,4 +1,4 @@
-package com.iot.model;
+package com.iot.model.jsonObject;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +21,10 @@ public class Transfer {
 
 	private String describe;
 
+	private int  score;
+
 	private String[] content;
+
 
 
 		public String getContent() {
