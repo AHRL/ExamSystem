@@ -1,0 +1,19 @@
+.card {
+    margin-bottom: 1.25rem;
+}
+
+.list-group-item {
+    cursor: pointer;
+}
+
+.list-group-item.disabled {
+    cursor: not-allowed;
+}
+
+.nav-tabs {
+    margin-bottom: 1.25rem;
+}
+
+.nav-link {
+    cursor: pointer;
+}

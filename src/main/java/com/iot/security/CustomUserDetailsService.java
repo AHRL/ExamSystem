@@ -28,7 +28,6 @@ public class CustomUserDetailsService implements UserDetailsService{
 
         //这里可以增加一个禁止同时在线的功能
 
-
         List<SimpleGrantedAuthority> authorities=new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(user.getRole().name()));
 

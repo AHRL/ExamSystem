@@ -8,6 +8,8 @@ var REG = {
     pswd: /^[a-zA-Z0-9!@#$%^&*]{6,16}$/,
 };
 
+var server = '';
+
 function pageReady() {
     // Page Login ------------------------
     // Sign in
@@ -15,28 +17,58 @@ function pageReady() {
         $pswdIn = $('#pswdIn'),
         $submitIn = $('#submitIn');
 
+    var $formIn = $('#formIn');
+
     $emailIn.on('blur', checkValue(matchEmail));
     $emailIn.on('focus', rmValidationClass);
     $pswdIn.on('blur', checkValue(matchLength));
     $pswdIn.on('focus', rmValidationClass);
-    $submitIn.on('click', function(e) {
+    // $submitIn.on('click', function(e) {
+    //     e.preventDefault();
+    //     // /* $.ajax({
+    //     //     type: 'POST',
+    //     //     url: server + '/login',
+    //     //     data: JSON.stringify({
+    //     //         email: $emailIn.val(),
+    //     //         pswd: $pswdIn.val()
+    //     //     }),
+    //     //     // dataType: '', // 我期望得到的数据类型
+    //     //     contentType: 'application/json', // 我准备以该数据类型发送数据
+    //     //     success: function(data) {
+    //     //         console.log(data);
+    //     //     },
+    //     //     error: function(err) {
+    //     //         console.error(err);
+    //     //     }
+    //     // }); */
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: '',
+    //         contentType: 'application/x-www-form-urlencoded',
+    //         data: $,
+    //         success: function(data) {
+    //             console.log(data);
+    //         },
+    //         error: function(err) {
+    //             console.error(err);
+    //         }
+    //     })
+    // });
+
+    $formIn.on('submit', function(e) {
         e.preventDefault();
         $.ajax({
             type: 'POST',
-            url: 'http://127.0.0.1:3000/signin',
-            data: JSON.stringify({
-                email: $emailIn.val(),
-                pswd: $pswdIn.val()
-            }),
-            dataType: 'json', // 我期望得到的数据类型
-            contentType: 'application/json', // 我准备以该数据类型发送数据
+            url: '/login',
+            contentType: 'application/x-www-form-urlencoded',
+            data: $formIn.serialize(),
             success: function(data) {
                 console.log(data);
             },
             error: function(err) {
                 console.error(err);
             }
-        });
+        })
     });
 
     // Sign up
@@ -51,7 +83,7 @@ function pageReady() {
     $emailUp.on('blur', function() {
         $.ajax({
             type: 'POST',
-            url: '/isExist',
+            url: server + '/api/isExist',
             data: JSON.stringify({
                 emila: $emailUp.val()
             }),
@@ -74,7 +106,7 @@ function pageReady() {
         e.preventDefault();
         $.ajax({
             type: 'GET',
-            url: 'http://127.0.0.1:3000/api/getValCode',
+            url: server + '/api/getValCode',
             dataType: 'json',
             success: function(data) {
                 console.log(data);
@@ -110,7 +142,7 @@ function pageReady() {
         e.preventDefault();
         $.ajax({
             type: 'POST',
-            url: 'http://127.0.0.1:3000/signup',
+            url: server + '/api/signup',
             data: JSON.stringify({
                 email: $emailUp.val(),
                 name: $nameUp.val(),

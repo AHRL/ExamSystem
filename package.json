@@ -25,6 +25,7 @@
         "browserify": "^16.1.1",
         "cookie-parser": "^1.4.3",
         "del": "^3.0.0",
+        "event-stream": "^3.3.4",
         "express": "^4.16.3",
         "gulp": "^4.0.0",
         "gulp-autoprefixer": "^5.0.0",

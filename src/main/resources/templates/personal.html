@@ -71,16 +71,16 @@
         <div class="row">
             <div class="col-3">
                 <ul class="list-group">
-                    <li class="list-group-item">我的考试</li>
-                    <li class="list-group-item disabled">我的题库</li>
-                    <li class="list-group-item disabled">我的成就</li>
+                    <li class="list-group-item active">我的考试</li>
+                    <li class="list-group-item disabled" title="尽情期待">我的题库</li>
+                    <li class="list-group-item disabled" title="尽情期待">我的成就</li>
                     <li class="list-group-item">账号设置</li>
-                    <li class="list-group-item">{{管理员中心}}</li>
+                    <li class="list-group-item"><a href="http://www.swpuiot.com">{{管理员中心}}</a></li>
                 </ul>
             </div>
             <div class="col-9">
                 <!-- Tab My Exam -->
-                <div class="">
+                <div class="listBox">
                     <div class="jumbotron">
                         <h1 class="h4">{{李友波}}，您好！</h1>
                         <p class="lead">
@@ -90,15 +90,15 @@
                         <p>找到适合自己的工作从来不是一件容易的事。我们希望通过科学严谨的面试流程，确保能充分了解每一位候选人。但同时我们也希望您能理解面试并不是对个人能力的单方面考核，而是关于匹配程度的双向选择。 <br />在开始申请前，我们建议您先查看官网上的 这篇攻略，以便了解 CVTE 校招面试的各个环节。如果还有疑问，可以关注“CVTE校园招聘”微信公众号并在后台留言，或者在工作时段拨打 020-86154330，我们会尽全力帮您解答问题。</p>
                     </div>
                     <div class="jumbotron">
-                        <ul class="nav nav-tabs">
+                        <ul class="nav nav-tabs tabGroup1">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#">即将参加的考试</a>
+                                <span class="nav-link active">即将参加的考试</span>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">已参加的考试</a>
+                                <span class="nav-link">已参加的考试</span>
                             </li>
                         </ul>
-                        <div>
+                        <div class="tabCon1">
                             <div class="row">
                                 <div class="col-4">
                                     <div class="card" style="width: 100%;">
@@ -135,7 +135,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div>
+                        <div class="tabCon1">
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
@@ -165,12 +165,12 @@
                         </div>
                     </div>
                 </div>
-
-
+                <div class="listBox"></div>
+                <div class="listBox"></div>
                 <!-- Tab Account Setting -->
-                <div class="">
+                <div class="listBox">
                     <div class="jumbotron">
-                        <ul class="nav nav-tabs">
+                        <ul class="nav nav-tabs tabGroup2">
                             <li class="nav-item">
                                 <a class="nav-link active" href="#">基本信息</a>
                             </li>

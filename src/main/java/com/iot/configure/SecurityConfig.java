@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             throws Exception{
         auth.userDetailsService(userDetailsService());//这里作用是引入dataInit的配置
         //内存申明一个用户，用于简单调试security
-//        auth.inMemoryAuthentication().withUser("xixixi").password("123456").roles("user");
+        auth.inMemoryAuthentication().withUser("xixixi").password("123456").roles("user");
     }
 
     //使@preAuthorize生效
@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/img/**","/js/**","/lib/**","/fonts/**","/stylesheets/**");
+        web.ignoring().antMatchers("/img/**","/js/**","/lib/**","/fonts/**","/dest/**","/stylesheets/**");
     }
 
     @Override
@@ -57,9 +57,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 //
         http.authorizeRequests()
-                .antMatchers("/register","/*.html","/onlineLib","/report"
+                .antMatchers("/register","/*.html","/onlineLib","/api/*","/report"
                         ,"/back","/onlineLib_practice","/select","/registered","/validcode"
-                        ,"/admin","/admin_add","/add","/isExist","/select","/mailSender"
+                        ,"/admin","/admin_add","/add","/select","/mailSender"
                         ,"/answersSender","/test","/onlineLib_result","/skill_chart"
                         ,"/admin_publish","/exam_add","/.well-known/pki-validation/fileauth.txt"
                         ,"/personal","/personalInfo").permitAll()

@@ -30,12 +30,12 @@ app.get('/', function(req, res) {
     res.send('home');
 });
 
-app.post('/signin', function(req, res) {
+app.post('/api/signin', function(req, res) {
     console.log(req.body);
     res.json(JSON.stringify({ 'status': 'ok' }));
 });
 
-app.post('/signup', function(req, res) {
+app.post('/api/signup', function(req, res) {
     console.log(req.body);
     res.json(JSON.stringify({ 'status': 'ok' }));
 });
@@ -79,7 +79,137 @@ app.post('/api/user-sign-for-exam', function(req, res) {
 
 app.get('/api/userinfo', function(req, res) {
     res.json(JSON.stringify({ "name": "李友波" }));
-})
+});
+
+app.get('/api/user-will-exam', function(req, res) {
+    res.json(JSON.stringify({ "name": "sss" }));
+});
+
+app.get('/api/skillmap', function(req, res) {
+    res.json(JSON.stringify({
+        data: [{
+            "name": "翼灵物联工作室",
+            "symbolSize": 60,
+            "draggable": "true"
+        }, {
+            "name": "Web 前端",
+            "symbolSize": 40,
+            "draggable": "true"
+        }, {
+            "name": "HTML5",
+            "symbolSize": 20,
+            "draggable": "true"
+        }, {
+            "name": "CSS3",
+            "symbolSize": 20,
+            "draggable": "true"
+        }, {
+            "name": "JavaScript",
+            "symbolSize": 20,
+            "draggable": "true"
+        }, {
+            "name": "Web 后端",
+            "symbolSize": 40,
+            "draggable": "true"
+        }, {
+            "name": "Java",
+            "symbolSize": 20,
+            "draggable": "true"
+        }, {
+            "name": "数据库",
+            "symbolSize": 20,
+            "draggable": "true"
+        }, {
+            "name": "Spring Boot",
+            "symbolSize": 20,
+            "draggable": "true"
+        }, {
+            "name": "Android",
+            "symbolSize": 40,
+            "draggable": "true"
+        }, {
+            "name": "嵌入式",
+            "symbolSize": 40,
+            "draggable": "true"
+        }, {
+            "name": "C/C++",
+            "symbolSize": 20,
+            "draggable": "true"
+        }, {
+            "name": "树莓派",
+            "symbolSize": 20,
+            "draggable": "true"
+        }, {
+            "name": "物联网",
+            "symbolSize": 20,
+            "draggable": "true"
+        }, {
+            "name": "数据分析",
+            "symbolSize": 40,
+            "draggable": "true"
+        }, {
+            "name": "Python",
+            "symbolSize": 20,
+            "draggable": "true"
+        }, {
+            "name": "爬虫",
+            "symbolSize": 20,
+            "draggable": "true"
+        }],
+        links: [{
+            "source": "翼灵物联工作室",
+            "target": "Web 前端"
+        }, {
+            "source": "翼灵物联工作室",
+            "target": "Web 后端"
+        }, {
+            "source": "翼灵物联工作室",
+            "target": "Android"
+        }, {
+            "source": "翼灵物联工作室",
+            "target": "嵌入式"
+        }, {
+            "source": "翼灵物联工作室",
+            "target": "数据分析"
+        }, {
+            "source": "Web 前端",
+            "target": "HTML5"
+        }, {
+            "source": "Web 前端",
+            "target": "CSS3"
+        }, {
+            "source": "Web 前端",
+            "target": "JavaScript"
+        }, {
+            "source": "Web 后端",
+            "target": "Java"
+        }, {
+            "source": "Web 后端",
+            "target": "数据库"
+        }, {
+            "source": "Web 后端",
+            "target": "Spring Boot"
+        }, {
+            "source": "Android",
+            "target": 'Java'
+        }, {
+            "source": "嵌入式",
+            "target": 'C/C++'
+        }, {
+            "source": "嵌入式",
+            "target": '树莓派'
+        }, {
+            "source": "嵌入式",
+            "target": '物联网'
+        }, {
+            "source": "数据分析",
+            "target": 'Python'
+        }, {
+            "source": "数据分析",
+            "target": '爬虫'
+        }]
+    }))
+});
 
 app.use(router);
 
