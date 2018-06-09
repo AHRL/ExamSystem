@@ -11,7 +11,8 @@ module.exports = {
         personal: path.resolve(__dirname, 'resource/js', 'personal.js'),
         exam: path.resolve(__dirname, 'resource/js', 'exam.js'),
         admin: path.resolve(__dirname, 'resource/js', 'admin.js'),
-        practice: path.resolve(__dirname, 'resource/js', 'practice.js')
+        practice: path.resolve(__dirname, 'resource/js', 'practice.js'),
+        select: path.resolve(__dirname, 'resource/js', 'select.js')
     },
     output: {
         filename: './js/[name].bundle.js',

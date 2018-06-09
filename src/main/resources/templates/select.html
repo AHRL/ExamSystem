@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" xmlns:th="http://www.thymeleaf.org">
+<!--<![endif]-->
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>在线题库 | FunExam</title>
+    <meta name="keyword" content="在线题库，Fun Exam" />
+    <meta name="description" content="在线题库" />
+    <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
+    <link rel="short icon" type="image/x-icon" href="../favicon.ico" />
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="dist/css/select.bundle.css" />
+    <script src="https://cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
+    <!-- Respond.js for IE 8 or less only-->
+    <!--[if (lt IE 9) & (!IEMobile)]>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.bootcss.com/holder/2.9.4/holder.min.js"></script>
+</head>
+
+<body>
+    <!--[if lte IE 7]>
+    <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Fun Exam</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">个人中心 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="funExam.html">返回首页</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="avator" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                </a>
+                        <div class="dropdown-menu" aria-labelledby="avator">
+                            <a class="dropdown-item" href="#">个人中心</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">退出登录</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="exam-con">
+        <div class="jumbotron">
+            <form class="choice-form">
+                <h1 class="h3">选择练习</h1>
+                <hr/>
+                <h2 class="h5">选择语言</h2>
+                <div class="row">
+                    <div class="custom-control custom-checkbox col-2">
+                        <input class="custom-control-input" type="checkbox" name="lang" id="lang-checkbox0" />
+                        <label class="custom-control-label" for="lang-checkbox0">C</label>
+                    </div>
+                    <div class="custom-control custom-checkbox col-2">
+                        <input class="custom-control-input" type="checkbox" name="lang" id="lang-checkbox1" />
+                        <label class="custom-control-label" for="lang-checkbox1">Java</label>
+                    </div>
+                    <div class="custom-control custom-checkbox col-2">
+                        <input class="custom-control-input" type="checkbox" name="lang" id="lang-checkbox2" />
+                        <label class="custom-control-label" for="lang-checkbox2">JavaScript</label>
+                    </div>
+                    <div class="custom-control custom-checkbox col-2">
+                        <input class="custom-control-input" type="checkbox" name="lang" id="lang-checkbox3" />
+                        <label class="custom-control-label" for="lang-checkbox3">python</label>
+                    </div>
+                    <div class="custom-control custom-checkbox col-2">
+                        <input class="custom-control-input" type="checkbox" name="lang" id="lang-checkbox4" />
+                        <label class="custom-control-label" for="lang-checkbox4">数据结构</label>
+                    </div>
+                </div>
+                <h2 class="h5">选择题型</h2>
+                <div class="row">
+                    <div class="custom-control custom-checkbox col-2">
+                        <input class="custom-control-input" type="checkbox" name="type" id="type-checkbox0" />
+                        <label class="custom-control-label" for="type-checkbox0">单选</label>
+                    </div>
+                    <div class="custom-control custom-checkbox col-2">
+                        <input class="custom-control-input" type="checkbox" name="type" id="type-checkbox1" />
+                        <label class="custom-control-label" for="type-checkbox1">多选</label>
+                    </div>
+                    <div class="custom-control custom-checkbox col-2">
+                        <input class="custom-control-input" type="checkbox" name="type" id="type-checkbox2" />
+                        <label class="custom-control-label" for="type-checkbox2">简答</label>
+                    </div>
+                </div>
+                <h2 class="h5">选择数量</h2>
+                <div class="row">
+                    <div class="custom-control custom-radio col-2">
+                        <input class="custom-control-input" type="radio" name="num" id="num-radio0" />
+                        <label class="custom-control-label" for="num-radio0">10</label>
+                    </div>
+                    <div class="custom-control custom-radio col-2">
+                        <input class="custom-control-input" type="radio" name="num" id="num-radio1" />
+                        <label class="custom-control-label" for="num-radio1">20</label>
+                    </div>
+                    <div class="custom-control custom-radio col-2">
+                        <input class="custom-control-input" type="radio" name="num" id="num-radio2" />
+                        <label class="custom-control-label" for="num-radio2">30</label>
+                    </div>
+                </div>
+                <hr/>
+                <h3 class="h6">
+                    您已选择：<span class="choosed"></span>
+                    <button style="float: right" class="btn btn-primary btn-sm btn-submit">确定</button>
+                </h3>
+            </form>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light footer">
+        <div class="container">
+            <footer class="page-copyright" role="contentinfo">
+                <span><i class="fa fa-cc"></i> 2018</span>
+                <a href="https://github.com/w3fun/" target="_blank"><i class="fa fa-heart"></i> W3Fun</a>
+                <a href="https://github.com/YiLing-IOT-Studio/" target="_blank"><i class="fa fa-heart"></i> YiLing-IOT-Studio</a>
+                <a href="https://github.com/swpuLeo/" target="_blank"><i class="fa fa-male"></i> Leo</a>
+                <a href="https://github.com/812913/" target="_blank"><i class="fa fa-female"></i> lwf</a>
+                <a href="https://github.com/StaticWalk/" target="_blank"><i class="fa fa-male"></i> StaticWalk</a>
+                <a href="https://github.com/luqingying/" target="_blank"><i class="fa fa-female"></i> lqy</a>
+                <a href="https://github.com/w3fun/ExamSystem/blob/master/LICENSE" target="_blank"><i class="fa fa-copyright"></i> MIT</a>
+            </footer>
+        </div>
+    </nav>
+
+    <script src="dist/js/select.bundle.js"></script>
+</body>
+
+</html>
