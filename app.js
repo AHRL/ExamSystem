@@ -334,6 +334,47 @@ app.post('/api/exam_add', upload.array(), (req, res) => {
     }))
 })
 
+app.get('/api/back', (req, res) => {
+    res.json(JSON.stringify({
+        ret: true,
+        data: [{
+            lang: 'C',
+            type: 'radio',
+            description: '第一题',
+            content: [
+                'Check this custom checkbox',
+                'Check this custom checkbox',
+                'Check this custom checkbox',
+                'Check this custom checkbox'
+            ]
+        }, {
+            lang: 'Java',
+            type: 'checkbox',
+            description: '第二题',
+            content: [
+                'Check this custom checkbox',
+                'Check this custom checkbox',
+                'Check this custom checkbox',
+                'Check this custom checkbox'
+            ]
+        }, {
+            lang: 'Python',
+            type: 'others',
+            description: '第三题',
+        }, {
+            lang: 'JavaScript',
+            type: 'checkbox',
+            description: '第四题',
+            content: [
+                'Check this custom checkbox',
+                'Check this custom checkbox',
+                'Check this custom checkbox',
+                'Check this custom checkbox'
+            ]
+        }]
+    }))
+})
+
 app.get('404', function(req, res) {
     res.send('404');
 });
