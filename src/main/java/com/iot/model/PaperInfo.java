@@ -29,35 +29,24 @@ public class PaperInfo {
 	List<ExamQuestion> examQuestions;
 
 	private String name;
-
 	private  String date;
-	private  String startTime;
 	private  String location;
-	private  String endTime;
 	private  String type;
 	private  String time;
-
 	private Boolean  isSigned;
-
-	private  String token;
-
 	private String deadline;
-
 	private int apolicants = 0;
 
 	public PaperInfo() {
 	}
 
-	public PaperInfo(String date, String name, User user, String startTime, String location, String endTime, String type, String time, String token, Boolean isSigned, String deadline) {
+	public PaperInfo(String date, String name, User user, String location, String type, String time, Boolean isSigned, String deadline) {
 		this.date=date;
 		this.name=name;
 		this.user=user;
-		this.startTime = startTime;
 		this.location = location;
-		this.endTime = endTime;
 		this.type = type;
 		this.time = time;
-		this.token = token;
 		this.isSigned=isSigned;
 		this.deadline=deadline;
 	}
@@ -68,7 +57,7 @@ public class PaperInfo {
 	return	"{" +
 			"\"name\":\"" + name + "\"," +
 			"\"date\":\"" + date + "\"," +
-			"\"token\":\"" + token + "\"," +
+			"\"token\":\"" + id + "\"," +
 			"\"deadline\":\"" + deadline + "\"," +
 			"\"location\":\"" + location + "\"" +
 			"}";
@@ -78,7 +67,7 @@ public class PaperInfo {
 	 return "{" +
 			"\"name\":\"" + name + "\"," +
 			"\"date\":\"" + date + "\"," +
-			"\"token\":\"" + token + "\"," +
+			"\"token\":\"" + id + "\"," +
 			"\"deadline\":\"" + deadline + "\"," +
 			"\"isSigned\":" + isSigned + "," +
 			"\"location\":\"" + location + "\"" +

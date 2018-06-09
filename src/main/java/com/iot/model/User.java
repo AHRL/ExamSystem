@@ -22,15 +22,13 @@ public class User {
 
     Date date;
 
+    //自己枚举的权限需要加前缀ROLE_
     public enum ROLE{
-    ROLE_admin,ROLE_user;
+    ROLE_admin,ROLE_user
     }
 
     @Enumerated(EnumType.STRING)
     private ROLE role;
-
-//    @OneToMany
-//    List<Record> recordes;
 
     @Id
     private String username;
@@ -39,8 +37,6 @@ public class User {
     private String grade;
     private String major;
     private String other;
-
-//    private String admin="admin";
 
 
     public User() {

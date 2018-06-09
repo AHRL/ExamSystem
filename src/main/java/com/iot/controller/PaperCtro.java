@@ -1,11 +1,15 @@
 package com.iot.controller;
 
 import com.google.gson.Gson;
-import com.iot.model.*;
+import com.iot.model.ExamQuestion;
+import com.iot.model.PaperInfo;
+import com.iot.model.PaperRecord;
+import com.iot.model.User;
+import com.iot.model.jsonObject.Basic;
+import com.iot.model.jsonObject.Transfer;
 import com.iot.repository.*;
 import com.iot.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -43,11 +47,8 @@ public class PaperCtro {
 
 	private PaperInfo paperInfo;
 
-	private PsdBack psdBack;
-
 	private static  String lang[]=new String[]{"HTML+CSS","JavaScript","Java","C"};
 
-	private ExamQuestion examQuestion;
 
 	private static String jsessionId;
 
@@ -57,16 +58,13 @@ public class PaperCtro {
 
 	private Transfer transfer;
 
-//	private EventListenerComponent eventListenerComponent;
+	private Basic basic;
 
 	StringUtil stringUtil=new StringUtil();
 
 	@Autowired
-
 	private PaperRecordRepository paperRecordRepository;
 
-	@Autowired
-	private JavaMailSender mailSender;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -76,12 +74,6 @@ public class PaperCtro {
 
 	@Autowired
 	private PaperInfoRepository paperInfoRepository;
-
-	@Autowired
-	private QuestionRepository questionRepository;
-
-	@Autowired
-	private RecordRepository recordRepository;
 
 
 	@ResponseBody
@@ -95,13 +87,15 @@ public class PaperCtro {
 		List<PaperInfo> list=paperInfoRepository.findAll();
 
 		for (int i = 0; i < list.size(); i++) {
-			String mix=list.get(i).getDate()+" "+list.get(i).getStartTime()+":00";
+
+			String mix=list.get(i).getDeadline()+":00";
+			if (mix.length()<8) { mix="0"+ mix; }
+			mix=list.get(i).getDate().replace("/","-")+" "+mix;
 
 			try {
-				if (format.parse(mix).getTime()-600000< now.getTime()&&format.parse(mix).getTime()+1800000> now.getTime()) {
-
-					jedis.set(jsessionId+"PaperCode",String.valueOf(list.get(i).getId()));
-					jedis.expire(jsessionId+"PaperCode",2400);
+				if (format.parse(mix).getTime()+7200000<now.getTime()&&format.parse(mix).getTime()+9000000> now.getTime()){
+					jedis.set(jsessionId+"PaperId",String.valueOf(list.get(i).getId()));
+					jedis.expire(jsessionId+"PaperId",2400);
 
 					return "{\"ret\":true,\"data\":{\"status\":\"OK\"}}";
 				}
@@ -113,19 +107,20 @@ public class PaperCtro {
 
 	}
 
-	@RequestMapping(value = "exam")
-	public String exam(){
-		return "exam";
-	}
 
 
+	/**
+	 *
+	 * @param request
+	 * @return
+	 *
+	 * 查询当前用户的已考试卷和待考试卷
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/api/exam_detail")
-//	@RequestMapping(value = "/api/exam_detail",produces="application/json;charsetD=UTF-8")
 	public String exam_detail(HttpServletRequest request) {
 
 		jsessionId=request.getSession().getId();
-		Boolean status =true;
 		List<PaperRecord> examing = null;
 		List<PaperRecord> examed = null;
 
@@ -134,10 +129,10 @@ public class PaperCtro {
 			examing = paperRecordRepository.findExamingPaperByUsername(user.getUsername());
 			examed = paperRecordRepository.findExamedPaperByUsername(user.getUsername());
 		}catch (Exception e){
-			status = false;
 			System.err.println(e+"/api/exam_detail");
+			return "{\"ret\":false}";
 		}
-		return  status?"{\"ret\":true,\"data\":{"+stringUtil.getExamedRecord(examed)+","+stringUtil.getExamingRecord(examing)+"}}":"{\"ret\":false}";
+		return "{\"ret\":true,\"data\":{"+stringUtil.getExamedRecord(examed)+","+stringUtil.getExamingRecord(examing)+"}}";
 	}
 
 
@@ -215,6 +210,14 @@ public class PaperCtro {
 	}
 
 
+
+	/**
+	 *
+	 * @param email
+	 * @return
+	 *
+	 * 校验邮箱是否被注册过
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/api/isExist",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
 	public String isExist(@RequestParam(value = "email")String email) {
@@ -233,7 +236,14 @@ public class PaperCtro {
 	}
 
 
-	//这里的userInfo应该是注册用户信息还是登陆考试的用户的信息  ！！必须登陆才行
+	/**
+	 *
+	 * @param request
+	 * @return
+	 *
+	 *
+	 * 返回当前登陆用户的详细信息
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/api/userinfo",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
 	public  String userinfo(HttpServletRequest request) {
@@ -252,14 +262,20 @@ public class PaperCtro {
 	}
 
 
+	/**
+	 *
+	 * @return
+	 *
+	 * ？？？
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/api/getValCode",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
 	public  String getValCode() {
 		Boolean status =true;
-		String token=null;
+		Long token=null;
 
 		try {
-			token = paperInfoRepository.findById(Long.valueOf(jedis.get(jsessionId+"PaperCode"))).getToken();
+			token = paperInfoRepository.findById(Long.valueOf(jedis.get(jsessionId+"PaperId"))).getId();
 		}catch (Exception e){
 			status=false;
 			System.err.println(e+"/api/");
@@ -268,6 +284,14 @@ public class PaperCtro {
 	}
 
 
+
+	/**
+	 *
+	 * @param request
+	 * @return
+	 *
+	 * 获取当前开放的考试试卷
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/api/exam",method = RequestMethod.GET)
 	public String exam(HttpServletRequest request) {
@@ -276,66 +300,85 @@ public class PaperCtro {
 		Boolean status =true;
 		try{
 			user = userRepository.findByUsername(jedis.get(jsessionId));
-			paperInfo =paperInfoRepository.findById(Long.valueOf(jedis.get(jsessionId+"PaperCode")));
+			paperInfo =paperInfoRepository.findById(Long.valueOf(jedis.get(jsessionId+"PaperId")));
 		}catch (Exception e){
 			status = false;}
 
-		return status?"{\"ret\":true,\"time\":\""+ (Integer.valueOf(paperInfo.getTime())/60000)+"\",\"data\":["+stringUtil.toExamQuestionsString(paperInfo.getExamQuestions()) +"]}":"{\"ret\":false}";
+		return status?"{\"ret\":true,\"time\":\"120\",\"data\":["+stringUtil.toExamQuestionsString(paperInfo.getExamQuestions()) +"]}":"{\"ret\":false}";
 
 
 	}
 
 
+
+	/**
+	 *
+	 * @param request
+	 * @param paperAnswer
+	 * @return
+	 *
+	 * 考生提交试卷
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/api/exam_submit",method = RequestMethod.POST)
-	public  String exam_submit(HttpServletRequest request,@RequestParam(value = "paperAnswer") String paperAnswer,@RequestParam(value = "token")String token) {
+	public  String exam_submit(HttpServletRequest request,@RequestParam(value = "paperAnswer") String paperAnswer) {
 
-		Boolean status =true;
 		jsessionId = request.getSession().getId();
+		Long paperId=Long.valueOf(jedis.get(jsessionId+"PaperId"));
 		user = userRepository.findByUsername(jedis.get(jsessionId));
 
 		try{
-			paperRecord=paperRecordRepository. findByTokenAndName(token,user.getUsername());
+			paperRecord=paperRecordRepository. findByPaperInfoAndName(paperId,user.getUsername());
 			paperRecord.setPaperAnswer(paperAnswer);
 			paperRecordRepository.saveAndFlush(paperRecord);
 		}catch (Exception e){
-			System.err.println(e+"/api/");
-			status=false;
+			System.err.println(e+"/api/exam_submit");
+			return "{\"ret\":false}";
 		}
 
-		return status?"{\"ret\":true,\"data\":[{\"status\":\"OK\"}]}":"{\"ret\":false}";
+		return "{\"ret\":true,\"data\":[{\"status\":\"OK\"}]}";
 	}
 
 
+
+	/**
+	 *
+	 * @param request
+	 * @param a    		试卷的paperInfo
+	 * @param data 		试卷中的examQuestions
+	 * @return
+	 *
+	 * 管理员权限添加考试试卷
+	 * 		通过basic来转化拿到的paperInfo的数据，transfer来转化拿到的examQuestion数据
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/api/exam_add",method = RequestMethod.POST)
-	public String exam_add(HttpServletRequest request,@RequestParam(value = "token" ) String token,@RequestParam(value = "deadline") String deadline
-			,@RequestParam(value = "time") String time,@RequestParam(value = "name") String name,@RequestParam(value = "date") String date
-			,@RequestParam(value = "type") String type,@RequestParam(value = "location") String location
-			,@RequestParam(value = "startTime") String startTime,@RequestParam(value = "endTime") String endTime
-						   ,@RequestParam(value = "data") String data) throws InterruptedException {
-		//处理ExamQuestions
-
-		//这里的gson、examQuestion都引入了局部声明，全局声明不到位？？？
-		Gson gson =new Gson();
-
-		//处理字符串数据data，引入了一个中转类 有没有必要？
-		String[] b=data.substring(2,data.length()-2).split("},\\{");
-		List<ExamQuestion> list=new ArrayList<>();
-		for (int i = 0; i < b.length; i++) {
-			transfer=gson.fromJson("{"+b[i]+"}",Transfer.class);
-			ExamQuestion examQuestion=new ExamQuestion(new java.sql.Date(System.currentTimeMillis()),transfer.getType(),transfer.getDescribe(),transfer.getContent());
-			list.add(examQuestion);
-			examQuestionRepository.save(examQuestion);
-		}
+	public String exam_add(HttpServletRequest request,@RequestParam(value = "basic" ) String a,@RequestParam(value = "questions") String data) {
 
 		jsessionId =request.getSession().getId();
 		Boolean status=true;
+		Gson gson =new Gson();
+		List<ExamQuestion> list=new ArrayList<>();
 		user=userRepository.findByUsername(jedis.get(jsessionId));
 
 		try {
-			//deadline的时间格式2018/6/14 23:59   date格式2018-01-18(2018/01/18)
-			paperInfo=new PaperInfo(date,name,user,startTime,location,endTime,type,time,token,false,deadline);
+
+		//这里的gson、examQuestion都引入了局部声明，全局声明不到位？？？
+		//处理字符串数据data，引入了一个中转类 有没有必要？
+		String[] b=data.substring(2,data.length()-2).split("},\\{");
+
+			for (int i = 0; i < b.length; i++) {
+				transfer=gson.fromJson("{"+b[i]+"}",Transfer.class);
+				ExamQuestion examQuestion=new ExamQuestion(new java.sql.Date(System.currentTimeMillis()),transfer.getType(),transfer.getDescribe(),transfer.getContent(),transfer.getScore());
+				list.add(examQuestion);
+				examQuestionRepository.save(examQuestion);
+			}
+
+			basic=gson.fromJson(a,Basic.class);
+
+			//deadline的时间格式 23:59   date格式2018-01-18(2018/01/18)!
+			paperInfo=new PaperInfo(basic.getDate(),basic.getDescribe(),user,basic.getLocation(),basic.getType(),basic.getTime(),false,basic.getDeadline());
+
 			//保存试卷
 			paperInfoRepository.save(paperInfo);
 
@@ -343,8 +386,9 @@ public class PaperCtro {
 			System.err.println(e+"/api/exam_add");
 		}
 
-		return 	status?"{\"ret\":true}":"{\"ret\":false}";
+		return 	status?"{\"ret\":true,\"data\":{\"status\":\"OK\"}}":"{\"ret\":false}";
 	}
+
 
 
 
@@ -459,23 +503,31 @@ public class PaperCtro {
 	}
 
 
-	//用户报名考试
+	/***
+	 *
+	 * @param request
+	 * @param id
+	 * @return
+	 *
+	 * 用户报名考试
+	 */
 	@ResponseBody
 	@RequestMapping( value = "/api/user_sign_for_exam",method = RequestMethod.POST)
-	public  String user_sign_for_exam(HttpServletRequest request,@RequestParam(value = "token") String token) {
+	public  String user_sign_for_exam(HttpServletRequest request,@RequestParam(value = "token") Long id) {
 
 		Boolean status=true;
 		jsessionId=request.getSession().getId();
 		try{
-			paperInfo = paperInfoRepository.findByToken(token);
+			paperInfo = paperInfoRepository.findById(id);
 			user = userRepository.findByUsername(jedis.get(jsessionId));
 
-			if (paperRecordRepository.findByTokenAndName(token,user.getUsername())!=null){
+			if (paperRecordRepository.findByPaperInfoAndName(id,user.getUsername())!=null){
 				return "{\"ret\":false}";
 			}
 
-			String date =paperInfo.getDate().replace("-","/")+" "+paperInfo.getStartTime()+"-"+paperInfo.getEndTime();
-			PaperRecord  paperRecord=new PaperRecord(user,paperInfo,0,token,paperInfo.getName(),paperInfo.getDeadline(),-1
+//			String date =paperInfo.getDate().replace("-","/")+" "+paperInfo.getStartTime()+"-"+paperInfo.getEndTime();
+			String date=paperInfo.getDate()+" "+paperInfo.getTime();
+			PaperRecord  paperRecord=new PaperRecord(user,paperInfo,0,paperInfo.getName(),paperInfo.getDeadline(),-1
 					,date,paperInfo.getLocation(),new Date());
 			paperRecordRepository.save(paperRecord);
 		}catch (Exception e){
@@ -486,6 +538,13 @@ public class PaperCtro {
 	}
 
 
+	/**
+	 *
+	 * @param request
+	 * @param response
+	 * @return
+	 * 用户登出
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/api/logout",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
 	public String logout(HttpServletRequest request, HttpServletResponse response){
@@ -521,31 +580,39 @@ public class PaperCtro {
 	}
 
 
-
-	//用户可以报名参加的考试列表
+	/***
+	 *
+	 * @param request
+	 * @return
+	 * 用户可以报名参加的考试列表
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/api/exam_list_for_sign",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
 	public String exam_list_for_sign(HttpServletRequest request){
 
 		jsessionId=request.getSession().getId();
 		Boolean status =true;
-		java.util.Date now = new java.util.Date();
+
 		DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		java.util.Date now = new java.util.Date();
+
 		List<PaperInfo> list=paperInfoRepository.findAll();
-		List<PaperInfo> a=list;
+		List<PaperInfo> a=new ArrayList<>();
 		try{
 			for (int i = 0; i < list.size(); i++) {
-				String mix=list.get(i).getDeadline().replace("/","-")+":00";
-				a.get(i).setIsSigned(false);
+
+				String mix=list.get(i).getDeadline()+":00";
+				if (mix.length()<8) { mix="0"+ mix; }
+				mix=list.get(i).getDate().replace("/","-")+" "+mix;
+
 				if (format.parse(mix).getTime() > now.getTime()) {
-					if (paperRecordRepository.findByTokenAndName(list.get(i).getToken(), user.getUsername()) != null) {
-						a.get(i).setIsSigned(true);
+					list.get(i).setIsSigned(true);
+					if (paperRecordRepository.findByPaperInfoAndName(list.get(i).getId(), user.getUsername()) == null) {
+						list.get(i).setIsSigned(false);
 					}
-					a.remove(i);
+					a.add(list.get(i));
 				}
-
 			}
-
 			return "{\"ret\":true,\"data\":["+stringUtil.getExamingPaper(a)+"]}";
 
 		}catch (ParseException e){
@@ -557,7 +624,13 @@ public class PaperCtro {
 	}
 
 
-	//用户马上进行考试的标题
+	/**
+	 *
+	 * @param request
+	 * @return
+	 * 用户马上进行考试的标题
+	 * 好像没用的？
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/api/exam_title",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
 	public  String exam_title(HttpServletRequest request) {
@@ -566,7 +639,7 @@ public class PaperCtro {
 		Boolean status =true;
 		try{
 			user = userRepository.findByUsername(jedis.get(jsessionId));
-			paperInfo =paperInfoRepository.findById(Long.valueOf(jedis.get(jsessionId+"PaperCode")));
+			paperInfo =paperInfoRepository.findById(Long.valueOf(jedis.get(jsessionId+"PaperId")));
 		}catch (Exception e){
 			System.err.println(e+"/api/exam_title");
 			status = false;
@@ -575,6 +648,8 @@ public class PaperCtro {
 		return status?"\"ret\":true,\"data\":[" +paperInfo.toBeExaming()+"]}":"\"ret\":false";
 
 	}
+
+
 
 	@RequestMapping(value = "/api/register", method = RequestMethod.POST)
 	public String register(HttpServletRequest request) throws Exception {

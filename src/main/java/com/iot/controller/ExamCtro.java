@@ -12,9 +12,9 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,10 +26,8 @@ import redis.clients.jedis.Jedis;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.Date;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -68,36 +66,28 @@ public class ExamCtro {
     private UserRepository userRepository;
 
     @Autowired
-    private ExamQuestionRepository examQuestionRepository;
-
-    @Autowired
-    private PaperInfoRepository paperInfoRepository;
-
-    @Autowired
     private QuestionRepository questionRepository;
 
     @Autowired
     private RecordRepository recordRepository;
 
 
-    @ResponseBody
-    @RequestMapping(value = "/",produces="application/json;charset=UTF-8")
-    public String index(HttpServletRequest request,Model model){
-         username=request.getRemoteUser();
-         jsessionId=request.getSession().getId();
-         jedis.set(jsessionId,username);
-//        System.out.println("jsessionId:"+jsessionId+"+username:"+username);
-       model.addAttribute("username",username);
-
-
-        return "{\"username\":\""+username+"\",\"JsessionId\":\""+jsessionId+"\"}";
-//        return "funExam";
+    @RequestMapping(value = "/")
+    public String api_login(HttpServletRequest request){
+        username=request.getRemoteUser();
+        jsessionId=request.getSession().getId();
+        jedis.set(jsessionId,username);
+        return "funExam";
     }
 
-    @ResponseBody
-    @RequestMapping("/.well-known/pki-validation/fileauth.txt")
-    public String https()  {
-        return "201802261233415544hvi872a7agweaqjpeg1whxfo32p4jbutjcsgmp54mxyh1r";
+
+    /**
+     * 考试系统首页
+     */
+    @RequestMapping("/funExam")
+    @PreAuthorize("hasAnyRole( 'user','admin')")
+    public String funExam() {
+        return "funExam";
     }
 
 
@@ -106,67 +96,99 @@ public class ExamCtro {
         return "login";
     }
 
-    @RequestMapping(value = "/")
-    public String api_login(HttpServletRequest request){
 
-        username=request.getRemoteUser();
-        jsessionId=request.getSession().getId();
-        jedis.set(jsessionId,username);
-        return "funExam";
-    }
-
+    /**
+     * 用户个人中心
+     */
     @RequestMapping(value = "/personal")
-    public String personal() throws Exception {
+    public String personal() {
         return "personal";
     }
 
 
+    /**
+     * 管理员页面
+     */
+    @RequestMapping("/admin")
+    public String admin() throws Exception {
+        return "admin";
+    }
+
+
+    /**
+     * 管理员添加试卷
+     */
     @RequestMapping("/admin_add")
-    public String admin_add() throws Exception {
+    public String admin_add(){
         return "admin_add";
     }
 
-    @RequestMapping("/admin_publish")
-    public String admin_publish() throws Exception {
-        return "admin_publish";
+
+    /**
+     * 考试页面跳转
+     */
+    @RequestMapping(value = "/exam")
+    public String exam(){
+        return  "exam";
     }
 
+
+    /**
+     * 用户在线练题—选择页
+     */
     @RequestMapping(value = "/onlineLib")
     @PreAuthorize("hasAnyRole('admin','user')")
-    public String onlineLib() throws Exception {
+    public String onlineLib(){
         return "onlineLib";
     }
 
-    @RequestMapping("/skill_chart")
-    public String skill_chart() throws Exception {
-        return "skill_chart";
+
+    /**
+     * 用户在线练题—答题页
+     */
+    @RequestMapping("/onlineLib_practice")
+    public String onlineLib_practice() {
+        return "/onlineLib_practice";
     }
 
-    @RequestMapping("/examinee_info")
-    public String examinee_info() throws Exception {
-        return "examinee_info";
-    }
 
-    @RequestMapping("/funExam")
-    @PreAuthorize("hasAnyRole( 'user','admin')")//需要加前缀ROLE_
-    public String funExam() throws Exception {
-        return "funExam";
-    }
-
-    @RequestMapping("/404")
-    public String forbidden(){
-        return "404";
-    }
-
+    /**
+     * 练题练题结束评估页
+     */
     @RequestMapping("/practice_completed")
     public String practice_completed(){
         return "practice_completed";
     }
 
-    @RequestMapping("/admin")
-    public String admin() throws Exception {
-        return "admin";
+
+    /**
+     * 用户的技能图谱
+     */
+    @RequestMapping("/skill_chart")
+    public String skill_chart() {
+        return "skill_chart";
     }
+
+
+//
+    @RequestMapping("/examinee_info")
+    public String examinee_info()  {
+        return "examinee_info";
+    }
+
+//
+    @RequestMapping("/404")
+    public String forbidden(){
+        return "404";
+    }
+
+//
+    @RequestMapping("/admin_publish")
+    public String admin_publish() throws Exception {
+        return "admin_publish";
+    }
+
+
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -178,6 +200,30 @@ public class ExamCtro {
     }
 
 
+
+    /**
+     *
+     * @return
+     *
+     * https证书配置，腾讯云颁发的ssl证书，服务器端通过nginx反向代理
+     */
+    @ResponseBody
+    @RequestMapping("/.well-known/pki-validation/fileauth.txt")
+    public String https()  {
+        return "201802261233415544hvi872a7agweaqjpeg1whxfo32p4jbutjcsgmp54mxyh1r";
+    }
+
+
+
+    /***
+     *
+     * @param email
+     * @param request
+     * @return
+     *
+     * 调用了腾讯邮箱的SMTP服务
+     *      实现注册的时候的发送注册验证码
+     */
     @RequestMapping(value = "/mailSender")
     @ResponseBody
     public String mailSender(@RequestParam(value = "email")String email, HttpServletRequest request){
@@ -200,8 +246,19 @@ public class ExamCtro {
         return random;
     }
 
-    @RequestMapping("/answersSender")
+
+
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     * 阅卷+用户答题信息整理
+     */
+    @RequestMapping("/api/answersSender")
     public String answersSender(HttpServletRequest request,HttpServletResponse response){
+
+        jsessionId=request.getSession().getId();
 
         //获取当前jsessionId会话的record
         Record record=recordRepository.findByJsessionId(jsessionId);
@@ -257,15 +314,20 @@ public class ExamCtro {
         map.put("D",String.valueOf(jedis.hmget(jsessionId+"map","D").get(0)));
         map.put("chart",chart);
 
-//        jedis.set("map"+jsessionId,gson.toJson(map));
+        jedis.set("map"+jsessionId,gson.toJson(map));
         return "/practice_completed";
     }
 
-    @RequestMapping("/onlineLib_practice")
-    public String onlineLib_practice() throws Exception {
-        return "/onlineLib_practice";
-    }
 
+
+    /**
+     *
+     * @param response
+     * @param request
+     * @return
+     *
+     * 用户技能图谱的数据统计
+     */
     @RequestMapping("/onlineLib_result")
     @ResponseBody
     public String onlineLib_result( HttpServletResponse response,HttpServletRequest request){
@@ -294,116 +356,15 @@ public class ExamCtro {
     }
 
 
-    @ResponseBody
-    @RequestMapping("/isLimit")
-    public int isLimit() {
-        return Integer.valueOf(jedis.get(jsessionId+"UserPaper"));
-    }
-
-    @ResponseBody
-    @RequestMapping("/personalInfo")
-    public String personalInfo() {
-        int practiced=0;
-        int tested=0;
-//        user = userRepository.findByUsername(jedis.get(jsessionId));
-        user = userRepository.findByUsername(username);
-        List<String> hh=recordRepository.findLangDetails(user.getUsername());
-        for (int i = 0; i < lang.length; i++) {
-            practiced+= stringUtil.totalNumber(lang[i],hh);
-        }
-        if (String.valueOf(user.getRole()).equals("admin"))
-            return "{\"name\":"+user.getUsername()+"\",\"email\":\""+user.getEmail()+"\",\"practiced\":\""+practiced+
-                    "\",\"tested\":\""+0+"\",\"email\":\""+user.getEmail()+"\",\"isAdmin\":\"1\"}";
-        else
-            return  "{\"name\":"+user.getUsername()+"\",\"email\":\""+user.getEmail()+"\",\"practiced\":\""+0+
-                    "\",\"tested\":\""+0+"\",\"email\":\""+user.getEmail()+"\",\"isAdmin\":\"0\"}";
-    }
-    
-
-    @ResponseBody
-    @RequestMapping("/userPaper")
-    public String userPaper() {
-        jedis.set(jsessionId+"UserPaper",String.valueOf(0));
-        java.util.Date now = new java.util.Date();
-        DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        List<PaperInfo> list=paperInfoRepository.findAll();
-
-        for (int i = 0; i < list.size(); i++) {
-            String mix=list.get(i).getDate()+" "+list.get(i).getStartTime()+":00";
-            System.out.println(mix);
-            try {
-                if (format.parse(mix).getTime()-600000< now.getTime()&&format.parse(mix).getTime()+1800000> now.getTime()) {
-
-                    jedis.set(jsessionId+"UserPaper", String.valueOf(1));
-                    user = userRepository.findByUsername(jedis.get(jsessionId));
-                    paperInfo = list.get(i);
-
-				return "{\"role\":\""+user.getRole()+"\",\"email\":\""+user.getEmail()+"\",\"username\":\""+user.getUsername()
-                        + "\",\"examQuestion\":[" +
-                        // paperInfo.getExamQuestion()
-                        stringUtil.adjustFormat(paperInfo)
-                        +"],\"startTime\":\""+paperInfo.getStartTime()
-                        +"\",\"endTime\":\""+paperInfo.getEndTime()+"\",\"type\":\""+paperInfo.getType()+"\",\"info\":\""+
-                        paperInfo.getName()+"\",\"token\":\""+paperInfo.getToken()+"\"}";
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        return "error";
-
-    }
-
-    @RequestMapping("/exam_add")
-    public void exam_add(HttpServletResponse response, @RequestParam(required = false,value = "examData")String examData){
-
-        response.addHeader("Access-Control-Allow-Origin", "*");
-        response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
-        response.addHeader("Access-Control-Max-Age","1800");
-
-        //处理考试题目，并与试卷级联
-        List<ExamQuestion> list=stringUtil.examCut(examData);
-        for (int i = 0; i < list.size(); i++) {
-            examQuestionRepository.save(list.get(i));
-        }
-
-        //处理获取试卷信息
-        PaperInfo paperInfo=stringUtil.basicCut(examData,list);
-        paperInfo.setUser(userRepository.findByUsername(username));
-        paperInfoRepository.save(paperInfo);
-
-    }
-
-
-    @RequestMapping("/select")
-    public String select(@RequestParam(required = false,defaultValue = "null",value = "programmeA")String A,
-                         @RequestParam(required = false,defaultValue = "null",value = "programmeB")String B,
-                         @RequestParam(required = false,defaultValue = "null",value = "programmeC")String C,
-                         @RequestParam(required = false,defaultValue = "null",value = "programmeD")String D,
-                         @RequestParam(required = false,value = "count")String count,
-                         HttpServletResponse response) throws IOException {
-        response.addHeader("Access-Control-Allow-Origin", "*");
-        response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
-        response.addHeader("Access-Control-Max-Age", "1800");
-
-        //jedis的map来带值
-        Map<String,String> map=new HashMap<>();
-        map.put("A",A);
-        map.put("B",B);
-        map.put("C",C);
-        map.put("D",D);
-        map.put("count",count);
-        map.put("begin", String.valueOf(System.currentTimeMillis()));//答题练习的开始时间
-        jedis.hmset(jsessionId+"map",map);
-
-        //设置会话窗口的存活期
-//       jedis.expire(jsessionId,Integer.parseInt(String.valueOf(360)));//设置由就session生成的查询条件map生存期
-
-        return "onlineLib_practice";
-    }
-
+    /**
+     *
+     * @param userAuthentication
+     * @param model
+     * @return
+     *
+     * 这是处理通过QQ快捷登陆的用户验证部分
+     *      使用了自己的回调地址，配置文件查看 filter.qq 目录
+     */
     @RequestMapping("/user")
     public String user(@AuthenticationPrincipal UsernamePasswordAuthenticationToken userAuthentication, Model model)
     {
@@ -413,51 +374,143 @@ public class ExamCtro {
         return "funExam";
     }
 
-    @RequestMapping(value = "/back")
+
+
+    /***
+     * @param A
+     * @param B
+     * @param C
+     * @param D
+     * @param count
+     * @param response
+     * @param request
+     * @return
+     *
+     * http://localhost/api/select?programmeA=HTML+CSS&&programmeB=Java&&programmeC=C&&programmeD=null&&count=15
+     *
+     * 根据自己数据库中提供的题目种类数来设置programme的个数
+     *      需要更改question相关的查询语句
+     * [programme:C/C++、Java、Javascript、HTML/CSS]
+     *
+     */
     @ResponseBody
-    public List<Question> back(HttpServletRequest request,HttpServletResponse response){
+    @RequestMapping("/api/select")
+    public String select(@RequestParam(required = false,defaultValue = "null",value = "programmeA")String A,
+                         @RequestParam(required = false,defaultValue = "null",value = "programmeB")String B,
+                         @RequestParam(required = false,defaultValue = "null",value = "programmeC")String C,
+                         @RequestParam(required = false,defaultValue = "null",value = "programmeD")String D,
+                         @RequestParam(required = false,value = "count")String count,
+                         HttpServletResponse response,HttpServletRequest request)  {
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         response.addHeader("Access-Control-Max-Age", "1800");
 
-        //通过redis中的map拿到值
-        String A= String.valueOf(jedis.hmget(jsessionId+"map","A").get(0));
-        String B= String.valueOf(jedis.hmget(jsessionId+"map","B").get(0));
-        String C= String.valueOf(jedis.hmget(jsessionId+"map","C").get(0));
-        String D=String.valueOf(jedis.hmget(jsessionId+"map","D").get(0));
-        Integer count= Integer.valueOf(jedis.hmget(jsessionId+"map","count").get(0));
+        DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        List<Question> list=questionRepository.find(A,B,C,D,count);
+        try
+        {
+            jsessionId=request.getSession().getId();
 
-        //查询得到数据放在record题目类型列
-        List<String> langList=questionRepository.findLang(A,B,C,D,count);
+            //jedis的map来带值
+            Map<String,String> map=new HashMap<>();
+            map.put("A",A);
+            map.put("B",B);
+            map.put("C",C);
+            map.put("D",D);
+            map.put("count",count);
+            map.put("startTime", String.valueOf(System.currentTimeMillis()));//答题练习的开始时间
+            jedis.hmset(jsessionId+"map",map);
 
-        //把查询出来的答案数组放在字符串answers中,不需要放入jedis去转运，关键设计在于使用好jsessionid
-//        jedis.set(username + "answers",String.valueOf(questionRepository.findAnwserList(A,B,C,D,count)));
-        String answers=String.valueOf(questionRepository.findAnwserList(A,B,C,D,count));
+            //设置会话窗口的存活期
+            jedis.expire(jsessionId,Integer.parseInt(String.valueOf(360)));//设置由就session生成的查询条件map生存期
 
-        //使用构造器来new新的record
-        Record record=new Record(jsessionId,0,userRepository.findByUsername(username),list,-1,
-                null,answers,null,count,langList.toString(),new Date(System.currentTimeMillis()));
-
-        recordRepository.save(record);
-
-
-        return list;
+        }catch (Exception e){
+            System.err.println(e+"/api/select");
+            return "{\"ret\":false}";
+        }
+        return  "{\"ret\":true}";
     }
 
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     *
+     * 返回当前时间开放的考试
+     */
+    @RequestMapping(value = "/api/back")
     @ResponseBody
-    @RequestMapping(value = "/add")
+    public String back(HttpServletRequest request,HttpServletResponse response){
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+        response.addHeader("Access-Control-Max-Age", "1800");
+
+        List<Question> list=new ArrayList<>();
+        jsessionId=request.getSession().getId();
+        String startTime=String.valueOf(jedis.hmget(jsessionId+"map","startTime").get(0));
+
+        try {
+
+            String A= String.valueOf(jedis.hmget(jsessionId+"map","A").get(0));
+            String B= String.valueOf(jedis.hmget(jsessionId+"map","B").get(0));
+            String C= String.valueOf(jedis.hmget(jsessionId+"map","C").get(0));
+            String D=String.valueOf(jedis.hmget(jsessionId+"map","D").get(0));
+            Integer count= Integer.valueOf(jedis.hmget(jsessionId+"map","count").get(0));
+
+            list=questionRepository.find(A,B,C,D,count);
+
+            //查询得到数据放在record题目类型列
+            List<String> langList=questionRepository.findLang(A,B,C,D,count);
+
+            //把查询出来的答案数组放在字符串answers中,不需要放入jedis去转运，关键设计在于使用好jsessionid
+            String answers=String.valueOf(questionRepository.findAnwserList(A,B,C,D,count));
+
+            //使用构造器来new新的record
+            Record record=new Record(jsessionId,0,userRepository.findByUsername(username),list,-1,
+                    null,answers,null,count,langList.toString(),new Date(System.currentTimeMillis()));
+
+            recordRepository.save(record);
+
+        }catch (Exception e){
+            System.err.println(e+"/api/back");
+            e.printStackTrace();
+            return "{\"ret\":\"false\"}";
+        }
+
+        return  "{\"ret\":true,\"startTime\":\""+startTime+"\",\"data\":["+ stringUtil.toQuestionsString(list)+"]}";
+    }
+
+
+    /**
+     *
+     * @param type
+     * @param lang
+     * @param answer
+     * @param description
+     * @param content
+     *
+     * 添加练题的题目
+     */
+    @ResponseBody
+    @RequestMapping(value = "/api/add")
     public void add(@RequestParam(value = "type")String type,@RequestParam(value = "lang")String lang,
-                                    @RequestParam(value = "info")String info,@RequestParam(value = "code")String code,
-                                    @RequestParam(value = "choices")String choices){
-        Question question=new Question(type,lang,info,code,choices, new Date(System.currentTimeMillis()));
+                                    @RequestParam(value = "answer")String answer,@RequestParam(value = "description")String description,
+                                    @RequestParam(value = "content")String content){
+
+        Question question=new Question(new Date(System.currentTimeMillis()),answer,type,lang,description,content);
         questionRepository.save(question);
     }
 
 
+
+    /**
+     *
+     * 最近七天注册人数
+     */
     @RequestMapping(value = "/registered")
     @ResponseBody
     public List<Long> registered() {
@@ -470,6 +523,9 @@ public class ExamCtro {
         }
         return number;
     }
+
+
+
 
 //    @RequestMapping("/onlineExam")
 //    @PreAuthorize("hasAnyRole( 'user')")
@@ -490,5 +546,61 @@ public class ExamCtro {
 //        return "funExam";
 //    }
 
+//    @ResponseBody
+//    @RequestMapping("/isLimit")
+//    public int isLimit() {
+//        return Integer.valueOf(jedis.get(jsessionId+"UserPaper"));
+//    }
+
+//    @ResponseBody
+//    @RequestMapping("/personalInfo")
+//    public String personalInfo() {
+//        int practiced=0;
+//        int tested=0;
+////        user = userRepository.findByUsername(jedis.get(jsessionId));
+//        user = userRepository.findByUsername(username);
+//        List<String> hh=recordRepository.findLangDetails(user.getUsername());
+//        for (int i = 0; i < lang.length; i++) {
+//            practiced+= stringUtil.totalNumber(lang[i],hh);
+//        }
+//        if (String.valueOf(user.getRole()).equals("admin"))
+//            return "{\"name\":"+user.getUsername()+"\",\"email\":\""+user.getEmail()+"\",\"practiced\":\""+practiced+
+//                    "\",\"tested\":\""+0+"\",\"email\":\""+user.getEmail()+"\",\"isAdmin\":\"1\"}";
+//        else
+//            return  "{\"name\":"+user.getUsername()+"\",\"email\":\""+user.getEmail()+"\",\"practiced\":\""+0+
+//                    "\",\"tested\":\""+0+"\",\"email\":\""+user.getEmail()+"\",\"isAdmin\":\"0\"}";
+//    }
+
+//    @ResponseBody
+//    @RequestMapping("/userPaper")
+//    public String userPaper() {
+//        jedis.set(jsessionId+"UserPaper",String.valueOf(0));
+//        java.util.Date now = new java.util.Date();
+//        DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        List<PaperInfo> list=paperInfoRepository.findAll();
+//
+//        for (int i = 0; i < list.size(); i++) {
+//            String mix=list.get(i).getDate().replace("/","-")+" "+list.get(i).getDeadline()+":00";
+//            System.out.println(mix);
+//            try {
+//                if (format.parse(mix).getTime()+12000000-600000< now.getTime()&&format.parse(mix).getTime()+12000000+1800000> now.getTime()) {
+//
+//                    jedis.set(jsessionId+"UserPaper", String.valueOf(1));
+//                    user = userRepository.findByUsername(jedis.get(jsessionId));
+//                    paperInfo = list.get(i);
+//
+//				return "{\"role\":\""+user.getRole()+"\",\"email\":\""+user.getEmail()+"\",\"username\":\""+user.getUsername()
+//                        + "\",\"examQuestion\":[" +
+//                        // paperInfo.getExamQuestion()
+//                        stringUtil.adjustFormat(paperInfo)
+//                        +"]\",\"type\":\""+paperInfo.getType()+"\",\"info\":\""+
+//                        paperInfo.getName()+"\",\"token\":\""+paperInfo.getId()+"\"}";
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return "error";
+//    }
 
 }
