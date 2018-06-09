@@ -45,7 +45,7 @@ class Practice {
         $.get('api/back')
             .done(data => {
                 console.log(data)
-                emitter.emit('getData', JSON.parse(data))
+                emitter.emit('getData', data)
             })
     }
 
@@ -267,7 +267,7 @@ class Practice {
                 return answer.ans
             }
         })
-        $.post('/api/exam_submit', `paperAnswer=${JSON.stringify(answers)}`)
+        $.post('/api/exam_submit', `answers=${JSON.stringify(answers)}`)
             .done(data => {
                 if (data.ret) {
                     location.href = './personal.html'

@@ -14,7 +14,6 @@ class Select {
             choice: [],
             query: {
                 lang: [],
-                type: [],
                 num: []
             },
             q: ''
@@ -60,11 +59,8 @@ class Select {
         this.dom.form.find('input[name="lang"]').toArray().forEach(input => {
             if (input.checked) {
                 this.data.query.lang.push($(input).next('label').text())
-            }
-        })
-        this.dom.form.find('input[name="type"]').toArray().forEach(input => {
-            if (input.checked) {
-                this.data.query.type.push($(input).next('label').text())
+            } else {
+                this.data.query.lang.push(null)
             }
         })
         this.dom.form.find('input[name="num"]').toArray().forEach(input => {
@@ -72,9 +68,11 @@ class Select {
                 this.data.query.num.push($(input).next('label').text())
             }
         })
-        this.data.q = 'lang=' + this.data.query.lang.join('|') + '&&' +
-            'type=' + this.data.query.type.join('|') + '&&' +
-            'num=' + this.data.query.num.toString()
+        this.data.q = 'programmeA=' + this.data.query.lang[0] + '&&' +
+            'programmeB=' + this.data.query.lang[1] + '&&' +
+            'programmeC=' + this.data.query.lang[2] + '&&' +
+            'programmeD=' + this.data.query.lang[3] + '&&' +
+            'count=' + this.data.query.num.toString()
     }
 }
 

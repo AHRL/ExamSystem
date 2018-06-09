@@ -52,7 +52,7 @@ class Login {
                         const res = data.data;
                         if (data.ret && res) {
                             if (res.isExist === false) {
-                                this.fadeIn('邮箱未被注册');
+                                this.fadeIn('该用户未被注册');
                                 this.flag.email = false;
                             }
                         } else {
@@ -63,7 +63,7 @@ class Login {
                         console.error(err);
                     });
                 } else {
-                    this.fadeIn('邮箱格式不正确');
+                    this.fadeIn('用户名不正确');
                     this.flag.email = false;
                 }     
             }
@@ -99,12 +99,12 @@ class Login {
             if (val) {
                 result = this.check('email', val);
                 if (result) {
-                    $.get('/api/isExsit')
+                    $.get('/api/isExsit', `email=${val}`)
                     .then(data => {
                         data = JSON.parse(data);
                         const res = data.data;
                         if (data.ret && res) {
-                            if (res.isExsit === true) {
+                            if (res.isExsit !== true) {
                                 this.fadeUp('邮箱已被注册');
                                 this.flag.email = false;
                             }
@@ -128,13 +128,29 @@ class Login {
            const val = this.$nameUp.val();
            let result;
            if (val) {
-               result = this.check('name', val);
-               if (!result) {
-                   this.fadeUp('姓名不符合要求');
-                   this.flag.name = false;
-                 } else {
-                     this.flag.name = true;
-                 }
+                result = this.check('name', val);
+                if (result) {
+                    $.get('/api/isUsernameExsit', `username=${username}`)
+                    .then(data => {
+                        data = JSON.parse(data)
+                        const res = data.data
+                        if (data.ret && res) {
+                            if (res.isExsit !== true) {
+                                this.fadeUp('用户名已被注册');
+                                this.flag.name = false;
+                            } else {
+                                this.flag.name = true
+                            }
+                        }
+                    })
+                    .fail(err => {
+                        console.error(err)
+                    })
+                    
+                } else {
+                    this.fadeUp('姓名不符合要求')
+                    this.flag.name = false
+                }
            }
        });
     }
