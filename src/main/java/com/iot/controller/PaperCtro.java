@@ -137,79 +137,6 @@ public class PaperCtro {
 
 
 
-	@ResponseBody
-	@RequestMapping(value = "/api/examed_detail")
-	public String examed_detail(){
-
-		return "{\n"+
-				"\"ret\":true,\n"+
-				"\"data\":{\n"+
-				"\"chart\":{\n"+
-				"\"type\":\"column\"\n"+
-				"},\n"+
-				"\"title\":{\n"+
-				"\"text\":\"已考试卷\"\n"+
-				"},\n"+
-				"\"subtitle\":{\n"+
-				"\"text\":\"数据截止2018-05\"\n"+
-				"},\n"+
-				"\"xAxis\":{\n"+
-				"\"type\":\"category\",\n"+
-				"\"labels\":{\n"+
-				"\"rotation\":\"-45//设置轴标签旋转角度\"\n"+
-				"}\n"+
-				"},\n"+
-				"\"yAxis\":{\n"+
-				"\"min\":0,\n"+
-				"\"title\":{\n"+
-				"\"text\":\"参考人数(人)\"\n"+
-				"}\n"+
-				"},\n"+
-				"\"legend\":{\n"+
-				"\"enabled\":false\n"+
-				"},\n"+
-				"\"tooltip\":{\n"+
-				"\"pointFormat\":\"参考人数\":\"<b>{point.y}人次</b>\"\n"+
-				"},\n"+
-				"series:[{\n"+
-				"name:\"总人数\",\n"+
-				"data:[\n"+
-				"[\"上海\",24],\n"+
-				"[\"卡拉奇\",23],\n"+
-				"[\"北京\",21],\n"+
-				"[\"德里\",16],\n"+
-				"[\"拉各斯\",16],\n"+
-				"[\"天津\",15],\n"+
-				"[\"伊斯坦布尔\",14],\n"+
-				"[\"东京\",13],\n"+
-				"[\"广州\",13],\n"+
-				"[\"孟买\",12],\n"+
-				"[\"莫斯科\",12],\n"+
-				"[\"圣保罗\",12],\n"+
-				"[\"深圳\",10],\n"+
-				"[\"雅加达\",10],\n"+
-				"[\"拉合尔\",10],\n"+
-				"[\"首尔\",9],\n"+
-				"[\"武汉\",9],\n"+
-				"[\"金沙萨\",9],\n"+
-				"[\"开罗\",9],\n"+
-				"[\"墨西哥\",8]\n"+
-				"],\n"+
-				"dataLabels:{\n"+
-				"enabled:true,\n"+
-				"rotation:-90,\n"+
-				"color:\"#FFFFFF\",\n"+
-				"align:\"right\",\n"+
-				"//format:\"{point.y:.1f}\",//:.1f为保留1位小数\n"+
-				"y:10\n"+
-				"}\n"+
-				"}]\n"+
-				"}\n"+
-				"}";
-
-	}
-
-
 
 	/**
 	 *
@@ -219,28 +146,52 @@ public class PaperCtro {
 	 * 校验邮箱是否被注册过
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/api/isExist",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
-	public String isExist(@RequestParam(value = "email")String email) {
+	@RequestMapping(value = "/api/isEmailExist",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
+	public String isEmailExist(@RequestParam(value = "email")String email) {
 
-		Boolean status =true;
-		Boolean isExist = true;
 		try {
-			isExist=userRepository.findByEmail(email)!=null;
-		}catch (Exception e){
-			status=false;
-			System.err.println(e+"/api/isExist");
-		}
+			if (userRepository.findByEmail(email)!=null)
+				return "{\"ret\":false}";
 
-		return  status?"{\"ret\":true,\"date\":{\"isExist\":\""+isExist+"\"}}":"{\"ret\":false}";
+		}catch (Exception e){
+			System.err.println(e+"/api/isEmailExist");
+			return "{\"ret\":false}";
+		}
+		return  "{\"ret\":true}";
 
 	}
+
+
+
+	/**
+	 *
+	 * @param name
+	 * @return
+	 *
+	 * 校验用户名是否被注册过
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/api/isUsernameExist",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
+	public String isUsernameExist(@RequestParam(value = "username")String name) {
+
+		try {
+			if (userRepository.findByUsername(name)!=null)
+				return "{\"ret\":false}";
+		}catch (Exception e){
+			System.err.println(e+"/api/isUsernameExist");
+			return "{\"ret\":false}";
+		}
+		return  "{\"ret\":true}";
+	}
+
+
+
 
 
 	/**
 	 *
 	 * @param request
 	 * @return
-	 *
 	 *
 	 * 返回当前登陆用户的详细信息
 	 */
@@ -262,28 +213,6 @@ public class PaperCtro {
 	}
 
 
-	/**
-	 *
-	 * @return
-	 *
-	 * ？？？
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/api/getValCode",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
-	public  String getValCode() {
-		Boolean status =true;
-		Long token=null;
-
-		try {
-			token = paperInfoRepository.findById(Long.valueOf(jedis.get(jsessionId+"PaperId"))).getId();
-		}catch (Exception e){
-			status=false;
-			System.err.println(e+"/api/");
-		}
-		return status?"{\"ret\":true,\"data\":{\"valCode\":'" +token +"'}":"{\"ret\":false}";
-	}
-
-
 
 	/**
 	 *
@@ -297,16 +226,14 @@ public class PaperCtro {
 	public String exam(HttpServletRequest request) {
 
 		jsessionId=request.getSession().getId();
-		Boolean status =true;
 		try{
 			user = userRepository.findByUsername(jedis.get(jsessionId));
 			paperInfo =paperInfoRepository.findById(Long.valueOf(jedis.get(jsessionId+"PaperId")));
 		}catch (Exception e){
-			status = false;}
+			return "{\"ret\":false}";
+		}
 
-		return status?"{\"ret\":true,\"time\":\"120\",\"data\":["+stringUtil.toExamQuestionsString(paperInfo.getExamQuestions()) +"]}":"{\"ret\":false}";
-
-
+		return "{\"ret\":true,\"time\":\"120\",\"data\":["+stringUtil.toExamQuestionsString(paperInfo.getExamQuestions()) +"]}";
 	}
 
 
@@ -321,7 +248,7 @@ public class PaperCtro {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/api/exam_submit",method = RequestMethod.POST)
-	public  String exam_submit(HttpServletRequest request,@RequestParam(value = "paperAnswer") String paperAnswer) {
+	public  String exam_submit(HttpServletRequest request,@RequestParam(value = "paperAnswers") String paperAnswer) {
 
 		jsessionId = request.getSession().getId();
 		Long paperId=Long.valueOf(jedis.get(jsessionId+"PaperId"));
@@ -389,118 +316,6 @@ public class PaperCtro {
 		return 	status?"{\"ret\":true,\"data\":{\"status\":\"OK\"}}":"{\"ret\":false}";
 	}
 
-
-
-
-	@ResponseBody
-	@RequestMapping(value = "/api/exam_sign_detail",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
-	public  String exam_sign_detail() {
-
-		return "{\n"+
-				"ret:true,\n"+
-				"data:{\n"+
-				"chart:{\n"+
-				"type:'bar'\n"+
-				"},\n"+
-				"title:{\n"+
-				"text:'待考试卷/报名人数'\n"+
-				"},\n"+
-				"subtitle:{\n"+
-				"text:'数据截止：2018-05-15'\n"+
-				"},\n"+
-				"xAxis:{\n"+
-				"categories:['C','招新'],\n"+
-				"title:{\n"+
-				"text:null\n"+
-				"}\n"+
-				"},\n"+
-				"yAxis:{\n"+
-				"min:0,\n"+
-				"title:{\n"+
-				"text:'报名人数(人)',\n"+
-				"align:'high'\n"+
-				"},\n"+
-				"labels:{\n"+
-				"overflow:'justify'\n"+
-				"}\n"+
-				"},\n"+
-				"tooltip:{\n"+
-				"valueSuffix:'人次'\n"+
-				"},\n"+
-				"plotOptions:{\n"+
-				"bar:{\n"+
-				"dataLabels:{\n"+
-				"enabled:true,\n"+
-				"allowOverlap:true//允许数据标签重叠\n"+
-				"}\n"+
-				"}\n"+
-				"},\n"+
-				"legend:{\n"+
-				"layout:'vertical',\n"+
-				"align:'right',\n"+
-				"verticalAlign:'top',\n"+
-				"x:-40,\n"+
-				"y:100,\n"+
-				"floating:true,\n"+
-				"borderWidth:1,\n"+
-				"backgroundColor:'#FFFFFF',\n"+
-				"shadow:true\n"+
-				"},\n"+
-				"series:[{\n"+
-				"name:'2018年',\n"+
-				"data:[11,99]\n"+
-				"}]\n"+
-				"}\n"+
-				"}";
-
-	}
-
-
-
-
-	@ResponseBody
-	@RequestMapping(value = "/api/exam_categroy",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
-	public  String exam_categroy(){
-		return "{\n"+
-				"ret:true,\n"+
-				"data:{\n"+
-				"title:{\n"+
-				"text:'试卷分类'\n"+
-				"},\n"+
-				"tooltip:{\n"+
-				"headerFormat:'{series.name}<br>',\n"+
-				"pointFormat:'{point.name}:<b>{point.percentage:.1f}%</b>'\n"+
-				"},\n"+
-				"plotOptions:{\n"+
-				"pie:{\n"+
-				"allowPointSelect:true,\n"+
-				"cursor:'pointer',\n"+
-				"dataLabels:{\n"+
-				"enabled:false\n"+
-				"},\n"+
-				"showInLegend:true//设置饼图是否在图例中显示\n"+
-				"}\n"+
-				"},\n"+
-				"series:[{\n"+
-				"type:'pie',\n"+
-				"name:'试卷类型占比',\n"+
-				"data:[\n"+
-				"['数据结构',22.0],\n"+
-				"['web前端',26.8],\n"+
-				"{\n"+
-				"name:'C语言',\n"+
-				"y:12.8,\n"+
-				"sliced:true,\n"+
-				"selected:true\n"+
-				"},\n"+
-				"['web后端',8.5],\n"+
-				"['Android',6.2],\n"+
-				"['嵌入式',23.7]\n"+
-				"]\n"+
-				"}]\n"+
-				"}\n"+
-				"}";
-	}
 
 
 	/***
