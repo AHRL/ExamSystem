@@ -2,7 +2,9 @@ package com.iot.controller;
 
 import com.google.gson.Gson;
 import com.iot.model.*;
-import com.iot.repository.*;
+import com.iot.repository.QuestionRepository;
+import com.iot.repository.RecordRepository;
+import com.iot.repository.UserRepository;
 import com.iot.utils.RandomUtil;
 import com.iot.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +53,8 @@ public class ExamCtro {
     private static  String lang[]=new String[]{"HTML+CSS","JavaScript","Java","C"};
 
     private ExamQuestion examQuestion;
+
+    private  Record  record;
 
     private static String jsessionId;
 
@@ -139,7 +143,7 @@ public class ExamCtro {
     @RequestMapping(value = "/onlineLib")
     @PreAuthorize("hasAnyRole('admin','user')")
     public String onlineLib(){
-        return "onlineLib";
+        return "select";
     }
 
 
@@ -148,7 +152,7 @@ public class ExamCtro {
      */
     @RequestMapping("/onlineLib_practice")
     public String onlineLib_practice() {
-        return "/onlineLib_practice";
+        return "/practice";
     }
 
 
@@ -189,16 +193,21 @@ public class ExamCtro {
     }
 
 
-
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	/**
+	 *
+	 * @param request
+	 * @param response
+	 * @return
+	 * 用户登出
+	 */
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(HttpServletRequest request, HttpServletResponse response){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "login";
     }
-
 
 
     /**
@@ -215,6 +224,26 @@ public class ExamCtro {
 
 
 
+	/**
+	 *
+	 * @param userAuthentication
+	 * @param model
+	 * @return
+	 *
+	 * 这是处理通过QQ快捷登陆的用户验证部分
+	 *      使用了自己的回调地址，配置文件查看 filter.qq 目录
+	 */
+	@RequestMapping("/user")
+	public String user(@AuthenticationPrincipal UsernamePasswordAuthenticationToken userAuthentication, Model model)
+	{
+		QQUser user = (QQUser) userAuthentication.getPrincipal();
+		model.addAttribute("username", user.getNickname());
+		model.addAttribute("avatar", user.getAvatar());
+		return "funExam";
+	}
+
+
+
     /***
      *
      * @param email
@@ -224,7 +253,7 @@ public class ExamCtro {
      * 调用了腾讯邮箱的SMTP服务
      *      实现注册的时候的发送注册验证码
      */
-    @RequestMapping(value = "/mailSender")
+    @RequestMapping(value = "/api/getValCode")
     @ResponseBody
     public String mailSender(@RequestParam(value = "email")String email, HttpServletRequest request){
         String random= RandomUtil.getRandom();
@@ -242,10 +271,10 @@ public class ExamCtro {
             System.out.print("hahahahah");
         } catch (javax.mail.MessagingException e) {
             e.printStackTrace();
+            return "{\"ret\":false}";
         }
-        return random;
+        return  "{\"ret\":true,\"valCode\":\""+random+"\"}";
     }
-
 
 
     /**
@@ -328,11 +357,11 @@ public class ExamCtro {
      *
      * 用户技能图谱的数据统计
      */
-    @RequestMapping("/onlineLib_result")
-    @ResponseBody
+	@ResponseBody
+    @RequestMapping("/api/onlineLib_result")
     public String onlineLib_result( HttpServletResponse response,HttpServletRequest request){
 
-        username=jedis.get(request.getSession().getId());
+        username=request.getRemoteUser();
 
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
@@ -357,26 +386,6 @@ public class ExamCtro {
 
 
     /**
-     *
-     * @param userAuthentication
-     * @param model
-     * @return
-     *
-     * 这是处理通过QQ快捷登陆的用户验证部分
-     *      使用了自己的回调地址，配置文件查看 filter.qq 目录
-     */
-    @RequestMapping("/user")
-    public String user(@AuthenticationPrincipal UsernamePasswordAuthenticationToken userAuthentication, Model model)
-    {
-        QQUser user = (QQUser) userAuthentication.getPrincipal();
-        model.addAttribute("username", user.getNickname());
-        model.addAttribute("avatar", user.getAvatar());
-        return "funExam";
-    }
-
-
-
-    /***
      * @param A
      * @param B
      * @param C
@@ -433,15 +442,16 @@ public class ExamCtro {
     }
 
 
+
     /**
      *
      * @param request
      * @param response
      * @return
      *
-     * 返回当前时间开放的考试
+     * 返回当前时间开放的练题
      */
-    @RequestMapping(value = "/api/back")
+    @RequestMapping(value = "/api/back",produces="application/json;charset=UTF-8")
     @ResponseBody
     public String back(HttpServletRequest request,HttpServletResponse response){
         response.addHeader("Access-Control-Allow-Origin", "*");
@@ -478,31 +488,32 @@ public class ExamCtro {
         }catch (Exception e){
             System.err.println(e+"/api/back");
             e.printStackTrace();
-            return "{\"ret\":\"false\"}";
+            return "{\"ret\":false}";
         }
 
-        return  "{\"ret\":true,\"startTime\":\""+startTime+"\",\"data\":["+ stringUtil.toQuestionsString(list)+"]}";
+        return  "{\"ret\":true,\"data\":["+ stringUtil.toQuestionsString(list)+"]}";
     }
 
 
     /**
      *
-     * @param type
-     * @param lang
-     * @param answer
-     * @param description
-     * @param content
-     *
-     * 添加练题的题目
+     * 提交练题
      */
     @ResponseBody
-    @RequestMapping(value = "/api/add")
-    public void add(@RequestParam(value = "type")String type,@RequestParam(value = "lang")String lang,
-                                    @RequestParam(value = "answer")String answer,@RequestParam(value = "description")String description,
-                                    @RequestParam(value = "content")String content){
+    @RequestMapping(value = "/api/practice_submit")
+    public String add(@RequestParam(value = "answers")String answers,HttpServletRequest request){
 
-        Question question=new Question(new Date(System.currentTimeMillis()),answer,type,lang,description,content);
-        questionRepository.save(question);
+        jsessionId =request.getSession().getId();
+        user=userRepository.findByUsername(jedis.get(jsessionId));
+        try{
+            record =recordRepository.findByJsessionId(jsessionId);
+            record.setAnswerList(answers);
+            recordRepository.saveAndFlush(record);
+        }catch (Exception e){
+            System.err.println(e+"/api/practice_submit");
+            return "{\"ret\":false}";
+        }
+        return  "{\"ret\":true}";
     }
 
 

@@ -55,6 +55,7 @@ public class Question implements Serializable{
     public String toString() {
         return "{"+
                 "\"lang\":\""+lang+"\""+
+                ",\"type\":\""+type+"\""+
                 ",\"description\":\""+description+"\""+
                 ",\"content\":"+content+""+
                 "}";
