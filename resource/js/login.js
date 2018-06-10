@@ -130,7 +130,7 @@ class Login {
            if (val) {
                 result = this.check('name', val);
                 if (result) {
-                    $.get('/api/isUsernameExsit', `username=${username}`)
+                    $.get('/api/isUsernameExsit', `username=${val}`)
                     .then(data => {
                         data = JSON.parse(data)
                         const res = data.data
