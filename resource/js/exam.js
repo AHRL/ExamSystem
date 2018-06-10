@@ -337,7 +337,8 @@ class Exam {
     submit() {
         this.$confirmSubmit.on('click', e => {
             e.preventDefault();
-            $.post('/api/exam_submit', JSON.stringify(this.result))
+            let result = JSON.stringify()
+            $.post('/api/exam_submit', `paperAnswers=${this.result}`)
                 .then(data => {
                     data = JSON.parse(data);
                     const res = data.data;
