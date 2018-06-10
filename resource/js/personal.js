@@ -37,7 +37,7 @@ function pageReady() {
                 if (len2 === 0) {
                     $('.no-examedDetail').show();
                 }
-                for (let i = 0; i < len; i++) {
+                for (let i = 0; i < len2; i++) {
                     createTable(res.examed[i]);
                 }
             }
