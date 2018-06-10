@@ -186,7 +186,8 @@ class Login {
     getValCode() {
         this.$getValCodeBtn.on('click', e => {
             e.preventDefault();
-            $.get('/api/getValCode')
+            const val = this.$emailUp.val();
+            $.post('/api/getValCode', 'email=${val}')
                 .then(data => {
                     data = JSON.parse(data);
                     const res = data.data;
