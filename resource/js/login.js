@@ -46,7 +46,7 @@ class Login {
             if (val) {
                 result = this.check('email', val);
                 if (result) {
-                    $.get('/api/isExist')
+                    $.get('/api/isEmailExist')
                     .then(data => {
                         data = JSON.parse(data);
                         const res = data.data;
@@ -99,7 +99,7 @@ class Login {
             if (val) {
                 result = this.check('email', val);
                 if (result) {
-                    $.get('/api/isExsit', `email=${val}`)
+                    $.get('/api/isEmailExsit', `email=${val}`)
                     .then(data => {
                         data = JSON.parse(data);
                         const res = data.data;

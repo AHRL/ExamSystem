@@ -267,7 +267,7 @@ class Practice {
                 return answer.ans
             }
         })
-        $.post('/api/exam_submit', `answers=${JSON.stringify(answers)}`)
+        $.post('/api/practice_submit', `answers=${JSON.stringify(answers)}`)
             .done(data => {
                 if (data.ret) {
                     location.href = './personal.html'
