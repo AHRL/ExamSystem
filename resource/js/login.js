@@ -104,7 +104,7 @@ class Login {
                         data = JSON.parse(data);
                         const res = data.data;
                         if (data.ret && res) {
-                            if (res.isExsit !== true) {
+                            if (res.isExist !== true) {
                                 this.fadeUp('邮箱已被注册');
                                 this.flag.email = false;
                             }
@@ -130,12 +130,12 @@ class Login {
            if (val) {
                 result = this.check('name', val);
                 if (result) {
-                    $.get('/api/isUsernameExsit', `username=${val}`)
+                    $.get('/api/isUsernameExist', `username=${val}`)
                     .then(data => {
                         data = JSON.parse(data)
                         const res = data.data
                         if (data.ret && res) {
-                            if (res.isExsit !== true) {
+                            if (res.isExist !== true) {
                                 this.fadeUp('用户名已被注册');
                                 this.flag.name = false;
                             } else {
