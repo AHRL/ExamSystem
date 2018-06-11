@@ -184,14 +184,13 @@ class Login {
             const val = this.$emailUp.val();
             $.post('/api/getValCode', `email=${val}`)
                 .then(data => {
-                    console.log(data)
                     data = JSON.parse(data);
-                    const res = data.data;
-                    if (data.ret && res) {
+                    const valCode = data.valCode;
+                    if (data.ret) {
                         this.$valCode.on('blur', e => {
                             console.log(111111)
                             const val = this.$valCode.val();
-                            if (val !== res.valCode) {
+                            if (val !== valCode) {
                                 console.log('zxcvbnm')
                                 this.fadeUp('验证码不正确');
                                 this.flag.valCode = false;
