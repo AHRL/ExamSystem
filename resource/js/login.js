@@ -210,6 +210,7 @@ class Login {
     
     submitUp() {
         this.$submitUp.on('click', e => {
+            console.log(this.flag)
             if (this.flag.email && this.flag.name && this.flag.pswd && this.flag.enPswd && this.flag.valCode) {
                 console.log(1);
                 this.$formUp.submit();
