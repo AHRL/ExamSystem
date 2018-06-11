@@ -14,7 +14,7 @@ class Login {
         this.$emailUp = $('#emailUp'),
         this.$nameUp = $('#nameUp'),
         this.$pswdUp = $('#pswdUp'),
-        this.$enPswdUp = $('#enPwsdUp'),
+        this.$enPswdUp = $('#enPswdUp'),
         this.$valCode = $('#valCode'),
         this.$getValCodeBtn = $('#sendValCode'),
         this.$submitUp = $('#submitUp');
@@ -168,6 +168,7 @@ class Login {
     checkEnPswdUp() {
         this.$enPswdUp.on('blur', e => {
             const val = this.$enPswdUp.val();
+            console.log(val)
             if (this.$pswdUp.val() !== val) {
                 this.fadeUp('两次密码不一致');
                 this.flag.enPswd = false;
@@ -187,8 +188,10 @@ class Login {
                     const res = data.data;
                     if (data.ret && res) {
                         this.$valCode.on('blur', e => {
+                            console.log(111111)
                             const val = this.$valCode.val();
                             if (val !== res.valCode) {
+                                console.log('zxcvbnm')
                                 this.fadeUp('验证码不正确');
                                 this.flag.valCode = false;
                             } else {

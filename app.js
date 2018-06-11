@@ -78,7 +78,7 @@ app.get('/api/isExist', (req, res) => {
     }))
 });
 
-app.get('/api/getValCode', (req, res) => {
+app.post('/api/getValCode', (req, res) => {
     res.json(JSON.stringify({
         ret: true,
         data: {
