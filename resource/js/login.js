@@ -184,6 +184,7 @@ class Login {
             const val = this.$emailUp.val();
             $.post('/api/getValCode', `email=${val}`)
                 .then(data => {
+                    console.log(data)
                     data = JSON.parse(data);
                     const res = data.data;
                     if (data.ret && res) {
