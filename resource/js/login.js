@@ -101,15 +101,12 @@ class Login {
                 if (result) {
                     $.get('/api/isEmailExist', `email=${val}`)
                     .then(data => {
-                        data = JSON.parse(data);
-                        const res = data.data;
-                        if (data.ret && res) {
-                            if (res.isExist !== true) {
-                                this.fadeUp('邮箱已被注册');
-                                this.flag.email = false;
-                            }
-                        } else {
+                        data = JSON.parse(data)
+                        if (data.ret === true) {
                             this.flag.email = true;
+                        } else {
+                            this.fadeUp('邮箱已被注册');
+                            this.flag.email = false;
                         }
                     })
                     .fail(err => {
@@ -133,14 +130,11 @@ class Login {
                     $.get('/api/isUsernameExist', `username=${val}`)
                     .then(data => {
                         data = JSON.parse(data)
-                        const res = data.data
-                        if (data.ret && res) {
-                            if (res.isExist !== true) {
-                                this.fadeUp('用户名已被注册');
-                                this.flag.name = false;
-                            } else {
-                                this.flag.name = true
-                            }
+                        if (data.ret === true) {
+                            this.flag.name = true
+                        } else {
+                            this.fadeUp('用户名已被注册');
+                            this.flag.name = false;
                         }
                     })
                     .fail(err => {
