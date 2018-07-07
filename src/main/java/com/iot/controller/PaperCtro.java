@@ -47,9 +47,6 @@ public class PaperCtro {
 
 	private PaperInfo paperInfo;
 
-	private static  String lang[]=new String[]{"HTML+CSS","JavaScript","Java","C"};
-
-
 	private static String jsessionId;
 
 	private static PaperRecord paperRecord;
@@ -76,6 +73,43 @@ public class PaperCtro {
 	private PaperInfoRepository paperInfoRepository;
 
 
+
+	/**
+	 *
+	 * @param request
+	 * @return
+	 *
+	 * 用户注册
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/api/register", method = RequestMethod.POST)
+	public String register(HttpServletRequest request) {
+
+		try{
+			String Username = request.getParameter("username");
+			String Password = request.getParameter("password");
+			String Email = request.getParameter("email");
+
+			User user = new User(Username, Password, Email, new java.sql.Date(System.currentTimeMillis()));
+			user.setRole(User.ROLE.ROLE_user);
+			userRepository.save(user);
+		}catch (Exception e){
+			System.err.println(e+"/api/register");
+			return "{\"ret\":false}";
+		}
+
+		return "{\"ret\":true}";
+	}
+
+
+
+	/**
+	 *
+	 * @param request
+	 * @return
+	 *
+	 * 获取当前开放的试卷
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/api/ready_exam",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
 	public String ready_exam(HttpServletRequest request){
@@ -257,6 +291,7 @@ public class PaperCtro {
 		try{
 			paperRecord=paperRecordRepository. findByPaperInfoAndName(paperId,user.getUsername());
 			paperRecord.setPaperAnswer(paperAnswer);
+			paperRecord.setStatus(1);
 			paperRecordRepository.saveAndFlush(paperRecord);
 		}catch (Exception e){
 			System.err.println(e+"/api/exam_submit");
@@ -463,20 +498,4 @@ public class PaperCtro {
 		return status?"\"ret\":true,\"data\":[" +paperInfo.toBeExaming()+"]}":"\"ret\":false";
 
 	}
-
-
-
-	@RequestMapping(value = "/api/register", method = RequestMethod.POST)
-	public String register(HttpServletRequest request) throws Exception {
-		String Username = request.getParameter("upUsername");
-		String Password = request.getParameter("upPassword");
-		String Email = request.getParameter("upEmail");
-		request.getSession().setAttribute("Username", Username);
-		User user = new User(Username, Password, Email, new java.sql.Date(System.currentTimeMillis()));
-		user.setRole(User.ROLE.ROLE_user);
-		userRepository.save(user);
-		return "/funExam";
-	}
-
-
 }

@@ -57,17 +57,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         http.authorizeRequests()
-                .antMatchers("/register","/*.html","/onlineLib","/report"
-                        ,"/back","/onlineLib_practice","/select","/registered","/validcode"
-                        ,"/admin","/admin_add","/add","/select","/mailSender"
-                        ,"/answersSender","/test","/onlineLib_result","/skill_chart"
-                        ,"/admin_publish","/exam_add","/.well-known/pki-validation/fileauth.txt"
-                        ,"/personal","/personalInfo","/api/**","/userPaper").permitAll()
+                .antMatchers("/register","/*.html","/onlineLib"
+                        ,"/admin","/onlineLib_result","/skill_chart"
+                        ,"/admin_publish","/.well-known/pki-validation/fileauth.txt"
+                        ,"/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").defaultSuccessUrl("/")
                 .permitAll()
-                .and().logout().logoutSuccessUrl("/login")
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login")
                 .permitAll();
 
         http.addFilterBefore(qqAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
