@@ -380,6 +380,19 @@ app.get('/api/back', (req, res) => {
     }))
 })
 
+app.post('/api/modify', (req, res) => {
+    res.json(JSON.stringify({
+        success: true
+    }))
+})
+
+app.post('/api/varifyPswd', (req, res) => {
+    res.json(JSON.stringify({
+        success: true,
+        msg: '密码一致'
+    }))
+})
+
 app.get('404', function(req, res) {
     res.send('404');
 });

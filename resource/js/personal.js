@@ -180,15 +180,23 @@ function pageReady() {
     })
     $btnEnsure.on('click', e => {
         e.preventDefault()
-        $.post() // TODO
+        $.post('/api/modify', JSON.stringify({
+            username: $trueName.val(),
+            major: $modifyMajor.val(),
+            grade: $modifyGrade.val(),
+            other: $modifyOther.val()
+        })) // TODO
             .then(data => {
-                alert('完成修改资料')
-                $trueName.attr('disabled', true)
-                $modifyMajor.attr('disabled', true)
-                $modifyGrade.attr('disabled', true)
-                $modifyOther.attr('disabled', true)
-                $btnModify.show()
-                $btnEnsure.hide()
+                data = JSON.parse(data)
+                if (data.success) {
+                    alert('完成修改资料')
+                    $trueName.attr('disabled', true)
+                    $modifyMajor.attr('disabled', true)
+                    $modifyGrade.attr('disabled', true)
+                    $modifyOther.attr('disabled', true)
+                    $btnModify.show()
+                    $btnEnsure.hide()
+                }
             })
             .catch(err => {
                 console.error(err)
@@ -202,8 +210,15 @@ function pageReady() {
 
     const $modifyPswd = $('.modify-password')
     $originalpswd.blur(e => {
-        $.post() // TODO 验证密码是否正确
-            .then(data => {})
+        $.post('/api/varifyPswd', JSON.stringify({
+            password: $originalpswd.val()
+        })) // TODO 验证密码是否正确
+            .then(data => {
+                data = JSON.parse(data)
+                if (!data.success) {
+                    alert('密码不正确')
+                }
+            })
             .catch(err => {})
     })
     $ensurepswd.blur(e => {
@@ -217,6 +232,20 @@ function pageReady() {
     })
     $modifyPswd.click(e => {
         e.preventDefault()
-        $.post() // TODO 保存密码
+        if (modifyPswd) {
+            $.post('/api/savePswd', JSON.stringify({
+                password: $ensurepswd.val()
+            })).then(data => {
+                data = JSON.parse(data)
+                if (data.success) {
+                    alert('密码修改成功')
+                    $originalpswd.val('')
+                    $newpswd.val('')
+                    $ensurepswd.val('')
+                }
+            }) // TODO 保存密码
+        } else {
+            alert('密码不一致')
+        }
     })
 }
