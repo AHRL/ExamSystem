@@ -33,7 +33,8 @@ app.get('/api/userinfo', (req, res) => {
             username: 'Leo',
             major: '物联网工程',
             grade: '2015',
-            other: 'll'
+            email: '162089@qq.com',
+            isAdmin: true
         }
     }))
 });

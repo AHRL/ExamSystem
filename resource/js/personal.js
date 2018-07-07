@@ -4,15 +4,13 @@ function pageReady() {
     const $avator = $('#avator');
     $.get('/api/userinfo')
         .then(data => {
-            console.log(data);
             data = JSON.parse(data);
-            console.log(data);
             const res = data.data;
             if (data.ret && res) {
                 $avator.text(res.username);
                 $('#avator-title').text(`${res.username}，您好！`);
                 $('#trueName').val(res.username);
-                if (res.isAdmin === 'admin') {
+                if (res.isAdmin === true) {
                     $('#isAdmin').show();
                 }
             }
@@ -162,5 +160,63 @@ function pageReady() {
                 $(item).show();
             }
         })
+    })
+
+    const $btnModify = $('.btn-modify')
+    const $btnEnsure = $('.btn-ensure')
+    const $trueName = $('#trueName')
+    const $modifyMajor = $('.modify-major')
+    const $modifyGrade = $('.modify-grade')
+    const $modifyOther = $('.modify-other')
+    $btnModify.on('click', e => {
+        e.preventDefault()
+        alert('你将修改资料')
+        $trueName.removeAttr('disabled')
+        $modifyMajor.removeAttr('disabled')
+        $modifyGrade.removeAttr('disabled')
+        $modifyOther.removeAttr('disabled')
+        $btnModify.hide()
+        $btnEnsure.show()
+    })
+    $btnEnsure.on('click', e => {
+        e.preventDefault()
+        $.post() // TODO
+            .then(data => {
+                alert('完成修改资料')
+                $trueName.attr('disabled', true)
+                $modifyMajor.attr('disabled', true)
+                $modifyGrade.attr('disabled', true)
+                $modifyOther.attr('disabled', true)
+                $btnModify.show()
+                $btnEnsure.hide()
+            })
+            .catch(err => {
+                console.error(err)
+            })
+    })
+
+    const $originalpswd = $('#originalpswd')
+    const $newpswd = $('#newpswd')
+    const $ensurepswd = $('#ensurepswd')
+    let modifyPswd = false
+
+    const $modifyPswd = $('.modify-password')
+    $originalpswd.blur(e => {
+        $.post() // TODO 验证密码是否正确
+            .then(data => {})
+            .catch(err => {})
+    })
+    $ensurepswd.blur(e => {
+        const pswd = $newpswd.val()
+        if (pswd) {
+            if (pswd !== $ensurepswd.val()) {
+                alert('密码不一致')
+            }
+            modifyPswd = true
+        }
+    })
+    $modifyPswd.click(e => {
+        e.preventDefault()
+        $.post() // TODO 保存密码
     })
 }

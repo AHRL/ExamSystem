@@ -27,6 +27,11 @@ class Admin {
         this.$examInfo = $('.exam-info');
         this.$submit = $('.btn-submit');
 
+        this.$pReading = $('.examd-papers .reading')
+        this.$pReaded = $('.examd-papers .readed')
+        this.$sReading = $('.examd-student .reading')
+        this.$sReaded = $('.examd-student .readed')
+
         this.exam = {
             basic: null,
             question: []
@@ -245,6 +250,18 @@ class Admin {
                     }
                 });
         });
+    }
+
+    renderExamResult() {
+        $.get('/api/')
+            .then(data => {
+                
+            })
+            .catch(err => {
+
+            })
+
+        
     }
 }
 
