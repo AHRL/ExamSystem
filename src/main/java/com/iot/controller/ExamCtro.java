@@ -77,6 +77,7 @@ public class ExamCtro {
 
 
     @RequestMapping(value = "/")
+    @PreAuthorize("hasAnyRole( 'user','admin')")
     public String api_login(HttpServletRequest request){
         username=request.getRemoteUser();
         jsessionId=request.getSession().getId();
@@ -95,6 +96,9 @@ public class ExamCtro {
     }
 
 
+    /**
+     * 用户登陆
+     */
     @RequestMapping(value = "/login")
     public String login(){
         return "login";
@@ -114,6 +118,7 @@ public class ExamCtro {
      * 管理员页面
      */
     @RequestMapping("/admin")
+    @PreAuthorize("hasAnyRole('admin')")
     public String admin() throws Exception {
         return "admin";
     }
@@ -123,6 +128,7 @@ public class ExamCtro {
      * 管理员添加试卷
      */
     @RequestMapping("/admin_add")
+    @PreAuthorize("hasAnyRole('admin')")
     public String admin_add(){
         return "admin_add";
     }
@@ -150,9 +156,9 @@ public class ExamCtro {
     /**
      * 用户在线练题—答题页
      */
-    @RequestMapping("/onlineLib_practice")
+    @RequestMapping("/practice")
     public String onlineLib_practice() {
-        return "/practice";
+        return "practice";
     }
 
 
@@ -174,7 +180,7 @@ public class ExamCtro {
     }
 
 
-//
+//考生详情页
     @RequestMapping("/examinee_info")
     public String examinee_info()  {
         return "examinee_info";
@@ -240,6 +246,8 @@ public class ExamCtro {
 		model.addAttribute("username", user.getNickname());
 		model.addAttribute("avatar", user.getAvatar());
 		return "funExam";
+
+//        return "\"a1\\},{";
 	}
 
 
@@ -253,7 +261,7 @@ public class ExamCtro {
      * 调用了腾讯邮箱的SMTP服务
      *      实现注册的时候的发送注册验证码
      */
-    @RequestMapping(value = "/api/getValCode")
+    @RequestMapping(value = "/api/getValCode",method = RequestMethod.POST,produces="text/plain;charset=UTF-8")
     @ResponseBody
     public String mailSender(@RequestParam(value = "email")String email, HttpServletRequest request){
         String random= RandomUtil.getRandom();
@@ -282,6 +290,7 @@ public class ExamCtro {
      * @param request
      * @param response
      * @return
+     *
      * 阅卷+用户答题信息整理
      */
     @RequestMapping("/api/answersSender")
@@ -478,6 +487,7 @@ public class ExamCtro {
 
             //把查询出来的答案数组放在字符串answers中,不需要放入jedis去转运，关键设计在于使用好jsessionid
             String answers=String.valueOf(questionRepository.findAnwserList(A,B,C,D,count));
+            answers.replace("','","").replace("\"['","").replace("']\"","");
 
             //使用构造器来new新的record
             Record record=new Record(jsessionId,0,userRepository.findByUsername(username),list,-1,
@@ -503,9 +513,10 @@ public class ExamCtro {
     @RequestMapping(value = "/api/practice_submit")
     public String add(@RequestParam(value = "answers")String answers,HttpServletRequest request){
 
-        jsessionId =request.getSession().getId();
-        user=userRepository.findByUsername(jedis.get(jsessionId));
         try{
+            jsessionId =request.getSession().getId();
+            user=userRepository.findByUsername(jedis.get(jsessionId));
+
             record =recordRepository.findByJsessionId(jsessionId);
             record.setAnswerList(answers);
             recordRepository.saveAndFlush(record);
@@ -534,84 +545,5 @@ public class ExamCtro {
         }
         return number;
     }
-
-
-
-
-//    @RequestMapping("/onlineExam")
-//    @PreAuthorize("hasAnyRole( 'user')")
-//    public String onlineExam()throws Exception{return "onlineExam";}
-
-//    @RequestMapping(value = "/get")
-//    @ResponseBody
-//    public void get(HttpServletRequest request) {
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.set("Accept", "application/json");
-//        String email=(String) request.getSession().getAttribute("email");
-//        String validcode=jedis.get(email);
-////        return validcode;
-//    }
-
-//    @RequestMapping("/user")
-//    public String user() throws Exception {
-//        return "funExam";
-//    }
-
-//    @ResponseBody
-//    @RequestMapping("/isLimit")
-//    public int isLimit() {
-//        return Integer.valueOf(jedis.get(jsessionId+"UserPaper"));
-//    }
-
-//    @ResponseBody
-//    @RequestMapping("/personalInfo")
-//    public String personalInfo() {
-//        int practiced=0;
-//        int tested=0;
-////        user = userRepository.findByUsername(jedis.get(jsessionId));
-//        user = userRepository.findByUsername(username);
-//        List<String> hh=recordRepository.findLangDetails(user.getUsername());
-//        for (int i = 0; i < lang.length; i++) {
-//            practiced+= stringUtil.totalNumber(lang[i],hh);
-//        }
-//        if (String.valueOf(user.getRole()).equals("admin"))
-//            return "{\"name\":"+user.getUsername()+"\",\"email\":\""+user.getEmail()+"\",\"practiced\":\""+practiced+
-//                    "\",\"tested\":\""+0+"\",\"email\":\""+user.getEmail()+"\",\"isAdmin\":\"1\"}";
-//        else
-//            return  "{\"name\":"+user.getUsername()+"\",\"email\":\""+user.getEmail()+"\",\"practiced\":\""+0+
-//                    "\",\"tested\":\""+0+"\",\"email\":\""+user.getEmail()+"\",\"isAdmin\":\"0\"}";
-//    }
-
-//    @ResponseBody
-//    @RequestMapping("/userPaper")
-//    public String userPaper() {
-//        jedis.set(jsessionId+"UserPaper",String.valueOf(0));
-//        java.util.Date now = new java.util.Date();
-//        DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        List<PaperInfo> list=paperInfoRepository.findAll();
-//
-//        for (int i = 0; i < list.size(); i++) {
-//            String mix=list.get(i).getDate().replace("/","-")+" "+list.get(i).getDeadline()+":00";
-//            System.out.println(mix);
-//            try {
-//                if (format.parse(mix).getTime()+12000000-600000< now.getTime()&&format.parse(mix).getTime()+12000000+1800000> now.getTime()) {
-//
-//                    jedis.set(jsessionId+"UserPaper", String.valueOf(1));
-//                    user = userRepository.findByUsername(jedis.get(jsessionId));
-//                    paperInfo = list.get(i);
-//
-//				return "{\"role\":\""+user.getRole()+"\",\"email\":\""+user.getEmail()+"\",\"username\":\""+user.getUsername()
-//                        + "\",\"examQuestion\":[" +
-//                        // paperInfo.getExamQuestion()
-//                        stringUtil.adjustFormat(paperInfo)
-//                        +"]\",\"type\":\""+paperInfo.getType()+"\",\"info\":\""+
-//                        paperInfo.getName()+"\",\"token\":\""+paperInfo.getId()+"\"}";
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return "error";
-//    }
 
 }

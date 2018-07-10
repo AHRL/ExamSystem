@@ -56,7 +56,8 @@ public class Question implements Serializable{
         return "{"+
                 "\"lang\":\""+lang+"\""+
                 ",\"type\":\""+type+"\""+
-                ",\"description\":\""+description+"\""+
+                ",\"description\":"+description+""+
+//                ",\"description\":\""+description+"\""+
                 ",\"content\":"+content+""+
                 "}";
     }
