@@ -22,6 +22,7 @@ class Admin {
         this.$qType = $('#questionType');
         this.$qScore = $('#questionScore');
         this.$qChoice = $('.questionChoice');
+        this.$qAnswer = $('#choiceanswer');
         this.$qBtn = $('.questionBtn');
 
         this.$examInfo = $('.exam-info');
@@ -45,6 +46,7 @@ class Admin {
         this.basicBtnClick();
         this.qBtnClick();
         this.submit();
+        this.renderExamResult();
     }
 
     tab() {
@@ -184,7 +186,8 @@ class Admin {
                 score: this.$qScore.val(),
                 content: this.$qChoice.toArray().map(item => {
                     return $(item).val();
-                })
+                }),
+                answer: this.$qAnswer.val()
             });
             console.log(this.exam);
             this.renderExamInfo();
@@ -253,15 +256,126 @@ class Admin {
     }
 
     renderExamResult() {
-        $.get('/api/')
+        $.get('/api/showPapers')
             .then(data => {
-                
-            })
-            .catch(err => {
+                data = JSON.parse(data)
+                if (data.success) {
+                    const readed = data.readed
+                    const reading = data.reading
+                    const readedFrag = document.createDocumentFragment()
+                    readed.forEach(item => {
+                        let $li = $('<li>').addClass('readed-item').text(item.title).attr('title', item.id)
+                        $(readedFrag).append($li)
+                    })
+                    this.$pReaded.append(readedFrag)
+                    const readingFrag = document.createDocumentFragment()
+                    reading.forEach(item => {
+                        let $li = $('<li>').addClass('reading-item').text(item.title).attr('title', item.id)
+                        $(readingFrag).append($li)
+                    })
+                    this.$pReading.append(readingFrag)
 
+                    this.handlePapersItemClick()
+                }
             })
+            .catch(err => {})
+    }
 
-        
+    handlePapersItemClick() {
+        this.$pReaded.on('click', evt => {
+            const $target = $(evt.target)
+            const paperId = $target.attr('title')
+            $.post('/api/showPStu', JSON.stringify({
+                id: paperId
+            })).then(data => {
+                data = JSON.parse(data)
+                console.log(data)
+                if (data.success) {
+                    const items = data.data
+                    const readed = items.filter(item => {
+                        return item.status === 'readed'
+                    })
+                    const reading = items.filter(item => {
+                        return item.status === 'reading'
+                    })
+                    const readedFrag = document.createDocumentFragment()
+                    readed.forEach(item => {
+                        let $li = $('<li>').text(item.name).attr({
+                            'data-email': item.stuEmail,
+                            'data-paperId': paperId
+                        })
+                        $(readedFrag).append($li)
+                    })
+                    this.$sReaded.append(readedFrag)
+                    const readingFrag = document.createDocumentFragment()
+                    reading.forEach(item => {
+                        let $li = $('<li>').text(item.name).attr({
+                            'data-email': item.stuEmail,
+                            'data-paperId': paperId
+                        })
+                        $(readingFrag).append($li)
+                    })
+                    this.$sReading.append(readingFrag)
+                }
+            }).catch(err => {})
+        })
+        this.$pReading.on('click', evt => {
+            const $target = $(evt.target)
+            const paperId = $target.attr('title')
+            $.post('/api/showPStu', JSON.stringify({
+                id: paperId
+            })).then(data => {
+                data = JSON.parse(data)
+                if (data.success) {
+                    const items = data.data
+                    const readed = items.filter(item => {
+                        return item.status === 'readed'
+                    })
+                    const reading = items.filter(item => {
+                        return item.status === 'reading'
+                    })
+                    const readedFrag = document.createDocumentFragment()
+                    readed.forEach(item => {
+                        let $li = $('<li>').text(item.name).attr({
+                            'data-email': item.stuEmail,
+                            'data-paperId': paperId
+                        })
+                        $(readedFrag).append($li)
+                    })
+                    this.$sReaded.append(readedFrag)
+                    const readingFrag = document.createDocumentFragment()
+                    reading.forEach(item => {
+                        let $li = $('<li>').text(item.name).attr({
+                            'data-email': item.stuEmail,
+                            'data-paperId': paperId
+                        })
+                        $(readingFrag).append($li)
+                    })
+                    this.$sReading.append(readingFrag)
+                }
+            }).catch(err => {})
+        })
+
+        this.handleStuItemClick()
+    }
+
+    handleStuItemClick() {
+        this.$sReaded.on('click', evt => {
+            const $target = $(evt.target)
+            const stuEamil = $target.attr('data-email')
+            const id = $target.attr('data-paperId')
+            localStorage.setItem('stuEmail', stuEamil)
+            localStorage.setItem('id', id)
+            location.assign('/exam-detail.html')
+        })
+        this.$sReading.on('click', evt => {
+            const $target = $(evt.target)
+            const stuEamil = $target.attr('data-email')
+            const id = $target.attr('data-paperId')
+            localStorage.setItem('stuEmail', stuEamil)
+            localStorage.setItem('id', id)
+            location.assign('/exam-detail.html')
+        })
     }
 }
 

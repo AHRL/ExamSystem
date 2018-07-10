@@ -11,3 +11,21 @@
 .examd-details {
     margin-bottom: 2rem;
 }
+
+.readed-item,
+.reading-item {
+    cursor: pointer;
+    color: #444;
+    &:hover {
+        color: #000;
+    }
+}
+
+.reading li,
+.readed li {
+    cursor: pointer;
+    color: #444;
+    &:hover {
+        color: #000;
+    }
+}

@@ -393,6 +393,60 @@ app.post('/api/varifyPswd', (req, res) => {
     }))
 })
 
+app.get('/api/showPapers', (req, res) => {
+    res.json(JSON.stringify({
+        success: true,
+        readed: [{
+            title: '招新',
+            id: '8'
+        }, {
+            title: '招新',
+            id: '9'
+        }],
+        reading: [{
+            title: '翼灵',
+            id: '10'
+        }]
+    }))
+})
+
+app.post('/api/showPStu', (req, res) => {
+    res.json(JSON.stringify({
+        success: true,
+        data: [{
+            name: 'Leo',
+            stuEmail: '12345@qq.com',
+            status: 'reading'
+        }, {
+            name: 'Jeo',
+            stuEmail: '12345@qq.com',
+            status: 'readed'
+        }]
+    }))
+})
+
+app.post('/api/showDetail', (req, res) => {
+    res.json(JSON.stringify({
+        success: true,
+        data: {
+            title: 'C语言测试',
+            name: 'Leo',
+            stuID: '201531060577',
+            major: '物联网工程',
+            chScore: 30,
+            answers: [{
+                title: '简述localStorage',
+                score: 15,
+                answer: '*************************************************************************************'
+            }, {
+                title: '简述localStorage',
+                score: 10,
+                answer: '*************************************************************************************'
+            }]
+        }
+    }))
+})
+
 app.get('404', function(req, res) {
     res.send('404');
 });
