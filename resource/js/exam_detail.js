@@ -79,9 +79,7 @@ class Detail {
     submit() {
         this.$submit.on('click', e => {
             e.preventDefault()
-            $.post('/api/submitScore', JSON.stringify({
-                score: this.$score.text()
-            }))
+            $.post('/api/submitScore', `score=${this.$score.text()}&&email=${localStorage.getItem('stuEmail')}&id=${localStorage.getItem('id')}`)
                 .then(data => {
                     data = JSON.parse(data)
                     if (data.success) {
