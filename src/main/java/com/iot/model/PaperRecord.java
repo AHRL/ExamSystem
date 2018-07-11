@@ -86,6 +86,15 @@ public class PaperRecord {
 				"}";
 	}
 
+	public String toShowP(){
+
+		return "{" +
+				"\"name\":\"" + name + "\"," +
+				"\"stuEmail\":\"" + user.getEmail() + "\"," +
+				"\"status\":\"" + String.valueOf(status==1?"readed":"reading") + "\"" +
+				"}";
+	}
+
 
 	public PaperRecord() {
 	}

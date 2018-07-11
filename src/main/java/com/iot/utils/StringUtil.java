@@ -147,7 +147,6 @@ public class StringUtil {
 			if (i<a.size()-1) s.append(",");
 		}
 		return String.valueOf(s);
-
 	}
 
 	public String toExamQuestionsString(List<ExamQuestion> a){
@@ -172,6 +171,59 @@ public class StringUtil {
 		return String.valueOf(s);
 	}
 
+
+	public String toReadableTitle(List<PaperInfo> a){
+		StringBuffer s=new StringBuffer();
+		s.append("[");
+		for (int i = 0; i < a.size(); i++) {
+			s.append(a.get(i).toTitle());
+			if (i<a.size()-1) s.append(",");
+		}
+		s.append("]");
+		return String.valueOf(s);
+	}
+
+
+	public String toShowPStu(List<PaperRecord> a){
+
+		StringBuffer s=new StringBuffer();
+		s.append("\"data\":[");
+		for (int i = 0; i < a.size(); i++) {
+			s.append(a.get(i).toShowP());
+			if (i<a.size()-1) s.append(",");
+		}
+		s.append("]");
+		return String.valueOf(s);
+
+	}
+
+
+	public String showPaper(PaperInfo info,PaperRecord record){
+
+		StringBuffer s=new StringBuffer();
+		s.append("\"data\":{");
+		s.append("\"title\":\""+record.getName()+"\",");
+		s.append("\"name\":\""+record.getUser().getUsername()+"\",");
+		s.append("\"stuEmail\":\""+record.getUser().getEmail()+"\",");
+		s.append("\"major\":\""+record.getUser().getMajor()+"\",");
+		s.append("\"chScore\":\""+record.getScore()+"\",");
+		s.append("\"answers\":[");
+
+		List<ExamQuestion> ques=info.getExamQuestions();
+		String a=record.getPaperAnswer();
+		a=a.substring(1,a.length()-1);
+		String[] b=a.split(",");
+
+		for (int i = 0; i < ques.size(); i++) {
+			s.append("{\"title\":\""+ques.get(i).getDescription()+
+					"\",\"chScore\":\""+ques.get(i).getScore()+
+					"\",\"answer\":\""+b[i].substring(1,b[i].length()-1)+"\"},");
+		}
+		s.deleteCharAt(s.length()-1);
+		s.append("]}");
+		return String.valueOf(s);
+
+	}
 
 
 

@@ -25,6 +25,8 @@ public class Transfer {
 
 	private String[] content;
 
+	private String answer;
+
 
 
 		public String getContent() {

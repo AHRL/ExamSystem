@@ -7,7 +7,10 @@ import com.iot.model.PaperRecord;
 import com.iot.model.User;
 import com.iot.model.jsonObject.Basic;
 import com.iot.model.jsonObject.Transfer;
-import com.iot.repository.*;
+import com.iot.repository.ExamQuestionRepository;
+import com.iot.repository.PaperInfoRepository;
+import com.iot.repository.PaperRecordRepository;
+import com.iot.repository.UserRepository;
 import com.iot.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -220,8 +223,6 @@ public class PaperCtro {
 
 
 
-
-
 	/**
 	 *
 	 * @param request
@@ -288,8 +289,38 @@ public class PaperCtro {
 		Long paperId=Long.valueOf(jedis.get(jsessionId+"PaperId"));
 		user = userRepository.findByUsername(jedis.get(jsessionId));
 
+		int score=0;
+
+		List<ExamQuestion> ques = paperInfoRepository.findById(paperId).getExamQuestions();
+		String  cc=paperAnswer;
+
+		cc=cc.substring(2,cc.length()-2);
+
+		String[] dd=cc.split("\",\"");
+
+
+		for (int i = 0; i < ques.size(); i++) {
+			if (ques.get(i).getType().equals("radio") || ques.get(i).getType().equals("checkbox")){
+				System.out.println();
+				if (ques.get(i).getSolution()!= null &&ques.get(i).getSolution().toUpperCase().equals(dd[i])){
+					score+=ques.get(i).getScore();
+				}
+			}
+		}
+
+
+
+
+//		List<ExamQuestion> list=paperInfoRepository.findExamQuesions(paperId);
+
+//		System.out.println(answerList);
+
+
 		try{
 			paperRecord=paperRecordRepository. findByPaperInfoAndName(paperId,user.getUsername());
+
+			paperRecord.setScore(score);
+
 			paperRecord.setPaperAnswer(paperAnswer);
 			paperRecord.setStatus(1);
 			paperRecordRepository.saveAndFlush(paperRecord);
@@ -331,7 +362,9 @@ public class PaperCtro {
 
 			for (int i = 0; i < b.length; i++) {
 				transfer=gson.fromJson("{"+b[i]+"}",Transfer.class);
-				ExamQuestion examQuestion=new ExamQuestion(new java.sql.Date(System.currentTimeMillis()),transfer.getType(),transfer.getDescribe(),transfer.getContent(),transfer.getScore());
+
+				ExamQuestion examQuestion=new ExamQuestion(new java.sql.Date(System.currentTimeMillis()),transfer.getType()
+						,transfer.getDescribe(),transfer.getContent(),transfer.getScore(), transfer.getAnswer());
 				list.add(examQuestion);
 				examQuestionRepository.save(examQuestion);
 			}
@@ -479,7 +512,7 @@ public class PaperCtro {
 	 * @param request
 	 * @return
 	 * 用户马上进行考试的标题
-	 * 好像没用的？
+	 * 好像没用到？
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/api/exam_title",method = RequestMethod.GET,produces="text/plain;charset=UTF-8")
@@ -498,4 +531,8 @@ public class PaperCtro {
 		return status?"\"ret\":true,\"data\":[" +paperInfo.toBeExaming()+"]}":"\"ret\":false";
 
 	}
+
+
+
+
 }
