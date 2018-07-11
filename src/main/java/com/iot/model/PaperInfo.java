@@ -51,6 +51,15 @@ public class PaperInfo {
 		this.deadline=deadline;
 	}
 
+	public String toTitle(){
+
+		return "{" +
+				"\"title\":\"" + name + "\"," +
+				"\"id\":\"" + id + "\"" +
+				"}";
+	}
+
+
 	
 	public String toBeExaming() {
 

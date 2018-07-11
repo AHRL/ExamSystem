@@ -118,7 +118,7 @@ public class ExamCtro {
      * 管理员页面
      */
     @RequestMapping("/admin")
-    @PreAuthorize("hasAnyRole('admin')")
+//    @PreAuthorize("hasAnyRole('admin')")
     public String admin() throws Exception {
         return "admin";
     }
@@ -190,6 +190,16 @@ public class ExamCtro {
     @RequestMapping("/404")
     public String forbidden(){
         return "404";
+    }
+
+    /**
+     *
+     * @return
+     *
+     */
+    @RequestMapping("/exam_detail")
+    public String exam_detail(){
+        return "exam_detail";
     }
 
 //
@@ -288,13 +298,12 @@ public class ExamCtro {
     /**
      *
      * @param request
-     * @param response
      * @return
      *
      * 阅卷+用户答题信息整理
      */
     @RequestMapping("/api/answersSender")
-    public String answersSender(HttpServletRequest request,HttpServletResponse response){
+    public String answersSender(HttpServletRequest request){
 
         jsessionId=request.getSession().getId();
 

@@ -22,7 +22,6 @@ public interface PaperRecordRepository extends CrudRepository<PaperRecord,Long> 
 	@Query(value = "select * from paper_record  p  where p.paper_info_id=?1",nativeQuery = true)
 	List<PaperRecord> findByPaperInfoId(Long id);
 
-
 	@Query(value = "select * from paper_record  p where p.user_username=?1 AND p.status = 1",nativeQuery = true)
 	List<PaperRecord>  findExamedPaperByUsername(String username);
 
@@ -35,5 +34,6 @@ public interface PaperRecordRepository extends CrudRepository<PaperRecord,Long> 
 	PaperRecord findByPaperInfoAndName(Long id,String username);
 
 	PaperRecord saveAndFlush(PaperRecord paperRecord);
+
 
 }

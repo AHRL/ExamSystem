@@ -29,18 +29,21 @@ public class ExamQuestion {
 
 	private int score;
 
+	private String solution;
+
 	@Column(length=1024 )
 	private String description;
 
 	@Column(length=1024 )
 	private String content;
 
-	public ExamQuestion(Date date,String type, String describe, String content,int score) {
+	public ExamQuestion(Date date,String type, String describe, String content,int score,String solution) {
 		this.date=date;
 		this.type = type;
 		this.description = describe;
 		this.content = content;
 		this.score=score;
+		this.solution=solution;
 	}
 
 	public ExamQuestion() {
