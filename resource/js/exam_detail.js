@@ -1,4 +1,4 @@
-import '../scss/exam-detail.scss'
+import '../scss/exam_detail.scss'
 
 class Detail {
     constructor() {
