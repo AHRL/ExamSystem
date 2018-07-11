@@ -322,9 +322,7 @@ class Admin {
         this.$pReading.on('click', evt => {
             const $target = $(evt.target)
             const paperId = $target.attr('title')
-            $.post('/api/showPStu', JSON.stringify({
-                id: paperId
-            })).then(data => {
+            $.post('/api/showPStu', `?id=${paperId}`).then(data => {
                 data = JSON.parse(data)
                 if (data.success) {
                     const items = data.data
