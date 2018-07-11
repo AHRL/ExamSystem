@@ -86,6 +86,7 @@ class Detail {
                     data = JSON.parse(data)
                     if (data.success) {
                         alert('完成批阅')
+                        login.assgin('/admin.html')
                     }
                 })
                 .catch(err => {})

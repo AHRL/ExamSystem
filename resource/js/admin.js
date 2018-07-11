@@ -370,7 +370,7 @@ class Admin {
             const id = $target.attr('data-paperId')
             localStorage.setItem('stuEmail', stuEamil)
             localStorage.setItem('id', id)
-            location.assign('/exam-detail.html')
+            location.assign('/exam_detail.html')
         })
     }
 }
