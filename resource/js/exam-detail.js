@@ -18,7 +18,7 @@ class Detail {
     }
 
     render() {
-        $.post('/api/showDetail', `?email=${localStorage.getItem('stuEmail')}&id=${localStorage.getItem('id')}`)
+        $.post('/api/showDetail', `email=${localStorage.getItem('stuEmail')}&id=${localStorage.getItem('id')}`)
             .then(data => {
                 data = JSON.parse(data)
                 if (data.success) {
