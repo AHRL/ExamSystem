@@ -44,7 +44,7 @@ class Detail {
                     $('<div>').addClass('q-title').text(data[i].title),
                     $('<textarea>').addClass('form-control').attr({
                         cols: 20,
-                        rows: 8,
+                        rows: 4,
                         disabled: true
                     }).css({
                         resize: 'none'
