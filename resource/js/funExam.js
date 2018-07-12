@@ -56,10 +56,8 @@ class Home {
             $.get('/api/logout')
                 .then(data => {
                     alert('您已退出登录')
-                })
-                .fail(err => {
-    
-                });
+                    location.assign('/login')
+                }).fail(err => { });
         });
     }
 

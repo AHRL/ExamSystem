@@ -33,6 +33,8 @@ class Admin {
         this.$sReading = $('.examd-student .reading')
         this.$sReaded = $('.examd-student .readed')
 
+        this.$logout = $('#logout')
+
         this.exam = {
             basic: null,
             question: []
@@ -41,12 +43,14 @@ class Admin {
 
     init() {
         this.tab();
+        this.readerDate();
         this.getMore();
         this.listTab();
         this.basicBtnClick();
         this.qBtnClick();
         this.submit();
         this.renderExamResult();
+        this.logout();
     }
 
     tab() {
@@ -372,6 +376,49 @@ class Admin {
             localStorage.setItem('id', id)
             location.assign('/exam_detail.html')
         })
+    }
+
+    logout() {
+        this.$logout.on('click', () => {
+            // TODO
+            $.get('/api/logout')
+                .then(data => {
+                    alert('您已退出登录')
+                    location.assign('/login')
+                }).fail(err => { });
+        });
+    }
+
+    renderDate() {
+        // let date = new Date()
+        // let year = date.getFullYear()
+        // let month = date.getMonth() + 1
+        // let day = date.getDate()
+        // let yearFragment = document.createDocumentFragment()
+        // yearFragment.appendChild($('<option>').text('年').attr('selected', true))
+        // for (let i = year; i < (year + 2); i++) {
+        //     let option = $('<option>').val(i).text(i)
+        //     fragment.appendChild(option)
+        // }
+        // this.$examYear.append(fragment)
+
+        // let monthFragment = document.createDocumentFragment()
+        // monthFragment.appendChild($('<option>').text('月').attr('selected', true))
+        // for (let i = month; i < (month + 2); i++) {
+        //     i = i % 12
+        //     let option = $('<option>').val(i).text(i)
+        //     monthFragment.appendChild(option)
+        // }
+        // this.$examMonth.append(monthFragment)
+
+        // let dayFragment = document.createDocumentFragment()
+        // dayFragment.appendChild($('<option>').text('月').attr('selected', true))
+        // for (let i = day; i < (day + 7); i++) {
+        //     i = i % 30
+        //     let option = $('<option>').val(i).text(i)
+        //     dayFragment.appendChild(option)
+        // }
+        // this.$examMonth.append(dayFragment)
     }
 }
 

@@ -108,9 +108,6 @@ function pageReady() {
         })
     });
 
-    const $logout = $('#logout');
-    $logout.on('click', () => {});
-
     const $tabGroup1 = $('.tabGroup1');
     const $tabCon1 = $('.tabCon1');
 
@@ -248,4 +245,25 @@ function pageReady() {
             alert('密码不一致')
         }
     })
+
+    const $logout = $('#logout');
+    $logout.on('click', () => {
+        $.get('/api/logout')
+            .then(data => {
+                alert('您已退出登录')
+                location.assign('/login')
+            }).fail(err => { });
+    })
+
+    const $gradeInfo = $('#gradeInfo')
+    (function renderGrade() {
+        let fragment = document.createDocumentFragment()
+        fragment.appendChild($('<option>').text('年级').attr('selected', true))
+        let year = Date.getFullYear()
+        for(let i = year; i > (year-4); i--) {
+            let option = $('<option>').val(i).text(i)
+            fragment.appendChild(option)
+        }
+        $gradeInfo.append(fragment)
+    }());
 }

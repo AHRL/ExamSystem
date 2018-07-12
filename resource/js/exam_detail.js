@@ -15,6 +15,7 @@ class Detail {
 
     init() {
         this.render()
+        this.submit()
     }
 
     render() {
