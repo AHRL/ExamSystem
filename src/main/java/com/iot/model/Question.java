@@ -61,4 +61,14 @@ public class Question implements Serializable{
                 ",\"content\":"+content+""+
                 "}";
     }
+
+    public String toPracticeFormat() {
+
+        return "{"+
+                "\"type\":\""+type+"\""+
+                ",\"description\":"+description+
+                ",\"choices\":"+content+
+                ",\"rightAnswer\":"+answer+""+
+                ",\"answer\":\"";
+    }
 }

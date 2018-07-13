@@ -30,6 +30,8 @@ public class PaperRecord {
 	@OneToOne()
 	PaperInfo  paperInfo;
 
+
+	//试卷三状态：0-未答  1-已答未阅  2-已阅
 	private int status;
 
 //    private Long token;
@@ -89,9 +91,9 @@ public class PaperRecord {
 	public String toShowP(){
 
 		return "{" +
-				"\"name\":\"" + name + "\"," +
+				"\"name\":\"" + user.getUsername() + "\"," +
 				"\"stuEmail\":\"" + user.getEmail() + "\"," +
-				"\"status\":\"" + String.valueOf(status==1?"readed":"reading") + "\"" +
+				"\"status\":\"" + String.valueOf(status==2?"readed":"reading") + "\"" +
 				"}";
 	}
 

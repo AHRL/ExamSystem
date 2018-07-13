@@ -34,8 +34,9 @@ public class StringUtil {
 	private ExamQuestionRepository examQuestionRepository;
 
 	public String[] stringToArray(String s){
-//		String[] b=s.substring(1,s.length()-1).replace(" ","").split(",");
-		String[] b=s.replace("[","").replace("]","").replace(" ","").split(",");
+		String[] b=s.substring(2,s.length()-2).split("\",\"");
+//		String[] b=s.replace("[","").replace("]","").replace(" ","").split(",");
+
 		return b;
 	}
 
@@ -186,10 +187,15 @@ public class StringUtil {
 
 	public String toShowPStu(List<PaperRecord> a){
 
+		if (null == a) return "\\[\\]";
+
 		StringBuffer s=new StringBuffer();
 		s.append("\"data\":[");
 		for (int i = 0; i < a.size(); i++) {
-			s.append(a.get(i).toShowP());
+			if(a.get(i).getStatus()>0)
+			{
+				s.append(a.get(i).toShowP());
+			}
 			if (i<a.size()-1) s.append(",");
 		}
 		s.append("]");
@@ -216,7 +222,7 @@ public class StringUtil {
 
 		for (int i = 0; i < ques.size(); i++) {
 			s.append("{\"title\":\""+ques.get(i).getDescription()+
-					"\",\"chScore\":\""+ques.get(i).getScore()+
+					"\",\"score\":\""+ques.get(i).getScore()+
 					"\",\"answer\":\""+b[i].substring(1,b[i].length()-1)+"\"},");
 		}
 		s.deleteCharAt(s.length()-1);
@@ -225,6 +231,22 @@ public class StringUtil {
 
 	}
 
+
+	public String toPracticeFormat(List<Question> list,String[] dd){
+		StringBuffer s=new StringBuffer();
+		s.append("[");
+		for (int i = 0; i < list.size(); i++) {
+//不确定是否需要消除双引号
+			if (list.get(i).getAnswer()!=null) {
+				s.append(list.get(i).toPracticeFormat() + dd[i] + "\",\"right\":" + list.get(i).getAnswer().replace("\"","").equals(dd[i]) + "}");
+				if (i < list.size() - 1)
+					s.append(",");
+			}
+		}
+		s.append("]");
+		return String.valueOf(s);
+
+	}
 
 
 

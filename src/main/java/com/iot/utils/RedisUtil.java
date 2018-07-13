@@ -11,6 +11,12 @@ import redis.clients.jedis.JedisPoolConfig;
 
 public final class RedisUtil {
 
+
+    public static void main(String[] args) {
+        System.out.println("\"\",\"\"");
+    }
+
+
     //Redis服务器IP
 
     private static String ADDR ="118.89.36.125";
