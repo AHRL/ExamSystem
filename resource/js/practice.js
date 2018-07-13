@@ -267,6 +267,7 @@ class Practice {
     }
 
     handleAnswer() {
+        console.log(this.answer)
         let answers = this.answer.map(answer => {
             if (answer.type !== '简答') {
                 return answer.ans.split('').map(ans => {
@@ -281,6 +282,7 @@ class Practice {
         })
         $.post('/api/practice_submit', `answers=${JSON.stringify(answers)}`)
             .done(res => {
+                console.log(res)
                 res = JSON.parse(res)
                 if (res.success) {
                     localStorage.setItem('prResult', JSON.stringify(res))
