@@ -366,7 +366,6 @@ public class ExamCtro {
     }
 
 
-
     /**
      *
      * @param response
@@ -481,6 +480,8 @@ public class ExamCtro {
         jsessionId=request.getSession().getId();
         String startTime=String.valueOf(jedis.hmget(jsessionId+"map","startTime").get(0));
 
+        int ss=new Random().nextInt();
+
         try {
 
             String A= String.valueOf(jedis.hmget(jsessionId+"map","A").get(0));
@@ -517,23 +518,42 @@ public class ExamCtro {
     /**
      *
      * 提交练题
+     * 阅卷+用户答题信息整理
      */
     @ResponseBody
     @RequestMapping(value = "/api/practice_submit")
     public String add(@RequestParam(value = "answers")String answers,HttpServletRequest request){
 
-        try{
-            jsessionId =request.getSession().getId();
-            user=userRepository.findByUsername(jedis.get(jsessionId));
+        jsessionId =request.getSession().getId();
+        user=userRepository.findByUsername(jedis.get(jsessionId));
 
+        List<Question> list=new ArrayList<>();
+
+        //使用自定义的一个字符串处理工具包来简化代码,好像没有效果？？
+        String[] dd=stringUtil.stringToArray(answers);
+
+        try{
+
+System.out.println(answers);
+
+            //获取当前jsessionId会话的record
             record =recordRepository.findByJsessionId(jsessionId);
             record.setAnswerList(answers);
             recordRepository.saveAndFlush(record);
+
+            String A= String.valueOf(jedis.hmget(jsessionId+"map","A").get(0));
+            String B= String.valueOf(jedis.hmget(jsessionId+"map","B").get(0));
+            String C= String.valueOf(jedis.hmget(jsessionId+"map","C").get(0));
+            String D=String.valueOf(jedis.hmget(jsessionId+"map","D").get(0));
+            Integer count= Integer.valueOf(jedis.hmget(jsessionId+"map","count").get(0));
+            list=questionRepository.find(A,B,C,D,count);
+
         }catch (Exception e){
-            System.err.println(e+"/api/practice_submit");
+            System.err.println("/api/practice_submit"+e);
             return "{\"ret\":false}";
         }
-        return  "{\"ret\":true}";
+        return  "{\"success\":true,\"name\":\"" +user.getUsername()+
+                    "\",\"data\":"+stringUtil.toPracticeFormat(list,dd)+"}";
     }
 
 

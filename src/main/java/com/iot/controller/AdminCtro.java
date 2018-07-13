@@ -1,7 +1,8 @@
 package com.iot.controller;
 
-import com.google.gson.Gson;
-import com.iot.model.*;
+import com.iot.model.PaperInfo;
+import com.iot.model.PaperRecord;
+import com.iot.model.User;
 import com.iot.repository.PaperInfoRepository;
 import com.iot.repository.PaperRecordRepository;
 import com.iot.repository.UserRepository;
@@ -28,18 +29,13 @@ public class AdminCtro {
 
 	private Jedis jedis=new Jedis("118.89.36.125", 6379);
 
-	private Gson gson=new Gson();
-
 	private User user;
 
 	private PaperInfo paperInfo;
 
 	private PaperRecord paperRecord;
 
-	private Record record;
-
 	private static String jsessionId;
-
 
 	StringUtil stringUtil=new StringUtil();
 
@@ -85,7 +81,7 @@ public class AdminCtro {
 				//如果试卷答卷为0 或者无需要再批阅(paperRecord全是1)则放入readed
 				if (records.size()!=0){
 					for (int j = 0; j < records.size(); j++) {
-						if (records.get(j).getStatus()==0) {
+						if (records.get(j).getStatus()==1) {
 								break;
 						}
 						else if (j==records.size()-1){
@@ -122,7 +118,7 @@ public class AdminCtro {
 	@RequestMapping(value = "/api/showPStu")
 	public String showPStu (HttpServletRequest request, @RequestParam(value="id")String id){
 
-		List<PaperRecord> records=new ArrayList<>();
+		List<PaperRecord> records;
 
 		try{
 			jsessionId =request.getSession().getId();
@@ -139,17 +135,14 @@ public class AdminCtro {
 
 	/**
 	 *
-	 * @param request
 	 * @return
 	 * 展示选择的考生的试卷
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/api/showDetail")
-	public String showDetail (HttpServletRequest request,@RequestParam(value = "email") String email,@RequestParam(value="id")String id){
+	public String showDetail (@RequestParam(value = "email") String email,@RequestParam(value="id")String id){
 
 		try{
-			jsessionId =request.getSession().getId();
-//			user=userRepository.findByUsername(jedis.get(jsessionId));
 			user=userRepository.findByEmail(email);
 			paperInfo=paperInfoRepository.findById(Long.valueOf(id));
 			paperRecord =paperRecordRepository.findByPaperInfoAndName(Long.valueOf(id),user.getUsername());
@@ -162,27 +155,32 @@ public class AdminCtro {
 	}
 
 
-
+	/**
+	 *
+	 * @param request
+	 * @param email
+	 * @param id
+	 * @param score
+	 * @return
+	 * 手动阅卷后提交最终成绩
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/api/submitScore")
-	public String  submitScore(HttpServletRequest request){
-		jsessionId =request.getSession().getId();
-		user=userRepository.findByUsername(jedis.get(jsessionId));
+	public String  submitScore(HttpServletRequest request,@RequestParam(value = "email")String email
+			,@RequestParam(value = "id")String id,@RequestParam(value = "score")String score){
 
-
+		try{
+			jsessionId =request.getSession().getId();
+			user=userRepository.findByEmail(email);
+			paperRecord =paperRecordRepository.findByPaperInfoAndName(Long.valueOf(id),user.getUsername());
+			paperRecord.setScore(Integer.valueOf(score));
+			paperRecord.setStatus(2);
+			paperRecordRepository.saveAndFlush(paperRecord);
+		}catch (Exception e){
+			System.err.println("/api/aubmitScore"+e);
+			return "{\"success\":false}";
+		}
 		return "{\"success\":true}";
 	}
-
-
-
-	@ResponseBody
-	@RequestMapping(value = "/api/setAnswers")
-	public String setAnswers(HttpServletRequest request){
-		jsessionId =request.getSession().getId();
-		user=userRepository.findByUsername(jedis.get(jsessionId));
-
-		return "{\"success\":true}";
-	}
-
 
 }

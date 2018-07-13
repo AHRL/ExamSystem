@@ -291,36 +291,25 @@ public class PaperCtro {
 
 		int score=0;
 
+		//拿到题目的答案和试卷提交过来的内容
+		//把checkbox和radio类型的阅卷   还没有解决答案乱序的问题
 		List<ExamQuestion> ques = paperInfoRepository.findById(paperId).getExamQuestions();
 		String  cc=paperAnswer;
 
 		cc=cc.substring(2,cc.length()-2);
-
 		String[] dd=cc.split("\",\"");
-
 
 		for (int i = 0; i < ques.size(); i++) {
 			if (ques.get(i).getType().equals("radio") || ques.get(i).getType().equals("checkbox")){
-				System.out.println();
 				if (ques.get(i).getSolution()!= null &&ques.get(i).getSolution().toUpperCase().equals(dd[i])){
 					score+=ques.get(i).getScore();
 				}
 			}
 		}
 
-
-
-
-//		List<ExamQuestion> list=paperInfoRepository.findExamQuesions(paperId);
-
-//		System.out.println(answerList);
-
-
 		try{
 			paperRecord=paperRecordRepository. findByPaperInfoAndName(paperId,user.getUsername());
-
 			paperRecord.setScore(score);
-
 			paperRecord.setPaperAnswer(paperAnswer);
 			paperRecord.setStatus(1);
 			paperRecordRepository.saveAndFlush(paperRecord);
