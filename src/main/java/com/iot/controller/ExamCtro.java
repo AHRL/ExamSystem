@@ -532,9 +532,9 @@ public class ExamCtro {
         //使用自定义的一个字符串处理工具包来简化代码,好像没有效果？？
         String[] dd=stringUtil.stringToArray(answers);
 
-        try{
+        System.out.println(answers);
 
-System.out.println(answers);
+        try{
 
             //获取当前jsessionId会话的record
             record =recordRepository.findByJsessionId(jsessionId);
@@ -549,7 +549,7 @@ System.out.println(answers);
             list=questionRepository.find(A,B,C,D,count);
 
         }catch (Exception e){
-            System.err.println("/api/practice_submit"+e);
+            e.printStackTrace();
             return "{\"ret\":false}";
         }
         return  "{\"success\":true,\"name\":\"" +user.getUsername()+
