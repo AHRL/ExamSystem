@@ -426,6 +426,7 @@ app.post('/api/showPStu', (req, res) => {
 })
 
 app.post('/api/showDetail', (req, res) => {
+    console.log(req.body)
     res.json(JSON.stringify({
         success: true,
         data: {
@@ -442,6 +443,31 @@ app.post('/api/showDetail', (req, res) => {
                 title: '简述localStorage',
                 score: 10,
                 answer: '*************************************************************************************'
+            }]
+        }
+    }))
+})
+
+app.post('/api/practice_submit', (req, res) => {
+    console.log(req.body)
+    res.json(JSON.stringify({
+        success: true,
+        data: {
+            name: 'Leo',
+            data: [{
+                type: 'radio',
+                description: '第一题',
+                choices: ['第一个选项', '第二个选项', '第三个选项', '第四个选项'],
+                rightAnswer: 'A',
+                answer: 'C',
+                right: false
+            }, {
+                type: 'checkbox',
+                description: '第二题',
+                choices: ['第一个选项', '第二个选项', '第三个选项', '第四个选项'],
+                rightAnswer: 'AD',
+                answer: 'AD',
+                right: true
             }]
         }
     }))

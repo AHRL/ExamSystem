@@ -38,6 +38,15 @@ class Practice {
                 this.clickItem()
             }
         })
+        $.get('/api/userinfo')
+            .then(res => {
+                res = JSON.parse(res)
+                if (res.ret) {
+                    this.username = res.data.username
+                    localStorage.setItem('prName', this.username)
+                    console.log(localStorage.getItem('prName'))
+                }
+            })
     }
 
     getData() {
@@ -261,6 +270,9 @@ class Practice {
         let answers = this.answer.map(answer => {
             if (answer.type !== '简答') {
                 return answer.ans.split('').map(ans => {
+                    if (!ans) {
+                        return null
+                    }
                     return String.fromCharCode(65 + parseInt(ans))
                 }).join('')
             } else {
@@ -268,9 +280,11 @@ class Practice {
             }
         })
         $.post('/api/practice_submit', `answers=${JSON.stringify(answers)}`)
-            .done(data => {
-                if (data.ret) {
-                    location.href = './personal.html'
+            .done(res => {
+                res = JSON.parse(res)
+                if (res.success) {
+                    localStorage.setItem('prResult', JSON.stringify(res))
+                    location.href = './practice_detail.html'
                 }
             })
     }

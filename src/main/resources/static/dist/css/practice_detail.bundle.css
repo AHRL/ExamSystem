@@ -1,0 +1,24 @@
+h1.h4 {
+  margin-bottom: 2rem; }
+
+.name {
+  margin-right: 6rem; }
+
+.time {
+  float: right; }
+
+.paper-item {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 2rem; }
+
+.item-choice {
+  margin: 1rem 0; }
+
+.right-answer {
+  float: right; }
+
+.choice-count {
+  margin-right: .5rem; }
+
+/*# sourceMappingURL=practice_detail.bundle.css.map*/
