@@ -54,6 +54,7 @@ class Practice {
         $.get('api/back')
             .done(data => {
                 console.log(data)
+                data = JSON.parse(data)
                 emitter.emit('getData', data)
             })
     }
