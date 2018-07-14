@@ -223,10 +223,13 @@ class Practice {
                     cur_answer.ans += i
                 }
             })
+            if (cur_answer.ans === '') {
+                cur_answer.ans = null
+            }
         } else {
-            cur_answer.ans = form.find('textarea').val()
+            cur_answer.ans = form.find('textarea').val() || null
         }
-        if (cur_answer.ans) { // 是否选择了答案
+        if (cur_answer.ans !== '') { // 是否选择了答案
             if (!this.answer[this.index]) { // 没保存过答案
                 this.answer.push(cur_answer) // 执行保存
             } else {
@@ -270,11 +273,12 @@ class Practice {
     handleAnswer() {
         console.log(this.answer)
         let answers = this.answer.map(answer => {
+            console.log(answer)
             if (answer.type !== '简答') {
+                if (answer.ans === null) {
+                    return null
+                }
                 return answer.ans.split('').map(ans => {
-                    if (!ans) {
-                        return null
-                    }
                     return String.fromCharCode(65 + parseInt(ans))
                 }).join('')
             } else {
