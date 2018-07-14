@@ -180,7 +180,11 @@ public class ExamCtro {
     }
 
 
-//考生详情页
+    /**
+     *
+     * @return
+     * 考生详情页
+     */
     @RequestMapping("/examinee_info")
     public String examinee_info()  {
         return "examinee_info";
@@ -201,6 +205,19 @@ public class ExamCtro {
     public String exam_detail(){
         return "exam_detail";
     }
+
+
+
+    /**
+     *
+     * @return
+     * 练题阅览
+     */
+    @RequestMapping("/practice_detail")
+    public String practice_detail()  {
+        return "practice_detail";
+    }
+
 
 //
     @RequestMapping("/admin_publish")
@@ -468,7 +485,8 @@ public class ExamCtro {
      *
      * 返回当前时间开放的练题
      */
-    @RequestMapping(value = "/api/back",produces="application/json;charset=UTF-8")
+//    @RequestMapping(value = "/api/back",produces="application/json;charset=UTF-8")
+    @RequestMapping(value = "/api/back",produces="plain/text;charset=UTF-8")
     @ResponseBody
     public String back(HttpServletRequest request,HttpServletResponse response){
         response.addHeader("Access-Control-Allow-Origin", "*");
@@ -476,7 +494,13 @@ public class ExamCtro {
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         response.addHeader("Access-Control-Max-Age", "1800");
 
+        jsessionId=request.getSession().getId();
+
+        Integer count= Integer.valueOf(jedis.hmget(jsessionId+"map","count").get(0));
+
+
         List<Question> list=new ArrayList<>();
+        List<Question> listA=new ArrayList<>();
         jsessionId=request.getSession().getId();
         String startTime=String.valueOf(jedis.hmget(jsessionId+"map","startTime").get(0));
 
@@ -488,20 +512,47 @@ public class ExamCtro {
             String B= String.valueOf(jedis.hmget(jsessionId+"map","B").get(0));
             String C= String.valueOf(jedis.hmget(jsessionId+"map","C").get(0));
             String D=String.valueOf(jedis.hmget(jsessionId+"map","D").get(0));
-            Integer count= Integer.valueOf(jedis.hmget(jsessionId+"map","count").get(0));
 
-            list=questionRepository.find(A,B,C,D,count);
+
+            list=questionRepository.find(A,B,C,D);
+
+            int  rand= new Random().nextInt(list.size()-count);
+
+            jedis.set(jsessionId+"random",String.valueOf(rand));
+
+
+            for (int i = rand; i <list.size() ; i++) {
+                listA.add(list.get(i));
+                if (listA.size()==count)
+                    break;
+            }
 
             //查询得到数据放在record题目类型列
-            List<String> langList=questionRepository.findLang(A,B,C,D,count);
+            List<String> langList=questionRepository.findLang(A,B,C,D);
+            List<String> langListA=new ArrayList<>();
+            for (int i = rand; i <langList.size() ; i++) {
+                langListA.add(langList.get(i));
+                if (langListA.size()==count)
+                    break;
+            }
+
 
             //把查询出来的答案数组放在字符串answers中,不需要放入jedis去转运，关键设计在于使用好jsessionid
-            String answers=String.valueOf(questionRepository.findAnwserList(A,B,C,D,count));
-            answers.replace("','","").replace("\"['","").replace("']\"","");
+            List<String> aa=questionRepository.findAnwserList(A,B,C,D);
+            List<String> bb=new ArrayList<>();
+            for (int i = rand; i <aa.size() ; i++) {
+                bb.add(aa.get(i));
+                if (bb.size()==count)
+                    break;
+            }
+
+
+            String answersA = String.valueOf(bb);
+            answersA.replace("','","").replace("\"['","").replace("']\"","");
 
             //使用构造器来new新的record
             Record record=new Record(jsessionId,0,userRepository.findByUsername(username),list,-1,
-                    null,answers,null,count,langList.toString(),new Date(System.currentTimeMillis()));
+                    null,answersA,null,count,langListA.toString(),new Date(System.currentTimeMillis()));
 
             recordRepository.save(record);
 
@@ -511,7 +562,7 @@ public class ExamCtro {
             return "{\"ret\":false}";
         }
 
-        return  "{\"ret\":true,\"data\":["+ stringUtil.toQuestionsString(list)+"]}";
+        return  "{\"ret\":true,\"data\":["+ stringUtil.toQuestionsString(listA)+"]}";
     }
 
 
@@ -528,13 +579,17 @@ public class ExamCtro {
         user=userRepository.findByUsername(jedis.get(jsessionId));
 
         List<Question> list=new ArrayList<>();
+        List<Question> listA=new ArrayList<>();
 
         //使用自定义的一个字符串处理工具包来简化代码,好像没有效果？？
         String[] dd=stringUtil.stringToArray(answers);
 
-        try{
+        System.out.println(answers);
 
-System.out.println(answers);
+        int rand =Integer.valueOf(jedis.get(jsessionId+"random"));
+
+
+        try{
 
             //获取当前jsessionId会话的record
             record =recordRepository.findByJsessionId(jsessionId);
@@ -546,14 +601,20 @@ System.out.println(answers);
             String C= String.valueOf(jedis.hmget(jsessionId+"map","C").get(0));
             String D=String.valueOf(jedis.hmget(jsessionId+"map","D").get(0));
             Integer count= Integer.valueOf(jedis.hmget(jsessionId+"map","count").get(0));
-            list=questionRepository.find(A,B,C,D,count);
+            list=questionRepository.find(A,B,C,D);
+            for (int i = rand; i <list.size() ; i++) {
+                listA.add(list.get(i));
+                if (listA.size()==count)
+                    break;
+            }
+
 
         }catch (Exception e){
-            System.err.println("/api/practice_submit"+e);
+            e.printStackTrace();
             return "{\"ret\":false}";
         }
         return  "{\"success\":true,\"name\":\"" +user.getUsername()+
-                    "\",\"data\":"+stringUtil.toPracticeFormat(list,dd)+"}";
+                    "\",\"data\":"+stringUtil.toPracticeFormat(listA,dd)+"}";
     }
 
 
