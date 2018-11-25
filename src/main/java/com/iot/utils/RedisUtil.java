@@ -22,7 +22,7 @@ public final class RedisUtil {
     private static String ADDR ="118.89.36.125";
 
     //Redis的端口号
-    private static int PORT = 6379;
+    private static int PORT = 6380;
 
     //可用连接实例的最大数目，默认值为8；
     //如果赋值为-1，则表示不限制；如果pool已经分配了maxActive个jedis实例，则此时pool的状态为exhausted(耗尽)。
@@ -60,7 +60,9 @@ public final class RedisUtil {
 
     @Test
     public void demo(){
-        Jedis jedis=new Jedis("118.89.36.125",6379);
+//        Jedis jedis=new Jedis("118.89.36.125",6379);
+        Jedis jedis=new Jedis("192.168.113.128",7001);
+//        Jedis jedis=new Jedis("127.0.0.1",7001);
         jedis.set("name","xixixi");
         String value=jedis.get("name");
         System.out.print(value);

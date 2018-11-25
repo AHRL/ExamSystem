@@ -40,7 +40,10 @@ import java.util.*;
 @Controller
 public class ExamCtro {
 
+
+
     private Jedis jedis=new Jedis("118.89.36.125", 6379);
+//    private Jedis jedis=new Jedis("172.23.253.172", 6379);
 
     private Gson gson=new Gson();
 
@@ -348,7 +351,10 @@ public class ExamCtro {
                score++;
                }
                else
-               rightSerial[i]=0;
+               {
+                   rightSerial[i]=0;
+               }
+
            }
         }
 
@@ -523,8 +529,10 @@ public class ExamCtro {
 
             for (int i = rand; i <list.size() ; i++) {
                 listA.add(list.get(i));
-                if (listA.size()==count)
+                if(listA.size()==count)
+                {
                     break;
+                }
             }
 
             //查询得到数据放在record题目类型列
@@ -533,7 +541,10 @@ public class ExamCtro {
             for (int i = rand; i <langList.size() ; i++) {
                 langListA.add(langList.get(i));
                 if (langListA.size()==count)
+                {
                     break;
+                }
+
             }
 
 
@@ -542,8 +553,10 @@ public class ExamCtro {
             List<String> bb=new ArrayList<>();
             for (int i = rand; i <aa.size() ; i++) {
                 bb.add(aa.get(i));
-                if (bb.size()==count)
+                if(bb.size()==count){
                     break;
+                }
+
             }
 
 
@@ -604,8 +617,9 @@ public class ExamCtro {
             list=questionRepository.find(A,B,C,D);
             for (int i = rand; i <list.size() ; i++) {
                 listA.add(list.get(i));
-                if (listA.size()==count)
+                if (listA.size()==count) {
                     break;
+                }
             }
 
 
