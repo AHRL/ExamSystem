@@ -11,19 +11,19 @@
 
 ### 登录/注册
 
-![](http://ozm6xmuky.bkt.clouddn.com/register.png)
+![](https://github.com/w3fun/ExamSystem/blob/v2/MDpic/register.png)
 
 ### 在线题库
 
-![](http://ozm6xmuky.bkt.clouddn.com/register.png)
+![](https://github.com/w3fun/ExamSystem/blob/v2/MDpic/questionBank.png)
 
 ### 在线考试
 
-![](http://ozm6xmuky.bkt.clouddn.com/register.png)
+![](https://github.com/w3fun/ExamSystem/blob/v2/MDpic/exam.png)
 
 ### 后台管理
 
-![](http://ozm6xmuky.bkt.clouddn.com/add.png)
+![](https://github.com/w3fun/ExamSystem/blob/v2/MDpic/endManager.png)
 
 
 ## 开源许可
